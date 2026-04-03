@@ -34,17 +34,3 @@
 
 * [附录A - 核心提示词工程全解析](附录A-核心提示词工程全解析.md)
 
-## English Chapters
-
-* [Chapter 01 - Project Overview and Architecture](Chapter-01-Project-Overview-and-Architecture.md)
-* [Chapter 02 - Build System and Startup Flow](Chapter-02-Build-System-and-Startup-Flow.md)
-* [Chapter 03 - Terminal UI Rendering Engine](Chapter-03-Terminal-UI-Rendering-Engine.md)
-* [Chapter 04 - Event System and Input Handling](Chapter-04-Event-System-and-Input-Handling.md)
-* [Chapter 05 - Core Conversation Engine QueryEngine](Chapter-05-Core-Conversation-Engine-QueryEngine.md)
-* [Chapter 06 - LLM API and Streaming](Chapter-06-LLM-API-and-Streaming.md)
-* [Chapter 07 - Tool System Architecture](Chapter-07-Tool-System-Architecture.md)
-* [Chapter 08 - Context Management and Compression](Chapter-08-Context-Management-and-Compression.md)
-* [Chapter 09 - Task System and Multi-Agent](Chapter-09-Task-System-and-Multi-Agent.md)
-* [Chapter 10 - Team Collaboration and Remote Communication](Chapter-10-Team-Collaboration-and-Remote-Communication.md)
-* [Chapter 11 - Plugin Skills and Hook System](Chapter-11-Plugin-Skills-and-Hook-System.md)
-* [Chapter 12 - State Security and Infrastructure](Chapter-12-State-Security-and-Infrastructure.md)

@@ -16,6 +16,10 @@
     
             
                 
+                <link rel="stylesheet" href="gitbook/honkit-plugin-mermaid/mermaid.css">
+                
+            
+                
                 <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
                 
             
@@ -316,169 +320,6 @@
     
 
     
-        
-        <li class="header">English Chapters</li>
-        
-        
-    
-        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                <a href="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                    
-                    Chapter 01 - Project Overview and Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                    
-                    Chapter 02 - Build System and Startup Flow
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                    
-                    Chapter 03 - Terminal UI Rendering Engine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                <a href="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                    
-                    Chapter 04 - Event System and Input Handling
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                    
-                    Chapter 05 - Core Conversation Engine QueryEngine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
-            
-                <a href="Chapter-06-LLM-API-and-Streaming.html">
-            
-                    
-                    Chapter 06 - LLM API and Streaming
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
-            
-                <a href="Chapter-07-Tool-System-Architecture.html">
-            
-                    
-                    Chapter 07 - Tool System Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
-            
-                <a href="Chapter-08-Context-Management-and-Compression.html">
-            
-                    
-                    Chapter 08 - Context Management and Compression
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                    
-                    Chapter 09 - Task System and Multi-Agent
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                    
-                    Chapter 10 - Team Collaboration and Remote Communication
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                    
-                    Chapter 11 - Plugin Skills and Hook System
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                <a href="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                    
-                    Chapter 12 - State Security and Infrastructure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
 
     <li class="divider"></li>
 
@@ -526,7 +367,7 @@
 <h2 id="81-概述">8.1 概述</h2>
 <p>大语言模型的上下文窗口是有限资源。Claude Code 在一次会话中可能执行数十甚至数百轮工具调用，每轮产生大量输入输出内容。如果不加控制，上下文窗口会迅速溢出，导致 API 返回 413 错误（prompt_too_long）。</p>
 <h3 id="代码流程图：五层渐进式压缩管道">代码流程图：五层渐进式压缩管道</h3>
-<pre><code class="lang-mermaid">flowchart TD
+<pre><code class="lang-mermaid"><div class="mermaid">flowchart TD
     A["原始消息序列&lt;br/&gt;getMessagesAfterCompactBoundary()"] --&gt; L1
 
     subgraph layer1["L1: Tool Result Budget"]
@@ -583,7 +424,7 @@
     style layer5 fill:#f3e5f5
     style OUT fill:#c8e6c9
     style REACT fill:#ffcdd2
-</code></pre>
+</div></code></pre>
 <p>Claude Code 实现了一套五层渐进式压缩策略，从轻量级的内容裁剪到重量级的对话摘要，逐层介入：</p>
 <table>
 <thead>
@@ -639,33 +480,33 @@
 </ul>
 <h2 id="82-压缩管道在-queryts-中的编排">8.2 压缩管道在 query.ts 中的编排</h2>
 <p>所有压缩策略在 <code>src/query.ts</code> 的主查询循环中按固定顺序执行：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts (简化)</span>
-<span class="hljs-keyword">let</span> messagesForQuery = [...<span class="hljs-title function_">getMessagesAfterCompactBoundary</span>(messages)]
+<pre><code class="lang-typescript">// src/query.ts (简化)
+let messagesForQuery = [...getMessagesAfterCompactBoundary(messages)]
 
-<span class="hljs-comment">// L1: Tool Result Budget</span>
-messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-title function_">applyToolResultBudget</span>(
+// L1: Tool Result Budget
+messagesForQuery = await applyToolResultBudget(
   messagesForQuery,
-  toolUseContext.<span class="hljs-property">contentReplacementState</span>,
-  persistReplacements ? <span class="hljs-function"><span class="hljs-params">records</span> =&gt;</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">recordContentReplacement</span>(...) : <span class="hljs-literal">undefined</span>,
-  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">tools</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> !<span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(t.<span class="hljs-property">maxResultSizeChars</span>)).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> t.<span class="hljs-property">name</span>)),
+  toolUseContext.contentReplacementState,
+  persistReplacements ? records =&gt; void recordContentReplacement(...) : undefined,
+  new Set(toolUseContext.options.tools.filter(t =&gt; !Number.isFinite(t.maxResultSizeChars)).map(t =&gt; t.name)),
 )
 
-<span class="hljs-comment">// L2: Snip</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'HISTORY_SNIP'</span>)) {
-  <span class="hljs-keyword">const</span> snipResult = snipModule!.<span class="hljs-title function_">snipCompactIfNeeded</span>(messagesForQuery)
-  messagesForQuery = snipResult.<span class="hljs-property">messages</span>
-  snipTokensFreed = snipResult.<span class="hljs-property">tokensFreed</span>
+// L2: Snip
+if (feature('HISTORY_SNIP')) {
+  const snipResult = snipModule!.snipCompactIfNeeded(messagesForQuery)
+  messagesForQuery = snipResult.messages
+  snipTokensFreed = snipResult.tokensFreed
 }
 
-<span class="hljs-comment">// L3: Microcompact</span>
-<span class="hljs-keyword">const</span> microcompactResult = <span class="hljs-keyword">await</span> deps.<span class="hljs-title function_">microcompact</span>(messagesForQuery, toolUseContext, querySource)
-messagesForQuery = microcompactResult.<span class="hljs-property">messages</span>
+// L3: Microcompact
+const microcompactResult = await deps.microcompact(messagesForQuery, toolUseContext, querySource)
+messagesForQuery = microcompactResult.messages
 
-<span class="hljs-comment">// L4: Context Collapse (feature-gated)</span>
-<span class="hljs-comment">// ...</span>
+// L4: Context Collapse (feature-gated)
+// ...
 
-<span class="hljs-comment">// L5: Autocompact</span>
-<span class="hljs-keyword">const</span> { compactionResult } = <span class="hljs-keyword">await</span> deps.<span class="hljs-title function_">autocompact</span>(
+// L5: Autocompact
+const { compactionResult } = await deps.autocompact(
   messagesForQuery, toolUseContext, cacheSafeParams,
   querySource, tracking, snipTokensFreed,
 )
@@ -674,16 +515,16 @@ messagesForQuery = microcompactResult.<span class="hljs-property">messages</span
 <h2 id="83-l1-tool-result-budget">8.3 L1: Tool Result Budget</h2>
 <h3 id="831-机制">8.3.1 机制</h3>
 <p>Tool Result Budget 对每条消息中的聚合工具结果大小施加预算限制。超过预算的工具结果被替换为磁盘文件引用。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts</span>
-messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-title function_">applyToolResultBudget</span>(
+<pre><code class="lang-typescript">// src/query.ts
+messagesForQuery = await applyToolResultBudget(
   messagesForQuery,
-  toolUseContext.<span class="hljs-property">contentReplacementState</span>,  <span class="hljs-comment">// 替换状态</span>
-  persistReplacements ? <span class="hljs-function"><span class="hljs-params">records</span> =&gt;</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">recordContentReplacement</span>(...) : <span class="hljs-literal">undefined</span>,
-  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(
-    toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">tools</span>
-      .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> !<span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(t.<span class="hljs-property">maxResultSizeChars</span>))
-      .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> t.<span class="hljs-property">name</span>),
-  ),  <span class="hljs-comment">// 豁免工具集（maxResultSizeChars = Infinity 的工具）</span>
+  toolUseContext.contentReplacementState,  // 替换状态
+  persistReplacements ? records =&gt; void recordContentReplacement(...) : undefined,
+  new Set(
+    toolUseContext.options.tools
+      .filter(t =&gt; !Number.isFinite(t.maxResultSizeChars))
+      .map(t =&gt; t.name),
+  ),  // 豁免工具集（maxResultSizeChars = Infinity 的工具）
 )
 </code></pre>
 <p>最后一个参数构建了一个豁免工具集。<code>maxResultSizeChars</code> 设为 <code>Infinity</code> 的工具（如 FileReadTool）不会被替换，因为将其结果持久化到文件后，模型会用 Read 读取该文件，形成循环。</p>
@@ -716,51 +557,51 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 </tbody>
 </table>
 <p>实际阈值还受全局默认值和 GrowthBook 覆盖影响：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/toolResultStorage.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getPersistenceThreshold</span>(<span class="hljs-params">
-  <span class="hljs-attr">toolName</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">declaredMaxResultSizeChars</span>: <span class="hljs-built_in">number</span>,
-</span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(declaredMaxResultSizeChars)) {
-    <span class="hljs-keyword">return</span> declaredMaxResultSizeChars  <span class="hljs-comment">// Infinity 直接返回</span>
+<pre><code class="lang-typescript">// src/utils/toolResultStorage.ts
+export function getPersistenceThreshold(
+  toolName: string,
+  declaredMaxResultSizeChars: number,
+): number {
+  if (!Number.isFinite(declaredMaxResultSizeChars)) {
+    return declaredMaxResultSizeChars  // Infinity 直接返回
   }
-  <span class="hljs-keyword">const</span> overrides = <span class="hljs-title function_">getFeatureValue_CACHED_MAY_BE_STALE</span>(<span class="hljs-variable constant_">PERSIST_THRESHOLD_OVERRIDE_FLAG</span>, {})
-  <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> = overrides?.[toolName]
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-keyword">override</span> === <span class="hljs-string">'number'</span> &amp;&amp; <span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(<span class="hljs-keyword">override</span>) &amp;&amp; <span class="hljs-keyword">override</span> &gt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">override</span>  <span class="hljs-comment">// GrowthBook 覆盖值</span>
+  const overrides = getFeatureValue_CACHED_MAY_BE_STALE(PERSIST_THRESHOLD_OVERRIDE_FLAG, {})
+  const override = overrides?.[toolName]
+  if (typeof override === 'number' &amp;&amp; Number.isFinite(override) &amp;&amp; override &gt; 0) {
+    return override  // GrowthBook 覆盖值
   }
-  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(declaredMaxResultSizeChars, <span class="hljs-variable constant_">DEFAULT_MAX_RESULT_SIZE_CHARS</span>)
+  return Math.min(declaredMaxResultSizeChars, DEFAULT_MAX_RESULT_SIZE_CHARS)
 }
 </code></pre>
 <h3 id="833-contentreplacementstate">8.3.3 ContentReplacementState</h3>
 <p>替换状态通过 <code>ToolUseContext.contentReplacementState</code> 在对话线程中传递：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/Tool.ts</span>
-<span class="hljs-attr">contentReplacementState</span>?: <span class="hljs-title class_">ContentReplacementState</span>
+<pre><code class="lang-typescript">// src/Tool.ts
+contentReplacementState?: ContentReplacementState
 </code></pre>
 <p>主线程由 REPL 一次性初始化（不重置，过期 UUID key 是惰性的）。子 agent 通过 <code>createSubagentContext</code> 克隆父级状态（缓存共享 fork 需要一致的决策）。</p>
 <h2 id="84-l2-snip">8.4 L2: Snip</h2>
 <h3 id="841-机制">8.4.1 机制</h3>
 <p>Snip 是一种轻量级压缩策略，直接删除中间消息，保留对话首尾。它不需要调用 API 生成摘要，因此速度快、零额外成本。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'HISTORY_SNIP'</span>)) {
-  <span class="hljs-keyword">const</span> snipResult = snipModule!.<span class="hljs-title function_">snipCompactIfNeeded</span>(messagesForQuery)
-  messagesForQuery = snipResult.<span class="hljs-property">messages</span>
-  snipTokensFreed = snipResult.<span class="hljs-property">tokensFreed</span>
-  <span class="hljs-keyword">if</span> (snipResult.<span class="hljs-property">boundaryMessage</span>) {
-    <span class="hljs-keyword">yield</span> snipResult.<span class="hljs-property">boundaryMessage</span>
+<pre><code class="lang-typescript">// src/query.ts
+if (feature('HISTORY_SNIP')) {
+  const snipResult = snipModule!.snipCompactIfNeeded(messagesForQuery)
+  messagesForQuery = snipResult.messages
+  snipTokensFreed = snipResult.tokensFreed
+  if (snipResult.boundaryMessage) {
+    yield snipResult.boundaryMessage
   }
 }
 </code></pre>
 <p>Snip 通过 feature flag <code>HISTORY_SNIP</code> 控制，代码通过条件 require 加载：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> snipModule = <span class="hljs-title function_">feature</span>(<span class="hljs-string">'HISTORY_SNIP'</span>)
-  ? (<span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/compact/snipCompact.js'</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">typeof</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./services/compact/snipCompact.js'</span>))
-  : <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">const snipModule = feature('HISTORY_SNIP')
+  ? (require('./services/compact/snipCompact.js') as typeof import('./services/compact/snipCompact.js'))
+  : null
 </code></pre>
 <h3 id="842-与其他策略的关系">8.4.2 与其他策略的关系</h3>
 <p>Snip 在 Microcompact 之前执行。如果 Snip 和 Microcompact 同时触发，两者都会运行——它们不互斥。Snip 释放的 token 数传递给 Autocompact：</p>
-<pre><code class="lang-typescript">snipTokensFreed = snipResult.<span class="hljs-property">tokensFreed</span>
-<span class="hljs-comment">// ...</span>
-<span class="hljs-keyword">const</span> { compactionResult } = <span class="hljs-keyword">await</span> deps.<span class="hljs-title function_">autocompact</span>(
+<pre><code class="lang-typescript">snipTokensFreed = snipResult.tokensFreed
+// ...
+const { compactionResult } = await deps.autocompact(
   messagesForQuery, toolUseContext, cacheSafeParams,
   querySource, tracking, snipTokensFreed,
 )
@@ -771,187 +612,187 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 <p>Microcompact 清除旧的工具结果内容，将其替换为短文本标记。与 Autocompact（需要 API 调用生成摘要）不同，Microcompact 是本地操作，不消耗额外 API 调用。</p>
 <p>核心源码在 <code>src/services/compact/microCompact.ts</code>。</p>
 <h3 id="852-可压缩工具列表">8.5.2 可压缩工具列表</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">COMPACTABLE_TOOLS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-built_in">string</span>&gt;([
-  <span class="hljs-variable constant_">FILE_READ_TOOL_NAME</span>,
-  ...<span class="hljs-variable constant_">SHELL_TOOL_NAMES</span>,
-  <span class="hljs-variable constant_">GREP_TOOL_NAME</span>,
-  <span class="hljs-variable constant_">GLOB_TOOL_NAME</span>,
-  <span class="hljs-variable constant_">WEB_SEARCH_TOOL_NAME</span>,
-  <span class="hljs-variable constant_">WEB_FETCH_TOOL_NAME</span>,
-  <span class="hljs-variable constant_">FILE_EDIT_TOOL_NAME</span>,
-  <span class="hljs-variable constant_">FILE_WRITE_TOOL_NAME</span>,
+<pre><code class="lang-typescript">const COMPACTABLE_TOOLS = new Set<string>([
+  FILE_READ_TOOL_NAME,
+  ...SHELL_TOOL_NAMES,
+  GREP_TOOL_NAME,
+  GLOB_TOOL_NAME,
+  WEB_SEARCH_TOOL_NAME,
+  WEB_FETCH_TOOL_NAME,
+  FILE_EDIT_TOOL_NAME,
+  FILE_WRITE_TOOL_NAME,
 ])
-</code></pre>
+</string></code></pre>
 <p>只有这些工具的结果会被 Microcompact 清除。其他工具（如 AgentTool、TodoWriteTool 等）的结果保持不变。</p>
 <h3 id="853-入口函数">8.5.3 入口函数</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">microcompactMessages</span>(<span class="hljs-params">
-  <span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[],
-  <span class="hljs-attr">toolUseContext</span>?: <span class="hljs-title class_">ToolUseContext</span>,
-  <span class="hljs-attr">querySource</span>?: <span class="hljs-title class_">QuerySource</span>,
-</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">MicrocompactResult</span>&gt; {
-  <span class="hljs-title function_">clearCompactWarningSuppression</span>()
+<pre><code class="lang-typescript">export async function microcompactMessages(
+  messages: Message[],
+  toolUseContext?: ToolUseContext,
+  querySource?: QuerySource,
+): Promise<microcompactresult> {
+  clearCompactWarningSuppression()
 
-  <span class="hljs-comment">// 1. 基于时间的触发优先</span>
-  <span class="hljs-keyword">const</span> timeBasedResult = <span class="hljs-title function_">maybeTimeBasedMicrocompact</span>(messages, querySource)
-  <span class="hljs-keyword">if</span> (timeBasedResult) <span class="hljs-keyword">return</span> timeBasedResult
+  // 1. 基于时间的触发优先
+  const timeBasedResult = maybeTimeBasedMicrocompact(messages, querySource)
+  if (timeBasedResult) return timeBasedResult
 
-  <span class="hljs-comment">// 2. 缓存编辑微压缩（ant-only）</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CACHED_MICROCOMPACT'</span>)) {
-    <span class="hljs-keyword">const</span> mod = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getCachedMCModule</span>()
-    <span class="hljs-keyword">if</span> (mod.<span class="hljs-title function_">isCachedMicrocompactEnabled</span>() &amp;&amp; mod.<span class="hljs-title function_">isModelSupportedForCacheEditing</span>(model) &amp;&amp; <span class="hljs-title function_">isMainThreadSource</span>(querySource)) {
-      <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">cachedMicrocompactPath</span>(messages, querySource)
+  // 2. 缓存编辑微压缩（ant-only）
+  if (feature('CACHED_MICROCOMPACT')) {
+    const mod = await getCachedMCModule()
+    if (mod.isCachedMicrocompactEnabled() &amp;&amp; mod.isModelSupportedForCacheEditing(model) &amp;&amp; isMainThreadSource(querySource)) {
+      return await cachedMicrocompactPath(messages, querySource)
     }
   }
 
-  <span class="hljs-comment">// 3. 无操作回退</span>
-  <span class="hljs-keyword">return</span> { messages }
+  // 3. 无操作回退
+  return { messages }
 }
-</code></pre>
+</microcompactresult></code></pre>
 <h3 id="854-基于时间的微压缩">8.5.4 基于时间的微压缩</h3>
 <p>当用户长时间未操作后恢复对话时触发：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">evaluateTimeBasedTrigger</span>(<span class="hljs-params">
-  <span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[],
-  <span class="hljs-attr">querySource</span>: <span class="hljs-title class_">QuerySource</span> | <span class="hljs-literal">undefined</span>,
-</span>): { <span class="hljs-attr">gapMinutes</span>: <span class="hljs-built_in">number</span>; <span class="hljs-attr">config</span>: <span class="hljs-title class_">TimeBasedMCConfig</span> } | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">const</span> config = <span class="hljs-title function_">getTimeBasedMCConfig</span>()
-  <span class="hljs-keyword">if</span> (!config.<span class="hljs-property">enabled</span> || !querySource || !<span class="hljs-title function_">isMainThreadSource</span>(querySource)) {
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">export function evaluateTimeBasedTrigger(
+  messages: Message[],
+  querySource: QuerySource | undefined,
+): { gapMinutes: number; config: TimeBasedMCConfig } | null {
+  const config = getTimeBasedMCConfig()
+  if (!config.enabled || !querySource || !isMainThreadSource(querySource)) {
+    return null
   }
-  <span class="hljs-keyword">const</span> lastAssistant = messages.<span class="hljs-title function_">findLast</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">type</span> === <span class="hljs-string">'assistant'</span>)
-  <span class="hljs-keyword">if</span> (!lastAssistant) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  const lastAssistant = messages.findLast(m =&gt; m.type === 'assistant')
+  if (!lastAssistant) return null
 
-  <span class="hljs-keyword">const</span> gapMinutes = (<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() - <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(lastAssistant.<span class="hljs-property">timestamp</span>).<span class="hljs-title function_">getTime</span>()) / <span class="hljs-number">60_000</span>
-  <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(gapMinutes) || gapMinutes &lt; config.<span class="hljs-property">gapThresholdMinutes</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  const gapMinutes = (Date.now() - new Date(lastAssistant.timestamp).getTime()) / 60_000
+  if (!Number.isFinite(gapMinutes) || gapMinutes &lt; config.gapThresholdMinutes) {
+    return null
   }
-  <span class="hljs-keyword">return</span> { gapMinutes, config }
+  return { gapMinutes, config }
 }
 </code></pre>
 <p>触发条件：自上次 assistant 消息以来的间隔超过配置的阈值（分钟）。此时服务器缓存已过期，完整前缀将被重写，所以趁机清除旧工具结果以缩小重写内容。</p>
 <p>清除逻辑：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">maybeTimeBasedMicrocompact</span>(<span class="hljs-params">messages, querySource</span>) {
-  <span class="hljs-keyword">const</span> trigger = <span class="hljs-title function_">evaluateTimeBasedTrigger</span>(messages, querySource)
-  <span class="hljs-keyword">if</span> (!trigger) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">function maybeTimeBasedMicrocompact(messages, querySource) {
+  const trigger = evaluateTimeBasedTrigger(messages, querySource)
+  if (!trigger) return null
 
-  <span class="hljs-keyword">const</span> compactableIds = <span class="hljs-title function_">collectCompactableToolIds</span>(messages)
-  <span class="hljs-keyword">const</span> keepRecent = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">1</span>, config.<span class="hljs-property">keepRecent</span>)  <span class="hljs-comment">// 至少保留最后 1 个</span>
-  <span class="hljs-keyword">const</span> keepSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(compactableIds.<span class="hljs-title function_">slice</span>(-keepRecent))
-  <span class="hljs-keyword">const</span> clearSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(compactableIds.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">id</span> =&gt;</span> !keepSet.<span class="hljs-title function_">has</span>(id)))
+  const compactableIds = collectCompactableToolIds(messages)
+  const keepRecent = Math.max(1, config.keepRecent)  // 至少保留最后 1 个
+  const keepSet = new Set(compactableIds.slice(-keepRecent))
+  const clearSet = new Set(compactableIds.filter(id =&gt; !keepSet.has(id)))
 
-  <span class="hljs-comment">// 清除旧工具结果内容</span>
-  <span class="hljs-keyword">const</span> result = messages.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">message</span> =&gt;</span> {
-    <span class="hljs-comment">// ...</span>
-    <span class="hljs-keyword">const</span> newContent = message.<span class="hljs-property">message</span>.<span class="hljs-property">content</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">block</span> =&gt;</span> {
-      <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_result'</span> &amp;&amp; clearSet.<span class="hljs-title function_">has</span>(block.<span class="hljs-property">tool_use_id</span>)
-          &amp;&amp; block.<span class="hljs-property">content</span> !== <span class="hljs-variable constant_">TIME_BASED_MC_CLEARED_MESSAGE</span>) {
-        tokensSaved += <span class="hljs-title function_">calculateToolResultTokens</span>(block)
-        <span class="hljs-keyword">return</span> { ...block, <span class="hljs-attr">content</span>: <span class="hljs-variable constant_">TIME_BASED_MC_CLEARED_MESSAGE</span> }
+  // 清除旧工具结果内容
+  const result = messages.map(message =&gt; {
+    // ...
+    const newContent = message.message.content.map(block =&gt; {
+      if (block.type === 'tool_result' &amp;&amp; clearSet.has(block.tool_use_id)
+          &amp;&amp; block.content !== TIME_BASED_MC_CLEARED_MESSAGE) {
+        tokensSaved += calculateToolResultTokens(block)
+        return { ...block, content: TIME_BASED_MC_CLEARED_MESSAGE }
       }
-      <span class="hljs-keyword">return</span> block
+      return block
     })
-    <span class="hljs-comment">// ...</span>
+    // ...
   })
 }
 </code></pre>
 <p><code>TIME_BASED_MC_CLEARED_MESSAGE</code> 是 <code>'[Old tool result content cleared]'</code>。保留最近 N 个工具结果不清除（至少 1 个），确保模型有最近的工作上下文。</p>
 <h3 id="855-缓存编辑微压缩">8.5.5 缓存编辑微压缩</h3>
 <p>这是一种更精细的微压缩策略，利用 API 的 cache editing 能力，在不使缓存前缀失效的情况下删除工具结果。</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">cachedMicrocompactPath</span>(<span class="hljs-params">messages, querySource</span>) {
-  <span class="hljs-keyword">const</span> mod = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getCachedMCModule</span>()
-  <span class="hljs-keyword">const</span> state = <span class="hljs-title function_">ensureCachedMCState</span>()
-  <span class="hljs-keyword">const</span> config = mod.<span class="hljs-title function_">getCachedMCConfig</span>()
+<pre><code class="lang-typescript">async function cachedMicrocompactPath(messages, querySource) {
+  const mod = await getCachedMCModule()
+  const state = ensureCachedMCState()
+  const config = mod.getCachedMCConfig()
 
-  <span class="hljs-comment">// 1. 收集可压缩的工具 ID</span>
-  <span class="hljs-keyword">const</span> compactableToolIds = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(<span class="hljs-title function_">collectCompactableToolIds</span>(messages))
+  // 1. 收集可压缩的工具 ID
+  const compactableToolIds = new Set(collectCompactableToolIds(messages))
 
-  <span class="hljs-comment">// 2. 注册未跟踪的工具结果</span>
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> messages) {
-    <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'user'</span> &amp;&amp; <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(message.<span class="hljs-property">message</span>.<span class="hljs-property">content</span>)) {
-      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> block <span class="hljs-keyword">of</span> message.<span class="hljs-property">message</span>.<span class="hljs-property">content</span>) {
-        <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_result'</span> &amp;&amp; compactableToolIds.<span class="hljs-title function_">has</span>(block.<span class="hljs-property">tool_use_id</span>)
-            &amp;&amp; !state.<span class="hljs-property">registeredTools</span>.<span class="hljs-title function_">has</span>(block.<span class="hljs-property">tool_use_id</span>)) {
-          mod.<span class="hljs-title function_">registerToolResult</span>(state, block.<span class="hljs-property">tool_use_id</span>)
+  // 2. 注册未跟踪的工具结果
+  for (const message of messages) {
+    if (message.type === 'user' &amp;&amp; Array.isArray(message.message.content)) {
+      for (const block of message.message.content) {
+        if (block.type === 'tool_result' &amp;&amp; compactableToolIds.has(block.tool_use_id)
+            &amp;&amp; !state.registeredTools.has(block.tool_use_id)) {
+          mod.registerToolResult(state, block.tool_use_id)
         }
       }
     }
   }
 
-  <span class="hljs-comment">// 3. 决定要删除哪些工具结果</span>
-  <span class="hljs-keyword">const</span> toolsToDelete = mod.<span class="hljs-title function_">getToolResultsToDelete</span>(state)
+  // 3. 决定要删除哪些工具结果
+  const toolsToDelete = mod.getToolResultsToDelete(state)
 
-  <span class="hljs-comment">// 4. 创建 cache_edits block</span>
-  <span class="hljs-keyword">if</span> (toolsToDelete.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">const</span> cacheEdits = mod.<span class="hljs-title function_">createCacheEditsBlock</span>(state, toolsToDelete)
-    <span class="hljs-keyword">if</span> (cacheEdits) {
+  // 4. 创建 cache_edits block
+  if (toolsToDelete.length &gt; 0) {
+    const cacheEdits = mod.createCacheEditsBlock(state, toolsToDelete)
+    if (cacheEdits) {
       pendingCacheEdits = cacheEdits
     }
   }
 
-  <span class="hljs-comment">// 消息不修改 -- cache_reference 和 cache_edits 在 API 层添加</span>
-  <span class="hljs-keyword">return</span> { messages, <span class="hljs-attr">compactionInfo</span>: { <span class="hljs-attr">pendingCacheEdits</span>: { ... } } }
+  // 消息不修改 -- cache_reference 和 cache_edits 在 API 层添加
+  return { messages, compactionInfo: { pendingCacheEdits: { ... } } }
 }
 </code></pre>
 <p>关键区别：缓存编辑微压缩<strong>不修改本地消息内容</strong>。它通过 <code>cache_edits</code> API 指令在服务端删除工具结果，保持客户端消息完整。这意味着 prompt cache 不会被破坏。</p>
 <h3 id="856-token-估算辅助函数">8.5.6 Token 估算辅助函数</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateToolResultTokens</span>(<span class="hljs-params"><span class="hljs-attr">block</span>: <span class="hljs-title class_">ToolResultBlockParam</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">if</span> (!block.<span class="hljs-property">content</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> block.<span class="hljs-property">content</span> === <span class="hljs-string">'string'</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">content</span>)
+<pre><code class="lang-typescript">function calculateToolResultTokens(block: ToolResultBlockParam): number {
+  if (!block.content) return 0
+  if (typeof block.content === 'string') {
+    return roughTokenCountEstimation(block.content)
   }
-  <span class="hljs-keyword">return</span> block.<span class="hljs-property">content</span>.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, item</span>) =&gt;</span> {
-    <span class="hljs-keyword">if</span> (item.<span class="hljs-property">type</span> === <span class="hljs-string">'text'</span>) <span class="hljs-keyword">return</span> sum + <span class="hljs-title function_">roughTokenCountEstimation</span>(item.<span class="hljs-property">text</span>)
-    <span class="hljs-keyword">if</span> (item.<span class="hljs-property">type</span> === <span class="hljs-string">'image'</span> || item.<span class="hljs-property">type</span> === <span class="hljs-string">'document'</span>) <span class="hljs-keyword">return</span> sum + <span class="hljs-variable constant_">IMAGE_MAX_TOKEN_SIZE</span>
-    <span class="hljs-keyword">return</span> sum
-  }, <span class="hljs-number">0</span>)
+  return block.content.reduce((sum, item) =&gt; {
+    if (item.type === 'text') return sum + roughTokenCountEstimation(item.text)
+    if (item.type === 'image' || item.type === 'document') return sum + IMAGE_MAX_TOKEN_SIZE
+    return sum
+  }, 0)
 }
 </code></pre>
 <p>图片和文档统一按 2000 token 估算。文本使用 <code>roughTokenCountEstimation</code>（字符数 / 4）。</p>
 <h2 id="86-l5-autocompact">8.6 L5: Autocompact</h2>
 <h3 id="861-阈值计算">8.6.1 阈值计算</h3>
 <p>Autocompact 的触发基于精确的阈值计算。核心公式在 <code>autoCompact.ts</code> 中：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// 常量定义</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">AUTOCOMPACT_BUFFER_TOKENS</span> = <span class="hljs-number">13_000</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">WARNING_THRESHOLD_BUFFER_TOKENS</span> = <span class="hljs-number">20_000</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">ERROR_THRESHOLD_BUFFER_TOKENS</span> = <span class="hljs-number">20_000</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MANUAL_COMPACT_BUFFER_TOKENS</span> = <span class="hljs-number">3_000</span>
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_OUTPUT_TOKENS_FOR_SUMMARY</span> = <span class="hljs-number">20_000</span>
+<pre><code class="lang-typescript">// 常量定义
+export const AUTOCOMPACT_BUFFER_TOKENS = 13_000
+export const WARNING_THRESHOLD_BUFFER_TOKENS = 20_000
+export const ERROR_THRESHOLD_BUFFER_TOKENS = 20_000
+export const MANUAL_COMPACT_BUFFER_TOKENS = 3_000
+const MAX_OUTPUT_TOKENS_FOR_SUMMARY = 20_000
 
-<span class="hljs-comment">// 有效上下文窗口 = 模型上下文窗口 - 摘要输出预留</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getEffectiveContextWindowSize</span>(<span class="hljs-params"><span class="hljs-attr">model</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">const</span> reservedTokensForSummary = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(
-    <span class="hljs-title function_">getMaxOutputTokensForModel</span>(model),
-    <span class="hljs-variable constant_">MAX_OUTPUT_TOKENS_FOR_SUMMARY</span>,
+// 有效上下文窗口 = 模型上下文窗口 - 摘要输出预留
+export function getEffectiveContextWindowSize(model: string): number {
+  const reservedTokensForSummary = Math.min(
+    getMaxOutputTokensForModel(model),
+    MAX_OUTPUT_TOKENS_FOR_SUMMARY,
   )
-  <span class="hljs-keyword">let</span> contextWindow = <span class="hljs-title function_">getContextWindowForModel</span>(model, <span class="hljs-title function_">getSdkBetas</span>())
+  let contextWindow = getContextWindowForModel(model, getSdkBetas())
 
-  <span class="hljs-comment">// 支持环境变量覆盖</span>
-  <span class="hljs-keyword">const</span> autoCompactWindow = process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_AUTO_COMPACT_WINDOW</span>
-  <span class="hljs-keyword">if</span> (autoCompactWindow) {
-    <span class="hljs-keyword">const</span> parsed = <span class="hljs-built_in">parseInt</span>(autoCompactWindow, <span class="hljs-number">10</span>)
-    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isNaN</span>(parsed) &amp;&amp; parsed &gt; <span class="hljs-number">0</span>) {
-      contextWindow = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(contextWindow, parsed)
+  // 支持环境变量覆盖
+  const autoCompactWindow = process.env.CLAUDE_CODE_AUTO_COMPACT_WINDOW
+  if (autoCompactWindow) {
+    const parsed = parseInt(autoCompactWindow, 10)
+    if (!isNaN(parsed) &amp;&amp; parsed &gt; 0) {
+      contextWindow = Math.min(contextWindow, parsed)
     }
   }
 
-  <span class="hljs-keyword">return</span> contextWindow - reservedTokensForSummary
+  return contextWindow - reservedTokensForSummary
 }
 
-<span class="hljs-comment">// 自动压缩阈值 = 有效上下文窗口 - 缓冲区</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getAutoCompactThreshold</span>(<span class="hljs-params"><span class="hljs-attr">model</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">const</span> effectiveContextWindow = <span class="hljs-title function_">getEffectiveContextWindowSize</span>(model)
-  <span class="hljs-keyword">const</span> autocompactThreshold = effectiveContextWindow - <span class="hljs-variable constant_">AUTOCOMPACT_BUFFER_TOKENS</span>
+// 自动压缩阈值 = 有效上下文窗口 - 缓冲区
+export function getAutoCompactThreshold(model: string): number {
+  const effectiveContextWindow = getEffectiveContextWindowSize(model)
+  const autocompactThreshold = effectiveContextWindow - AUTOCOMPACT_BUFFER_TOKENS
 
-  <span class="hljs-comment">// 支持百分比覆盖（测试用）</span>
-  <span class="hljs-keyword">const</span> envPercent = process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_AUTOCOMPACT_PCT_OVERRIDE</span>
-  <span class="hljs-keyword">if</span> (envPercent) {
-    <span class="hljs-keyword">const</span> parsed = <span class="hljs-built_in">parseFloat</span>(envPercent)
-    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isNaN</span>(parsed) &amp;&amp; parsed &gt; <span class="hljs-number">0</span> &amp;&amp; parsed &lt;= <span class="hljs-number">100</span>) {
-      <span class="hljs-keyword">const</span> percentageThreshold = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(effectiveContextWindow * (parsed / <span class="hljs-number">100</span>))
-      <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(percentageThreshold, autocompactThreshold)
+  // 支持百分比覆盖（测试用）
+  const envPercent = process.env.CLAUDE_AUTOCOMPACT_PCT_OVERRIDE
+  if (envPercent) {
+    const parsed = parseFloat(envPercent)
+    if (!isNaN(parsed) &amp;&amp; parsed &gt; 0 &amp;&amp; parsed &lt;= 100) {
+      const percentageThreshold = Math.floor(effectiveContextWindow * (parsed / 100))
+      return Math.min(percentageThreshold, autocompactThreshold)
     }
   }
 
-  <span class="hljs-keyword">return</span> autocompactThreshold
+  return autocompactThreshold
 }
 </code></pre>
 <p>以 Claude Sonnet 为例，假设上下文窗口为 200K tokens：</p>
@@ -959,22 +800,22 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 自动压缩阈值 = 180,000 - 13,000 = 167,000
 </code></pre><p>当 token 使用量达到 167,000 时触发自动压缩。</p>
 <h3 id="862-多层警告状态">8.6.2 多层警告状态</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">calculateTokenWarningState</span>(<span class="hljs-params">tokenUsage, model</span>) {
-  <span class="hljs-keyword">const</span> autoCompactThreshold = <span class="hljs-title function_">getAutoCompactThreshold</span>(model)
-  <span class="hljs-keyword">const</span> threshold = <span class="hljs-title function_">isAutoCompactEnabled</span>() ? autoCompactThreshold : <span class="hljs-title function_">getEffectiveContextWindowSize</span>(model)
+<pre><code class="lang-typescript">export function calculateTokenWarningState(tokenUsage, model) {
+  const autoCompactThreshold = getAutoCompactThreshold(model)
+  const threshold = isAutoCompactEnabled() ? autoCompactThreshold : getEffectiveContextWindowSize(model)
 
-  <span class="hljs-keyword">const</span> percentLeft = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">0</span>, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(((threshold - tokenUsage) / threshold) * <span class="hljs-number">100</span>))
+  const percentLeft = Math.max(0, Math.round(((threshold - tokenUsage) / threshold) * 100))
 
-  <span class="hljs-keyword">const</span> warningThreshold = threshold - <span class="hljs-variable constant_">WARNING_THRESHOLD_BUFFER_TOKENS</span>
-  <span class="hljs-keyword">const</span> errorThreshold = threshold - <span class="hljs-variable constant_">ERROR_THRESHOLD_BUFFER_TOKENS</span>
-  <span class="hljs-keyword">const</span> blockingLimit = actualContextWindow - <span class="hljs-variable constant_">MANUAL_COMPACT_BUFFER_TOKENS</span>
+  const warningThreshold = threshold - WARNING_THRESHOLD_BUFFER_TOKENS
+  const errorThreshold = threshold - ERROR_THRESHOLD_BUFFER_TOKENS
+  const blockingLimit = actualContextWindow - MANUAL_COMPACT_BUFFER_TOKENS
 
-  <span class="hljs-keyword">return</span> {
+  return {
     percentLeft,
-    <span class="hljs-attr">isAboveWarningThreshold</span>: tokenUsage &gt;= warningThreshold,
-    <span class="hljs-attr">isAboveErrorThreshold</span>: tokenUsage &gt;= errorThreshold,
-    <span class="hljs-attr">isAboveAutoCompactThreshold</span>: <span class="hljs-title function_">isAutoCompactEnabled</span>() &amp;&amp; tokenUsage &gt;= autoCompactThreshold,
-    <span class="hljs-attr">isAtBlockingLimit</span>: tokenUsage &gt;= blockingLimit,
+    isAboveWarningThreshold: tokenUsage &gt;= warningThreshold,
+    isAboveErrorThreshold: tokenUsage &gt;= errorThreshold,
+    isAboveAutoCompactThreshold: isAutoCompactEnabled() &amp;&amp; tokenUsage &gt;= autoCompactThreshold,
+    isAtBlockingLimit: tokenUsage &gt;= blockingLimit,
   }
 }
 </code></pre>
@@ -987,79 +828,79 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 </ul>
 <h3 id="863-触发条件守卫">8.6.3 触发条件守卫</h3>
 <p><code>shouldAutoCompact()</code> 在触发前执行多重守卫检查：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">shouldAutoCompact</span>(<span class="hljs-params">messages, model, querySource, snipTokensFreed = <span class="hljs-number">0</span></span>) {
-  <span class="hljs-comment">// 1. 递归守卫：session_memory 和 compact 自身是 forked agent，会死锁</span>
-  <span class="hljs-keyword">if</span> (querySource === <span class="hljs-string">'session_memory'</span> || querySource === <span class="hljs-string">'compact'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+<pre><code class="lang-typescript">export async function shouldAutoCompact(messages, model, querySource, snipTokensFreed = 0) {
+  // 1. 递归守卫：session_memory 和 compact 自身是 forked agent，会死锁
+  if (querySource === 'session_memory' || querySource === 'compact') return false
 
-  <span class="hljs-comment">// 2. Context Collapse 的上下文 agent 不能触发自动压缩</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CONTEXT_COLLAPSE'</span>)) {
-    <span class="hljs-keyword">if</span> (querySource === <span class="hljs-string">'marble_origami'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // 2. Context Collapse 的上下文 agent 不能触发自动压缩
+  if (feature('CONTEXT_COLLAPSE')) {
+    if (querySource === 'marble_origami') return false
   }
 
-  <span class="hljs-comment">// 3. 检查用户是否启用了自动压缩</span>
-  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isAutoCompactEnabled</span>()) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // 3. 检查用户是否启用了自动压缩
+  if (!isAutoCompactEnabled()) return false
 
-  <span class="hljs-comment">// 4. Reactive-only 模式下压制主动自动压缩</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'REACTIVE_COMPACT'</span>)) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">getFeatureValue_CACHED_MAY_BE_STALE</span>(<span class="hljs-string">'tengu_cobalt_raccoon'</span>, <span class="hljs-literal">false</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // 4. Reactive-only 模式下压制主动自动压缩
+  if (feature('REACTIVE_COMPACT')) {
+    if (getFeatureValue_CACHED_MAY_BE_STALE('tengu_cobalt_raccoon', false)) return false
   }
 
-  <span class="hljs-comment">// 5. Context Collapse 模式下压制（Collapse 自己管理上下文头空间）</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CONTEXT_COLLAPSE'</span>)) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isContextCollapseEnabled</span>()) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // 5. Context Collapse 模式下压制（Collapse 自己管理上下文头空间）
+  if (feature('CONTEXT_COLLAPSE')) {
+    if (isContextCollapseEnabled()) return false
   }
 
-  <span class="hljs-comment">// 6. 计算 token 数并比较阈值</span>
-  <span class="hljs-keyword">const</span> tokenCount = <span class="hljs-title function_">tokenCountWithEstimation</span>(messages) - snipTokensFreed
-  <span class="hljs-keyword">const</span> { isAboveAutoCompactThreshold } = <span class="hljs-title function_">calculateTokenWarningState</span>(tokenCount, model)
-  <span class="hljs-keyword">return</span> isAboveAutoCompactThreshold
+  // 6. 计算 token 数并比较阈值
+  const tokenCount = tokenCountWithEstimation(messages) - snipTokensFreed
+  const { isAboveAutoCompactThreshold } = calculateTokenWarningState(tokenCount, model)
+  return isAboveAutoCompactThreshold
 }
 </code></pre>
 <h3 id="864-执行流程">8.6.4 执行流程</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">autoCompactIfNeeded</span>(<span class="hljs-params">messages, toolUseContext, ...</span>) {
-  <span class="hljs-comment">// 断路器：连续失败 3 次后停止重试</span>
-  <span class="hljs-keyword">if</span> (tracking?.<span class="hljs-property">consecutiveFailures</span> &gt;= <span class="hljs-variable constant_">MAX_CONSECUTIVE_AUTOCOMPACT_FAILURES</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">wasCompacted</span>: <span class="hljs-literal">false</span> }
+<pre><code class="lang-typescript">export async function autoCompactIfNeeded(messages, toolUseContext, ...) {
+  // 断路器：连续失败 3 次后停止重试
+  if (tracking?.consecutiveFailures &gt;= MAX_CONSECUTIVE_AUTOCOMPACT_FAILURES) {
+    return { wasCompacted: false }
   }
 
-  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">await</span> <span class="hljs-title function_">shouldAutoCompact</span>(...)) <span class="hljs-keyword">return</span> { <span class="hljs-attr">wasCompacted</span>: <span class="hljs-literal">false</span> }
+  if (!await shouldAutoCompact(...)) return { wasCompacted: false }
 
-  <span class="hljs-comment">// 先尝试 Session Memory 压缩（更轻量）</span>
-  <span class="hljs-keyword">const</span> sessionMemoryResult = <span class="hljs-keyword">await</span> <span class="hljs-title function_">trySessionMemoryCompaction</span>(
-    messages, toolUseContext.<span class="hljs-property">agentId</span>, recompactionInfo.<span class="hljs-property">autoCompactThreshold</span>
+  // 先尝试 Session Memory 压缩（更轻量）
+  const sessionMemoryResult = await trySessionMemoryCompaction(
+    messages, toolUseContext.agentId, recompactionInfo.autoCompactThreshold
   )
-  <span class="hljs-keyword">if</span> (sessionMemoryResult) {
-    <span class="hljs-title function_">setLastSummarizedMessageId</span>(<span class="hljs-literal">undefined</span>)
-    <span class="hljs-title function_">runPostCompactCleanup</span>(querySource)
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">wasCompacted</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">compactionResult</span>: sessionMemoryResult }
+  if (sessionMemoryResult) {
+    setLastSummarizedMessageId(undefined)
+    runPostCompactCleanup(querySource)
+    return { wasCompacted: true, compactionResult: sessionMemoryResult }
   }
 
-  <span class="hljs-comment">// 回退到完整对话摘要压缩</span>
-  <span class="hljs-keyword">try</span> {
-    <span class="hljs-keyword">const</span> compactionResult = <span class="hljs-keyword">await</span> <span class="hljs-title function_">compactConversation</span>(
+  // 回退到完整对话摘要压缩
+  try {
+    const compactionResult = await compactConversation(
       messages, toolUseContext, cacheSafeParams,
-      <span class="hljs-literal">true</span>,      <span class="hljs-comment">// 压制后续问题</span>
-      <span class="hljs-literal">undefined</span>, <span class="hljs-comment">// 无自定义指令</span>
-      <span class="hljs-literal">true</span>,      <span class="hljs-comment">// isAutoCompact</span>
+      true,      // 压制后续问题
+      undefined, // 无自定义指令
+      true,      // isAutoCompact
       recompactionInfo,
     )
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">wasCompacted</span>: <span class="hljs-literal">true</span>, compactionResult, <span class="hljs-attr">consecutiveFailures</span>: <span class="hljs-number">0</span> }
-  } <span class="hljs-keyword">catch</span> (error) {
-    <span class="hljs-keyword">const</span> nextFailures = (tracking?.<span class="hljs-property">consecutiveFailures</span> ?? <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">wasCompacted</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">consecutiveFailures</span>: nextFailures }
+    return { wasCompacted: true, compactionResult, consecutiveFailures: 0 }
+  } catch (error) {
+    const nextFailures = (tracking?.consecutiveFailures ?? 0) + 1
+    return { wasCompacted: false, consecutiveFailures: nextFailures }
   }
 }
 </code></pre>
 <h3 id="865-断路器机制">8.6.5 断路器机制</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_CONSECUTIVE_AUTOCOMPACT_FAILURES</span> = <span class="hljs-number">3</span>
+<pre><code class="lang-typescript">const MAX_CONSECUTIVE_AUTOCOMPACT_FAILURES = 3
 </code></pre>
 <p>注释中引用了统计数据：1,279 个会话有 50+ 次连续失败（最高 3,272 次），浪费约 250K API 调用/天。断路器在 3 次连续失败后停止重试，避免在上下文不可恢复的情况下反复尝试。</p>
 <h3 id="866-isautocompactenabled">8.6.6 isAutoCompactEnabled</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">isAutoCompactEnabled</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnvTruthy</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">DISABLE_COMPACT</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnvTruthy</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">DISABLE_AUTO_COMPACT</span>)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
-  <span class="hljs-keyword">const</span> userConfig = <span class="hljs-title function_">getGlobalConfig</span>()
-  <span class="hljs-keyword">return</span> userConfig.<span class="hljs-property">autoCompactEnabled</span>
+<pre><code class="lang-typescript">export function isAutoCompactEnabled(): boolean {
+  if (isEnvTruthy(process.env.DISABLE_COMPACT)) return false
+  if (isEnvTruthy(process.env.DISABLE_AUTO_COMPACT)) return false
+  const userConfig = getGlobalConfig()
+  return userConfig.autoCompactEnabled
 }
 </code></pre>
 <p>三级禁用开关：</p>
@@ -1071,162 +912,162 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 <h2 id="87-对话摘要压缩-compactts">8.7 对话摘要压缩 (compact.ts)</h2>
 <h3 id="871-compactconversation">8.7.1 compactConversation</h3>
 <p>这是完整的对话摘要压缩实现。它使用 forked agent 调用模型生成对话摘要：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">compactConversation</span>(<span class="hljs-params">
-  <span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[],
-  <span class="hljs-attr">context</span>: <span class="hljs-title class_">ToolUseContext</span>,
-  <span class="hljs-attr">cacheSafeParams</span>: <span class="hljs-title class_">CacheSafeParams</span>,
-  <span class="hljs-attr">suppressFollowUpQuestions</span>: <span class="hljs-built_in">boolean</span>,
-  <span class="hljs-attr">customInstructions</span>?: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">isAutoCompact</span>: <span class="hljs-built_in">boolean</span> = <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">recompactionInfo</span>?: <span class="hljs-title class_">RecompactionInfo</span>,
-</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">CompactionResult</span>&gt; {
-  <span class="hljs-keyword">if</span> (messages.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-variable constant_">ERROR_MESSAGE_NOT_ENOUGH_MESSAGES</span>)
+<pre><code class="lang-typescript">export async function compactConversation(
+  messages: Message[],
+  context: ToolUseContext,
+  cacheSafeParams: CacheSafeParams,
+  suppressFollowUpQuestions: boolean,
+  customInstructions?: string,
+  isAutoCompact: boolean = false,
+  recompactionInfo?: RecompactionInfo,
+): Promise<compactionresult> {
+  if (messages.length === 0) {
+    throw new Error(ERROR_MESSAGE_NOT_ENOUGH_MESSAGES)
   }
-  <span class="hljs-comment">// ...</span>
+  // ...
 }
-</code></pre>
+</compactionresult></code></pre>
 <h3 id="872-compactionresult">8.7.2 CompactionResult</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">CompactionResult</span> {
-  <span class="hljs-attr">boundaryMarker</span>: <span class="hljs-title class_">SystemMessage</span>          <span class="hljs-comment">// 压缩边界标记</span>
-  <span class="hljs-attr">summaryMessages</span>: <span class="hljs-title class_">UserMessage</span>[]         <span class="hljs-comment">// 摘要消息</span>
-  <span class="hljs-attr">attachments</span>: <span class="hljs-title class_">AttachmentMessage</span>[]       <span class="hljs-comment">// 附件（CLAUDE.md 等需要重新注入）</span>
-  <span class="hljs-attr">hookResults</span>: <span class="hljs-title class_">HookResultMessage</span>[]       <span class="hljs-comment">// Hook 结果</span>
-  <span class="hljs-attr">messagesToKeep</span>?: <span class="hljs-title class_">Message</span>[]             <span class="hljs-comment">// 保留的消息（partial compact）</span>
-  <span class="hljs-attr">userDisplayMessage</span>?: <span class="hljs-built_in">string</span>            <span class="hljs-comment">// 用户可见的说明</span>
-  <span class="hljs-attr">preCompactTokenCount</span>?: <span class="hljs-built_in">number</span>          <span class="hljs-comment">// 压缩前 token 数</span>
-  <span class="hljs-attr">postCompactTokenCount</span>?: <span class="hljs-built_in">number</span>         <span class="hljs-comment">// 压缩后 token 数</span>
-  <span class="hljs-attr">truePostCompactTokenCount</span>?: <span class="hljs-built_in">number</span>     <span class="hljs-comment">// 真实压缩后 token 数（API 计数）</span>
-  <span class="hljs-attr">compactionUsage</span>?: <span class="hljs-title class_">ReturnType</span>&lt;<span class="hljs-keyword">typeof</span> getTokenUsage&gt;  <span class="hljs-comment">// API 使用量</span>
+<pre><code class="lang-typescript">export interface CompactionResult {
+  boundaryMarker: SystemMessage          // 压缩边界标记
+  summaryMessages: UserMessage[]         // 摘要消息
+  attachments: AttachmentMessage[]       // 附件（CLAUDE.md 等需要重新注入）
+  hookResults: HookResultMessage[]       // Hook 结果
+  messagesToKeep?: Message[]             // 保留的消息（partial compact）
+  userDisplayMessage?: string            // 用户可见的说明
+  preCompactTokenCount?: number          // 压缩前 token 数
+  postCompactTokenCount?: number         // 压缩后 token 数
+  truePostCompactTokenCount?: number     // 真实压缩后 token 数（API 计数）
+  compactionUsage?: ReturnType<typeof gettokenusage="">  // API 使用量
 }
-</code></pre>
+</typeof></code></pre>
 <h3 id="873-压缩后消息重建">8.7.3 压缩后消息重建</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">buildPostCompactMessages</span>(<span class="hljs-params"><span class="hljs-attr">result</span>: <span class="hljs-title class_">CompactionResult</span></span>): <span class="hljs-title class_">Message</span>[] {
-  <span class="hljs-keyword">return</span> [
-    result.<span class="hljs-property">boundaryMarker</span>,      <span class="hljs-comment">// 标记压缩边界</span>
-    ...result.<span class="hljs-property">summaryMessages</span>,  <span class="hljs-comment">// 摘要</span>
-    ...(result.<span class="hljs-property">messagesToKeep</span> ?? []),  <span class="hljs-comment">// 保留的消息</span>
-    ...result.<span class="hljs-property">attachments</span>,      <span class="hljs-comment">// 重新注入的附件</span>
-    ...result.<span class="hljs-property">hookResults</span>,      <span class="hljs-comment">// Hook 结果</span>
+<pre><code class="lang-typescript">export function buildPostCompactMessages(result: CompactionResult): Message[] {
+  return [
+    result.boundaryMarker,      // 标记压缩边界
+    ...result.summaryMessages,  // 摘要
+    ...(result.messagesToKeep ?? []),  // 保留的消息
+    ...result.attachments,      // 重新注入的附件
+    ...result.hookResults,      // Hook 结果
   ]
 }
 </code></pre>
 <h3 id="874-图片剥离">8.7.4 图片剥离</h3>
 <p>压缩前会剥离图片以避免压缩 API 调用本身超出 prompt 限制：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">stripImagesFromMessages</span>(<span class="hljs-params"><span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[]</span>): <span class="hljs-title class_">Message</span>[] {
-  <span class="hljs-keyword">return</span> messages.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">message</span> =&gt;</span> {
-    <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> !== <span class="hljs-string">'user'</span>) <span class="hljs-keyword">return</span> message
-    <span class="hljs-comment">// ...</span>
-    <span class="hljs-keyword">const</span> newContent = content.<span class="hljs-title function_">flatMap</span>(<span class="hljs-function"><span class="hljs-params">block</span> =&gt;</span> {
-      <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'image'</span>) {
-        <span class="hljs-keyword">return</span> [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'[image]'</span> }]
+<pre><code class="lang-typescript">export function stripImagesFromMessages(messages: Message[]): Message[] {
+  return messages.map(message =&gt; {
+    if (message.type !== 'user') return message
+    // ...
+    const newContent = content.flatMap(block =&gt; {
+      if (block.type === 'image') {
+        return [{ type: 'text' as const, text: '[image]' }]
       }
-      <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'document'</span>) {
-        <span class="hljs-keyword">return</span> [{ <span class="hljs-attr">type</span>: <span class="hljs-string">'text'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'[document]'</span> }]
+      if (block.type === 'document') {
+        return [{ type: 'text' as const, text: '[document]' }]
       }
-      <span class="hljs-comment">// tool_result 中嵌套的图片也被剥离</span>
-      <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_result'</span> &amp;&amp; <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(block.<span class="hljs-property">content</span>)) {
-        <span class="hljs-comment">// ...</span>
+      // tool_result 中嵌套的图片也被剥离
+      if (block.type === 'tool_result' &amp;&amp; Array.isArray(block.content)) {
+        // ...
       }
-      <span class="hljs-keyword">return</span> [block]
+      return [block]
     })
   })
 }
 </code></pre>
 <h3 id="875-ptl-重试机制">8.7.5 PTL 重试机制</h3>
 <p>当压缩 API 调用本身返回 prompt_too_long 时，<code>truncateHeadForPTLRetry</code> 从头部丢弃消息组：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">truncateHeadForPTLRetry</span>(<span class="hljs-params">messages, ptlResponse</span>) {
-  <span class="hljs-keyword">const</span> groups = <span class="hljs-title function_">groupMessagesByApiRound</span>(input)
-  <span class="hljs-keyword">if</span> (groups.<span class="hljs-property">length</span> &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">export function truncateHeadForPTLRetry(messages, ptlResponse) {
+  const groups = groupMessagesByApiRound(input)
+  if (groups.length &lt; 2) return null
 
-  <span class="hljs-keyword">const</span> tokenGap = <span class="hljs-title function_">getPromptTooLongTokenGap</span>(ptlResponse)
-  <span class="hljs-keyword">let</span> <span class="hljs-attr">dropCount</span>: <span class="hljs-built_in">number</span>
-  <span class="hljs-keyword">if</span> (tokenGap !== <span class="hljs-literal">undefined</span>) {
-    <span class="hljs-comment">// 精确丢弃：累计足够 token 的组</span>
-    <span class="hljs-keyword">let</span> acc = <span class="hljs-number">0</span>
-    dropCount = <span class="hljs-number">0</span>
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> g <span class="hljs-keyword">of</span> groups) {
-      acc += <span class="hljs-title function_">roughTokenCountEstimationForMessages</span>(g)
+  const tokenGap = getPromptTooLongTokenGap(ptlResponse)
+  let dropCount: number
+  if (tokenGap !== undefined) {
+    // 精确丢弃：累计足够 token 的组
+    let acc = 0
+    dropCount = 0
+    for (const g of groups) {
+      acc += roughTokenCountEstimationForMessages(g)
       dropCount++
-      <span class="hljs-keyword">if</span> (acc &gt;= tokenGap) <span class="hljs-keyword">break</span>
+      if (acc &gt;= tokenGap) break
     }
-  } <span class="hljs-keyword">else</span> {
-    <span class="hljs-comment">// 模糊回退：丢弃 20% 的组</span>
-    dropCount = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-number">1</span>, <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(groups.<span class="hljs-property">length</span> * <span class="hljs-number">0.2</span>))
+  } else {
+    // 模糊回退：丢弃 20% 的组
+    dropCount = Math.max(1, Math.floor(groups.length * 0.2))
   }
 
-  dropCount = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(dropCount, groups.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>)  <span class="hljs-comment">// 至少保留一组</span>
-  <span class="hljs-keyword">const</span> sliced = groups.<span class="hljs-title function_">slice</span>(dropCount).<span class="hljs-title function_">flat</span>()
+  dropCount = Math.min(dropCount, groups.length - 1)  // 至少保留一组
+  const sliced = groups.slice(dropCount).flat()
 
-  <span class="hljs-comment">// 如果切片后第一条是 assistant 消息，添加合成 user 消息</span>
-  <span class="hljs-keyword">if</span> (sliced[<span class="hljs-number">0</span>]?.<span class="hljs-property">type</span> === <span class="hljs-string">'assistant'</span>) {
-    <span class="hljs-keyword">return</span> [<span class="hljs-title function_">createUserMessage</span>({ <span class="hljs-attr">content</span>: <span class="hljs-variable constant_">PTL_RETRY_MARKER</span>, <span class="hljs-attr">isMeta</span>: <span class="hljs-literal">true</span> }), ...sliced]
+  // 如果切片后第一条是 assistant 消息，添加合成 user 消息
+  if (sliced[0]?.type === 'assistant') {
+    return [createUserMessage({ content: PTL_RETRY_MARKER, isMeta: true }), ...sliced]
   }
-  <span class="hljs-keyword">return</span> sliced
+  return sliced
 }
 </code></pre>
 <p>最多重试 3 次（<code>MAX_PTL_RETRIES</code>）。</p>
 <h2 id="88-reactive-compact-413-应急处理">8.8 Reactive Compact (413 应急处理)</h2>
 <h3 id="881-触发条件">8.8.1 触发条件</h3>
 <p>Reactive Compact 在 API 返回 413 prompt_too_long 错误后触发。在 <code>query.ts</code> 的重试循环中：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts (简化)</span>
-<span class="hljs-keyword">const</span> isWithheld413 = reactiveCompact?.<span class="hljs-title function_">isWithheldPromptTooLong</span>(message)
-<span class="hljs-keyword">const</span> isWithheldMedia = reactiveCompact?.<span class="hljs-title function_">isWithheldMediaSizeError</span>(message)
+<pre><code class="lang-typescript">// src/query.ts (简化)
+const isWithheld413 = reactiveCompact?.isWithheldPromptTooLong(message)
+const isWithheldMedia = reactiveCompact?.isWithheldMediaSizeError(message)
 
-<span class="hljs-keyword">if</span> ((isWithheld413 || isWithheldMedia) &amp;&amp; reactiveCompact) {
-  <span class="hljs-keyword">const</span> compacted = <span class="hljs-keyword">await</span> reactiveCompact.<span class="hljs-title function_">tryReactiveCompact</span>({
-    <span class="hljs-attr">messages</span>: messagesForQuery,
+if ((isWithheld413 || isWithheldMedia) &amp;&amp; reactiveCompact) {
+  const compacted = await reactiveCompact.tryReactiveCompact({
+    messages: messagesForQuery,
     toolUseContext,
     cacheSafeParams,
-    <span class="hljs-comment">// ...</span>
+    // ...
   })
 }
 </code></pre>
 <h3 id="882-与其他策略的关系">8.8.2 与其他策略的关系</h3>
 <p>Reactive Compact 是最后的安全网。正常流程中，Autocompact 应该在达到阈值时主动触发。但如果因为 token 估算不准、多个大工具结果同时到达等原因导致 Autocompact 未能阻止溢出，API 返回 413 后 Reactive Compact 介入。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// query.ts 中的注释</span>
-<span class="hljs-comment">// Also skip when reactive compact is enabled and automatic compaction is</span>
-<span class="hljs-comment">// enabled (the blocking limit would prevent the context from reaching the</span>
-<span class="hljs-comment">// API, so reactive compact would never see a prompt-too-long to react to).</span>
+<pre><code class="lang-typescript">// query.ts 中的注释
+// Also skip when reactive compact is enabled and automatic compaction is
+// enabled (the blocking limit would prevent the context from reaching the
+// API, so reactive compact would never see a prompt-too-long to react to).
 </code></pre>
 <p>当 Reactive Compact 和 Autocompact 同时启用时，阻塞限制会被跳过，让请求到达 API，使 Reactive Compact 有机会在真正的 413 上触发。</p>
 <h3 id="883-context-collapse-集成">8.8.3 Context Collapse 集成</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CONTEXT_COLLAPSE'</span>) &amp;&amp; isWithheld413) {
-  <span class="hljs-comment">// reactiveCompact compiled out but contextCollapse withheld and</span>
-  <span class="hljs-comment">// the retry still 413'd, fall through to reactive compact.</span>
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">reason</span>: <span class="hljs-string">'prompt_too_long'</span> }
+<pre><code class="lang-typescript">if (feature('CONTEXT_COLLAPSE') &amp;&amp; isWithheld413) {
+  // reactiveCompact compiled out but contextCollapse withheld and
+  // the retry still 413'd, fall through to reactive compact.
+  return { reason: 'prompt_too_long' }
 }
 </code></pre>
 <p>Context Collapse 也处理 413 错误。流程是：先尝试 Context Collapse（提交暂存的上下文），如果重试仍然 413，再降级到 Reactive Compact。</p>
 <h2 id="89-token-估算策略">8.9 Token 估算策略</h2>
 <h3 id="891-核心函数-tokencountwithestimation">8.9.1 核心函数 tokenCountWithEstimation</h3>
 <p>这是 Claude Code 中测量上下文大小的标准函数：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/tokens.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">tokenCountWithEstimation</span>(<span class="hljs-params"><span class="hljs-attr">messages</span>: <span class="hljs-keyword">readonly</span> <span class="hljs-title class_">Message</span>[]</span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">let</span> i = messages.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>
-  <span class="hljs-keyword">while</span> (i &gt;= <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">const</span> message = messages[i]
-    <span class="hljs-keyword">const</span> usage = message ? <span class="hljs-title function_">getTokenUsage</span>(message) : <span class="hljs-literal">undefined</span>
-    <span class="hljs-keyword">if</span> (message &amp;&amp; usage) {
-      <span class="hljs-comment">// 处理并行工具调用的消息分裂</span>
-      <span class="hljs-keyword">const</span> responseId = <span class="hljs-title function_">getAssistantMessageId</span>(message)
-      <span class="hljs-keyword">if</span> (responseId) {
-        <span class="hljs-keyword">let</span> j = i - <span class="hljs-number">1</span>
-        <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span>) {
-          <span class="hljs-keyword">const</span> priorId = messages[j] ? <span class="hljs-title function_">getAssistantMessageId</span>(messages[j]!) : <span class="hljs-literal">undefined</span>
-          <span class="hljs-keyword">if</span> (priorId === responseId) {
-            i = j  <span class="hljs-comment">// 回退到同一 API 响应的最早分裂</span>
-          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (priorId !== <span class="hljs-literal">undefined</span>) {
-            <span class="hljs-keyword">break</span>   <span class="hljs-comment">// 碰到不同 API 响应，停止</span>
+<pre><code class="lang-typescript">// src/utils/tokens.ts
+export function tokenCountWithEstimation(messages: readonly Message[]): number {
+  let i = messages.length - 1
+  while (i &gt;= 0) {
+    const message = messages[i]
+    const usage = message ? getTokenUsage(message) : undefined
+    if (message &amp;&amp; usage) {
+      // 处理并行工具调用的消息分裂
+      const responseId = getAssistantMessageId(message)
+      if (responseId) {
+        let j = i - 1
+        while (j &gt;= 0) {
+          const priorId = messages[j] ? getAssistantMessageId(messages[j]!) : undefined
+          if (priorId === responseId) {
+            i = j  // 回退到同一 API 响应的最早分裂
+          } else if (priorId !== undefined) {
+            break   // 碰到不同 API 响应，停止
           }
           j--
         }
       }
-      <span class="hljs-keyword">return</span> <span class="hljs-title function_">getTokenCountFromUsage</span>(usage) + <span class="hljs-title function_">roughTokenCountEstimationForMessages</span>(messages.<span class="hljs-title function_">slice</span>(i + <span class="hljs-number">1</span>))
+      return getTokenCountFromUsage(usage) + roughTokenCountEstimationForMessages(messages.slice(i + 1))
     }
     i--
   }
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimationForMessages</span>(messages)
+  return roughTokenCountEstimationForMessages(messages)
 }
 </code></pre>
 <p>策略：<strong>基准值 + 增量估算</strong>。</p>
@@ -1240,43 +1081,43 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 <p>当模型并行调用多个工具时，streaming 代码为每个 content block 生成一条独立的 assistant 记录（共享同一 <code>message.id</code> 和 <code>usage</code>），query loop 将每个 <code>tool_result</code> 紧跟在对应的 <code>tool_use</code> 后面：</p>
 <pre><code>[..., assistant(id=A), user(result1), assistant(id=A), user(result2), ...]
 </code></pre><p>如果只从最后一条 assistant 记录开始估算，会遗漏之前交错的 <code>tool_result</code>。因此代码回退到同一 <code>message.id</code> 的最早记录：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (priorId === responseId) {
-  i = j  <span class="hljs-comment">// 回退到最早的分裂</span>
-} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (priorId !== <span class="hljs-literal">undefined</span>) {
-  <span class="hljs-keyword">break</span>  <span class="hljs-comment">// 不同 API 响应，停止</span>
+<pre><code class="lang-typescript">if (priorId === responseId) {
+  i = j  // 回退到最早的分裂
+} else if (priorId !== undefined) {
+  break  // 不同 API 响应，停止
 }
-<span class="hljs-comment">// priorId === undefined: user/tool_result/attachment 消息，继续回退</span>
+// priorId === undefined: user/tool_result/attachment 消息，继续回退
 </code></pre>
 <h3 id="893-粗略估算函数">8.9.3 粗略估算函数</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tokenEstimation.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(<span class="hljs-params"><span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">bytesPerToken</span>: <span class="hljs-built_in">number</span> = <span class="hljs-number">4</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>(content.<span class="hljs-property">length</span> / bytesPerToken)
+<pre><code class="lang-typescript">// src/services/tokenEstimation.ts
+export function roughTokenCountEstimation(content: string, bytesPerToken: number = 4): number {
+  return Math.round(content.length / bytesPerToken)
 }
 </code></pre>
 <p>默认 4 字节/token。JSON 文件使用 2 字节/token（因为 JSON 有大量单字符 token 如 <code>{</code>, <code>}</code>, <code>:</code>, <code>,</code>, <code>"</code>）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">bytesPerTokenForFileType</span>(<span class="hljs-params"><span class="hljs-attr">fileExtension</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">switch</span> (fileExtension) {
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'json'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'jsonl'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'jsonc'</span>:
-      <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>
-    <span class="hljs-attr">default</span>:
-      <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>
+<pre><code class="lang-typescript">export function bytesPerTokenForFileType(fileExtension: string): number {
+  switch (fileExtension) {
+    case 'json':
+    case 'jsonl':
+    case 'jsonc':
+      return 2
+    default:
+      return 4
   }
 }
 </code></pre>
 <h3 id="894-内容块级别的估算">8.9.4 内容块级别的估算</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">roughTokenCountEstimationForBlock</span>(<span class="hljs-params">block</span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> block === <span class="hljs-string">'string'</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block)
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'text'</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">text</span>)
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'image'</span> || block.<span class="hljs-property">type</span> === <span class="hljs-string">'document'</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">2000</span>
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_result'</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimationForContent</span>(block.<span class="hljs-property">content</span>)
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_use'</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">name</span> + <span class="hljs-title function_">jsonStringify</span>(block.<span class="hljs-property">input</span> ?? {}))
+<pre><code class="lang-typescript">function roughTokenCountEstimationForBlock(block): number {
+  if (typeof block === 'string') return roughTokenCountEstimation(block)
+  if (block.type === 'text') return roughTokenCountEstimation(block.text)
+  if (block.type === 'image' || block.type === 'document') return 2000
+  if (block.type === 'tool_result') return roughTokenCountEstimationForContent(block.content)
+  if (block.type === 'tool_use') {
+    return roughTokenCountEstimation(block.name + jsonStringify(block.input ?? {}))
   }
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'thinking'</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">thinking</span>)
-  <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'redacted_thinking'</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">data</span>)
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">roughTokenCountEstimation</span>(<span class="hljs-title function_">jsonStringify</span>(block))
+  if (block.type === 'thinking') return roughTokenCountEstimation(block.thinking)
+  if (block.type === 'redacted_thinking') return roughTokenCountEstimation(block.data)
+  return roughTokenCountEstimation(jsonStringify(block))
 }
 </code></pre>
 <p>不同类型的内容块使用不同的估算策略：</p>
@@ -1290,61 +1131,61 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 </ul>
 <h3 id="895-api-精确计数">8.9.5 API 精确计数</h3>
 <p>当需要精确计数时，使用 <code>countTokensWithAPI</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tokenEstimation.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">countTokensWithAPI</span>(<span class="hljs-params"><span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span>&gt; {
-  <span class="hljs-keyword">if</span> (!content) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
-  <span class="hljs-keyword">const</span> message = { <span class="hljs-attr">role</span>: <span class="hljs-string">'user'</span>, <span class="hljs-attr">content</span>: content }
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">countMessagesTokensWithAPI</span>([message], [])
+<pre><code class="lang-typescript">// src/services/tokenEstimation.ts
+export async function countTokensWithAPI(content: string): Promise<number |="" null=""> {
+  if (!content) return 0
+  const message = { role: 'user', content: content }
+  return countMessagesTokensWithAPI([message], [])
 }
-</code></pre>
+</number></code></pre>
 <p>它调用 Anthropic API 的 <code>beta.messages.countTokens</code> 端点。对于 Bedrock 用户，使用 <code>CountTokensCommand</code>。</p>
 <p>备选方案 <code>countTokensViaHaikuFallback</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">countTokensViaHaikuFallback</span>(<span class="hljs-params">messages, tools</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span>&gt; {
-  <span class="hljs-comment">// 优先使用 Haiku（便宜快速）</span>
-  <span class="hljs-comment">// Vertex 全局区域或 Bedrock + thinking blocks 时降级到 Sonnet</span>
-  <span class="hljs-keyword">const</span> model = isVertexGlobalEndpoint || isBedrockWithThinking || isVertexWithThinking
-    ? <span class="hljs-title function_">getDefaultSonnetModel</span>()
-    : <span class="hljs-title function_">getSmallFastModel</span>()
+<pre><code class="lang-typescript">export async function countTokensViaHaikuFallback(messages, tools): Promise<number |="" null=""> {
+  // 优先使用 Haiku（便宜快速）
+  // Vertex 全局区域或 Bedrock + thinking blocks 时降级到 Sonnet
+  const model = isVertexGlobalEndpoint || isBedrockWithThinking || isVertexWithThinking
+    ? getDefaultSonnetModel()
+    : getSmallFastModel()
 
-  <span class="hljs-comment">// 发送 max_tokens=1 的请求，只关心 usage 中的 input_tokens</span>
-  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> anthropic.<span class="hljs-property">beta</span>.<span class="hljs-property">messages</span>.<span class="hljs-title function_">create</span>({
-    model, <span class="hljs-attr">max_tokens</span>: containsThinking ? <span class="hljs-variable constant_">TOKEN_COUNT_MAX_TOKENS</span> : <span class="hljs-number">1</span>,
-    <span class="hljs-attr">messages</span>: messagesToSend, tools,
-    <span class="hljs-comment">// ...</span>
+  // 发送 max_tokens=1 的请求，只关心 usage 中的 input_tokens
+  const response = await anthropic.beta.messages.create({
+    model, max_tokens: containsThinking ? TOKEN_COUNT_MAX_TOKENS : 1,
+    messages: messagesToSend, tools,
+    // ...
   })
 
-  <span class="hljs-keyword">return</span> inputTokens + cacheCreationTokens + cacheReadTokens
+  return inputTokens + cacheCreationTokens + cacheReadTokens
 }
-</code></pre>
+</number></code></pre>
 <p>这种方法通过发送一个几乎不产生输出（max_tokens=1）的请求来获取精确的 input token 计数。</p>
 <h3 id="896-消息级-token-估算">8.9.6 消息级 Token 估算</h3>
 <p>Microcompact 中使用的消息级估算函数带有 4/3 保守系数：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/compact/microCompact.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">estimateMessageTokens</span>(<span class="hljs-params"><span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[]</span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">let</span> totalTokens = <span class="hljs-number">0</span>
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> messages) {
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> block <span class="hljs-keyword">of</span> message.<span class="hljs-property">message</span>.<span class="hljs-property">content</span>) {
-      <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'text'</span>) totalTokens += <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">text</span>)
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_result'</span>) totalTokens += <span class="hljs-title function_">calculateToolResultTokens</span>(block)
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'image'</span> || block.<span class="hljs-property">type</span> === <span class="hljs-string">'document'</span>) totalTokens += <span class="hljs-variable constant_">IMAGE_MAX_TOKEN_SIZE</span>
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'thinking'</span>) totalTokens += <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">thinking</span>)
-      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (block.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_use'</span>) {
-        totalTokens += <span class="hljs-title function_">roughTokenCountEstimation</span>(block.<span class="hljs-property">name</span> + <span class="hljs-title function_">jsonStringify</span>(block.<span class="hljs-property">input</span> ?? {}))
+<pre><code class="lang-typescript">// src/services/compact/microCompact.ts
+export function estimateMessageTokens(messages: Message[]): number {
+  let totalTokens = 0
+  for (const message of messages) {
+    for (const block of message.message.content) {
+      if (block.type === 'text') totalTokens += roughTokenCountEstimation(block.text)
+      else if (block.type === 'tool_result') totalTokens += calculateToolResultTokens(block)
+      else if (block.type === 'image' || block.type === 'document') totalTokens += IMAGE_MAX_TOKEN_SIZE
+      else if (block.type === 'thinking') totalTokens += roughTokenCountEstimation(block.thinking)
+      else if (block.type === 'tool_use') {
+        totalTokens += roughTokenCountEstimation(block.name + jsonStringify(block.input ?? {}))
       }
-      <span class="hljs-comment">// ...</span>
+      // ...
     }
   }
-  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">ceil</span>(totalTokens * (<span class="hljs-number">4</span> / <span class="hljs-number">3</span>))  <span class="hljs-comment">// 保守系数</span>
+  return Math.ceil(totalTokens * (4 / 3))  // 保守系数
 }
 </code></pre>
 <p>乘以 4/3 是为了在粗略估算基础上留有余量，避免因低估导致压缩不及时。</p>
 <h2 id="810-gettokencountfromusage">8.10 getTokenCountFromUsage</h2>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getTokenCountFromUsage</span>(<span class="hljs-params"><span class="hljs-attr">usage</span>: <span class="hljs-title class_">Usage</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">return</span> (
-    usage.<span class="hljs-property">input_tokens</span> +
-    (usage.<span class="hljs-property">cache_creation_input_tokens</span> ?? <span class="hljs-number">0</span>) +
-    (usage.<span class="hljs-property">cache_read_input_tokens</span> ?? <span class="hljs-number">0</span>) +
-    usage.<span class="hljs-property">output_tokens</span>
+<pre><code class="lang-typescript">export function getTokenCountFromUsage(usage: Usage): number {
+  return (
+    usage.input_tokens +
+    (usage.cache_creation_input_tokens ?? 0) +
+    (usage.cache_read_input_tokens ?? 0) +
+    usage.output_tokens
   )
 }
 </code></pre>
@@ -1368,14 +1209,14 @@ messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-tit
 </ul>
 <h3 id="8113-递归守卫">8.11.3 递归守卫</h3>
 <p>压缩操作自身需要调用 API（如 compactConversation 用 forked agent 生成摘要），如果该 API 调用的上下文也超限，会导致无限递归。因此 <code>shouldAutoCompact</code> 中有明确的递归守卫：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (querySource === <span class="hljs-string">'session_memory'</span> || querySource === <span class="hljs-string">'compact'</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+<pre><code class="lang-typescript">if (querySource === 'session_memory' || querySource === 'compact') return false
 </code></pre>
 <h3 id="8114-完全压缩时的严厉指令">8.11.4 完全压缩时的严厉指令</h3>
 <p>当触发完全压缩（让 AI 对整段对话生成摘要）时，有一个严厉的前置指令：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">NO_TOOLS_PREAMBLE</span> = <span class="hljs-string">`CRITICAL: Respond with TEXT ONLY.
+<pre><code class="lang-typescript">const NO_TOOLS_PREAMBLE = `CRITICAL: Respond with TEXT ONLY.
 Do NOT call any tools.
 - Do NOT use Read, Bash, Grep, Glob, Edit, Write, or ANY other tool.
-- Tool calls will be REJECTED and will waste your only turn.`</span>
+- Tool calls will be REJECTED and will waste your only turn.`
 </code></pre>
 <p>如果总结过程中 AI 又去调用工具，就会产生更多的 token 消耗，适得其反。这段提示词的本质就是："你的任务是总结，别干别的。"</p>
 <p>压缩后的 token 恢复预算经过精心设计：</p>
@@ -1455,7 +1296,7 @@ Do NOT call any tools.
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第8章 - 上下文管理与压缩策略","level":"3.3","depth":1,"next":{"title":"第7章 - 工具系统架构与实现","level":"4.1","depth":1,"path":"第07章-工具系统架构与实现.md","ref":"第07章-工具系统架构与实现.md","articles":[]},"previous":{"title":"第6章 - LLM API 调用与流式处理","level":"3.2","depth":1,"path":"第06章-LLM-API调用与流式处理.md","ref":"第06章-LLM-API调用与流式处理.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第08章-上下文管理与压缩策略.md","mtime":"2026-04-01T07:47:22.960Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第8章 - 上下文管理与压缩策略","level":"3.3","depth":1,"next":{"title":"第7章 - 工具系统架构与实现","level":"4.1","depth":1,"path":"第07章-工具系统架构与实现.md","ref":"第07章-工具系统架构与实现.md","articles":[]},"previous":{"title":"第6章 - LLM API 调用与流式处理","level":"3.2","depth":1,"path":"第06章-LLM-API调用与流式处理.md","ref":"第06章-LLM-API调用与流式处理.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","mermaid"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第08章-上下文管理与压缩策略.md","mtime":"2026-04-03T06:45:16.316Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:57:12.977Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -1507,6 +1348,14 @@ Do NOT call any tools.
     </script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid-load.js"></script>
+        
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid.min.js"></script>
+        
     
         
         <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>

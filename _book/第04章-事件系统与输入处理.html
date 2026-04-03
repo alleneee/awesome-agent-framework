@@ -16,6 +16,10 @@
     
             
                 
+                <link rel="stylesheet" href="gitbook/honkit-plugin-mermaid/mermaid.css">
+                
+            
+                
                 <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
                 
             
@@ -316,169 +320,6 @@
     
 
     
-        
-        <li class="header">English Chapters</li>
-        
-        
-    
-        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                <a href="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                    
-                    Chapter 01 - Project Overview and Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                    
-                    Chapter 02 - Build System and Startup Flow
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                    
-                    Chapter 03 - Terminal UI Rendering Engine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                <a href="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                    
-                    Chapter 04 - Event System and Input Handling
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                    
-                    Chapter 05 - Core Conversation Engine QueryEngine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
-            
-                <a href="Chapter-06-LLM-API-and-Streaming.html">
-            
-                    
-                    Chapter 06 - LLM API and Streaming
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
-            
-                <a href="Chapter-07-Tool-System-Architecture.html">
-            
-                    
-                    Chapter 07 - Tool System Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
-            
-                <a href="Chapter-08-Context-Management-and-Compression.html">
-            
-                    
-                    Chapter 08 - Context Management and Compression
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                    
-                    Chapter 09 - Task System and Multi-Agent
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                    
-                    Chapter 10 - Team Collaboration and Remote Communication
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                    
-                    Chapter 11 - Plugin Skills and Hook System
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                <a href="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                    
-                    Chapter 12 - State Security and Infrastructure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
 
     <li class="divider"></li>
 
@@ -616,53 +457,53 @@
 <h3 id="421-输入来源与分词">4.2.1 输入来源与分词</h3>
 <p>终端输入是一个字节流，不同类型的输入（普通字符、转义序列、鼠标事件、终端响应）混在一起。<code>parse-keypress.ts</code> 负责将这个字节流解析为结构化的输入事件。</p>
 <p>顶层入口函数：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseMultipleKeypresses</span>(<span class="hljs-params">
-  <span class="hljs-attr">prevState</span>: <span class="hljs-title class_">KeyParseState</span>,
-  <span class="hljs-attr">input</span>: <span class="hljs-title class_">Buffer</span> | <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> = <span class="hljs-string">''</span>,
-</span>): [<span class="hljs-title class_">ParsedInput</span>[], <span class="hljs-title class_">KeyParseState</span>] {
-  <span class="hljs-keyword">const</span> isFlush = input === <span class="hljs-literal">null</span>
-  <span class="hljs-keyword">const</span> inputString = isFlush ? <span class="hljs-string">''</span> : <span class="hljs-title function_">inputToString</span>(input)
+<pre><code class="lang-typescript">export function parseMultipleKeypresses(
+  prevState: KeyParseState,
+  input: Buffer | string | null = '',
+): [ParsedInput[], KeyParseState] {
+  const isFlush = input === null
+  const inputString = isFlush ? '' : inputToString(input)
 
-  <span class="hljs-keyword">const</span> tokenizer = prevState.<span class="hljs-property">_tokenizer</span> ?? <span class="hljs-title function_">createTokenizer</span>({ <span class="hljs-attr">x10Mouse</span>: <span class="hljs-literal">true</span> })
-  <span class="hljs-keyword">const</span> tokens = isFlush ? tokenizer.<span class="hljs-title function_">flush</span>() : tokenizer.<span class="hljs-title function_">feed</span>(inputString)
+  const tokenizer = prevState._tokenizer ?? createTokenizer({ x10Mouse: true })
+  const tokens = isFlush ? tokenizer.flush() : tokenizer.feed(inputString)
 
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">keys</span>: <span class="hljs-title class_">ParsedInput</span>[] = []
-  <span class="hljs-keyword">let</span> inPaste = prevState.<span class="hljs-property">mode</span> === <span class="hljs-string">'IN_PASTE'</span>
-  <span class="hljs-keyword">let</span> pasteBuffer = prevState.<span class="hljs-property">pasteBuffer</span>
+  const keys: ParsedInput[] = []
+  let inPaste = prevState.mode === 'IN_PASTE'
+  let pasteBuffer = prevState.pasteBuffer
 
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> token <span class="hljs-keyword">of</span> tokens) {
-    <span class="hljs-keyword">if</span> (token.<span class="hljs-property">type</span> === <span class="hljs-string">'sequence'</span>) {
-      <span class="hljs-keyword">if</span> (token.<span class="hljs-property">value</span> === <span class="hljs-variable constant_">PASTE_START</span>) {
-        inPaste = <span class="hljs-literal">true</span>
-        pasteBuffer = <span class="hljs-string">''</span>
-      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (token.<span class="hljs-property">value</span> === <span class="hljs-variable constant_">PASTE_END</span>) {
-        keys.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">createPasteKey</span>(pasteBuffer))
-        inPaste = <span class="hljs-literal">false</span>
-        pasteBuffer = <span class="hljs-string">''</span>
-      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (inPaste) {
-        pasteBuffer += token.<span class="hljs-property">value</span>
-      } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">const</span> response = <span class="hljs-title function_">parseTerminalResponse</span>(token.<span class="hljs-property">value</span>)
-        <span class="hljs-keyword">if</span> (response) {
-          keys.<span class="hljs-title function_">push</span>({ <span class="hljs-attr">kind</span>: <span class="hljs-string">'response'</span>, <span class="hljs-attr">sequence</span>: token.<span class="hljs-property">value</span>, response })
-        } <span class="hljs-keyword">else</span> {
-          <span class="hljs-keyword">const</span> mouse = <span class="hljs-title function_">parseMouseEvent</span>(token.<span class="hljs-property">value</span>)
-          <span class="hljs-keyword">if</span> (mouse) {
-            keys.<span class="hljs-title function_">push</span>(mouse)
-          } <span class="hljs-keyword">else</span> {
-            keys.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseKeypress</span>(token.<span class="hljs-property">value</span>))
+  for (const token of tokens) {
+    if (token.type === 'sequence') {
+      if (token.value === PASTE_START) {
+        inPaste = true
+        pasteBuffer = ''
+      } else if (token.value === PASTE_END) {
+        keys.push(createPasteKey(pasteBuffer))
+        inPaste = false
+        pasteBuffer = ''
+      } else if (inPaste) {
+        pasteBuffer += token.value
+      } else {
+        const response = parseTerminalResponse(token.value)
+        if (response) {
+          keys.push({ kind: 'response', sequence: token.value, response })
+        } else {
+          const mouse = parseMouseEvent(token.value)
+          if (mouse) {
+            keys.push(mouse)
+          } else {
+            keys.push(parseKeypress(token.value))
           }
         }
       }
-    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (token.<span class="hljs-property">type</span> === <span class="hljs-string">'text'</span>) {
-      <span class="hljs-keyword">if</span> (inPaste) {
-        pasteBuffer += token.<span class="hljs-property">value</span>
-      } <span class="hljs-keyword">else</span> {
-        keys.<span class="hljs-title function_">push</span>(<span class="hljs-title function_">parseKeypress</span>(token.<span class="hljs-property">value</span>))
+    } else if (token.type === 'text') {
+      if (inPaste) {
+        pasteBuffer += token.value
+      } else {
+        keys.push(parseKeypress(token.value))
       }
     }
   }
-  <span class="hljs-comment">// ...</span>
+  // ...
 }
 </code></pre>
 <p>解析流程分为三个层级：</p>
@@ -672,318 +513,318 @@
 <li><strong>语义层</strong>：<code>parseKeypress</code> 将原始序列映射为 <code>ParsedKey</code> 结构。</li>
 </ol>
 <p>状态在调用间通过 <code>KeyParseState</code> 保持：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">KeyParseState</span> = {
-  <span class="hljs-attr">mode</span>: <span class="hljs-string">'NORMAL'</span> | <span class="hljs-string">'IN_PASTE'</span>
-  <span class="hljs-attr">incomplete</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">pasteBuffer</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">_tokenizer</span>?: <span class="hljs-title class_">Tokenizer</span>
+<pre><code class="lang-typescript">export type KeyParseState = {
+  mode: 'NORMAL' | 'IN_PASTE'
+  incomplete: string
+  pasteBuffer: string
+  _tokenizer?: Tokenizer
 }
 </code></pre>
 <p>Tokenizer 实例在 state 中持久化，跨 <code>stdin</code> 读取保持转义序列的分割状态。</p>
 <h3 id="422-csi-序列解析">4.2.2 CSI 序列解析</h3>
 <p>传统终端序列（VT100/xterm）通过正则匹配：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">FN_KEY_RE</span> =
-  <span class="hljs-regexp">/^(?:\x1b+)(O|N|\[|\[\[)(?:(\d+)(?:;(\d+))?([~^$])|(?:1;)?(\d+)?([a-zA-Z]))/</span>
+<pre><code class="lang-typescript">const FN_KEY_RE =
+  /^(?:\x1b+)(O|N|\[|\[\[)(?:(\d+)(?:;(\d+))?([~^$])|(?:1;)?(\d+)?([a-zA-Z]))/
 </code></pre>
 <p>这个正则覆盖多种前缀（<code>ESC O</code>、<code>ESC [</code>、<code>ESC [[</code>）和多种终止符（<code>~</code>、<code>^</code>、<code>$</code>、字母），并提取参数和修饰符。</p>
 <p>键名通过查表映射：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-attr">keyName</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt; = {
-  <span class="hljs-string">'[A'</span>: <span class="hljs-string">'up'</span>,
-  <span class="hljs-string">'[B'</span>: <span class="hljs-string">'down'</span>,
-  <span class="hljs-string">'[C'</span>: <span class="hljs-string">'right'</span>,
-  <span class="hljs-string">'[D'</span>: <span class="hljs-string">'left'</span>,
-  <span class="hljs-string">'[15~'</span>: <span class="hljs-string">'f5'</span>,
-  <span class="hljs-string">'[17~'</span>: <span class="hljs-string">'f6'</span>,
-  <span class="hljs-comment">// ... 60+ 条目</span>
+<pre><code class="lang-typescript">const keyName: Record<string, string=""> = {
+  '[A': 'up',
+  '[B': 'down',
+  '[C': 'right',
+  '[D': 'left',
+  '[15~': 'f5',
+  '[17~': 'f6',
+  // ... 60+ 条目
 }
-</code></pre>
+</string,></code></pre>
 <h3 id="423-kitty-键盘协议">4.2.3 Kitty 键盘协议</h3>
 <p>Kitty 协议使用 <code>CSI u</code> 格式，可以精确表达修饰键组合：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CSI_U_RE</span> = <span class="hljs-regexp">/^\x1b\[(\d+)(?:;(\d+))?u/</span>
+<pre><code class="lang-typescript">const CSI_U_RE = /^\x1b\[(\d+)(?:;(\d+))?u/
 
-<span class="hljs-keyword">if</span> ((match = <span class="hljs-variable constant_">CSI_U_RE</span>.<span class="hljs-title function_">exec</span>(s))) {
-  <span class="hljs-keyword">const</span> codepoint = <span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">1</span>]!, <span class="hljs-number">10</span>)
-  <span class="hljs-keyword">const</span> modifier = match[<span class="hljs-number">2</span>] ? <span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">2</span>], <span class="hljs-number">10</span>) : <span class="hljs-number">1</span>
-  <span class="hljs-keyword">const</span> mods = <span class="hljs-title function_">decodeModifier</span>(modifier)
-  <span class="hljs-keyword">const</span> name = <span class="hljs-title function_">keycodeToName</span>(codepoint)
-  <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">kind</span>: <span class="hljs-string">'key'</span>,
+if ((match = CSI_U_RE.exec(s))) {
+  const codepoint = parseInt(match[1]!, 10)
+  const modifier = match[2] ? parseInt(match[2], 10) : 1
+  const mods = decodeModifier(modifier)
+  const name = keycodeToName(codepoint)
+  return {
+    kind: 'key',
     name,
-    <span class="hljs-attr">ctrl</span>: mods.<span class="hljs-property">ctrl</span>,
-    <span class="hljs-attr">meta</span>: mods.<span class="hljs-property">meta</span>,
-    <span class="hljs-attr">shift</span>: mods.<span class="hljs-property">shift</span>,
-    <span class="hljs-attr">super</span>: mods.<span class="hljs-property">super</span>,
-    <span class="hljs-comment">// ...</span>
+    ctrl: mods.ctrl,
+    meta: mods.meta,
+    shift: mods.shift,
+    super: mods.super,
+    // ...
   }
 }
 </code></pre>
 <p>修饰符编码规则：<code>modifier = 1 + shift*1 + alt*2 + ctrl*4 + super*8</code></p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">decodeModifier</span>(<span class="hljs-params"><span class="hljs-attr">modifier</span>: <span class="hljs-built_in">number</span></span>): {
-  <span class="hljs-attr">shift</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">meta</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">ctrl</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">super</span>: <span class="hljs-built_in">boolean</span>
+<pre><code class="lang-typescript">function decodeModifier(modifier: number): {
+  shift: boolean; meta: boolean; ctrl: boolean; super: boolean
 } {
-  <span class="hljs-keyword">const</span> m = modifier - <span class="hljs-number">1</span>
-  <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">shift</span>: !!(m &amp; <span class="hljs-number">1</span>),
-    <span class="hljs-attr">meta</span>: !!(m &amp; <span class="hljs-number">2</span>),
-    <span class="hljs-attr">ctrl</span>: !!(m &amp; <span class="hljs-number">4</span>),
-    <span class="hljs-attr">super</span>: !!(m &amp; <span class="hljs-number">8</span>),
+  const m = modifier - 1
+  return {
+    shift: !!(m &amp; 1),
+    meta: !!(m &amp; 2),
+    ctrl: !!(m &amp; 4),
+    super: !!(m &amp; 8),
   }
 }
 </code></pre>
 <p>Kitty 协议的关键优势是能区分 <code>super</code>（Cmd/Win）和 <code>meta</code>（Alt/Option）。传统终端中 Alt 键用 ESC 前缀表示，和真正的 ESC 键不可区分。</p>
 <h3 id="424-xterm-modifyotherkeys">4.2.4 xterm modifyOtherKeys</h3>
 <p>另一种扩展协议，参数顺序与 CSI u 相反：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MODIFY_OTHER_KEYS_RE</span> = <span class="hljs-regexp">/^\x1b\[27;(\d+);(\d+)~/</span>
+<pre><code class="lang-typescript">const MODIFY_OTHER_KEYS_RE = /^\x1b\[27;(\d+);(\d+)~/
 
-<span class="hljs-keyword">if</span> ((match = <span class="hljs-variable constant_">MODIFY_OTHER_KEYS_RE</span>.<span class="hljs-title function_">exec</span>(s))) {
-  <span class="hljs-keyword">const</span> mods = <span class="hljs-title function_">decodeModifier</span>(<span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">1</span>]!, <span class="hljs-number">10</span>))  <span class="hljs-comment">// modifier 在前</span>
-  <span class="hljs-keyword">const</span> name = <span class="hljs-title function_">keycodeToName</span>(<span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">2</span>]!, <span class="hljs-number">10</span>))    <span class="hljs-comment">// keycode 在后</span>
-  <span class="hljs-comment">// ...</span>
+if ((match = MODIFY_OTHER_KEYS_RE.exec(s))) {
+  const mods = decodeModifier(parseInt(match[1]!, 10))  // modifier 在前
+  const name = keycodeToName(parseInt(match[2]!, 10))    // keycode 在后
+  // ...
 }
 </code></pre>
 <p>Ghostty、tmux 在 SSH 环境下可能使用此协议，因为 <code>TERM</code> 嗅探无法识别 Ghostty，不会推送 Kitty 模式。</p>
 <h3 id="425-鼠标事件解析">4.2.5 鼠标事件解析</h3>
 <p>SGR 鼠标格式：<code>CSI &lt; button ; col ; row M/m</code></p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">SGR_MOUSE_RE</span> = <span class="hljs-regexp">/^\x1b\[&lt;(\d+);(\d+);(\d+)([Mm])$/</span>
+<pre><code class="lang-typescript">const SGR_MOUSE_RE = /^\x1b\[&lt;(\d+);(\d+);(\d+)([Mm])$/
 
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">parseMouseEvent</span>(<span class="hljs-params"><span class="hljs-attr">s</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">ParsedMouse</span> | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">const</span> match = <span class="hljs-variable constant_">SGR_MOUSE_RE</span>.<span class="hljs-title function_">exec</span>(s)
-  <span class="hljs-keyword">if</span> (!match) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
-  <span class="hljs-keyword">const</span> button = <span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">1</span>]!, <span class="hljs-number">10</span>)
-  <span class="hljs-keyword">if</span> ((button &amp; <span class="hljs-number">0x40</span>) !== <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>  <span class="hljs-comment">// 滚轮事件走 ParsedKey</span>
-  <span class="hljs-keyword">return</span> {
-    <span class="hljs-attr">kind</span>: <span class="hljs-string">'mouse'</span>,
+function parseMouseEvent(s: string): ParsedMouse | null {
+  const match = SGR_MOUSE_RE.exec(s)
+  if (!match) return null
+  const button = parseInt(match[1]!, 10)
+  if ((button &amp; 0x40) !== 0) return null  // 滚轮事件走 ParsedKey
+  return {
+    kind: 'mouse',
     button,
-    <span class="hljs-attr">action</span>: match[<span class="hljs-number">4</span>] === <span class="hljs-string">'M'</span> ? <span class="hljs-string">'press'</span> : <span class="hljs-string">'release'</span>,
-    <span class="hljs-attr">col</span>: <span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">2</span>]!, <span class="hljs-number">10</span>),  <span class="hljs-comment">// 1-indexed</span>
-    <span class="hljs-attr">row</span>: <span class="hljs-built_in">parseInt</span>(match[<span class="hljs-number">3</span>]!, <span class="hljs-number">10</span>),  <span class="hljs-comment">// 1-indexed</span>
-    <span class="hljs-attr">sequence</span>: s,
+    action: match[4] === 'M' ? 'press' : 'release',
+    col: parseInt(match[2]!, 10),  // 1-indexed
+    row: parseInt(match[3]!, 10),  // 1-indexed
+    sequence: s,
   }
 }
 </code></pre>
 <p>按钮编码：bit 6 (<code>0x40</code>) = 滚轮，bit 5 (<code>0x20</code>) = 拖拽/移动。滚轮事件故意不走 <code>ParsedMouse</code>，而是作为 <code>ParsedKey</code>（<code>wheelup</code>/<code>wheeldown</code>）进入键绑定系统，这样滚轮可以绑定到滚动动作。</p>
 <p>X10 传统格式也被支持：<code>CSI M Cb Cx Cy</code>（3 个原始字节）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (s.<span class="hljs-property">length</span> === <span class="hljs-number">6</span> &amp;&amp; s.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\x1b[M'</span>)) {
-  <span class="hljs-keyword">const</span> button = s.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">3</span>) - <span class="hljs-number">32</span>
-  <span class="hljs-keyword">if</span> ((button &amp; <span class="hljs-number">0x43</span>) === <span class="hljs-number">0x40</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">createNavKey</span>(s, <span class="hljs-string">'wheelup'</span>, <span class="hljs-literal">false</span>)
-  <span class="hljs-keyword">if</span> ((button &amp; <span class="hljs-number">0x43</span>) === <span class="hljs-number">0x41</span>) <span class="hljs-keyword">return</span> <span class="hljs-title function_">createNavKey</span>(s, <span class="hljs-string">'wheeldown'</span>, <span class="hljs-literal">false</span>)
+<pre><code class="lang-typescript">if (s.length === 6 &amp;&amp; s.startsWith('\x1b[M')) {
+  const button = s.charCodeAt(3) - 32
+  if ((button &amp; 0x43) === 0x40) return createNavKey(s, 'wheelup', false)
+  if ((button &amp; 0x43) === 0x41) return createNavKey(s, 'wheeldown', false)
 }
 </code></pre>
 <h3 id="426-终端响应解析">4.2.6 终端响应解析</h3>
 <p>终端对查询的回复也在输入流中：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">parseTerminalResponse</span>(<span class="hljs-params"><span class="hljs-attr">s</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">TerminalResponse</span> | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">if</span> (s.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\x1b['</span>)) {
-    <span class="hljs-keyword">if</span> ((m = <span class="hljs-variable constant_">DECRPM_RE</span>.<span class="hljs-title function_">exec</span>(s)))     <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'decrpm'</span>, mode, status }
-    <span class="hljs-keyword">if</span> ((m = <span class="hljs-title class_">DA1</span>_RE.<span class="hljs-title function_">exec</span>(s)))        <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'da1'</span>, params }
-    <span class="hljs-keyword">if</span> ((m = <span class="hljs-title class_">DA2</span>_RE.<span class="hljs-title function_">exec</span>(s)))        <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'da2'</span>, params }
-    <span class="hljs-keyword">if</span> ((m = <span class="hljs-variable constant_">KITTY_FLAGS_RE</span>.<span class="hljs-title function_">exec</span>(s))) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'kittyKeyboard'</span>, flags }
-    <span class="hljs-keyword">if</span> ((m = <span class="hljs-variable constant_">CURSOR_POSITION_RE</span>.<span class="hljs-title function_">exec</span>(s))) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'cursorPosition'</span>, row, col }
+<pre><code class="lang-typescript">function parseTerminalResponse(s: string): TerminalResponse | null {
+  if (s.startsWith('\x1b[')) {
+    if ((m = DECRPM_RE.exec(s)))     return { type: 'decrpm', mode, status }
+    if ((m = DA1_RE.exec(s)))        return { type: 'da1', params }
+    if ((m = DA2_RE.exec(s)))        return { type: 'da2', params }
+    if ((m = KITTY_FLAGS_RE.exec(s))) return { type: 'kittyKeyboard', flags }
+    if ((m = CURSOR_POSITION_RE.exec(s))) return { type: 'cursorPosition', row, col }
   }
-  <span class="hljs-keyword">if</span> (s.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\x1b]'</span>))  <span class="hljs-comment">// OSC 响应 (如背景色查询)</span>
-  <span class="hljs-keyword">if</span> (s.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\x1bP'</span>))  <span class="hljs-comment">// DCS 响应 (如 XTVERSION)</span>
+  if (s.startsWith('\x1b]'))  // OSC 响应 (如背景色查询)
+  if (s.startsWith('\x1bP'))  // DCS 响应 (如 XTVERSION)
 }
 </code></pre>
 <p>响应类型覆盖：DECRPM（模式查询）、DA1/DA2（设备属性）、Kitty 键盘标志、光标位置、OSC 响应、XTVERSION。这些响应通过语法特征（<code>CSI ?</code> 前缀等）与键盘输入区分，不会误判为按键。</p>
 <h3 id="427-parsedinput-联合类型">4.2.7 ParsedInput 联合类型</h3>
 <p>解析器的输出是三种类型的联合：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">ParsedInput</span> = <span class="hljs-title class_">ParsedKey</span> | <span class="hljs-title class_">ParsedMouse</span> | <span class="hljs-title class_">ParsedResponse</span>
+<pre><code class="lang-typescript">export type ParsedInput = ParsedKey | ParsedMouse | ParsedResponse
 </code></pre>
 <p>每种类型用 <code>kind</code> 字段区分：<code>'key'</code>、<code>'mouse'</code>、<code>'response'</code>。下游代码通过 discriminated union 处理不同类型。</p>
 <h2 id="43-双事件路径">4.3 双事件路径</h2>
 <p>Claude Code 的事件系统存在两条并行路径：</p>
 <h3 id="431-eventemitter-旧路径">4.3.1 EventEmitter 旧路径</h3>
 <p>这是从原始 Ink 继承的路径。<code>input-event.ts</code> 定义了 <code>InputEvent</code> 类，它从 <code>ParsedKey</code> 构造出标准化的 <code>Key</code> 对象和 <code>input</code> 字符串：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InputEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Event</span> {
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">keypress</span>: <span class="hljs-title class_">ParsedKey</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>
+<pre><code class="lang-typescript">export class InputEvent extends Event {
+  readonly keypress: ParsedKey
+  readonly key: Key
+  readonly input: string
 
-  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">keypress</span>: <span class="hljs-title class_">ParsedKey</span></span>) {
-    <span class="hljs-variable language_">super</span>()
-    <span class="hljs-keyword">const</span> [key, input] = <span class="hljs-title function_">parseKey</span>(keypress)
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">keypress</span> = keypress
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span> = key
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">input</span> = input
+  constructor(keypress: ParsedKey) {
+    super()
+    const [key, input] = parseKey(keypress)
+    this.keypress = keypress
+    this.key = key
+    this.input = input
   }
 }
 </code></pre>
 <p><code>parseKey</code> 函数处理大量边界情况：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">parseKey</span>(<span class="hljs-params"><span class="hljs-attr">keypress</span>: <span class="hljs-title class_">ParsedKey</span></span>): [<span class="hljs-title class_">Key</span>, <span class="hljs-built_in">string</span>] {
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span> = {
-    <span class="hljs-attr">upArrow</span>: keypress.<span class="hljs-property">name</span> === <span class="hljs-string">'up'</span>,
-    <span class="hljs-attr">downArrow</span>: keypress.<span class="hljs-property">name</span> === <span class="hljs-string">'down'</span>,
-    <span class="hljs-attr">return</span>: keypress.<span class="hljs-property">name</span> === <span class="hljs-string">'return'</span>,
-    <span class="hljs-attr">escape</span>: keypress.<span class="hljs-property">name</span> === <span class="hljs-string">'escape'</span>,
-    <span class="hljs-attr">ctrl</span>: keypress.<span class="hljs-property">ctrl</span>,
-    <span class="hljs-attr">shift</span>: keypress.<span class="hljs-property">shift</span>,
-    <span class="hljs-attr">meta</span>: keypress.<span class="hljs-property">meta</span> || keypress.<span class="hljs-property">name</span> === <span class="hljs-string">'escape'</span> || keypress.<span class="hljs-property">option</span>,
-    <span class="hljs-attr">super</span>: keypress.<span class="hljs-property">super</span>,
-    <span class="hljs-comment">// ...</span>
+<pre><code class="lang-typescript">function parseKey(keypress: ParsedKey): [Key, string] {
+  const key: Key = {
+    upArrow: keypress.name === 'up',
+    downArrow: keypress.name === 'down',
+    return: keypress.name === 'return',
+    escape: keypress.name === 'escape',
+    ctrl: keypress.ctrl,
+    shift: keypress.shift,
+    meta: keypress.meta || keypress.name === 'escape' || keypress.option,
+    super: keypress.super,
+    // ...
   }
 
-  <span class="hljs-keyword">let</span> input = keypress.<span class="hljs-property">ctrl</span> ? keypress.<span class="hljs-property">name</span> : keypress.<span class="hljs-property">sequence</span>
-  <span class="hljs-comment">// ...</span>
+  let input = keypress.ctrl ? keypress.name : keypress.sequence
+  // ...
 }
 </code></pre>
 <p>注意 <code>meta</code> 字段的特殊处理：<code>keypress.name === 'escape'</code> 也被设为 <code>meta: true</code>。这是终端的历史遗留——ESC 键就是 Meta 前缀。后续的键绑定匹配必须特殊处理这一点。</p>
 <p><code>useInput</code> hook 通过 EventEmitter 监听这些事件：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title function_">useInput</span> = (<span class="hljs-params"><span class="hljs-attr">inputHandler</span>: <span class="hljs-title class_">Handler</span>, <span class="hljs-attr">options</span>: <span class="hljs-title class_">Options</span> = {}</span>) =&gt; {
-  <span class="hljs-keyword">const</span> { setRawMode, internal_eventEmitter } = <span class="hljs-title function_">useStdin</span>()
+<pre><code class="lang-typescript">const useInput = (inputHandler: Handler, options: Options = {}) =&gt; {
+  const { setRawMode, internal_eventEmitter } = useStdin()
 
-  <span class="hljs-title function_">useLayoutEffect</span>(<span class="hljs-function">() =&gt;</span> {
-    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">isActive</span> === <span class="hljs-literal">false</span>) <span class="hljs-keyword">return</span>
-    <span class="hljs-title function_">setRawMode</span>(<span class="hljs-literal">true</span>)
-    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> { <span class="hljs-title function_">setRawMode</span>(<span class="hljs-literal">false</span>) }
-  }, [options.<span class="hljs-property">isActive</span>, setRawMode])
+  useLayoutEffect(() =&gt; {
+    if (options.isActive === false) return
+    setRawMode(true)
+    return () =&gt; { setRawMode(false) }
+  }, [options.isActive, setRawMode])
 
-  <span class="hljs-keyword">const</span> handleData = <span class="hljs-title function_">useEventCallback</span>(<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">event</span>: <span class="hljs-title class_">InputEvent</span></span>) =&gt;</span> {
-    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">isActive</span> === <span class="hljs-literal">false</span>) <span class="hljs-keyword">return</span>
-    <span class="hljs-keyword">const</span> { input, key } = event
-    <span class="hljs-keyword">if</span> (!(input === <span class="hljs-string">'c'</span> &amp;&amp; key.<span class="hljs-property">ctrl</span>) || !internal_exitOnCtrlC) {
-      <span class="hljs-title function_">inputHandler</span>(input, key, event)
+  const handleData = useEventCallback((event: InputEvent) =&gt; {
+    if (options.isActive === false) return
+    const { input, key } = event
+    if (!(input === 'c' &amp;&amp; key.ctrl) || !internal_exitOnCtrlC) {
+      inputHandler(input, key, event)
     }
   })
 
-  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> {
-    internal_eventEmitter?.<span class="hljs-title function_">on</span>(<span class="hljs-string">'input'</span>, handleData)
-    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> { internal_eventEmitter?.<span class="hljs-title function_">off</span>(<span class="hljs-string">'input'</span>, handleData) }
+  useEffect(() =&gt; {
+    internal_eventEmitter?.on('input', handleData)
+    return () =&gt; { internal_eventEmitter?.off('input', handleData) }
   }, [internal_eventEmitter, handleData])
 }
 </code></pre>
 <p>旧路径的特点：扁平的监听器列表，没有事件冒泡，通过 <code>stopImmediatePropagation</code> 阻止同级监听器。</p>
 <h3 id="432-dom-新路径">4.3.2 DOM 新路径</h3>
 <p>新路径实现了完整的 W3C 事件模型。入口是 <code>KeyboardEvent</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">KeyboardEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">TerminalEvent</span> {
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">ctrl</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">shift</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">meta</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">superKey</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">fn</span>: <span class="hljs-built_in">boolean</span>
+<pre><code class="lang-typescript">export class KeyboardEvent extends TerminalEvent {
+  readonly key: string
+  readonly ctrl: boolean
+  readonly shift: boolean
+  readonly meta: boolean
+  readonly superKey: boolean
+  readonly fn: boolean
 
-  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">parsedKey</span>: <span class="hljs-title class_">ParsedKey</span></span>) {
-    <span class="hljs-variable language_">super</span>(<span class="hljs-string">'keydown'</span>, { <span class="hljs-attr">bubbles</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">cancelable</span>: <span class="hljs-literal">true</span> })
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">key</span> = <span class="hljs-title function_">keyFromParsed</span>(parsedKey)
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ctrl</span> = parsedKey.<span class="hljs-property">ctrl</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">shift</span> = parsedKey.<span class="hljs-property">shift</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">meta</span> = parsedKey.<span class="hljs-property">meta</span> || parsedKey.<span class="hljs-property">option</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">superKey</span> = parsedKey.<span class="hljs-property">super</span>
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">fn</span> = parsedKey.<span class="hljs-property">fn</span>
+  constructor(parsedKey: ParsedKey) {
+    super('keydown', { bubbles: true, cancelable: true })
+    this.key = keyFromParsed(parsedKey)
+    this.ctrl = parsedKey.ctrl
+    this.shift = parsedKey.shift
+    this.meta = parsedKey.meta || parsedKey.option
+    this.superKey = parsedKey.super
+    this.fn = parsedKey.fn
   }
 }
 </code></pre>
 <p><code>keyFromParsed</code> 遵循浏览器 <code>KeyboardEvent.key</code> 的语义：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">keyFromParsed</span>(<span class="hljs-params"><span class="hljs-attr">parsed</span>: <span class="hljs-title class_">ParsedKey</span></span>): <span class="hljs-built_in">string</span> {
-  <span class="hljs-keyword">if</span> (parsed.<span class="hljs-property">ctrl</span>) <span class="hljs-keyword">return</span> name              <span class="hljs-comment">// ctrl+c → 'c'</span>
-  <span class="hljs-keyword">if</span> (seq.<span class="hljs-property">length</span> === <span class="hljs-number">1</span>) {
-    <span class="hljs-keyword">const</span> code = seq.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">0</span>)
-    <span class="hljs-keyword">if</span> (code &gt;= <span class="hljs-number">0x20</span> &amp;&amp; code !== <span class="hljs-number">0x7f</span>) <span class="hljs-keyword">return</span> seq  <span class="hljs-comment">// 可打印字符 → 字面值</span>
+<pre><code class="lang-typescript">function keyFromParsed(parsed: ParsedKey): string {
+  if (parsed.ctrl) return name              // ctrl+c → 'c'
+  if (seq.length === 1) {
+    const code = seq.charCodeAt(0)
+    if (code &gt;= 0x20 &amp;&amp; code !== 0x7f) return seq  // 可打印字符 → 字面值
   }
-  <span class="hljs-keyword">return</span> name || seq                         <span class="hljs-comment">// 特殊键 → 名称 ('down', 'return')</span>
+  return name || seq                         // 特殊键 → 名称 ('down', 'return')
 }
 </code></pre>
 <p>DOM 路径通过 <code>Dispatcher.dispatchDiscrete</code> 进入捕获/冒泡循环，事件从焦点节点出发、沿 DOM 树传播。</p>
 <h2 id="44-w3c-事件模型在终端中的实现">4.4 W3C 事件模型在终端中的实现</h2>
 <h3 id="441-terminalevent-基类">4.4.1 TerminalEvent 基类</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TerminalEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Event</span> {
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">type</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">timeStamp</span>: <span class="hljs-built_in">number</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">bubbles</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">cancelable</span>: <span class="hljs-built_in">boolean</span>
+<pre><code class="lang-typescript">export class TerminalEvent extends Event {
+  readonly type: string
+  readonly timeStamp: number
+  readonly bubbles: boolean
+  readonly cancelable: boolean
 
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">_target</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">_currentTarget</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">_eventPhase</span>: <span class="hljs-title class_">EventPhase</span> = <span class="hljs-string">'none'</span>
-  <span class="hljs-keyword">private</span> _propagationStopped = <span class="hljs-literal">false</span>
-  <span class="hljs-keyword">private</span> _defaultPrevented = <span class="hljs-literal">false</span>
+  private _target: EventTarget | null = null
+  private _currentTarget: EventTarget | null = null
+  private _eventPhase: EventPhase = 'none'
+  private _propagationStopped = false
+  private _defaultPrevented = false
 
-  <span class="hljs-title function_">stopPropagation</span>(): <span class="hljs-built_in">void</span> {
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_propagationStopped</span> = <span class="hljs-literal">true</span>
+  stopPropagation(): void {
+    this._propagationStopped = true
   }
 
-  <span class="hljs-keyword">override</span> <span class="hljs-title function_">stopImmediatePropagation</span>(): <span class="hljs-built_in">void</span> {
-    <span class="hljs-variable language_">super</span>.<span class="hljs-title function_">stopImmediatePropagation</span>()
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">_propagationStopped</span> = <span class="hljs-literal">true</span>
+  override stopImmediatePropagation(): void {
+    super.stopImmediatePropagation()
+    this._propagationStopped = true
   }
 
-  <span class="hljs-title function_">preventDefault</span>(): <span class="hljs-built_in">void</span> {
-    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">cancelable</span>) {
-      <span class="hljs-variable language_">this</span>.<span class="hljs-property">_defaultPrevented</span> = <span class="hljs-literal">true</span>
+  preventDefault(): void {
+    if (this.cancelable) {
+      this._defaultPrevented = true
     }
   }
 
-  <span class="hljs-title function_">_prepareForTarget</span>(<span class="hljs-attr">_target</span>: <span class="hljs-title class_">EventTarget</span>): <span class="hljs-built_in">void</span> {}
+  _prepareForTarget(_target: EventTarget): void {}
 }
 </code></pre>
 <p>完全模拟浏览器 <code>Event</code> 的行为：<code>target</code>（初始派发目标）、<code>currentTarget</code>（当前处理器所在节点）、<code>eventPhase</code>（none/capturing/at_target/bubbling）、<code>stopPropagation</code>、<code>stopImmediatePropagation</code>、<code>preventDefault</code>。</p>
 <p><code>_prepareForTarget</code> 是一个钩子方法，子类可以在每个处理器执行前做节点级的准备工作。</p>
 <h3 id="442-事件处理器注册">4.4.2 事件处理器注册</h3>
 <p>处理器通过 React props 声明，遵循 React 命名约定：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">EventHandlerProps</span> = {
-  <span class="hljs-attr">onKeyDown</span>?: <span class="hljs-title class_">KeyboardEventHandler</span>
-  <span class="hljs-attr">onKeyDownCapture</span>?: <span class="hljs-title class_">KeyboardEventHandler</span>
-  <span class="hljs-attr">onFocus</span>?: <span class="hljs-title class_">FocusEventHandler</span>
-  <span class="hljs-attr">onFocusCapture</span>?: <span class="hljs-title class_">FocusEventHandler</span>
-  <span class="hljs-attr">onBlur</span>?: <span class="hljs-title class_">FocusEventHandler</span>
-  <span class="hljs-attr">onBlurCapture</span>?: <span class="hljs-title class_">FocusEventHandler</span>
-  <span class="hljs-attr">onPaste</span>?: <span class="hljs-title class_">PasteEventHandler</span>
-  <span class="hljs-attr">onPasteCapture</span>?: <span class="hljs-title class_">PasteEventHandler</span>
-  <span class="hljs-attr">onResize</span>?: <span class="hljs-title class_">ResizeEventHandler</span>
-  <span class="hljs-attr">onClick</span>?: <span class="hljs-title class_">ClickEventHandler</span>
-  <span class="hljs-attr">onMouseEnter</span>?: <span class="hljs-title class_">HoverEventHandler</span>
-  <span class="hljs-attr">onMouseLeave</span>?: <span class="hljs-title class_">HoverEventHandler</span>
+<pre><code class="lang-typescript">export type EventHandlerProps = {
+  onKeyDown?: KeyboardEventHandler
+  onKeyDownCapture?: KeyboardEventHandler
+  onFocus?: FocusEventHandler
+  onFocusCapture?: FocusEventHandler
+  onBlur?: FocusEventHandler
+  onBlurCapture?: FocusEventHandler
+  onPaste?: PasteEventHandler
+  onPasteCapture?: PasteEventHandler
+  onResize?: ResizeEventHandler
+  onClick?: ClickEventHandler
+  onMouseEnter?: HoverEventHandler
+  onMouseLeave?: HoverEventHandler
 }
 </code></pre>
 <p><code>onEventName</code> 用于冒泡阶段，<code>onEventNameCapture</code> 用于捕获阶段。</p>
 <p>反向查找表实现 O(1) 的处理器定位：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">HANDLER_FOR_EVENT</span>: <span class="hljs-title class_">Record</span>&lt;
-  <span class="hljs-built_in">string</span>,
-  { <span class="hljs-attr">bubble</span>?: keyof <span class="hljs-title class_">EventHandlerProps</span>; <span class="hljs-attr">capture</span>?: keyof <span class="hljs-title class_">EventHandlerProps</span> }
+<pre><code class="lang-typescript">export const HANDLER_FOR_EVENT: Record&lt;
+  string,
+  { bubble?: keyof EventHandlerProps; capture?: keyof EventHandlerProps }
 &gt; = {
-  <span class="hljs-attr">keydown</span>: { <span class="hljs-attr">bubble</span>: <span class="hljs-string">'onKeyDown'</span>, <span class="hljs-attr">capture</span>: <span class="hljs-string">'onKeyDownCapture'</span> },
-  <span class="hljs-attr">focus</span>: { <span class="hljs-attr">bubble</span>: <span class="hljs-string">'onFocus'</span>, <span class="hljs-attr">capture</span>: <span class="hljs-string">'onFocusCapture'</span> },
-  <span class="hljs-attr">blur</span>: { <span class="hljs-attr">bubble</span>: <span class="hljs-string">'onBlur'</span>, <span class="hljs-attr">capture</span>: <span class="hljs-string">'onBlurCapture'</span> },
-  <span class="hljs-attr">click</span>: { <span class="hljs-attr">bubble</span>: <span class="hljs-string">'onClick'</span> },
-  <span class="hljs-comment">// ...</span>
+  keydown: { bubble: 'onKeyDown', capture: 'onKeyDownCapture' },
+  focus: { bubble: 'onFocus', capture: 'onFocusCapture' },
+  blur: { bubble: 'onBlur', capture: 'onBlurCapture' },
+  click: { bubble: 'onClick' },
+  // ...
 }
 </code></pre>
 <p>处理器在 reconciler 中被存储到 <code>_eventHandlers</code>（而非 <code>attributes</code>），这样 handler 身份变化不会触发 <code>markDirty</code>，避免无谓的 Yoga 重新布局。</p>
 <h3 id="443-dispatcher----捕获冒泡分发">4.4.3 Dispatcher -- 捕获/冒泡分发</h3>
 <p><code>Dispatcher</code> 是事件系统的核心，源码位于 <code>src/ink/events/dispatcher.ts</code>。</p>
 <p><strong>监听器收集</strong>（react-dom 的双阶段累积模式）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">collectListeners</span>(<span class="hljs-params">
-  <span class="hljs-attr">target</span>: <span class="hljs-title class_">EventTarget</span>,
-  <span class="hljs-attr">event</span>: <span class="hljs-title class_">TerminalEvent</span>,
-</span>): <span class="hljs-title class_">DispatchListener</span>[] {
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">listeners</span>: <span class="hljs-title class_">DispatchListener</span>[] = []
+<pre><code class="lang-typescript">function collectListeners(
+  target: EventTarget,
+  event: TerminalEvent,
+): DispatchListener[] {
+  const listeners: DispatchListener[] = []
 
-  <span class="hljs-keyword">let</span> <span class="hljs-attr">node</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">undefined</span> = target
-  <span class="hljs-keyword">while</span> (node) {
-    <span class="hljs-keyword">const</span> isTarget = node === target
+  let node: EventTarget | undefined = target
+  while (node) {
+    const isTarget = node === target
 
-    <span class="hljs-keyword">const</span> captureHandler = <span class="hljs-title function_">getHandler</span>(node, event.<span class="hljs-property">type</span>, <span class="hljs-literal">true</span>)
-    <span class="hljs-keyword">const</span> bubbleHandler = <span class="hljs-title function_">getHandler</span>(node, event.<span class="hljs-property">type</span>, <span class="hljs-literal">false</span>)
+    const captureHandler = getHandler(node, event.type, true)
+    const bubbleHandler = getHandler(node, event.type, false)
 
-    <span class="hljs-keyword">if</span> (captureHandler) {
-      listeners.<span class="hljs-title function_">unshift</span>({
+    if (captureHandler) {
+      listeners.unshift({
         node,
-        <span class="hljs-attr">handler</span>: captureHandler,
-        <span class="hljs-attr">phase</span>: isTarget ? <span class="hljs-string">'at_target'</span> : <span class="hljs-string">'capturing'</span>,
+        handler: captureHandler,
+        phase: isTarget ? 'at_target' : 'capturing',
       })
     }
 
-    <span class="hljs-keyword">if</span> (bubbleHandler &amp;&amp; (event.<span class="hljs-property">bubbles</span> || isTarget)) {
-      listeners.<span class="hljs-title function_">push</span>({
+    if (bubbleHandler &amp;&amp; (event.bubbles || isTarget)) {
+      listeners.push({
         node,
-        <span class="hljs-attr">handler</span>: bubbleHandler,
-        <span class="hljs-attr">phase</span>: isTarget ? <span class="hljs-string">'at_target'</span> : <span class="hljs-string">'bubbling'</span>,
+        handler: bubbleHandler,
+        phase: isTarget ? 'at_target' : 'bubbling',
       })
     }
 
-    node = node.<span class="hljs-property">parentNode</span>
+    node = node.parentNode
   }
 
-  <span class="hljs-keyword">return</span> listeners
+  return listeners
 }
 </code></pre>
 <p>算法细节：</p>
@@ -994,24 +835,24 @@
 <li>最终顺序：<code>[root-cap, ..., parent-cap, target-cap, target-bub, parent-bub, ..., root-bub]</code></li>
 </ul>
 <p><strong>分发执行</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">processDispatchQueue</span>(<span class="hljs-params">
-  <span class="hljs-attr">listeners</span>: <span class="hljs-title class_">DispatchListener</span>[],
-  <span class="hljs-attr">event</span>: <span class="hljs-title class_">TerminalEvent</span>,
-</span>): <span class="hljs-built_in">void</span> {
-  <span class="hljs-keyword">let</span> <span class="hljs-attr">previousNode</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">undefined</span>
+<pre><code class="lang-typescript">function processDispatchQueue(
+  listeners: DispatchListener[],
+  event: TerminalEvent,
+): void {
+  let previousNode: EventTarget | undefined
 
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> { node, handler, phase } <span class="hljs-keyword">of</span> listeners) {
-    <span class="hljs-keyword">if</span> (event.<span class="hljs-title function_">_isImmediatePropagationStopped</span>()) <span class="hljs-keyword">break</span>
-    <span class="hljs-keyword">if</span> (event.<span class="hljs-title function_">_isPropagationStopped</span>() &amp;&amp; node !== previousNode) <span class="hljs-keyword">break</span>
+  for (const { node, handler, phase } of listeners) {
+    if (event._isImmediatePropagationStopped()) break
+    if (event._isPropagationStopped() &amp;&amp; node !== previousNode) break
 
-    event.<span class="hljs-title function_">_setEventPhase</span>(phase)
-    event.<span class="hljs-title function_">_setCurrentTarget</span>(node)
-    event.<span class="hljs-title function_">_prepareForTarget</span>(node)
+    event._setEventPhase(phase)
+    event._setCurrentTarget(node)
+    event._prepareForTarget(node)
 
-    <span class="hljs-keyword">try</span> {
-      <span class="hljs-title function_">handler</span>(event)
-    } <span class="hljs-keyword">catch</span> (error) {
-      <span class="hljs-title function_">logError</span>(error)
+    try {
+      handler(event)
+    } catch (error) {
+      logError(error)
     }
 
     previousNode = node
@@ -1024,21 +865,21 @@
 <li><code>stopImmediatePropagation()</code>：立即停止（同一节点上的后续处理器也不执行）。</li>
 </ul>
 <h3 id="444-事件优先级">4.4.4 事件优先级</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getEventPriority</span>(<span class="hljs-params"><span class="hljs-attr">eventType</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">number</span> {
-  <span class="hljs-keyword">switch</span> (eventType) {
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'keydown'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'keyup'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'click'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'focus'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'blur'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'paste'</span>:
-      <span class="hljs-keyword">return</span> <span class="hljs-title class_">DiscreteEventPriority</span>    <span class="hljs-comment">// 同步优先级</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'resize'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'scroll'</span>:
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'mousemove'</span>:
-      <span class="hljs-keyword">return</span> <span class="hljs-title class_">ContinuousEventPriority</span>  <span class="hljs-comment">// 连续优先级</span>
-    <span class="hljs-attr">default</span>:
-      <span class="hljs-keyword">return</span> <span class="hljs-title class_">DefaultEventPriority</span>
+<pre><code class="lang-typescript">function getEventPriority(eventType: string): number {
+  switch (eventType) {
+    case 'keydown':
+    case 'keyup':
+    case 'click':
+    case 'focus':
+    case 'blur':
+    case 'paste':
+      return DiscreteEventPriority    // 同步优先级
+    case 'resize':
+    case 'scroll':
+    case 'mousemove':
+      return ContinuousEventPriority  // 连续优先级
+    default:
+      return DefaultEventPriority
   }
 }
 </code></pre>
@@ -1047,117 +888,117 @@
 <li><strong>Discrete</strong>：用户直接交互（按键、点击），需要同步处理。通过 <code>dispatchDiscrete</code> 进入 reconciler 的 <code>discreteUpdates</code> 上下文。</li>
 <li><strong>Continuous</strong>：高频事件（滚动、鼠标移动），可以合并。通过 <code>dispatchContinuous</code> 设置连续优先级。</li>
 </ul>
-<pre><code class="lang-typescript"><span class="hljs-title function_">dispatchDiscrete</span>(<span class="hljs-attr">target</span>: <span class="hljs-title class_">EventTarget</span>, <span class="hljs-attr">event</span>: <span class="hljs-title class_">TerminalEvent</span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">discreteUpdates</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatch</span>(target, event)
+<pre><code class="lang-typescript">dispatchDiscrete(target: EventTarget, event: TerminalEvent): boolean {
+  if (!this.discreteUpdates) {
+    return this.dispatch(target, event)
   }
-  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">discreteUpdates</span>(
-    <span class="hljs-function">(<span class="hljs-params">t, e</span>) =&gt;</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatch</span>(t, e),
-    target, event, <span class="hljs-literal">undefined</span>, <span class="hljs-literal">undefined</span>,
+  return this.discreteUpdates(
+    (t, e) =&gt; this.dispatch(t, e),
+    target, event, undefined, undefined,
   )
 }
 
-<span class="hljs-title function_">dispatchContinuous</span>(<span class="hljs-attr">target</span>: <span class="hljs-title class_">EventTarget</span>, <span class="hljs-attr">event</span>: <span class="hljs-title class_">TerminalEvent</span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">const</span> previousPriority = <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUpdatePriority</span>
-  <span class="hljs-keyword">try</span> {
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUpdatePriority</span> = <span class="hljs-title class_">ContinuousEventPriority</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatch</span>(target, event)
-  } <span class="hljs-keyword">finally</span> {
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">currentUpdatePriority</span> = previousPriority
+dispatchContinuous(target: EventTarget, event: TerminalEvent): boolean {
+  const previousPriority = this.currentUpdatePriority
+  try {
+    this.currentUpdatePriority = ContinuousEventPriority
+    return this.dispatch(target, event)
+  } finally {
+    this.currentUpdatePriority = previousPriority
   }
 }
 </code></pre>
 <h2 id="45-键绑定系统分层架构">4.5 键绑定系统分层架构</h2>
 <h3 id="451-配置解析-parserts">4.5.1 配置解析 (parser.ts)</h3>
 <p>键绑定从声明式配置（JSON 或代码常量）解析为结构化对象：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseKeystroke</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">ParsedKeystroke</span> {
-  <span class="hljs-keyword">const</span> parts = input.<span class="hljs-title function_">split</span>(<span class="hljs-string">'+'</span>)
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">keystroke</span>: <span class="hljs-title class_">ParsedKeystroke</span> = {
-    <span class="hljs-attr">key</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">ctrl</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">alt</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">shift</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">meta</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">super</span>: <span class="hljs-literal">false</span>,
+<pre><code class="lang-typescript">export function parseKeystroke(input: string): ParsedKeystroke {
+  const parts = input.split('+')
+  const keystroke: ParsedKeystroke = {
+    key: '', ctrl: false, alt: false, shift: false, meta: false, super: false,
   }
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> part <span class="hljs-keyword">of</span> parts) {
-    <span class="hljs-keyword">const</span> lower = part.<span class="hljs-title function_">toLowerCase</span>()
-    <span class="hljs-keyword">switch</span> (lower) {
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'ctrl'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'control'</span>:
-        keystroke.<span class="hljs-property">ctrl</span> = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'alt'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'opt'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'option'</span>:
-        keystroke.<span class="hljs-property">alt</span> = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'shift'</span>:
-        keystroke.<span class="hljs-property">shift</span> = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'meta'</span>:
-        keystroke.<span class="hljs-property">meta</span> = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'cmd'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'command'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'super'</span>: <span class="hljs-keyword">case</span> <span class="hljs-string">'win'</span>:
-        keystroke.<span class="hljs-property">super</span> = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'esc'</span>:
-        keystroke.<span class="hljs-property">key</span> = <span class="hljs-string">'escape'</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'return'</span>:
-        keystroke.<span class="hljs-property">key</span> = <span class="hljs-string">'enter'</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-keyword">case</span> <span class="hljs-string">'space'</span>:
-        keystroke.<span class="hljs-property">key</span> = <span class="hljs-string">' '</span>; <span class="hljs-keyword">break</span>
-      <span class="hljs-attr">default</span>:
-        keystroke.<span class="hljs-property">key</span> = lower; <span class="hljs-keyword">break</span>
+  for (const part of parts) {
+    const lower = part.toLowerCase()
+    switch (lower) {
+      case 'ctrl': case 'control':
+        keystroke.ctrl = true; break
+      case 'alt': case 'opt': case 'option':
+        keystroke.alt = true; break
+      case 'shift':
+        keystroke.shift = true; break
+      case 'meta':
+        keystroke.meta = true; break
+      case 'cmd': case 'command': case 'super': case 'win':
+        keystroke.super = true; break
+      case 'esc':
+        keystroke.key = 'escape'; break
+      case 'return':
+        keystroke.key = 'enter'; break
+      case 'space':
+        keystroke.key = ' '; break
+      default:
+        keystroke.key = lower; break
     }
   }
-  <span class="hljs-keyword">return</span> keystroke
+  return keystroke
 }
 </code></pre>
 <p>支持丰富的修饰键别名：<code>ctrl</code>/<code>control</code>、<code>alt</code>/<code>opt</code>/<code>option</code>、<code>cmd</code>/<code>command</code>/<code>super</code>/<code>win</code>。方向键也有 Unicode 别名（<code>←</code> → <code>left</code>）。</p>
 <p>Chord（和弦序列）通过空格分割：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseChord</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">Chord</span> {
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">' '</span>) <span class="hljs-keyword">return</span> [<span class="hljs-title function_">parseKeystroke</span>(<span class="hljs-string">'space'</span>)]
-  <span class="hljs-keyword">return</span> input.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">split</span>(<span class="hljs-regexp">/\s+/</span>).<span class="hljs-title function_">map</span>(parseKeystroke)
+<pre><code class="lang-typescript">export function parseChord(input: string): Chord {
+  if (input === ' ') return [parseKeystroke('space')]
+  return input.trim().split(/\s+/).map(parseKeystroke)
 }
 </code></pre>
 <p>特殊处理：单个空格字符是 <code>space</code> 键绑定，不是 chord 分隔符。</p>
 <p>配置块到扁平绑定列表的转换：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseBindings</span>(<span class="hljs-params"><span class="hljs-attr">blocks</span>: <span class="hljs-title class_">KeybindingBlock</span>[]</span>): <span class="hljs-title class_">ParsedBinding</span>[] {
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">bindings</span>: <span class="hljs-title class_">ParsedBinding</span>[] = []
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> block <span class="hljs-keyword">of</span> blocks) {
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, action] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(block.<span class="hljs-property">bindings</span>)) {
-      bindings.<span class="hljs-title function_">push</span>({
-        <span class="hljs-attr">chord</span>: <span class="hljs-title function_">parseChord</span>(key),
+<pre><code class="lang-typescript">export function parseBindings(blocks: KeybindingBlock[]): ParsedBinding[] {
+  const bindings: ParsedBinding[] = []
+  for (const block of blocks) {
+    for (const [key, action] of Object.entries(block.bindings)) {
+      bindings.push({
+        chord: parseChord(key),
         action,
-        <span class="hljs-attr">context</span>: block.<span class="hljs-property">context</span>,
+        context: block.context,
       })
     }
   }
-  <span class="hljs-keyword">return</span> bindings
+  return bindings
 }
 </code></pre>
 <h3 id="452-默认键绑定配置-defaultbindingsts">4.5.2 默认键绑定配置 (defaultBindings.ts)</h3>
 <p>配置以 <code>KeybindingBlock[]</code> 形式组织，每个 block 对应一个上下文（context）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">DEFAULT_BINDINGS</span>: <span class="hljs-title class_">KeybindingBlock</span>[] = [
+<pre><code class="lang-typescript">export const DEFAULT_BINDINGS: KeybindingBlock[] = [
   {
-    <span class="hljs-attr">context</span>: <span class="hljs-string">'Global'</span>,
-    <span class="hljs-attr">bindings</span>: {
-      <span class="hljs-string">'ctrl+c'</span>: <span class="hljs-string">'app:interrupt'</span>,
-      <span class="hljs-string">'ctrl+d'</span>: <span class="hljs-string">'app:exit'</span>,
-      <span class="hljs-string">'ctrl+l'</span>: <span class="hljs-string">'app:redraw'</span>,
-      <span class="hljs-string">'ctrl+t'</span>: <span class="hljs-string">'app:toggleTodos'</span>,
-      <span class="hljs-string">'ctrl+r'</span>: <span class="hljs-string">'history:search'</span>,
+    context: 'Global',
+    bindings: {
+      'ctrl+c': 'app:interrupt',
+      'ctrl+d': 'app:exit',
+      'ctrl+l': 'app:redraw',
+      'ctrl+t': 'app:toggleTodos',
+      'ctrl+r': 'history:search',
     },
   },
   {
-    <span class="hljs-attr">context</span>: <span class="hljs-string">'Chat'</span>,
-    <span class="hljs-attr">bindings</span>: {
-      <span class="hljs-attr">escape</span>: <span class="hljs-string">'chat:cancel'</span>,
-      <span class="hljs-string">'ctrl+x ctrl+k'</span>: <span class="hljs-string">'chat:killAgents'</span>,  <span class="hljs-comment">// chord 绑定</span>
-      <span class="hljs-attr">enter</span>: <span class="hljs-string">'chat:submit'</span>,
-      <span class="hljs-attr">up</span>: <span class="hljs-string">'history:previous'</span>,
-      <span class="hljs-string">'ctrl+_'</span>: <span class="hljs-string">'chat:undo'</span>,
-      <span class="hljs-string">'ctrl+shift+-'</span>: <span class="hljs-string">'chat:undo'</span>,
+    context: 'Chat',
+    bindings: {
+      escape: 'chat:cancel',
+      'ctrl+x ctrl+k': 'chat:killAgents',  // chord 绑定
+      enter: 'chat:submit',
+      up: 'history:previous',
+      'ctrl+_': 'chat:undo',
+      'ctrl+shift+-': 'chat:undo',
     },
   },
   {
-    <span class="hljs-attr">context</span>: <span class="hljs-string">'Scroll'</span>,
-    <span class="hljs-attr">bindings</span>: {
-      <span class="hljs-attr">pageup</span>: <span class="hljs-string">'scroll:pageUp'</span>,
-      <span class="hljs-attr">wheelup</span>: <span class="hljs-string">'scroll:lineUp'</span>,
-      <span class="hljs-string">'ctrl+shift+c'</span>: <span class="hljs-string">'selection:copy'</span>,
-      <span class="hljs-string">'cmd+c'</span>: <span class="hljs-string">'selection:copy'</span>,
+    context: 'Scroll',
+    bindings: {
+      pageup: 'scroll:pageUp',
+      wheelup: 'scroll:lineUp',
+      'ctrl+shift+c': 'selection:copy',
+      'cmd+c': 'selection:copy',
     },
   },
-  <span class="hljs-comment">// ... Autocomplete, Confirmation, Tabs, Transcript 等</span>
+  // ... Autocomplete, Confirmation, Tabs, Transcript 等
 ]
 </code></pre>
 <p>设计要点：</p>
@@ -1168,150 +1009,150 @@
 </ul>
 <h3 id="453-按键匹配-matchts">4.5.3 按键匹配 (match.ts)</h3>
 <p>匹配核心是将 Ink 的 <code>Key</code> 对象与 <code>ParsedKeystroke</code> 进行比较：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getKeyName</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span></span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">escape</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'escape'</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">return</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'enter'</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">tab</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'tab'</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">backspace</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'backspace'</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">upArrow</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'up'</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">downArrow</span>) <span class="hljs-keyword">return</span> <span class="hljs-string">'down'</span>
-  <span class="hljs-keyword">if</span> (input.<span class="hljs-property">length</span> === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> input.<span class="hljs-title function_">toLowerCase</span>()
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">export function getKeyName(input: string, key: Key): string | null {
+  if (key.escape) return 'escape'
+  if (key.return) return 'enter'
+  if (key.tab) return 'tab'
+  if (key.backspace) return 'backspace'
+  if (key.upArrow) return 'up'
+  if (key.downArrow) return 'down'
+  if (input.length === 1) return input.toLowerCase()
+  return null
 }
 </code></pre>
 <p>修饰符匹配中的 alt/meta 合并处理：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">modifiersMatch</span>(<span class="hljs-params"><span class="hljs-attr">inkMods</span>: <span class="hljs-title class_">InkModifiers</span>, <span class="hljs-attr">target</span>: <span class="hljs-title class_">ParsedKeystroke</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">if</span> (inkMods.<span class="hljs-property">ctrl</span> !== target.<span class="hljs-property">ctrl</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
-  <span class="hljs-keyword">if</span> (inkMods.<span class="hljs-property">shift</span> !== target.<span class="hljs-property">shift</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+<pre><code class="lang-typescript">function modifiersMatch(inkMods: InkModifiers, target: ParsedKeystroke): boolean {
+  if (inkMods.ctrl !== target.ctrl) return false
+  if (inkMods.shift !== target.shift) return false
 
-  <span class="hljs-comment">// Alt 和 meta 在终端中不可区分，合并处理</span>
-  <span class="hljs-keyword">const</span> targetNeedsMeta = target.<span class="hljs-property">alt</span> || target.<span class="hljs-property">meta</span>
-  <span class="hljs-keyword">if</span> (inkMods.<span class="hljs-property">meta</span> !== targetNeedsMeta) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // Alt 和 meta 在终端中不可区分，合并处理
+  const targetNeedsMeta = target.alt || target.meta
+  if (inkMods.meta !== targetNeedsMeta) return false
 
-  <span class="hljs-comment">// Super (cmd/win) 是独立修饰键</span>
-  <span class="hljs-keyword">if</span> (inkMods.<span class="hljs-property">super</span> !== target.<span class="hljs-property">super</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  // Super (cmd/win) 是独立修饰键
+  if (inkMods.super !== target.super) return false
 
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+  return true
 }
 </code></pre>
 <p>ESC 键的特殊处理：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">matchesKeystroke</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span>, <span class="hljs-attr">target</span>: <span class="hljs-title class_">ParsedKeystroke</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">const</span> keyName = <span class="hljs-title function_">getKeyName</span>(input, key)
-  <span class="hljs-keyword">if</span> (keyName !== target.<span class="hljs-property">key</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+<pre><code class="lang-typescript">export function matchesKeystroke(input: string, key: Key, target: ParsedKeystroke): boolean {
+  const keyName = getKeyName(input, key)
+  if (keyName !== target.key) return false
 
-  <span class="hljs-keyword">const</span> inkMods = <span class="hljs-title function_">getInkModifiers</span>(key)
+  const inkMods = getInkModifiers(key)
 
-  <span class="hljs-comment">// Ink 在按下 ESC 时设置 key.meta=true，这是终端历史遗留</span>
-  <span class="hljs-comment">// 匹配 ESC 键时忽略 meta 修饰符</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">escape</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">modifiersMatch</span>({ ...inkMods, <span class="hljs-attr">meta</span>: <span class="hljs-literal">false</span> }, target)
+  // Ink 在按下 ESC 时设置 key.meta=true，这是终端历史遗留
+  // 匹配 ESC 键时忽略 meta 修饰符
+  if (key.escape) {
+    return modifiersMatch({ ...inkMods, meta: false }, target)
   }
 
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">modifiersMatch</span>(inkMods, target)
+  return modifiersMatch(inkMods, target)
 }
 </code></pre>
 <h3 id="454-键绑定解析-resolverts">4.5.4 键绑定解析 (resolver.ts)</h3>
 <p>单键解析（Phase 1）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolveKey</span>(<span class="hljs-params">
-  <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span>,
-  <span class="hljs-attr">activeContexts</span>: <span class="hljs-title class_">KeybindingContextName</span>[],
-  <span class="hljs-attr">bindings</span>: <span class="hljs-title class_">ParsedBinding</span>[],
-</span>): <span class="hljs-title class_">ResolveResult</span> {
-  <span class="hljs-keyword">let</span> <span class="hljs-attr">match</span>: <span class="hljs-title class_">ParsedBinding</span> | <span class="hljs-literal">undefined</span>
-  <span class="hljs-keyword">const</span> ctxSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(activeContexts)
+<pre><code class="lang-typescript">export function resolveKey(
+  input: string,
+  key: Key,
+  activeContexts: KeybindingContextName[],
+  bindings: ParsedBinding[],
+): ResolveResult {
+  let match: ParsedBinding | undefined
+  const ctxSet = new Set(activeContexts)
 
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> binding <span class="hljs-keyword">of</span> bindings) {
-    <span class="hljs-keyword">if</span> (binding.<span class="hljs-property">chord</span>.<span class="hljs-property">length</span> !== <span class="hljs-number">1</span>) <span class="hljs-keyword">continue</span>  <span class="hljs-comment">// 只匹配单键绑定</span>
-    <span class="hljs-keyword">if</span> (!ctxSet.<span class="hljs-title function_">has</span>(binding.<span class="hljs-property">context</span>)) <span class="hljs-keyword">continue</span>
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">matchesBinding</span>(input, key, binding)) {
-      match = binding  <span class="hljs-comment">// 后定义的覆盖先定义的</span>
+  for (const binding of bindings) {
+    if (binding.chord.length !== 1) continue  // 只匹配单键绑定
+    if (!ctxSet.has(binding.context)) continue
+    if (matchesBinding(input, key, binding)) {
+      match = binding  // 后定义的覆盖先定义的
     }
   }
 
-  <span class="hljs-keyword">if</span> (!match) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'none'</span> }
-  <span class="hljs-keyword">if</span> (match.<span class="hljs-property">action</span> === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'unbound'</span> }
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'match'</span>, <span class="hljs-attr">action</span>: match.<span class="hljs-property">action</span> }
+  if (!match) return { type: 'none' }
+  if (match.action === null) return { type: 'unbound' }
+  return { type: 'match', action: match.action }
 }
 </code></pre>
 <p>"最后一个匹配胜出"规则使得用户绑定（加载在默认绑定之后）自动覆盖默认值。<code>action === null</code> 表示显式解绑。</p>
 <h2 id="46-chord（和弦序列）实现">4.6 Chord（和弦序列）实现</h2>
 <p>Chord 是多键序列绑定，如 <code>ctrl+x ctrl+k</code>。实现在 <code>resolveKeyWithChordState</code> 中：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolveKeyWithChordState</span>(<span class="hljs-params">
-  <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">key</span>: <span class="hljs-title class_">Key</span>,
-  <span class="hljs-attr">activeContexts</span>: <span class="hljs-title class_">KeybindingContextName</span>[],
-  <span class="hljs-attr">bindings</span>: <span class="hljs-title class_">ParsedBinding</span>[],
-  <span class="hljs-attr">pending</span>: <span class="hljs-title class_">ParsedKeystroke</span>[] | <span class="hljs-literal">null</span>,
-</span>): <span class="hljs-title class_">ChordResolveResult</span> {
-  <span class="hljs-comment">// ESC 取消正在进行的 chord</span>
-  <span class="hljs-keyword">if</span> (key.<span class="hljs-property">escape</span> &amp;&amp; pending !== <span class="hljs-literal">null</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_cancelled'</span> }
+<pre><code class="lang-typescript">export function resolveKeyWithChordState(
+  input: string,
+  key: Key,
+  activeContexts: KeybindingContextName[],
+  bindings: ParsedBinding[],
+  pending: ParsedKeystroke[] | null,
+): ChordResolveResult {
+  // ESC 取消正在进行的 chord
+  if (key.escape &amp;&amp; pending !== null) {
+    return { type: 'chord_cancelled' }
   }
 
-  <span class="hljs-keyword">const</span> currentKeystroke = <span class="hljs-title function_">buildKeystroke</span>(input, key)
-  <span class="hljs-keyword">if</span> (!currentKeystroke) {
-    <span class="hljs-keyword">if</span> (pending !== <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_cancelled'</span> }
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'none'</span> }
+  const currentKeystroke = buildKeystroke(input, key)
+  if (!currentKeystroke) {
+    if (pending !== null) return { type: 'chord_cancelled' }
+    return { type: 'none' }
   }
 
-  <span class="hljs-keyword">const</span> testChord = pending ? [...pending, currentKeystroke] : [currentKeystroke]
+  const testChord = pending ? [...pending, currentKeystroke] : [currentKeystroke]
 
-  <span class="hljs-keyword">const</span> ctxSet = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(activeContexts)
-  <span class="hljs-keyword">const</span> contextBindings = bindings.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">b</span> =&gt;</span> ctxSet.<span class="hljs-title function_">has</span>(b.<span class="hljs-property">context</span>))
+  const ctxSet = new Set(activeContexts)
+  const contextBindings = bindings.filter(b =&gt; ctxSet.has(b.context))
 
-  <span class="hljs-comment">// 检查是否有更长的 chord 以当前序列为前缀</span>
-  <span class="hljs-keyword">const</span> chordWinners = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>&gt;()
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> binding <span class="hljs-keyword">of</span> contextBindings) {
-    <span class="hljs-keyword">if</span> (binding.<span class="hljs-property">chord</span>.<span class="hljs-property">length</span> &gt; testChord.<span class="hljs-property">length</span> &amp;&amp;
-        <span class="hljs-title function_">chordPrefixMatches</span>(testChord, binding)) {
-      chordWinners.<span class="hljs-title function_">set</span>(<span class="hljs-title function_">chordToString</span>(binding.<span class="hljs-property">chord</span>), binding.<span class="hljs-property">action</span>)
+  // 检查是否有更长的 chord 以当前序列为前缀
+  const chordWinners = new Map<string, string="" |="" null="">()
+  for (const binding of contextBindings) {
+    if (binding.chord.length &gt; testChord.length &amp;&amp;
+        chordPrefixMatches(testChord, binding)) {
+      chordWinners.set(chordToString(binding.chord), binding.action)
     }
   }
-  <span class="hljs-keyword">let</span> hasLongerChords = <span class="hljs-literal">false</span>
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> action <span class="hljs-keyword">of</span> chordWinners.<span class="hljs-title function_">values</span>()) {
-    <span class="hljs-keyword">if</span> (action !== <span class="hljs-literal">null</span>) { hasLongerChords = <span class="hljs-literal">true</span>; <span class="hljs-keyword">break</span> }
+  let hasLongerChords = false
+  for (const action of chordWinners.values()) {
+    if (action !== null) { hasLongerChords = true; break }
   }
 
-  <span class="hljs-comment">// 如果存在更长的 chord 匹配，进入等待状态</span>
-  <span class="hljs-keyword">if</span> (hasLongerChords) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_started'</span>, <span class="hljs-attr">pending</span>: testChord }
+  // 如果存在更长的 chord 匹配，进入等待状态
+  if (hasLongerChords) {
+    return { type: 'chord_started', pending: testChord }
   }
 
-  <span class="hljs-comment">// 检查精确匹配</span>
-  <span class="hljs-keyword">let</span> <span class="hljs-attr">exactMatch</span>: <span class="hljs-title class_">ParsedBinding</span> | <span class="hljs-literal">undefined</span>
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> binding <span class="hljs-keyword">of</span> contextBindings) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">chordExactlyMatches</span>(testChord, binding)) {
+  // 检查精确匹配
+  let exactMatch: ParsedBinding | undefined
+  for (const binding of contextBindings) {
+    if (chordExactlyMatches(testChord, binding)) {
       exactMatch = binding
     }
   }
 
-  <span class="hljs-keyword">if</span> (exactMatch) {
-    <span class="hljs-keyword">if</span> (exactMatch.<span class="hljs-property">action</span> === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'unbound'</span> }
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'match'</span>, <span class="hljs-attr">action</span>: exactMatch.<span class="hljs-property">action</span> }
+  if (exactMatch) {
+    if (exactMatch.action === null) return { type: 'unbound' }
+    return { type: 'match', action: exactMatch.action }
   }
 
-  <span class="hljs-keyword">if</span> (pending !== <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_cancelled'</span> }
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'none'</span> }
+  if (pending !== null) return { type: 'chord_cancelled' }
+  return { type: 'none' }
 }
-</code></pre>
+</string,></code></pre>
 <p>返回类型是五态联合：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">ChordResolveResult</span> =
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'match'</span>; <span class="hljs-attr">action</span>: <span class="hljs-built_in">string</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'none'</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'unbound'</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_started'</span>; <span class="hljs-attr">pending</span>: <span class="hljs-title class_">ParsedKeystroke</span>[] }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'chord_cancelled'</span> }
+<pre><code class="lang-typescript">export type ChordResolveResult =
+  | { type: 'match'; action: string }
+  | { type: 'none' }
+  | { type: 'unbound' }
+  | { type: 'chord_started'; pending: ParsedKeystroke[] }
+  | { type: 'chord_cancelled' }
 </code></pre>
 <p>Chord 的 null-override 处理是一个精巧的设计：如果用户在配置中将 <code>ctrl+x ctrl+k</code> 设为 <code>null</code>（解绑），但存在另一个以 <code>ctrl+x</code> 为前缀的活跃 chord，那么 <code>ctrl+x</code> 仍会进入 chord 等待。但如果 <code>ctrl+x</code> 前缀下的所有 chord 都被解绑了，<code>ctrl+x</code> 就不会进入 chord 等待，单键绑定（如果存在）能正常触发。这通过 <code>chordWinners</code> Map 中检查是否有非 null action 实现。</p>
 <p>Keystroke 比较中 alt/meta 的合并：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">keystrokesEqual</span>(<span class="hljs-params"><span class="hljs-attr">a</span>: <span class="hljs-title class_">ParsedKeystroke</span>, <span class="hljs-attr">b</span>: <span class="hljs-title class_">ParsedKeystroke</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">return</span> (
-    a.<span class="hljs-property">key</span> === b.<span class="hljs-property">key</span> &amp;&amp;
-    a.<span class="hljs-property">ctrl</span> === b.<span class="hljs-property">ctrl</span> &amp;&amp;
-    a.<span class="hljs-property">shift</span> === b.<span class="hljs-property">shift</span> &amp;&amp;
-    (a.<span class="hljs-property">alt</span> || a.<span class="hljs-property">meta</span>) === (b.<span class="hljs-property">alt</span> || b.<span class="hljs-property">meta</span>) &amp;&amp;
-    a.<span class="hljs-property">super</span> === b.<span class="hljs-property">super</span>
+<pre><code class="lang-typescript">export function keystrokesEqual(a: ParsedKeystroke, b: ParsedKeystroke): boolean {
+  return (
+    a.key === b.key &amp;&amp;
+    a.ctrl === b.ctrl &amp;&amp;
+    a.shift === b.shift &amp;&amp;
+    (a.alt || a.meta) === (b.alt || b.meta) &amp;&amp;
+    a.super === b.super
   )
 }
 </code></pre>
@@ -1320,24 +1161,24 @@
 <h3 id="471-状态类型定义">4.7.1 状态类型定义</h3>
 <p>Vim 模式的类型定义在 <code>src/vim/types.ts</code> 中，它本身就是完整的设计文档。</p>
 <p>顶层状态：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">VimState</span> =
-  | { <span class="hljs-attr">mode</span>: <span class="hljs-string">'INSERT'</span>; <span class="hljs-attr">insertedText</span>: <span class="hljs-built_in">string</span> }
-  | { <span class="hljs-attr">mode</span>: <span class="hljs-string">'NORMAL'</span>; <span class="hljs-attr">command</span>: <span class="hljs-title class_">CommandState</span> }
+<pre><code class="lang-typescript">export type VimState =
+  | { mode: 'INSERT'; insertedText: string }
+  | { mode: 'NORMAL'; command: CommandState }
 </code></pre>
 <p>INSERT 模式跟踪输入的文本（用于 dot-repeat）。NORMAL 模式包含一个命令解析状态机。</p>
 <p>NORMAL 模式的命令状态机：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">CommandState</span> =
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'idle'</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'count'</span>; <span class="hljs-attr">digits</span>: <span class="hljs-built_in">string</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'operator'</span>; <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorCount'</span>; <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span>; <span class="hljs-attr">digits</span>: <span class="hljs-built_in">string</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorFind'</span>; <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span>; <span class="hljs-attr">find</span>: <span class="hljs-title class_">FindType</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorTextObj'</span>; <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span>; <span class="hljs-attr">scope</span>: <span class="hljs-title class_">TextObjScope</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'find'</span>; <span class="hljs-attr">find</span>: <span class="hljs-title class_">FindType</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'g'</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorG'</span>; <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'replace'</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
-  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'indent'</span>; <span class="hljs-attr">dir</span>: <span class="hljs-string">'&gt;'</span> | <span class="hljs-string">'&lt;'</span>; <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span> }
+<pre><code class="lang-typescript">export type CommandState =
+  | { type: 'idle' }
+  | { type: 'count'; digits: string }
+  | { type: 'operator'; op: Operator; count: number }
+  | { type: 'operatorCount'; op: Operator; count: number; digits: string }
+  | { type: 'operatorFind'; op: Operator; count: number; find: FindType }
+  | { type: 'operatorTextObj'; op: Operator; count: number; scope: TextObjScope }
+  | { type: 'find'; find: FindType; count: number }
+  | { type: 'g'; count: number }
+  | { type: 'operatorG'; op: Operator; count: number }
+  | { type: 'replace'; count: number }
+  | { type: 'indent'; dir: '&gt;' | '&lt;'; count: number }
 </code></pre>
 <p>状态转移图（摘自类型文件注释）：</p>
 <pre><code>idle ──┬─[d/c/y]──► operator
@@ -1352,242 +1193,242 @@ operator ─┬─[motion]──► execute
            ├─[ia]─────► operatorTextObj
            └─[fFtT]───► operatorFind
 </code></pre><p>持久状态（跨命令保持）：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PersistentState</span> = {
-  <span class="hljs-attr">lastChange</span>: <span class="hljs-title class_">RecordedChange</span> | <span class="hljs-literal">null</span>   <span class="hljs-comment">// dot-repeat 记录</span>
-  <span class="hljs-attr">lastFind</span>: { <span class="hljs-attr">type</span>: <span class="hljs-title class_">FindType</span>; <span class="hljs-attr">char</span>: <span class="hljs-built_in">string</span> } | <span class="hljs-literal">null</span>  <span class="hljs-comment">// ;/, 重复查找</span>
-  <span class="hljs-attr">register</span>: <span class="hljs-built_in">string</span>                     <span class="hljs-comment">// 粘贴寄存器</span>
-  <span class="hljs-attr">registerIsLinewise</span>: <span class="hljs-built_in">boolean</span>          <span class="hljs-comment">// 行级粘贴标记</span>
+<pre><code class="lang-typescript">export type PersistentState = {
+  lastChange: RecordedChange | null   // dot-repeat 记录
+  lastFind: { type: FindType; char: string } | null  // ;/, 重复查找
+  register: string                     // 粘贴寄存器
+  registerIsLinewise: boolean          // 行级粘贴标记
 }
 </code></pre>
 <h3 id="472-transition-函数逐行讲解">4.7.2 transition 函数逐行讲解</h3>
 <p>核心转移函数在 <code>src/vim/transitions.ts</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">transition</span>(<span class="hljs-params">
-  <span class="hljs-attr">state</span>: <span class="hljs-title class_">CommandState</span>,
-  <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">ctx</span>: <span class="hljs-title class_">TransitionContext</span>,
-</span>): <span class="hljs-title class_">TransitionResult</span> {
-  <span class="hljs-keyword">switch</span> (state.<span class="hljs-property">type</span>) {
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'idle'</span>:        <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromIdle</span>(input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'count'</span>:       <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromCount</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'operator'</span>:    <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromOperator</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'operatorCount'</span>: <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromOperatorCount</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'operatorFind'</span>:  <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromOperatorFind</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'operatorTextObj'</span>: <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromOperatorTextObj</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'find'</span>:        <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromFind</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'g'</span>:           <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromG</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'operatorG'</span>:   <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromOperatorG</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'replace'</span>:     <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromReplace</span>(state, input, ctx)
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'indent'</span>:      <span class="hljs-keyword">return</span> <span class="hljs-title function_">fromIndent</span>(state, input, ctx)
+<pre><code class="lang-typescript">export function transition(
+  state: CommandState,
+  input: string,
+  ctx: TransitionContext,
+): TransitionResult {
+  switch (state.type) {
+    case 'idle':        return fromIdle(input, ctx)
+    case 'count':       return fromCount(state, input, ctx)
+    case 'operator':    return fromOperator(state, input, ctx)
+    case 'operatorCount': return fromOperatorCount(state, input, ctx)
+    case 'operatorFind':  return fromOperatorFind(state, input, ctx)
+    case 'operatorTextObj': return fromOperatorTextObj(state, input, ctx)
+    case 'find':        return fromFind(state, input, ctx)
+    case 'g':           return fromG(state, input, ctx)
+    case 'operatorG':   return fromOperatorG(state, input, ctx)
+    case 'replace':     return fromReplace(state, input, ctx)
+    case 'indent':      return fromIndent(state, input, ctx)
   }
 }
 </code></pre>
 <p>返回类型：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">TransitionResult</span> = {
-  <span class="hljs-attr">next</span>?: <span class="hljs-title class_">CommandState</span>   <span class="hljs-comment">// 新状态（省略 = 回到 idle）</span>
-  <span class="hljs-attr">execute</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>  <span class="hljs-comment">// 要执行的副作用</span>
+<pre><code class="lang-typescript">export type TransitionResult = {
+  next?: CommandState   // 新状态（省略 = 回到 idle）
+  execute?: () =&gt; void  // 要执行的副作用
 }
 </code></pre>
 <p><strong>fromIdle -- 空闲状态的入口逻辑</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fromIdle</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">ctx</span>: <span class="hljs-title class_">TransitionContext</span></span>): <span class="hljs-title class_">TransitionResult</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/[1-9]/</span>.<span class="hljs-title function_">test</span>(input)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'count'</span>, <span class="hljs-attr">digits</span>: input } }
+<pre><code class="lang-typescript">function fromIdle(input: string, ctx: TransitionContext): TransitionResult {
+  if (/[1-9]/.test(input)) {
+    return { next: { type: 'count', digits: input } }
   }
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'0'</span>) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> ctx.<span class="hljs-title function_">setOffset</span>(ctx.<span class="hljs-property">cursor</span>.<span class="hljs-title function_">startOfLogicalLine</span>().<span class="hljs-property">offset</span>),
+  if (input === '0') {
+    return {
+      execute: () =&gt; ctx.setOffset(ctx.cursor.startOfLogicalLine().offset),
     }
   }
-  <span class="hljs-keyword">const</span> result = <span class="hljs-title function_">handleNormalInput</span>(input, <span class="hljs-number">1</span>, ctx)
-  <span class="hljs-keyword">if</span> (result) <span class="hljs-keyword">return</span> result
-  <span class="hljs-keyword">return</span> {}
+  const result = handleNormalInput(input, 1, ctx)
+  if (result) return result
+  return {}
 }
 </code></pre>
 <p><code>0</code> 在 idle 状态是行首移动（不是 count 前缀），这是 Vim 的经典规则。非零数字进入 count 状态。其他输入委托给 <code>handleNormalInput</code>。</p>
 <p><strong>handleNormalInput -- 共享的普通输入处理</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleNormalInput</span>(<span class="hljs-params">
-  <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span>,
-  <span class="hljs-attr">ctx</span>: <span class="hljs-title class_">TransitionContext</span>,
-</span>): <span class="hljs-title class_">TransitionResult</span> | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isOperatorKey</span>(input)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'operator'</span>, <span class="hljs-attr">op</span>: <span class="hljs-variable constant_">OPERATORS</span>[input], count } }
+<pre><code class="lang-typescript">function handleNormalInput(
+  input: string,
+  count: number,
+  ctx: TransitionContext,
+): TransitionResult | null {
+  if (isOperatorKey(input)) {
+    return { next: { type: 'operator', op: OPERATORS[input], count } }
   }
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">SIMPLE_MOTIONS</span>.<span class="hljs-title function_">has</span>(input)) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> {
-        <span class="hljs-keyword">const</span> target = <span class="hljs-title function_">resolveMotion</span>(input, ctx.<span class="hljs-property">cursor</span>, count)
-        ctx.<span class="hljs-title function_">setOffset</span>(target.<span class="hljs-property">offset</span>)
+  if (SIMPLE_MOTIONS.has(input)) {
+    return {
+      execute: () =&gt; {
+        const target = resolveMotion(input, ctx.cursor, count)
+        ctx.setOffset(target.offset)
       },
     }
   }
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">FIND_KEYS</span>.<span class="hljs-title function_">has</span>(input)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'find'</span>, <span class="hljs-attr">find</span>: input <span class="hljs-keyword">as</span> <span class="hljs-title class_">FindType</span>, count } }
+  if (FIND_KEYS.has(input)) {
+    return { next: { type: 'find', find: input as FindType, count } }
   }
 
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'x'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">executeX</span>(count, ctx) }
+  if (input === 'x') {
+    return { execute: () =&gt; executeX(count, ctx) }
   }
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'D'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">executeOperatorMotion</span>(<span class="hljs-string">'delete'</span>, <span class="hljs-string">'$'</span>, <span class="hljs-number">1</span>, ctx) }
+  if (input === 'D') {
+    return { execute: () =&gt; executeOperatorMotion('delete', '$', 1, ctx) }
   }
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'.'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> ctx.<span class="hljs-property">onDotRepeat</span>?.() }
+  if (input === '.') {
+    return { execute: () =&gt; ctx.onDotRepeat?.() }
   }
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'i'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> ctx.<span class="hljs-title function_">enterInsert</span>(ctx.<span class="hljs-property">cursor</span>.<span class="hljs-property">offset</span>) }
+  if (input === 'i') {
+    return { execute: () =&gt; ctx.enterInsert(ctx.cursor.offset) }
   }
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'A'</span>) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> ctx.<span class="hljs-title function_">enterInsert</span>(ctx.<span class="hljs-property">cursor</span>.<span class="hljs-title function_">endOfLogicalLine</span>().<span class="hljs-property">offset</span>),
+  if (input === 'A') {
+    return {
+      execute: () =&gt; ctx.enterInsert(ctx.cursor.endOfLogicalLine().offset),
     }
   }
-  <span class="hljs-comment">// ...</span>
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  // ...
+  return null
 }
 </code></pre>
 <p>这个函数被 <code>fromIdle</code> 和 <code>fromCount</code> 共享——count 只影响传入的 <code>count</code> 参数，不影响逻辑结构。</p>
 <p><strong>fromOperator -- 等待 motion/text-object</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fromOperator</span>(<span class="hljs-params">state, input, ctx</span>): <span class="hljs-title class_">TransitionResult</span> {
-  <span class="hljs-comment">// dd, cc, yy = 行操作</span>
-  <span class="hljs-keyword">if</span> (input === state.<span class="hljs-property">op</span>[<span class="hljs-number">0</span>]) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">executeLineOp</span>(state.<span class="hljs-property">op</span>, state.<span class="hljs-property">count</span>, ctx) }
+<pre><code class="lang-typescript">function fromOperator(state, input, ctx): TransitionResult {
+  // dd, cc, yy = 行操作
+  if (input === state.op[0]) {
+    return { execute: () =&gt; executeLineOp(state.op, state.count, ctx) }
   }
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/[0-9]/</span>.<span class="hljs-title function_">test</span>(input)) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">next</span>: {
-        <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorCount'</span>,
-        <span class="hljs-attr">op</span>: state.<span class="hljs-property">op</span>,
-        <span class="hljs-attr">count</span>: state.<span class="hljs-property">count</span>,
-        <span class="hljs-attr">digits</span>: input,
+  if (/[0-9]/.test(input)) {
+    return {
+      next: {
+        type: 'operatorCount',
+        op: state.op,
+        count: state.count,
+        digits: input,
       },
     }
   }
 
-  <span class="hljs-keyword">const</span> result = <span class="hljs-title function_">handleOperatorInput</span>(state.<span class="hljs-property">op</span>, state.<span class="hljs-property">count</span>, input, ctx)
-  <span class="hljs-keyword">if</span> (result) <span class="hljs-keyword">return</span> result
+  const result = handleOperatorInput(state.op, state.count, input, ctx)
+  if (result) return result
 
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'idle'</span> } }
+  return { next: { type: 'idle' } }
 }
 </code></pre>
 <p><code>dd</code> 的检测：如果输入字符等于 operator 键的首字母（<code>d</code> 的首字母是 <code>d</code>，<code>c</code> 的首字母是 <code>c</code>），触发行操作。这自然地支持了 <code>dd</code>、<code>cc</code>、<code>yy</code>。</p>
 <p><strong>handleOperatorInput -- operator 后的 motion 处理</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleOperatorInput</span>(<span class="hljs-params">
-  <span class="hljs-attr">op</span>: <span class="hljs-title class_">Operator</span>,
-  <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span>,
-  <span class="hljs-attr">input</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">ctx</span>: <span class="hljs-title class_">TransitionContext</span>,
-</span>): <span class="hljs-title class_">TransitionResult</span> | <span class="hljs-literal">null</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isTextObjScopeKey</span>(input)) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorTextObj'</span>, op, count, <span class="hljs-attr">scope</span>: <span class="hljs-variable constant_">TEXT_OBJ_SCOPES</span>[input] },
+<pre><code class="lang-typescript">function handleOperatorInput(
+  op: Operator,
+  count: number,
+  input: string,
+  ctx: TransitionContext,
+): TransitionResult | null {
+  if (isTextObjScopeKey(input)) {
+    return {
+      next: { type: 'operatorTextObj', op, count, scope: TEXT_OBJ_SCOPES[input] },
     }
   }
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">FIND_KEYS</span>.<span class="hljs-title function_">has</span>(input)) {
-    <span class="hljs-keyword">return</span> {
-      <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorFind'</span>, op, count, <span class="hljs-attr">find</span>: input <span class="hljs-keyword">as</span> <span class="hljs-title class_">FindType</span> },
+  if (FIND_KEYS.has(input)) {
+    return {
+      next: { type: 'operatorFind', op, count, find: input as FindType },
     }
   }
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">SIMPLE_MOTIONS</span>.<span class="hljs-title function_">has</span>(input)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">executeOperatorMotion</span>(op, input, count, ctx) }
+  if (SIMPLE_MOTIONS.has(input)) {
+    return { execute: () =&gt; executeOperatorMotion(op, input, count, ctx) }
   }
 
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'G'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">execute</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">executeOperatorG</span>(op, count, ctx) }
+  if (input === 'G') {
+    return { execute: () =&gt; executeOperatorG(op, count, ctx) }
   }
 
-  <span class="hljs-keyword">if</span> (input === <span class="hljs-string">'g'</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'operatorG'</span>, op, count } }
+  if (input === 'g') {
+    return { next: { type: 'operatorG', op, count } }
   }
 
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  return null
 }
 </code></pre>
 <p><code>i</code>/<code>a</code> 在 operator 后面是文本对象作用域（inner/around），不是 insert 命令。这是上下文敏感的——同一个按键在不同状态有不同含义。</p>
 <p><strong>fromOperatorCount -- count 乘法</strong>：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">fromOperatorCount</span>(<span class="hljs-params">state, input, ctx</span>): <span class="hljs-title class_">TransitionResult</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/[0-9]/</span>.<span class="hljs-title function_">test</span>(input)) {
-    <span class="hljs-keyword">const</span> newDigits = state.<span class="hljs-property">digits</span> + input
-    <span class="hljs-keyword">const</span> parsedDigits = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(<span class="hljs-built_in">parseInt</span>(newDigits, <span class="hljs-number">10</span>), <span class="hljs-variable constant_">MAX_VIM_COUNT</span>)
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { ...state, <span class="hljs-attr">digits</span>: <span class="hljs-title class_">String</span>(parsedDigits) } }
+<pre><code class="lang-typescript">function fromOperatorCount(state, input, ctx): TransitionResult {
+  if (/[0-9]/.test(input)) {
+    const newDigits = state.digits + input
+    const parsedDigits = Math.min(parseInt(newDigits, 10), MAX_VIM_COUNT)
+    return { next: { ...state, digits: String(parsedDigits) } }
   }
 
-  <span class="hljs-keyword">const</span> motionCount = <span class="hljs-built_in">parseInt</span>(state.<span class="hljs-property">digits</span>, <span class="hljs-number">10</span>)
-  <span class="hljs-keyword">const</span> effectiveCount = state.<span class="hljs-property">count</span> * motionCount  <span class="hljs-comment">// count 相乘</span>
-  <span class="hljs-keyword">const</span> result = <span class="hljs-title function_">handleOperatorInput</span>(state.<span class="hljs-property">op</span>, effectiveCount, input, ctx)
-  <span class="hljs-keyword">if</span> (result) <span class="hljs-keyword">return</span> result
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">next</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'idle'</span> } }
+  const motionCount = parseInt(state.digits, 10)
+  const effectiveCount = state.count * motionCount  // count 相乘
+  const result = handleOperatorInput(state.op, effectiveCount, input, ctx)
+  if (result) return result
+  return { next: { type: 'idle' } }
 }
 </code></pre>
 <p><code>3d2w</code> = 删除 6 个单词。预命令 count (3) 和 motion count (2) 相乘。<code>MAX_VIM_COUNT = 10000</code> 防止意外的巨大数字。</p>
 <h3 id="473-motion-函数">4.7.3 Motion 函数</h3>
 <p><code>src/vim/motions.ts</code> 实现纯函数的光标移动：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resolveMotion</span>(<span class="hljs-params"><span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">cursor</span>: <span class="hljs-title class_">Cursor</span>, <span class="hljs-attr">count</span>: <span class="hljs-built_in">number</span></span>): <span class="hljs-title class_">Cursor</span> {
-  <span class="hljs-keyword">let</span> result = cursor
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; count; i++) {
-    <span class="hljs-keyword">const</span> next = <span class="hljs-title function_">applySingleMotion</span>(key, result)
-    <span class="hljs-keyword">if</span> (next.<span class="hljs-title function_">equals</span>(result)) <span class="hljs-keyword">break</span>  <span class="hljs-comment">// 到达边界则停止</span>
+<pre><code class="lang-typescript">export function resolveMotion(key: string, cursor: Cursor, count: number): Cursor {
+  let result = cursor
+  for (let i = 0; i &lt; count; i++) {
+    const next = applySingleMotion(key, result)
+    if (next.equals(result)) break  // 到达边界则停止
     result = next
   }
-  <span class="hljs-keyword">return</span> result
+  return result
 }
 
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">applySingleMotion</span>(<span class="hljs-params"><span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">cursor</span>: <span class="hljs-title class_">Cursor</span></span>): <span class="hljs-title class_">Cursor</span> {
-  <span class="hljs-keyword">switch</span> (key) {
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'h'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">left</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'l'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">right</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'j'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">downLogicalLine</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'k'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">upLogicalLine</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'gj'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">down</span>()      <span class="hljs-comment">// 显示行移动</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'gk'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">up</span>()        <span class="hljs-comment">// 显示行移动</span>
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'w'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">nextVimWord</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'b'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">prevVimWord</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'e'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">endOfVimWord</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'0'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">startOfLogicalLine</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'^'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">firstNonBlankInLogicalLine</span>()
-    <span class="hljs-keyword">case</span> <span class="hljs-string">'$'</span>: <span class="hljs-keyword">return</span> cursor.<span class="hljs-title function_">endOfLogicalLine</span>()
-    <span class="hljs-attr">default</span>: <span class="hljs-keyword">return</span> cursor
+function applySingleMotion(key: string, cursor: Cursor): Cursor {
+  switch (key) {
+    case 'h': return cursor.left()
+    case 'l': return cursor.right()
+    case 'j': return cursor.downLogicalLine()
+    case 'k': return cursor.upLogicalLine()
+    case 'gj': return cursor.down()      // 显示行移动
+    case 'gk': return cursor.up()        // 显示行移动
+    case 'w': return cursor.nextVimWord()
+    case 'b': return cursor.prevVimWord()
+    case 'e': return cursor.endOfVimWord()
+    case '0': return cursor.startOfLogicalLine()
+    case '^': return cursor.firstNonBlankInLogicalLine()
+    case '$': return cursor.endOfLogicalLine()
+    default: return cursor
   }
 }
 </code></pre>
 <p>关键设计：motion 是 immutable 的——<code>cursor.left()</code> 返回新的 <code>Cursor</code> 对象，不修改原对象。这使得整个 transition 流程是纯函数，可以安全地测试和推理。</p>
 <p>边界检测通过 <code>equals</code> 比较实现：如果 motion 后位置不变（到达文档边界），count 循环提前退出。</p>
 <p>Motion 的分类影响 operator 行为：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">isInclusiveMotion</span>(<span class="hljs-params"><span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-string">'eE$'</span>.<span class="hljs-title function_">includes</span>(key)
+<pre><code class="lang-typescript">export function isInclusiveMotion(key: string): boolean {
+  return 'eE$'.includes(key)
 }
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">isLinewiseMotion</span>(<span class="hljs-params"><span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-string">'jkG'</span>.<span class="hljs-title function_">includes</span>(key) || key === <span class="hljs-string">'gg'</span>
+export function isLinewiseMotion(key: string): boolean {
+  return 'jkG'.includes(key) || key === 'gg'
 }
 </code></pre>
 <p><code>de</code> 删除到单词末尾（包含末尾字符），<code>dj</code> 删除两行（行级操作）。<code>gj</code>/<code>gk</code> 是显示行移动，按 <code>:help gj</code> 定义为 characterwise exclusive（不是 linewise）。</p>
 <h3 id="474-文本对象">4.7.4 文本对象</h3>
 <p><code>src/vim/textObjects.ts</code> 实现文本对象的范围查找：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">findTextObject</span>(<span class="hljs-params">
-  <span class="hljs-attr">text</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">offset</span>: <span class="hljs-built_in">number</span>,
-  <span class="hljs-attr">objectType</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">isInner</span>: <span class="hljs-built_in">boolean</span>,
-</span>): <span class="hljs-title class_">TextObjectRange</span> {
-  <span class="hljs-keyword">if</span> (objectType === <span class="hljs-string">'w'</span>)
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">findWordObject</span>(text, offset, isInner, isVimWordChar)
-  <span class="hljs-keyword">if</span> (objectType === <span class="hljs-string">'W'</span>)
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">findWordObject</span>(text, offset, isInner, <span class="hljs-function"><span class="hljs-params">ch</span> =&gt;</span> !<span class="hljs-title function_">isVimWhitespace</span>(ch))
+<pre><code class="lang-typescript">export function findTextObject(
+  text: string,
+  offset: number,
+  objectType: string,
+  isInner: boolean,
+): TextObjectRange {
+  if (objectType === 'w')
+    return findWordObject(text, offset, isInner, isVimWordChar)
+  if (objectType === 'W')
+    return findWordObject(text, offset, isInner, ch =&gt; !isVimWhitespace(ch))
 
-  <span class="hljs-keyword">const</span> pair = <span class="hljs-variable constant_">PAIRS</span>[objectType]
-  <span class="hljs-keyword">if</span> (pair) {
-    <span class="hljs-keyword">const</span> [open, close] = pair
-    <span class="hljs-keyword">return</span> open === close
-      ? <span class="hljs-title function_">findQuoteObject</span>(text, offset, open, isInner)
-      : <span class="hljs-title function_">findBracketObject</span>(text, offset, open, close, isInner)
+  const pair = PAIRS[objectType]
+  if (pair) {
+    const [open, close] = pair
+    return open === close
+      ? findQuoteObject(text, offset, open, isInner)
+      : findBracketObject(text, offset, open, close, isInner)
   }
 
-  <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  return null
 }
 </code></pre>
 <p>三种查找策略：</p>
@@ -1597,38 +1438,38 @@ operator ─┬─[motion]──► execute
 <li><strong>Bracket object</strong> (<code>i(</code>/<code>a(</code>)：深度计数的括号匹配，支持嵌套。</li>
 </ol>
 <p>Word object 使用 <code>Intl.Segmenter</code> 做 grapheme 安全的迭代：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">findWordObject</span>(<span class="hljs-params">text, offset, isInner, isWordChar</span>) {
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">graphemes</span>: <span class="hljs-title class_">Array</span>&lt;{ <span class="hljs-attr">segment</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">index</span>: <span class="hljs-built_in">number</span> }&gt; = []
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> { segment, index } <span class="hljs-keyword">of</span> <span class="hljs-title function_">getGraphemeSegmenter</span>().<span class="hljs-title function_">segment</span>(text)) {
-    graphemes.<span class="hljs-title function_">push</span>({ segment, index })
+<pre><code class="lang-typescript">function findWordObject(text, offset, isInner, isWordChar) {
+  const graphemes: Array&lt;{ segment: string; index: number }&gt; = []
+  for (const { segment, index } of getGraphemeSegmenter().segment(text)) {
+    graphemes.push({ segment, index })
   }
-  <span class="hljs-comment">// 基于 grapheme 索引而非 codepoint 索引进行范围计算</span>
-  <span class="hljs-comment">// ...</span>
+  // 基于 grapheme 索引而非 codepoint 索引进行范围计算
+  // ...
 }
 </code></pre>
 <p>这确保了 emoji 和 CJK 字符被正确处理为单个单位。</p>
 <h2 id="48-焦点管理机制">4.8 焦点管理机制</h2>
 <p>源码位于 <code>src/ink/focus.ts</code>。<code>FocusManager</code> 是一个纯状态管理器，存储在 <code>ink-root</code> 的 <code>focusManager</code> 字段上。</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FocusManager</span> {
-  <span class="hljs-attr">activeElement</span>: <span class="hljs-title class_">DOMElement</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">dispatchFocusEvent</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">target</span>: <span class="hljs-title class_">DOMElement</span>, <span class="hljs-attr">event</span>: <span class="hljs-title class_">FocusEvent</span></span>) =&gt;</span> <span class="hljs-built_in">boolean</span>
-  <span class="hljs-keyword">private</span> enabled = <span class="hljs-literal">true</span>
-  <span class="hljs-keyword">private</span> <span class="hljs-attr">focusStack</span>: <span class="hljs-title class_">DOMElement</span>[] = []
+<pre><code class="lang-typescript">export class FocusManager {
+  activeElement: DOMElement | null = null
+  private dispatchFocusEvent: (target: DOMElement, event: FocusEvent) =&gt; boolean
+  private enabled = true
+  private focusStack: DOMElement[] = []
 
-  <span class="hljs-title function_">focus</span>(<span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span>): <span class="hljs-built_in">void</span> {
-    <span class="hljs-keyword">if</span> (node === <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>) <span class="hljs-keyword">return</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">enabled</span>) <span class="hljs-keyword">return</span>
+  focus(node: DOMElement): void {
+    if (node === this.activeElement) return
+    if (!this.enabled) return
 
-    <span class="hljs-keyword">const</span> previous = <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>
-    <span class="hljs-keyword">if</span> (previous) {
-      <span class="hljs-keyword">const</span> idx = <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">indexOf</span>(previous)
-      <span class="hljs-keyword">if</span> (idx !== -<span class="hljs-number">1</span>) <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">splice</span>(idx, <span class="hljs-number">1</span>)
-      <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">push</span>(previous)
-      <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-property">length</span> &gt; <span class="hljs-variable constant_">MAX_FOCUS_STACK</span>) <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">shift</span>()
-      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatchFocusEvent</span>(previous, <span class="hljs-keyword">new</span> <span class="hljs-title class_">FocusEvent</span>(<span class="hljs-string">'blur'</span>, node))
+    const previous = this.activeElement
+    if (previous) {
+      const idx = this.focusStack.indexOf(previous)
+      if (idx !== -1) this.focusStack.splice(idx, 1)
+      this.focusStack.push(previous)
+      if (this.focusStack.length &gt; MAX_FOCUS_STACK) this.focusStack.shift()
+      this.dispatchFocusEvent(previous, new FocusEvent('blur', node))
     }
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span> = node
-    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatchFocusEvent</span>(node, <span class="hljs-keyword">new</span> <span class="hljs-title class_">FocusEvent</span>(<span class="hljs-string">'focus'</span>, previous))
+    this.activeElement = node
+    this.dispatchFocusEvent(node, new FocusEvent('focus', previous))
   }
 }
 </code></pre>
@@ -1641,59 +1482,59 @@ operator ─┬─[motion]──► execute
 </ol>
 <p>焦点栈有 <code>MAX_FOCUS_STACK = 32</code> 的大小限制，防止无限增长。Tab 循环会反复 push 同一组元素，去重逻辑避免了栈膨胀。</p>
 <p>节点移除时的焦点恢复：</p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">handleNodeRemoved</span>(<span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span>, <span class="hljs-attr">root</span>: <span class="hljs-title class_">DOMElement</span>): <span class="hljs-built_in">void</span> {
-  <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">filter</span>(
-    <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n !== node &amp;&amp; <span class="hljs-title function_">isInTree</span>(n, root),
+<pre><code class="lang-typescript">handleNodeRemoved(node: DOMElement, root: DOMElement): void {
+  this.focusStack = this.focusStack.filter(
+    n =&gt; n !== node &amp;&amp; isInTree(n, root),
   )
 
-  <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>) <span class="hljs-keyword">return</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span> !== node &amp;&amp; <span class="hljs-title function_">isInTree</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>, root)) <span class="hljs-keyword">return</span>
+  if (!this.activeElement) return
+  if (this.activeElement !== node &amp;&amp; isInTree(this.activeElement, root)) return
 
-  <span class="hljs-keyword">const</span> removed = <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>
-  <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span> = <span class="hljs-literal">null</span>
-  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatchFocusEvent</span>(removed, <span class="hljs-keyword">new</span> <span class="hljs-title class_">FocusEvent</span>(<span class="hljs-string">'blur'</span>, <span class="hljs-literal">null</span>))
+  const removed = this.activeElement
+  this.activeElement = null
+  this.dispatchFocusEvent(removed, new FocusEvent('blur', null))
 
-  <span class="hljs-keyword">while</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">const</span> candidate = <span class="hljs-variable language_">this</span>.<span class="hljs-property">focusStack</span>.<span class="hljs-title function_">pop</span>()!
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isInTree</span>(candidate, root)) {
-      <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span> = candidate
-      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatchFocusEvent</span>(candidate, <span class="hljs-keyword">new</span> <span class="hljs-title class_">FocusEvent</span>(<span class="hljs-string">'focus'</span>, removed))
-      <span class="hljs-keyword">return</span>
+  while (this.focusStack.length &gt; 0) {
+    const candidate = this.focusStack.pop()!
+    if (isInTree(candidate, root)) {
+      this.activeElement = candidate
+      this.dispatchFocusEvent(candidate, new FocusEvent('focus', removed))
+      return
     }
   }
 }
 </code></pre>
 <p>当焦点元素或其祖先被移除时：先清理焦点栈中所有不再在树中的节点，然后从栈顶弹出最近的仍存活元素来恢复焦点。这保证了组件卸载后焦点不会悬空。</p>
 <p>Tab 导航：</p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">focusNext</span>(<span class="hljs-attr">root</span>: <span class="hljs-title class_">DOMElement</span>): <span class="hljs-built_in">void</span> {
-  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">moveFocus</span>(<span class="hljs-number">1</span>, root)
+<pre><code class="lang-typescript">focusNext(root: DOMElement): void {
+  this.moveFocus(1, root)
 }
 
-<span class="hljs-keyword">private</span> <span class="hljs-title function_">moveFocus</span>(<span class="hljs-attr">direction</span>: <span class="hljs-number">1</span> | -<span class="hljs-number">1</span>, <span class="hljs-attr">root</span>: <span class="hljs-title class_">DOMElement</span>): <span class="hljs-built_in">void</span> {
-  <span class="hljs-keyword">const</span> tabbable = <span class="hljs-title function_">collectTabbable</span>(root)
-  <span class="hljs-keyword">if</span> (tabbable.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>
+private moveFocus(direction: 1 | -1, root: DOMElement): void {
+  const tabbable = collectTabbable(root)
+  if (tabbable.length === 0) return
 
-  <span class="hljs-keyword">const</span> currentIndex = <span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>
-    ? tabbable.<span class="hljs-title function_">indexOf</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">activeElement</span>)
-    : -<span class="hljs-number">1</span>
+  const currentIndex = this.activeElement
+    ? tabbable.indexOf(this.activeElement)
+    : -1
 
-  <span class="hljs-keyword">const</span> nextIndex =
-    currentIndex === -<span class="hljs-number">1</span>
-      ? direction === <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : tabbable.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>
-      : (currentIndex + direction + tabbable.<span class="hljs-property">length</span>) % tabbable.<span class="hljs-property">length</span>
+  const nextIndex =
+    currentIndex === -1
+      ? direction === 1 ? 0 : tabbable.length - 1
+      : (currentIndex + direction + tabbable.length) % tabbable.length
 
-  <span class="hljs-keyword">const</span> next = tabbable[nextIndex]
-  <span class="hljs-keyword">if</span> (next) <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">focus</span>(next)
+  const next = tabbable[nextIndex]
+  if (next) this.focus(next)
 }
 </code></pre>
 <p><code>collectTabbable</code> 做深度优先遍历，收集所有 <code>tabIndex &gt;= 0</code> 的节点。<code>tabIndex = -1</code> 表示只能通过编程方式获取焦点（类似浏览器的 <code>tabindex="-1"</code>）。焦点循环使用模运算实现——到达末尾后回到开头。</p>
 <p><code>FocusEvent</code> 的设计遵循 react-dom 的语义：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FocusEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">TerminalEvent</span> {
-  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">relatedTarget</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">export class FocusEvent extends TerminalEvent {
+  readonly relatedTarget: EventTarget | null
 
-  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">type</span>: <span class="hljs-string">'focus'</span> | <span class="hljs-string">'blur'</span>, <span class="hljs-attr">relatedTarget</span>: <span class="hljs-title class_">EventTarget</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span></span>) {
-    <span class="hljs-variable language_">super</span>(<span class="hljs-keyword">type</span>, { <span class="hljs-attr">bubbles</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">cancelable</span>: <span class="hljs-literal">false</span> })
-    <span class="hljs-variable language_">this</span>.<span class="hljs-property">relatedTarget</span> = relatedTarget
+  constructor(type: 'focus' | 'blur', relatedTarget: EventTarget | null = null) {
+    super(type, { bubbles: true, cancelable: false })
+    this.relatedTarget = relatedTarget
   }
 }
 </code></pre>
@@ -1750,7 +1591,7 @@ operator ─┬─[motion]──► execute
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第4章 - 事件系统与输入处理","level":"2.2","depth":1,"next":{"title":"第5章 - 核心对话引擎 QueryEngine","level":"3.1","depth":1,"path":"第05章-核心对话引擎QueryEngine.md","ref":"第05章-核心对话引擎QueryEngine.md","articles":[]},"previous":{"title":"第3章 - 终端UI渲染引擎","level":"2.1","depth":1,"path":"第03章-终端UI渲染引擎.md","ref":"第03章-终端UI渲染引擎.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第04章-事件系统与输入处理.md","mtime":"2026-04-01T01:45:43.160Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第4章 - 事件系统与输入处理","level":"2.2","depth":1,"next":{"title":"第5章 - 核心对话引擎 QueryEngine","level":"3.1","depth":1,"path":"第05章-核心对话引擎QueryEngine.md","ref":"第05章-核心对话引擎QueryEngine.md","articles":[]},"previous":{"title":"第3章 - 终端UI渲染引擎","level":"2.1","depth":1,"path":"第03章-终端UI渲染引擎.md","ref":"第03章-终端UI渲染引擎.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","mermaid"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第04章-事件系统与输入处理.md","mtime":"2026-04-03T06:45:16.314Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:57:12.977Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -1802,6 +1643,14 @@ operator ─┬─[motion]──► execute
     </script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid-load.js"></script>
+        
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid.min.js"></script>
+        
     
         
         <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>

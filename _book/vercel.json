@@ -1,0 +1,5 @@
+{
+  "outputDirectory": "_book",
+  "buildCommand": "npx honkit build",
+  "installCommand": "npm install honkit honkit-plugin-mermaid --save-dev"
+}

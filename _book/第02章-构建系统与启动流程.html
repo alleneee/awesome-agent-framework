@@ -16,6 +16,10 @@
     
             
                 
+                <link rel="stylesheet" href="gitbook/honkit-plugin-mermaid/mermaid.css">
+                
+            
+                
                 <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
                 
             
@@ -316,169 +320,6 @@
     
 
     
-        
-        <li class="header">English Chapters</li>
-        
-        
-    
-        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                <a href="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                    
-                    Chapter 01 - Project Overview and Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                    
-                    Chapter 02 - Build System and Startup Flow
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                    
-                    Chapter 03 - Terminal UI Rendering Engine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                <a href="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                    
-                    Chapter 04 - Event System and Input Handling
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                    
-                    Chapter 05 - Core Conversation Engine QueryEngine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
-            
-                <a href="Chapter-06-LLM-API-and-Streaming.html">
-            
-                    
-                    Chapter 06 - LLM API and Streaming
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
-            
-                <a href="Chapter-07-Tool-System-Architecture.html">
-            
-                    
-                    Chapter 07 - Tool System Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
-            
-                <a href="Chapter-08-Context-Management-and-Compression.html">
-            
-                    
-                    Chapter 08 - Context Management and Compression
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                    
-                    Chapter 09 - Task System and Multi-Agent
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                    
-                    Chapter 10 - Team Collaboration and Remote Communication
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                    
-                    Chapter 11 - Plugin Skills and Hook System
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                <a href="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                    
-                    Chapter 12 - State Security and Infrastructure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
 
     <li class="divider"></li>
 
@@ -534,27 +375,27 @@
 </ol>
 <h3 id="212-plugin-1-bun-bundle-feature-shim">2.1.2 Plugin 1: bun-bundle-feature-shim</h3>
 <p>这是整个构建系统的核心插件，实现了 feature flag 的编译期替换。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// build.ts 第130-153行</span>
+<pre><code class="lang-typescript">// build.ts 第130-153行
 {
-  <span class="hljs-attr">name</span>: <span class="hljs-string">'bun-bundle-feature-shim'</span>,
-  <span class="hljs-title function_">setup</span>(<span class="hljs-params">build</span>) {
-    build.<span class="hljs-title function_">onResolve</span>({ <span class="hljs-attr">filter</span>: <span class="hljs-regexp">/^bun:bundle$/</span> }, <span class="hljs-function">() =&gt;</span> ({
-      <span class="hljs-attr">path</span>: <span class="hljs-string">'bun:bundle'</span>,
-      <span class="hljs-attr">namespace</span>: <span class="hljs-string">'bun-bundle-shim'</span>,
+  name: 'bun-bundle-feature-shim',
+  setup(build) {
+    build.onResolve({ filter: /^bun:bundle$/ }, () =&gt; ({
+      path: 'bun:bundle',
+      namespace: 'bun-bundle-shim',
     }))
-    build.<span class="hljs-title function_">onLoad</span>({ <span class="hljs-attr">filter</span>: <span class="hljs-regexp">/.*/</span>, <span class="hljs-attr">namespace</span>: <span class="hljs-string">'bun-bundle-shim'</span> }, <span class="hljs-function">() =&gt;</span> {
-      <span class="hljs-keyword">const</span> lines = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(featureFlags)
-        .<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">[k, v]</span>) =&gt;</span> <span class="hljs-string">`  '<span class="hljs-subst">${k}</span>': <span class="hljs-subst">${v}</span>,`</span>)
-        .<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>)
-      <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">contents</span>: <span class="hljs-string">`
-const features = {\n<span class="hljs-subst">${lines}</span>\n};
+    build.onLoad({ filter: /.*/, namespace: 'bun-bundle-shim' }, () =&gt; {
+      const lines = Object.entries(featureFlags)
+        .map(([k, v]) =&gt; `  '${k}': ${v},`)
+        .join('\n')
+      return {
+        contents: `
+const features = {\n${lines}\n};
 export function feature(name) {
   if (name in features) return features[name];
   return false;
 }
-`</span>,
-        <span class="hljs-attr">loader</span>: <span class="hljs-string">'js'</span>,
+`,
+        loader: 'js',
       }
     })
   },
@@ -567,29 +408,29 @@ export function feature(name) {
 <li>Bun bundler 的 tree-shaking 会将 <code>feature('DAEMON')</code> 这类调用内联为 <code>false</code>，然后将 <code>if (false) { ... }</code> 整个代码块消除</li>
 </ol>
 <p>在外部构建中，90 个 flag 中仅 4 个为 <code>true</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// build.ts 第25、33、61、86行</span>
-<span class="hljs-attr">BUILTIN_EXPLORE_PLAN_AGENTS</span>: <span class="hljs-literal">true</span>,
-<span class="hljs-attr">COMPACTION_REMINDERS</span>: <span class="hljs-literal">true</span>,
-<span class="hljs-attr">MCP_SKILLS</span>: <span class="hljs-literal">true</span>,
-<span class="hljs-attr">TOKEN_BUDGET</span>: <span class="hljs-literal">true</span>,
+<pre><code class="lang-typescript">// build.ts 第25、33、61、86行
+BUILTIN_EXPLORE_PLAN_AGENTS: true,
+COMPACTION_REMINDERS: true,
+MCP_SKILLS: true,
+TOKEN_BUDGET: true,
 </code></pre>
 <p>其余 86 个均为 <code>false</code>，对应的代码（如 DAEMON、BRIDGE_MODE、VOICE_MODE、SSH_REMOTE 等）在编译产物中完全不存��。</p>
 <h3 id="213-plugin-2-text-file-loader">2.1.3 Plugin 2: text-file-loader</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// build.ts 第155-173行</span>
+<pre><code class="lang-typescript">// build.ts 第155-173行
 {
-  <span class="hljs-attr">name</span>: <span class="hljs-string">'text-file-loader'</span>,
-  <span class="hljs-title function_">setup</span>(<span class="hljs-params">build</span>) {
-    build.<span class="hljs-title function_">onLoad</span>({ <span class="hljs-attr">filter</span>: <span class="hljs-regexp">/\.(md|txt)$/</span> }, <span class="hljs-title function_">async</span> (args) =&gt; {
-      <span class="hljs-keyword">const</span> fs = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'fs/promises'</span>)
-      <span class="hljs-keyword">const</span> contents = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFile</span>(args.<span class="hljs-property">path</span>, <span class="hljs-string">'utf-8'</span>)
-      <span class="hljs-keyword">return</span> {
-        <span class="hljs-attr">contents</span>: <span class="hljs-string">`export default <span class="hljs-subst">${<span class="hljs-built_in">JSON</span>.stringify(contents)}</span>`</span>,
-        <span class="hljs-attr">loader</span>: <span class="hljs-string">'js'</span>,
+  name: 'text-file-loader',
+  setup(build) {
+    build.onLoad({ filter: /\.(md|txt)$/ }, async (args) =&gt; {
+      const fs = await import('fs/promises')
+      const contents = await fs.readFile(args.path, 'utf-8')
+      return {
+        contents: `export default ${JSON.stringify(contents)}`,
+        loader: 'js',
       }
     })
-    build.<span class="hljs-title function_">onLoad</span>({ <span class="hljs-attr">filter</span>: <span class="hljs-regexp">/\.d\.ts$/</span> }, <span class="hljs-function">() =&gt;</span> ({
-      <span class="hljs-attr">contents</span>: <span class="hljs-string">'export {}'</span>,
-      <span class="hljs-attr">loader</span>: <span class="hljs-string">'js'</span>,
+    build.onLoad({ filter: /\.d\.ts$/ }, () =&gt; ({
+      contents: 'export {}',
+      loader: 'js',
     }))
   },
 },
@@ -600,57 +441,57 @@ export function feature(name) {
 <li><strong><code>.d.ts</code> 类型声明文件清空</strong>：类型声明文件在运行时无意义，生成空导出 <code>export {}</code> 避免 bundler 报错。</li>
 </ol>
 <h3 id="214-bunbuild-核心配置">2.1.4 Bun.build() 核心配置</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// build.ts 第102-128行</span>
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Bun</span>.<span class="hljs-title function_">build</span>({
-  <span class="hljs-attr">entrypoints</span>: [<span class="hljs-string">'./src/entrypoints/cli.tsx'</span>],
-  <span class="hljs-attr">outdir</span>: <span class="hljs-string">'./dist'</span>,
-  <span class="hljs-attr">target</span>: <span class="hljs-string">'node'</span>,
-  <span class="hljs-attr">format</span>: <span class="hljs-string">'esm'</span>,
-  <span class="hljs-attr">sourcemap</span>: <span class="hljs-string">'linked'</span>,
-  <span class="hljs-attr">minify</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">define</span>: {
-    <span class="hljs-string">'MACRO.VERSION'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-variable constant_">VERSION</span>),
-    <span class="hljs-string">'MACRO.BUILD_TIME'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-variable constant_">BUILD_TIME</span>),
-    <span class="hljs-string">'MACRO.ISSUES_EXPLAINER'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">'report the issue at ...'</span>),
-    <span class="hljs-string">'MACRO.FEEDBACK_CHANNEL'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">'https://github.com/...'</span>),
-    <span class="hljs-string">'MACRO.PACKAGE_URL'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">'https://www.npmjs.com/...'</span>),
-    <span class="hljs-string">'MACRO.NATIVE_PACKAGE_URL'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">'https://www.npmjs.com/...'</span>),
-    <span class="hljs-string">'MACRO.VERSION_CHANGELOG'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">''</span>),
-    <span class="hljs-string">'Bun.env.NODE_ENV'</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-string">'production'</span>),
+<pre><code class="lang-typescript">// build.ts 第102-128行
+const result = await Bun.build({
+  entrypoints: ['./src/entrypoints/cli.tsx'],
+  outdir: './dist',
+  target: 'node',
+  format: 'esm',
+  sourcemap: 'linked',
+  minify: false,
+  define: {
+    'MACRO.VERSION': JSON.stringify(VERSION),
+    'MACRO.BUILD_TIME': JSON.stringify(BUILD_TIME),
+    'MACRO.ISSUES_EXPLAINER': JSON.stringify('report the issue at ...'),
+    'MACRO.FEEDBACK_CHANNEL': JSON.stringify('https://github.com/...'),
+    'MACRO.PACKAGE_URL': JSON.stringify('https://www.npmjs.com/...'),
+    'MACRO.NATIVE_PACKAGE_URL': JSON.stringify('https://www.npmjs.com/...'),
+    'MACRO.VERSION_CHANGELOG': JSON.stringify(''),
+    'Bun.env.NODE_ENV': JSON.stringify('production'),
   },
-  <span class="hljs-attr">external</span>: [
-    <span class="hljs-string">'*.node'</span>,
-    <span class="hljs-string">'sharp'</span>,
-    <span class="hljs-string">'@img/*'</span>,
-    <span class="hljs-string">'@anthropic-ai/bedrock-sdk'</span>,
-    <span class="hljs-string">'@anthropic-ai/vertex-sdk'</span>,
-    <span class="hljs-string">'@anthropic-ai/foundry-sdk'</span>,
+  external: [
+    '*.node',
+    'sharp',
+    '@img/*',
+    '@anthropic-ai/bedrock-sdk',
+    '@anthropic-ai/vertex-sdk',
+    '@anthropic-ai/foundry-sdk',
   ],
 })
 </code></pre>
 <p><code>define</code> 字段实现编译期常量注入。源码中的 <code>MACRO.VERSION</code> 在编译后被替换为字面量字符串 <code>"2.1.88"</code>。这些 MACRO 常量的使用方式见 <code>cli.tsx</code> 的快速路径：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第39-41行</span>
-<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${MACRO.VERSION}</span> (Claude Code)`</span>);
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第39-41行
+console.log(`${MACRO.VERSION} (Claude Code)`);
 </code></pre>
 <p>编译后变为：</p>
-<pre><code class="lang-javascript"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"2.1.88 (Claude Code)"</span>);
+<pre><code class="lang-javascript">console.log("2.1.88 (Claude Code)");
 </code></pre>
 <p><code>external</code> 字段指定不打包的模块。<code>.node</code> 是原生二进制模块，<code>sharp</code> 是图片处理库（被 <code>image-processor-src</code> 替代），三个 Anthropic 云 SDK 是可选依赖。</p>
 <h3 id="215-构建后处理">2.1.5 构建后处理</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// build.ts 第177-197行</span>
-<span class="hljs-keyword">if</span> (result.<span class="hljs-property">success</span>) {
-  <span class="hljs-keyword">const</span> fs = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'fs/promises'</span>)
-  <span class="hljs-keyword">const</span> outFile = result.<span class="hljs-property">outputs</span>[<span class="hljs-number">0</span>]!.<span class="hljs-property">path</span>
-  <span class="hljs-keyword">const</span> content = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFile</span>(outFile, <span class="hljs-string">'utf-8'</span>)
-  <span class="hljs-keyword">if</span> (!content.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'#!/'</span>)) {
-    <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">writeFile</span>(outFile, <span class="hljs-string">`#!/usr/bin/env node\n<span class="hljs-subst">${content}</span>`</span>)
+<pre><code class="lang-typescript">// build.ts 第177-197行
+if (result.success) {
+  const fs = await import('fs/promises')
+  const outFile = result.outputs[0]!.path
+  const content = await fs.readFile(outFile, 'utf-8')
+  if (!content.startsWith('#!/')) {
+    await fs.writeFile(outFile, `#!/usr/bin/env node\n${content}`)
   }
-  <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">chmod</span>(outFile, <span class="hljs-number">0o755</span>)
+  await fs.chmod(outFile, 0o755)
 
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">'Build succeeded'</span>)
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`  Output: <span class="hljs-subst">${result.outputs.map(o =&gt; o.path).join(<span class="hljs-string">', '</span>)}</span>`</span>)
-  <span class="hljs-keyword">const</span> stat = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">stat</span>(outFile)
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`  Size: <span class="hljs-subst">${(stat.size / <span class="hljs-number">1024</span> / <span class="hljs-number">1024</span>).toFixed(<span class="hljs-number">1</span>)}</span>MB`</span>)
+  console.log('Build succeeded')
+  console.log(`  Output: ${result.outputs.map(o =&gt; o.path).join(', ')}`)
+  const stat = await fs.stat(outFile)
+  console.log(`  Size: ${(stat.size / 1024 / 1024).toFixed(1)}MB`)
 }
 </code></pre>
 <p>三步后处理：</p>
@@ -661,7 +502,7 @@ export function feature(name) {
 </ol>
 <h2 id="22-cli-入口：快速路径分发">2.2 CLI 入口：快速路径分发</h2>
 <h3 id="代码流程图：完整启动链路">代码流程图：完整启动链路</h3>
-<pre><code class="lang-mermaid">flowchart TD
+<pre><code class="lang-mermaid"><div class="mermaid">flowchart TD
     A["node cli.js"] --&gt; B["顶层副作用&lt;br/&gt;禁用 corepack / 设置堆大小"]
     B --&gt; C["main()"]
     C --&gt; D{{"参数匹配&lt;br/&gt;快速路径?"}}
@@ -715,28 +556,28 @@ export function feature(name) {
     style mainTsx fill:#fff3e0
     style initBlock fill:#f3e5f5
     style setupBlock fill:#e8f5e9
-</code></pre>
+</div></code></pre>
 <h3 id="221-文件概览">2.2.1 文件概览</h3>
 <p><code>src/entrypoints/cli.tsx</code>（302行）是 Bun bundler 的唯一入口点（<code>entrypoints: ['./src/entrypoints/cli.tsx']</code>）。它的设计哲学是<strong>快速路径优先</strong>——对于特定的 CLI 参数，尽可能早地返回，避免加载不必要的模块。</p>
 <h3 id="222-顶层副作用（第1-26行）">2.2.2 顶层副作用（第1-26行）</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第1行</span>
-<span class="hljs-keyword">import</span> { feature } <span class="hljs-keyword">from</span> <span class="hljs-string">'bun:bundle'</span>;
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第1行
+import { feature } from 'bun:bundle';
 
-<span class="hljs-comment">// 第5行</span>
-process.<span class="hljs-property">env</span>.<span class="hljs-property">COREPACK_ENABLE_AUTO_PIN</span> = <span class="hljs-string">'0'</span>;
+// 第5行
+process.env.COREPACK_ENABLE_AUTO_PIN = '0';
 
-<span class="hljs-comment">// 第9-13行</span>
-<span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_REMOTE</span> === <span class="hljs-string">'true'</span>) {
-  <span class="hljs-keyword">const</span> existing = process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_OPTIONS</span> || <span class="hljs-string">''</span>;
-  process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_OPTIONS</span> = existing
-    ? <span class="hljs-string">`<span class="hljs-subst">${existing}</span> --max-old-space-size=8192`</span>
-    : <span class="hljs-string">'--max-old-space-size=8192'</span>;
+// 第9-13行
+if (process.env.CLAUDE_CODE_REMOTE === 'true') {
+  const existing = process.env.NODE_OPTIONS || '';
+  process.env.NODE_OPTIONS = existing
+    ? `${existing} --max-old-space-size=8192`
+    : '--max-old-space-size=8192';
 }
 
-<span class="hljs-comment">// 第21-26行</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'ABLATION_BASELINE'</span>) &amp;&amp; process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_ABLATION_BASELINE</span>) {
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> k <span class="hljs-keyword">of</span> [<span class="hljs-string">'CLAUDE_CODE_SIMPLE'</span>, ...]) {
-    process.<span class="hljs-property">env</span>[k] ??= <span class="hljs-string">'1'</span>;
+// 第21-26行
+if (feature('ABLATION_BASELINE') &amp;&amp; process.env.CLAUDE_CODE_ABLATION_BASELINE) {
+  for (const k of ['CLAUDE_CODE_SIMPLE', ...]) {
+    process.env[k] ??= '1';
   }
 }
 </code></pre>
@@ -747,81 +588,81 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <li>消融基线实验（<code>ABLATION_BASELINE</code> 在外部构建中为 <code>false</code>，此代码块被消除）</li>
 </ol>
 <h3 id="223-main-函数与快速路径">2.2.3 main() 函数与快速路径</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第33行</span>
-<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
-  <span class="hljs-keyword">const</span> args = process.<span class="hljs-property">argv</span>.<span class="hljs-title function_">slice</span>(<span class="hljs-number">2</span>);
-</code></pre>
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第33行
+async function main(): Promise<void> {
+  const args = process.argv.slice(2);
+</void></code></pre>
 <p>核心逻辑是一系列 <code>if</code>/<code>return</code> 的快速路径分发。以下按执行顺序逐一分析：</p>
 <p><strong>路径 1：<code>--version</code>（零 import）</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第37-42行</span>
-<span class="hljs-keyword">if</span> (args.<span class="hljs-property">length</span> === <span class="hljs-number">1</span> &amp;&amp; (args[<span class="hljs-number">0</span>] === <span class="hljs-string">'--version'</span> || args[<span class="hljs-number">0</span>] === <span class="hljs-string">'-v'</span> || args[<span class="hljs-number">0</span>] === <span class="hljs-string">'-V'</span>)) {
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">${MACRO.VERSION}</span> (Claude Code)`</span>);
-  <span class="hljs-keyword">return</span>;
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第37-42行
+if (args.length === 1 &amp;&amp; (args[0] === '--version' || args[0] === '-v' || args[0] === '-V')) {
+  console.log(`${MACRO.VERSION} (Claude Code)`);
+  return;
 }
 </code></pre>
 <p>这是最快的路径——不需要加载任何模块，<code>MACRO.VERSION</code> 是编译期内联的字符串常量。<code>claude --version</code> 的响应时间接近零。</p>
 <p><strong>路径 2：<code>--dump-system-prompt</code>（内部调试）</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第53-71行</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'DUMP_SYSTEM_PROMPT'</span>) &amp;&amp; args[<span class="hljs-number">0</span>] === <span class="hljs-string">'--dump-system-prompt'</span>) {
-  <span class="hljs-keyword">const</span> { enableConfigs } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/config.js'</span>);
-  <span class="hljs-title function_">enableConfigs</span>();
-  <span class="hljs-keyword">const</span> { getSystemPrompt } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../constants/prompts.js'</span>);
-  <span class="hljs-keyword">const</span> prompt = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getSystemPrompt</span>([], model);
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(prompt.<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>));
-  <span class="hljs-keyword">return</span>;
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第53-71行
+if (feature('DUMP_SYSTEM_PROMPT') &amp;&amp; args[0] === '--dump-system-prompt') {
+  const { enableConfigs } = await import('../utils/config.js');
+  enableConfigs();
+  const { getSystemPrompt } = await import('../constants/prompts.js');
+  const prompt = await getSystemPrompt([], model);
+  console.log(prompt.join('\n'));
+  return;
 }
 </code></pre>
 <p>被 <code>feature('DUMP_SYSTEM_PROMPT')</code> 保护，在外部构建中被消除。</p>
 <p><strong>路径 3：Chrome MCP / 原生主机</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第72-93行</span>
-<span class="hljs-keyword">if</span> (process.<span class="hljs-property">argv</span>[<span class="hljs-number">2</span>] === <span class="hljs-string">'--claude-in-chrome-mcp'</span>) {
-  <span class="hljs-keyword">const</span> { runClaudeInChromeMcpServer } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/claudeInChrome/mcpServer.js'</span>);
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">runClaudeInChromeMcpServer</span>();
-  <span class="hljs-keyword">return</span>;
-} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (process.<span class="hljs-property">argv</span>[<span class="hljs-number">2</span>] === <span class="hljs-string">'--chrome-native-host'</span>) {
-  <span class="hljs-keyword">const</span> { runChromeNativeHost } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/claudeInChrome/chromeNativeHost.js'</span>);
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">runChromeNativeHost</span>();
-  <span class="hljs-keyword">return</span>;
-} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CHICAGO_MCP'</span>) &amp;&amp; process.<span class="hljs-property">argv</span>[<span class="hljs-number">2</span>] === <span class="hljs-string">'--computer-use-mcp'</span>) {
-  <span class="hljs-comment">// ...</span>
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第72-93行
+if (process.argv[2] === '--claude-in-chrome-mcp') {
+  const { runClaudeInChromeMcpServer } = await import('../utils/claudeInChrome/mcpServer.js');
+  await runClaudeInChromeMcpServer();
+  return;
+} else if (process.argv[2] === '--chrome-native-host') {
+  const { runChromeNativeHost } = await import('../utils/claudeInChrome/chromeNativeHost.js');
+  await runChromeNativeHost();
+  return;
+} else if (feature('CHICAGO_MCP') &amp;&amp; process.argv[2] === '--computer-use-mcp') {
+  // ...
 }
 </code></pre>
 <p>Chrome 扩展集成的专用入口。注意 <code>--computer-use-mcp</code> 被 feature flag 保护。</p>
 <p><strong>路径 4-9：feature flag 保护的子命令</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第100-233行</span>
-<span class="hljs-comment">// --daemon-worker (DAEMON flag, 外部构建消除)</span>
-<span class="hljs-comment">// remote-control / rc / remote (BRIDGE_MODE flag, 外���构建消除)</span>
-<span class="hljs-comment">// daemon (DAEMON flag, 外部构建消除)</span>
-<span class="hljs-comment">// ps / logs / attach / kill / --bg (BG_SESSIONS flag, 外部构建消除)</span>
-<span class="hljs-comment">// new / list / reply (TEMPLATES flag, 外部构建消除)</span>
-<span class="hljs-comment">// environment-runner (BYOC_ENVIRONMENT_RUNNER flag, 外部构建消除)</span>
-<span class="hljs-comment">// self-hosted-runner (SELF_HOSTED_RUNNER flag, 外部构建消除)</span>
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第100-233行
+// --daemon-worker (DAEMON flag, 外部构建消除)
+// remote-control / rc / remote (BRIDGE_MODE flag, 外���构建消除)
+// daemon (DAEMON flag, 外部构建消除)
+// ps / logs / attach / kill / --bg (BG_SESSIONS flag, 外部构建消除)
+// new / list / reply (TEMPLATES flag, 外部构建消除)
+// environment-runner (BYOC_ENVIRONMENT_RUNNER flag, 外部构建消除)
+// self-hosted-runner (SELF_HOSTED_RUNNER flag, 外部构建消除)
 </code></pre>
 <p>这些路径全部被 feature flag 包裹，在外部构建中被 dead code elimination 消除。</p>
 <p><strong>路径 10：<code>--worktree --tmux</code> 快速路径</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第248-274行</span>
-<span class="hljs-keyword">const</span> hasTmuxFlag = args.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'--tmux'</span>) || args.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'--tmux=classic'</span>);
-<span class="hljs-keyword">if</span> (hasTmuxFlag &amp;&amp; (args.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'-w'</span>) || args.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'--worktree'</span>) || ...)) {
-  <span class="hljs-keyword">const</span> { enableConfigs } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/config.js'</span>);
-  <span class="hljs-title function_">enableConfigs</span>();
-  <span class="hljs-keyword">const</span> { isWorktreeModeEnabled } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/worktreeModeEnabled.js'</span>);
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isWorktreeModeEnabled</span>()) {
-    <span class="hljs-keyword">const</span> { execIntoTmuxWorktree } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/worktree.js'</span>);
-    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">execIntoTmuxWorktree</span>(args);
-    <span class="hljs-keyword">if</span> (result.<span class="hljs-property">handled</span>) <span class="hljs-keyword">return</span>;
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第248-274行
+const hasTmuxFlag = args.includes('--tmux') || args.includes('--tmux=classic');
+if (hasTmuxFlag &amp;&amp; (args.includes('-w') || args.includes('--worktree') || ...)) {
+  const { enableConfigs } = await import('../utils/config.js');
+  enableConfigs();
+  const { isWorktreeModeEnabled } = await import('../utils/worktreeModeEnabled.js');
+  if (isWorktreeModeEnabled()) {
+    const { execIntoTmuxWorktree } = await import('../utils/worktree.js');
+    const result = await execIntoTmuxWorktree(args);
+    if (result.handled) return;
   }
 }
 </code></pre>
 <p>如果同时传了 <code>--worktree</code> 和 <code>--tmux</code>，在加载完整 CLI 前尝试直接 exec 进 tmux 会话。</p>
 <p><strong>默认路径：加载完整 CLI</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第287-298行</span>
-<span class="hljs-keyword">const</span> { startCapturingEarlyInput } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/earlyInput.js'</span>);
-<span class="hljs-title function_">startCapturingEarlyInput</span>();
-<span class="hljs-title function_">profileCheckpoint</span>(<span class="hljs-string">'cli_before_main_import'</span>);
-<span class="hljs-keyword">const</span> { <span class="hljs-attr">main</span>: cliMain } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../main.js'</span>);
-<span class="hljs-title function_">profileCheckpoint</span>(<span class="hljs-string">'cli_after_main_import'</span>);
-<span class="hljs-keyword">await</span> <span class="hljs-title function_">cliMain</span>();
-<span class="hljs-title function_">profileCheckpoint</span>(<span class="hljs-string">'cli_after_main_complete'</span>);
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第287-298行
+const { startCapturingEarlyInput } = await import('../utils/earlyInput.js');
+startCapturingEarlyInput();
+profileCheckpoint('cli_before_main_import');
+const { main: cliMain } = await import('../main.js');
+profileCheckpoint('cli_after_main_import');
+await cliMain();
+profileCheckpoint('cli_after_main_complete');
 </code></pre>
 <p>当没有匹配到任何快速路径时，执行以下步骤：</p>
 <ol>
@@ -830,44 +671,44 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <li>调用 <code>cliMain()</code> 进入 Commander 解析流程</li>
 </ol>
 <h3 id="224-入口文件末尾">2.2.4 入口文件末尾</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/cli.tsx 第301-302行</span>
-<span class="hljs-title function_">main</span>().<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> { <span class="hljs-comment">/* 错误处理 */</span> });
+<pre><code class="lang-typescript">// src/entrypoints/cli.tsx 第301-302行
+main().catch((error) =&gt; { /* 错误处理 */ });
 </code></pre>
 <p><code>main()</code> 在模块顶层被调用（IIFE 风格），<code>catch</code> 处理未捕获异常。</p>
 <h2 id="23-maintsx-的模块顶层副作用">2.3 main.tsx 的模块顶层副作用</h2>
 <p><code>src/main.tsx</code>（4683行）是整个应用最大的单一文件。它的前 200 行在模块加载阶段（不是函数调用阶段）就会执行。</p>
 <h3 id="231-启动性能优化三板斧">2.3.1 启动性能优化三板斧</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第9-10行</span>
-<span class="hljs-keyword">import</span> { profileCheckpoint, profileReport } <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils/startupProfiler.js'</span>;
-<span class="hljs-title function_">profileCheckpoint</span>(<span class="hljs-string">'main_tsx_entry'</span>);
+<pre><code class="lang-typescript">// src/main.tsx 第9-10行
+import { profileCheckpoint, profileReport } from './utils/startupProfiler.js';
+profileCheckpoint('main_tsx_entry');
 </code></pre>
 <p>第一步：记录模块评估的起始时间戳。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第13-16行</span>
-<span class="hljs-keyword">import</span> { startMdmRawRead } <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils/settings/mdm/rawRead.js'</span>;
-<span class="hljs-title function_">startMdmRawRead</span>();
+<pre><code class="lang-typescript">// src/main.tsx 第13-16行
+import { startMdmRawRead } from './utils/settings/mdm/rawRead.js';
+startMdmRawRead();
 </code></pre>
 <p>第二步：启动 MDM（Mobile Device Management）设置的子进程读取。在 macOS 上这意味着执行 <code>plutil</code> 命令读取系统级配置。子进程启动后立即返回，在后续模块加载期间并行执行。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第17-20行</span>
-<span class="hljs-keyword">import</span> { ensureKeychainPrefetchCompleted, startKeychainPrefetch }
-  <span class="hljs-keyword">from</span> <span class="hljs-string">'./utils/secureStorage/keychainPrefetch.js'</span>;
-<span class="hljs-title function_">startKeychainPrefetch</span>();
+<pre><code class="lang-typescript">// src/main.tsx 第17-20行
+import { ensureKeychainPrefetchCompleted, startKeychainPrefetch }
+  from './utils/secureStorage/keychainPrefetch.js';
+startKeychainPrefetch();
 </code></pre>
 <p>第三步：启动 macOS Keychain 的预读取。OAuth token 和 API key 存储在系统 Keychain 中，读取操作需要执行 <code>security</code> 命令。同样是启动子进程后立即返回。</p>
 <p>这三个副作用穿插在 <code>import</code> 语句之间，利用模块加载的 ~135ms 窗口并行完成 IO 密集型操作。到模块加载完毕时，这些子进程的结果通常已经就绪。</p>
 <h3 id="232-条件-require-与死代码消除">2.3.2 条件 require 与死代码消除</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第69-82行</span>
-<span class="hljs-keyword">const</span> <span class="hljs-title function_">getTeammateUtils</span> = (<span class="hljs-params"></span>) =&gt;
-  <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils/teammate.js'</span>) <span class="hljs-keyword">as</span> <span class="hljs-keyword">typeof</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./utils/teammate.js'</span>);
-<span class="hljs-keyword">const</span> <span class="hljs-title function_">getTeammatePromptAddendum</span> = (<span class="hljs-params"></span>) =&gt;
-  <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utils/swarm/teammatePromptAddendum.js'</span>) <span class="hljs-keyword">as</span> ...;
+<pre><code class="lang-typescript">// src/main.tsx 第69-82行
+const getTeammateUtils = () =&gt;
+  require('./utils/teammate.js') as typeof import('./utils/teammate.js');
+const getTeammatePromptAddendum = () =&gt;
+  require('./utils/swarm/teammatePromptAddendum.js') as ...;
 
-<span class="hljs-keyword">const</span> coordinatorModeModule = <span class="hljs-title function_">feature</span>(<span class="hljs-string">'COORDINATOR_MODE'</span>)
-  ? <span class="hljs-built_in">require</span>(<span class="hljs-string">'./coordinator/coordinatorMode.js'</span>) <span class="hljs-keyword">as</span> ...
-  : <span class="hljs-literal">null</span>;
+const coordinatorModeModule = feature('COORDINATOR_MODE')
+  ? require('./coordinator/coordinatorMode.js') as ...
+  : null;
 
-<span class="hljs-keyword">const</span> assistantModule = <span class="hljs-title function_">feature</span>(<span class="hljs-string">'KAIROS'</span>)
-  ? <span class="hljs-built_in">require</span>(<span class="hljs-string">'./assistant/index.js'</span>) <span class="hljs-keyword">as</span> ...
-  : <span class="hljs-literal">null</span>;
+const assistantModule = feature('KAIROS')
+  ? require('./assistant/index.js') as ...
+  : null;
 </code></pre>
 <p>两种模式：</p>
 <ol>
@@ -875,9 +716,9 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <li><strong>Feature flag 保护的 require</strong>：<code>coordinatorModeModule</code> 和 <code>assistantModule</code> 受 feature flag 保护。在外部构建中，<code>feature('COORDINATOR_MODE')</code> 和 <code>feature('KAIROS')</code> 均为 <code>false</code>，三元表达式直接求值为 <code>null</code>，<code>require()</code> 调用被消除。</li>
 </ol>
 <h3 id="233-调试模式检测与阻止">2.3.3 调试模式检测与阻止</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第266-271行</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-string">"external"</span> !== <span class="hljs-string">'ant'</span> &amp;&amp; <span class="hljs-title function_">isBeingDebugged</span>()) {
-  process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>);
+<pre><code class="lang-typescript">// src/main.tsx 第266-271行
+if ("external" !== 'ant' &amp;&amp; isBeingDebugged()) {
+  process.exit(1);
 }
 </code></pre>
 <p>外部构建中 <code>"external"</code> 是字面量字符串（原本是 <code>process.env.USER_TYPE</code> 的编译期替换），<code>"external" !== 'ant'</code> 恒为 <code>true</code>。如果检测到 Node.js 调试器（<code>--inspect</code>、<code>--debug</code>），立即退出。这是一个反调试保护措施。</p>
@@ -889,46 +730,46 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 </ul>
 <h2 id="24-init-初始化流程">2.4 init() 初始化流程</h2>
 <h3 id="241-memoized-单次执行">2.4.1 Memoized 单次执行</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第57行</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> init = <span class="hljs-title function_">memoize</span>(<span class="hljs-title function_">async</span> (): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; =&gt; {
-</code></pre>
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第57行
+export const init = memoize(async (): Promise<void> =&gt; {
+</void></code></pre>
 <p><code>init()</code> 使用 lodash 的 <code>memoize</code> 包装，无论调用多少次，实际逻辑只执行一次。后续调用返回缓存的 Promise。</p>
 <h3 id="242-初始化序列">2.4.2 初始化序列</h3>
 <p>init() 的执行顺序严格有序，每一步都有性能计时：</p>
 <p><strong>步骤 1：启用配置系统</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第64-66行</span>
-<span class="hljs-title function_">enableConfigs</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第64-66行
+enableConfigs()
 </code></pre>
 <p>激活配置读取能力。在此之前，任何 <code>getGlobalConfig()</code> / <code>getProjectConfig()</code> 调用都会失败。</p>
 <p><strong>步骤 2：应用安全环境变量</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第74-78行</span>
-<span class="hljs-title function_">applySafeConfigEnvironmentVariables</span>()
-<span class="hljs-title function_">applyExtraCACertsFromConfig</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第74-78行
+applySafeConfigEnvironmentVariables()
+applyExtraCACertsFromConfig()
 </code></pre>
 <p>只应用"安全"的环境变量（如 <code>NODE_EXTRA_CA_CERTS</code>��。完整的环境变量（可能来自不受信任的项目配置）要等到信任对话框通过后才应用。CA 证书必须在第一次 TLS 握手之前设置，因为 Bun 的 BoringSSL 会在启动时缓存证书存储。</p>
 <p><strong>步骤 3：注册优雅退出</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第87行</span>
-<span class="hljs-title function_">setupGracefulShutdown</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第87行
+setupGracefulShutdown()
 </code></pre>
 <p>注册 <code>SIGINT</code>/<code>SIGTERM</code>/<code>exit</code> 处理器。确保退出时刷新遥测数据、保存会话、清理临时文件。</p>
 <p><strong>步骤 4：异步 1P 事件日志</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第94-105行</span>
-<span class="hljs-built_in">void</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([
-  <span class="hljs-keyword">import</span>(<span class="hljs-string">'../services/analytics/firstPartyEventLogger.js'</span>),
-  <span class="hljs-keyword">import</span>(<span class="hljs-string">'../services/analytics/growthbook.js'</span>),
-]).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">[fp, gb]</span>) =&gt;</span> {
-  fp.<span class="hljs-title function_">initialize1PEventLogging</span>()
-  gb.<span class="hljs-title function_">onGrowthBookRefresh</span>(<span class="hljs-function">() =&gt;</span> {
-    <span class="hljs-built_in">void</span> fp.<span class="hljs-title function_">reinitialize1PEventLoggingIfConfigChanged</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第94-105行
+void Promise.all([
+  import('../services/analytics/firstPartyEventLogger.js'),
+  import('../services/analytics/growthbook.js'),
+]).then(([fp, gb]) =&gt; {
+  fp.initialize1PEventLogging()
+  gb.onGrowthBookRefresh(() =&gt; {
+    void fp.reinitialize1PEventLoggingIfConfigChanged()
   })
 })
 </code></pre>
 <p>动态导入 1P 事件日志和 GrowthBook（A/B 测试）模块。使用 <code>void</code> 表明是 fire-and-forget 操作，不阻塞主流程。</p>
 <p><strong>步骤 5：网络配置</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第136-151行</span>
-<span class="hljs-title function_">configureGlobalMTLS</span>()
-<span class="hljs-title function_">configureGlobalAgents</span>()
-<span class="hljs-title function_">preconnectAnthropicApi</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第136-151行
+configureGlobalMTLS()
+configureGlobalAgents()
+preconnectAnthropicApi()
 </code></pre>
 <p>三步网络初始化：</p>
 <ol>
@@ -937,28 +778,28 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <li>预连接 Anthropic API——在用户还在输入的 ~100ms 内完成 TCP+TLS 握手</li>
 </ol>
 <p><strong>步骤 6：清理注册</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts ��189-200行</span>
-<span class="hljs-title function_">registerCleanup</span>(shutdownLspServerManager)
-<span class="hljs-title function_">registerCleanup</span>(<span class="hljs-title function_">async</span> () =&gt; {
-  <span class="hljs-keyword">const</span> { cleanupSessionTeams } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../utils/swarm/teamHelpers.js'</span>)
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">cleanupSessionTeams</span>()
+<pre><code class="lang-typescript">// src/entrypoints/init.ts ��189-200行
+registerCleanup(shutdownLspServerManager)
+registerCleanup(async () =&gt; {
+  const { cleanupSessionTeams } = await import('../utils/swarm/teamHelpers.js')
+  await cleanupSessionTeams()
 })
 </code></pre>
 <p>注册进程退出时需要执行的清理函数。LSP 服务管理器关闭、团队会话清理等。</p>
 <h3 id="243-配置错误处理">2.4.3 配置错误处理</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/init.ts 第215-237行</span>
-} <span class="hljs-keyword">catch</span> (error) {
-  <span class="hljs-keyword">if</span> (error <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">ConfigParseError</span>) {
-    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">getIsNonInteractiveSession</span>()) {
-      process.<span class="hljs-property">stderr</span>.<span class="hljs-title function_">write</span>(<span class="hljs-string">`Configuration error in <span class="hljs-subst">${error.filePath}</span>: <span class="hljs-subst">${error.message}</span>\n`</span>)
-      <span class="hljs-title function_">gracefulShutdownSync</span>(<span class="hljs-number">1</span>)
-      <span class="hljs-keyword">return</span>
+<pre><code class="lang-typescript">// src/entrypoints/init.ts 第215-237行
+} catch (error) {
+  if (error instanceof ConfigParseError) {
+    if (getIsNonInteractiveSession()) {
+      process.stderr.write(`Configuration error in ${error.filePath}: ${error.message}\n`)
+      gracefulShutdownSync(1)
+      return
     }
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'../components/InvalidConfigDialog.js'</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span>
-      m.<span class="hljs-title function_">showInvalidConfigDialog</span>({ error }),
+    return import('../components/InvalidConfigDialog.js').then(m =&gt;
+      m.showInvalidConfigDialog({ error }),
     )
-  } <span class="hljs-keyword">else</span> {
-    <span class="hljs-keyword">throw</span> error
+  } else {
+    throw error
   }
 }
 </code></pre>
@@ -966,109 +807,109 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <h2 id="25-setup-会话级初始化">2.5 setup() 会话级初始化</h2>
 <p><code>src/setup.ts</code>（477行）在每个 CLI 会话中调用一次（区别于 <code>init()</code> 的进程级一次性调用）。</p>
 <h3 id="251-函数签名">2.5.1 函数签名</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第56-66行</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">setup</span>(<span class="hljs-params">
-  <span class="hljs-attr">cwd</span>: <span class="hljs-built_in">string</span>,
-  <span class="hljs-attr">permissionMode</span>: <span class="hljs-title class_">PermissionMode</span>,
-  <span class="hljs-attr">allowDangerouslySkipPermissions</span>: <span class="hljs-built_in">boolean</span>,
-  <span class="hljs-attr">worktreeEnabled</span>: <span class="hljs-built_in">boolean</span>,
-  <span class="hljs-attr">worktreeName</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>,
-  <span class="hljs-attr">tmuxEnabled</span>: <span class="hljs-built_in">boolean</span>,
-  <span class="hljs-attr">customSessionId</span>?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>,
-  <span class="hljs-attr">worktreePRNumber</span>?: <span class="hljs-built_in">number</span>,
-  <span class="hljs-attr">messagingSocketPath</span>?: <span class="hljs-built_in">string</span>,
-</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
-</code></pre>
+<pre><code class="lang-typescript">// src/setup.ts 第56-66行
+export async function setup(
+  cwd: string,
+  permissionMode: PermissionMode,
+  allowDangerouslySkipPermissions: boolean,
+  worktreeEnabled: boolean,
+  worktreeName: string | undefined,
+  tmuxEnabled: boolean,
+  customSessionId?: string | null,
+  worktreePRNumber?: number,
+  messagingSocketPath?: string,
+): Promise<void> {
+</void></code></pre>
 <p>接收工作目录、权限模式、worktree 配置等参数。</p>
 <h3 id="252-执行序列">2.5.2 执行序列</h3>
 <p><strong>Node.js 版本检���</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第70-79行</span>
-<span class="hljs-keyword">const</span> nodeVersion = process.<span class="hljs-property">version</span>.<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/^v(\d+)\./</span>)?.[<span class="hljs-number">1</span>]
-<span class="hljs-keyword">if</span> (!nodeVersion || <span class="hljs-built_in">parseInt</span>(nodeVersion) &lt; <span class="hljs-number">18</span>) {
-  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(chalk.<span class="hljs-property">bold</span>.<span class="hljs-title function_">red</span>(
-    <span class="hljs-string">'Error: Claude Code requires Node.js version 18 or higher.'</span>,
+<pre><code class="lang-typescript">// src/setup.ts 第70-79行
+const nodeVersion = process.version.match(/^v(\d+)\./)?.[1]
+if (!nodeVersion || parseInt(nodeVersion) &lt; 18) {
+  console.error(chalk.bold.red(
+    'Error: Claude Code requires Node.js version 18 or higher.',
   ))
-  process.<span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>)
+  process.exit(1)
 }
 </code></pre>
 <p>硬性要求 Node.js &gt;= 18。</p>
 <p><strong>UDS 消息服务器</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts ��95-101行</span>
-<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'UDS_INBOX'</span>)) {
-  <span class="hljs-keyword">const</span> m = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./utils/udsMessaging.js'</span>)
-  <span class="hljs-keyword">await</span> m.<span class="hljs-title function_">startUdsMessaging</span>(
-    messagingSocketPath ?? m.<span class="hljs-title function_">getDefaultUdsSocketPath</span>(),
-    { <span class="hljs-attr">isExplicit</span>: messagingSocketPath !== <span class="hljs-literal">undefined</span> },
+<pre><code class="lang-typescript">// src/setup.ts ��95-101行
+if (feature('UDS_INBOX')) {
+  const m = await import('./utils/udsMessaging.js')
+  await m.startUdsMessaging(
+    messagingSocketPath ?? m.getDefaultUdsSocketPath(),
+    { isExplicit: messagingSocketPath !== undefined },
   )
 }
 </code></pre>
 <p>Unix Domain Socket 消息服务器，被 <code>UDS_INBOX</code> feature flag 保护（外部构建消除）。</p>
 <p><strong>设置工作目录</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第161行</span>
-<span class="hljs-title function_">setCwd</span>(cwd)
+<pre><code class="lang-typescript">// src/setup.ts 第161行
+setCwd(cwd)
 </code></pre>
 <p>必须在所有依赖工作目录的代码之前调用。这是整个启动序列的关键同步点。</p>
 <p><strong>捕获 hooks 配置快照</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第165-169行</span>
-<span class="hljs-title function_">captureHooksConfigSnapshot</span>()
+<pre><code class="lang-typescript">// src/setup.ts 第165-169行
+captureHooksConfigSnapshot()
 </code></pre>
 <p>记录当前 hooks 配置的快照，用于检测运行期间是否有人篡改了 hooks 配置文件。必须在 <code>setCwd()</code> 之后，确保从正确的目录读取。</p>
 <p><strong>Worktree 创建</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第176-285行</span>
-<span class="hljs-keyword">if</span> (worktreeEnabled) {
-  <span class="hljs-comment">// 检查 git 仓库</span>
-  <span class="hljs-comment">// 创建 worktree</span>
-  <span class="hljs-comment">// 创建 tmux 会话（可选）</span>
-  <span class="hljs-comment">// 切换工作目录到 worktree</span>
-  <span class="hljs-comment">// 更新 projectRoot</span>
-  <span class="hljs-comment">// 清除缓存</span>
+<pre><code class="lang-typescript">// src/setup.ts 第176-285行
+if (worktreeEnabled) {
+  // 检查 git 仓库
+  // 创建 worktree
+  // 创建 tmux 会话（可选）
+  // 切换工作目录到 worktree
+  // 更新 projectRoot
+  // 清除缓存
 }
 </code></pre>
 <p>如果启用了 <code>--worktree</code> 参数，创建 git worktree 并将会话的工作目录切换到其中。</p>
 <p><strong>后台任务启动</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第292-304行</span>
-<span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isBareMode</span>()) {
-  <span class="hljs-title function_">initSessionMemory</span>()
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CONTEXT_COLLAPSE'</span>)) {
-    <span class="hljs-comment">// ...</span>
+<pre><code class="lang-typescript">// src/setup.ts 第292-304行
+if (!isBareMode()) {
+  initSessionMemory()
+  if (feature('CONTEXT_COLLAPSE')) {
+    // ...
   }
 }
-<span class="hljs-built_in">void</span> <span class="hljs-title function_">lockCurrentVersion</span>()
+void lockCurrentVersion()
 </code></pre>
 <p>初始化会话记忆、锁定当前版本（防止自动更新器在会话期间删除当前版本）。</p>
 <p><strong>命令和插件预取</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第322-329行</span>
-<span class="hljs-keyword">if</span> (!skipPluginPrefetch) {
-  <span class="hljs-built_in">void</span> <span class="hljs-title function_">getCommands</span>(<span class="hljs-title function_">getProjectRoot</span>())
+<pre><code class="lang-typescript">// src/setup.ts 第322-329行
+if (!skipPluginPrefetch) {
+  void getCommands(getProjectRoot())
 }
-<span class="hljs-built_in">void</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./utils/plugins/loadPluginHooks.js'</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> {
-  <span class="hljs-keyword">if</span> (!skipPluginPrefetch) {
-    <span class="hljs-built_in">void</span> m.<span class="hljs-title function_">loadPluginHooks</span>()
-    m.<span class="hljs-title function_">setupPluginHookHotReload</span>()
+void import('./utils/plugins/loadPluginHooks.js').then(m =&gt; {
+  if (!skipPluginPrefetch) {
+    void m.loadPluginHooks()
+    m.setupPluginHookHotReload()
   }
 })
 </code></pre>
 <p>Fire-and-forget 预取斜杠命令列表和插件钩子。使用 <code>void</code> 表示不等待结果——这些操作的结果在用户输入第一条消息之前会就绪。</p>
 <p><strong>遥测事件</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第378行</span>
-<span class="hljs-title function_">logEvent</span>(<span class="hljs-string">'tengu_started'</span>, {})
+<pre><code class="lang-typescript">// src/setup.ts 第378行
+logEvent('tengu_started', {})
 </code></pre>
 <p>发出 <code>tengu_started</code> 事件——这是最早的可靠"进程已启动"信号。放在 <code>initSinks()</code> 之后确保事件能被发送。</p>
 <p><strong>权限安全检查</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/setup.ts 第397-441行</span>
-<span class="hljs-keyword">if</span> (permissionMode === <span class="hljs-string">'bypassPermissions'</span> || allowDangerouslySkipPermissions) {
-  <span class="hljs-comment">// 禁止在 root/sudo 下跳过权限</span>
-  <span class="hljs-comment">// Anthropic 员工只能在 Docker/sandbox 中跳过权限</span>
+<pre><code class="lang-typescript">// src/setup.ts 第397-441行
+if (permissionMode === 'bypassPermissions' || allowDangerouslySkipPermissions) {
+  // 禁止在 root/sudo 下跳过权限
+  // Anthropic 员工只能在 Docker/sandbox 中跳过权限
 }
 </code></pre>
 <p><code>--dangerously-skip-permissions</code> 的安全防护：禁止以 root 运行、要求必须在隔离容器中且无互联网访问。</p>
 <h2 id="26-交互式-repl-vs-非交互式-print-mode">2.6 交互式 REPL vs 非交互式 print mode</h2>
 <h3 id="261-分叉判���">2.6.1 分叉判���</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第799-803行</span>
-<span class="hljs-keyword">const</span> hasPrintFlag = cliArgs.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'-p'</span>) || cliArgs.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'--print'</span>);
-<span class="hljs-keyword">const</span> hasInitOnlyFlag = cliArgs.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'--init-only'</span>);
-<span class="hljs-keyword">const</span> hasSdkUrl = cliArgs.<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">arg</span> =&gt;</span> arg.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'--sdk-url'</span>));
-<span class="hljs-keyword">const</span> isNonInteractive = hasPrintFlag || hasInitOnlyFlag || hasSdkUrl || !process.<span class="hljs-property">stdout</span>.<span class="hljs-property">isTTY</span>;
+<pre><code class="lang-typescript">// src/main.tsx 第799-803行
+const hasPrintFlag = cliArgs.includes('-p') || cliArgs.includes('--print');
+const hasInitOnlyFlag = cliArgs.includes('--init-only');
+const hasSdkUrl = cliArgs.some(arg =&gt; arg.startsWith('--sdk-url'));
+const isNonInteractive = hasPrintFlag || hasInitOnlyFlag || hasSdkUrl || !process.stdout.isTTY;
 </code></pre>
 <p>判定逻辑——四个条件中任一为真即为非交互模式：</p>
 <ol>
@@ -1078,21 +919,21 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <li>stdout 不是 TTY（管道、文件重定向等）</li>
 </ol>
 <h3 id="262-非交互式路径（print-mode）">2.6.2 非交互式路径（print mode）</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第2584-2860行</span>
-<span class="hljs-keyword">if</span> (isNonInteractiveSession) {
-  <span class="hljs-comment">// 1. 应用完整环境变量（信任对话框被跳过）</span>
-  <span class="hljs-title function_">applyConfigEnvironmentVariables</span>();
+<pre><code class="lang-typescript">// src/main.tsx 第2584-2860行
+if (isNonInteractiveSession) {
+  // 1. 应用完整环境变量（信任对话框被跳过）
+  applyConfigEnvironmentVariables();
 
-  <span class="hljs-comment">// 2. 初始化遥测</span>
-  <span class="hljs-title function_">initializeTelemetryAfterTrust</span>();
+  // 2. 初始化遥测
+  initializeTelemetryAfterTrust();
 
-  <span class="hljs-comment">// 3. 启动 SessionStart hooks</span>
-  <span class="hljs-keyword">const</span> sessionStartHooksPromise = <span class="hljs-title function_">processSessionStartHooks</span>(<span class="hljs-string">'startup'</span>);
+  // 3. 启动 SessionStart hooks
+  const sessionStartHooksPromise = processSessionStartHooks('startup');
 
-  <span class="hljs-comment">// 4. 导入 print.ts 并运行无头模式</span>
-  <span class="hljs-keyword">const</span> { runHeadless } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'src/cli/print.js'</span>);
-  <span class="hljs-built_in">void</span> <span class="hljs-title function_">runHeadless</span>(inputPrompt, <span class="hljs-comment">/* ... 大量配置参数 ... */</span>);
-  <span class="hljs-keyword">return</span>;
+  // 4. 导入 print.ts 并运行无头模式
+  const { runHeadless } = await import('src/cli/print.js');
+  void runHeadless(inputPrompt, /* ... 大量配置参数 ... */);
+  return;
 }
 </code></pre>
 <p>非交互模式的核心路径：</p>
@@ -1104,20 +945,20 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 </ol>
 <h3 id="263-交互式路径（repl-模式）">2.6.3 交互式路径（REPL 模式）</h3>
 <p>交互式路径要复杂得多。在 <code>main.tsx</code> 的 action handler 中（约第1006行开始），经过大量参数解析和配置后，最终通过 <code>launchRepl()</code> 启动 Ink 渲染：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/replLauncher.tsx 第12-22行</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">launchRepl</span>(<span class="hljs-params">
-  <span class="hljs-attr">root</span>: <span class="hljs-title class_">Root</span>,
-  <span class="hljs-attr">appProps</span>: <span class="hljs-title class_">AppWrapperProps</span>,
-  <span class="hljs-attr">replProps</span>: <span class="hljs-title class_">REPLProps</span>,
-  <span class="hljs-attr">renderAndRun</span>: (root: Root, element: React.ReactNode) =&gt; <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;,
-</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
-  <span class="hljs-keyword">const</span> { <span class="hljs-title class_">App</span> } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./components/App.js'</span>);
-  <span class="hljs-keyword">const</span> { <span class="hljs-variable constant_">REPL</span> } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./screens/REPL.js'</span>);
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">renderAndRun</span>(root, <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> {<span class="hljs-attr">...appProps</span>}&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">REPL</span> {<span class="hljs-attr">...replProps</span>} /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-name">App</span>&gt;</span></span>);
+<pre><code class="lang-typescript">// src/replLauncher.tsx 第12-22行
+export async function launchRepl(
+  root: Root,
+  appProps: AppWrapperProps,
+  replProps: REPLProps,
+  renderAndRun: (root: Root, element: React.ReactNode) =&gt; Promise<void>,
+): Promise<void> {
+  const { App } = await import('./components/App.js');
+  const { REPL } = await import('./screens/REPL.js');
+  await renderAndRun(root, <app {...appprops}="">
+    <repl {...replprops}="">
+  </repl></app>);
 }
-</code></pre>
+</void></void></code></pre>
 <p><code>launchRepl()</code> 动态导入 <code>App</code> 组件和 <code>REPL</code> 屏幕组件，然后调用 <code>renderAndRun()</code> 将 React 组件树交给 Ink 渲染引擎。<code>App</code> 提供全局上下文（FPS 指标、统计、状态），<code>REPL</code> 是主交互界面。</p>
 <p>在 <code>main.tsx</code> 中，<code>launchRepl()</code> 被多个不同场景调用：</p>
 <ul>
@@ -1131,23 +972,23 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 <p>每个场景传递不同的 <code>REPLProps</code>，包含初始消息、恢复的会话历史、特定的模型配置等。</p>
 <h2 id="27-bootstrapstatets-全局状态">2.7 bootstrap/state.ts 全局状态</h2>
 <h3 id="271-state-类型定义">2.7.1 State 类型定义</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/bootstrap/state.ts 第45-257行</span>
-<span class="hljs-keyword">type</span> <span class="hljs-title class_">State</span> = {
-  <span class="hljs-attr">originalCwd</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">projectRoot</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">totalCostUSD</span>: <span class="hljs-built_in">number</span>
-  <span class="hljs-attr">totalAPIDuration</span>: <span class="hljs-built_in">number</span>
-  <span class="hljs-comment">// ... 约 90 个字段 ...</span>
-  <span class="hljs-attr">sessionId</span>: <span class="hljs-title class_">SessionId</span>
-  <span class="hljs-attr">modelUsage</span>: { [<span class="hljs-attr">modelName</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-title class_">ModelUsage</span> }
-  <span class="hljs-attr">mainLoopModelOverride</span>: <span class="hljs-title class_">ModelSetting</span> | <span class="hljs-literal">undefined</span>
-  <span class="hljs-attr">isInteractive</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-attr">sdkBetas</span>: <span class="hljs-built_in">string</span>[] | <span class="hljs-literal">undefined</span>
-  <span class="hljs-attr">lastAPIRequest</span>: <span class="hljs-title class_">Omit</span>&lt;<span class="hljs-title class_">BetaMessageStreamParams</span>, <span class="hljs-string">'messages'</span>&gt; | <span class="hljs-literal">null</span>
-  <span class="hljs-attr">invokedSkills</span>: <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, { <span class="hljs-attr">skillName</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>; ... }&gt;
-  <span class="hljs-comment">// ...</span>
+<pre><code class="lang-typescript">// src/bootstrap/state.ts 第45-257行
+type State = {
+  originalCwd: string
+  projectRoot: string
+  totalCostUSD: number
+  totalAPIDuration: number
+  // ... 约 90 个字段 ...
+  sessionId: SessionId
+  modelUsage: { [modelName: string]: ModelUsage }
+  mainLoopModelOverride: ModelSetting | undefined
+  isInteractive: boolean
+  sdkBetas: string[] | undefined
+  lastAPIRequest: Omit<betamessagestreamparams, 'messages'=""> | null
+  invokedSkills: Map<string, {="" skillname:="" string;="" content:="" ...="" }="">
+  // ...
 }
-</code></pre>
+</string,></betamessagestreamparams,></code></pre>
 <p>State 类型横跨约 210 行，是整个应用运行时状态的完整描述。关键字段分组：</p>
 <table>
 <thead>
@@ -1206,30 +1047,30 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 </tbody>
 </table>
 <h3 id="272-状态初始化">2.7.2 状态初始化</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/bootstrap/state.ts 第260行</span>
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">getInitialState</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">State</span> {
-  <span class="hljs-keyword">let</span> resolvedCwd = <span class="hljs-string">''</span>
-  <span class="hljs-comment">// 解析符号链接，NFC 规范化（macOS 兼容）</span>
-  <span class="hljs-keyword">const</span> rawCwd = <span class="hljs-title function_">cwd</span>()
-  <span class="hljs-keyword">try</span> {
-    resolvedCwd = <span class="hljs-title function_">realpathSync</span>(rawCwd).<span class="hljs-title function_">normalize</span>(<span class="hljs-string">'NFC'</span>)
-  } <span class="hljs-keyword">catch</span> {
-    resolvedCwd = rawCwd.<span class="hljs-title function_">normalize</span>(<span class="hljs-string">'NFC'</span>)
+<pre><code class="lang-typescript">// src/bootstrap/state.ts 第260行
+function getInitialState(): State {
+  let resolvedCwd = ''
+  // 解析符号链接，NFC 规范化（macOS 兼容）
+  const rawCwd = cwd()
+  try {
+    resolvedCwd = realpathSync(rawCwd).normalize('NFC')
+  } catch {
+    resolvedCwd = rawCwd.normalize('NFC')
   }
-  <span class="hljs-keyword">const</span> <span class="hljs-attr">state</span>: <span class="hljs-title class_">State</span> = {
-    <span class="hljs-attr">originalCwd</span>: resolvedCwd,
-    <span class="hljs-attr">projectRoot</span>: resolvedCwd,
-    <span class="hljs-attr">totalCostUSD</span>: <span class="hljs-number">0</span>,
-    <span class="hljs-comment">// ...</span>
-    <span class="hljs-attr">sessionId</span>: <span class="hljs-title function_">randomUUID</span>() <span class="hljs-keyword">as</span> <span class="hljs-title class_">SessionId</span>,
-    <span class="hljs-attr">clientType</span>: <span class="hljs-string">'cli'</span>,
-    <span class="hljs-attr">allowedSettingSources</span>: [
-      <span class="hljs-string">'userSettings'</span>, <span class="hljs-string">'projectSettings'</span>, <span class="hljs-string">'localSettings'</span>,
-      <span class="hljs-string">'flagSettings'</span>, <span class="hljs-string">'policySettings'</span>,
+  const state: State = {
+    originalCwd: resolvedCwd,
+    projectRoot: resolvedCwd,
+    totalCostUSD: 0,
+    // ...
+    sessionId: randomUUID() as SessionId,
+    clientType: 'cli',
+    allowedSettingSources: [
+      'userSettings', 'projectSettings', 'localSettings',
+      'flagSettings', 'policySettings',
     ],
-    <span class="hljs-comment">// ...</span>
+    // ...
   }
-  <span class="hljs-keyword">return</span> state
+  return state
 }
 </code></pre>
 <p>初始化的关键细节：</p>
@@ -1240,13 +1081,13 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 </ol>
 <h3 id="273-gettersetter-模式">2.7.3 Getter/Setter 模式</h3>
 <p>state.ts 对外暴露的不是 State 对象本身，而是精细的 getter/setter 函数：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// 典型的 getter/setter 对</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getSessionId</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">SessionId</span> { <span class="hljs-keyword">return</span> state.<span class="hljs-property">sessionId</span> }
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">switchSession</span>(<span class="hljs-params"><span class="hljs-attr">id</span>: <span class="hljs-title class_">SessionId</span></span>): <span class="hljs-built_in">void</span> { state.<span class="hljs-property">sessionId</span> = id }
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getCwdState</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">string</span> { <span class="hljs-keyword">return</span> state.<span class="hljs-property">cwd</span> }
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">setCwdState</span>(<span class="hljs-params"><span class="hljs-attr">v</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">void</span> { state.<span class="hljs-property">cwd</span> = v }
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getIsNonInteractiveSession</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">boolean</span> { <span class="hljs-keyword">return</span> !state.<span class="hljs-property">isInteractive</span> }
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">setIsInteractive</span>(<span class="hljs-params"><span class="hljs-attr">v</span>: <span class="hljs-built_in">boolean</span></span>): <span class="hljs-built_in">void</span> { state.<span class="hljs-property">isInteractive</span> = v }
+<pre><code class="lang-typescript">// 典型的 getter/setter 对
+export function getSessionId(): SessionId { return state.sessionId }
+export function switchSession(id: SessionId): void { state.sessionId = id }
+export function getCwdState(): string { return state.cwd }
+export function setCwdState(v: string): void { state.cwd = v }
+export function getIsNonInteractiveSession(): boolean { return !state.isInteractive }
+export function setIsInteractive(v: boolean): void { state.isInteractive = v }
 </code></pre>
 <p>这种封装有两个目的：</p>
 <ol>
@@ -1255,21 +1096,21 @@ process.<span class="hljs-property">env</span>.<span class="hljs-property">COREP
 </ol>
 <h2 id="28-main-函数的-commander-配置">2.8 main() 函数的 Commander 配置</h2>
 <h3 id="281-preaction-钩子">2.8.1 preAction 钩子</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第907-967行</span>
-program.<span class="hljs-title function_">hook</span>(<span class="hljs-string">'preAction'</span>, <span class="hljs-keyword">async</span> thisCommand =&gt; {
-  <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>([<span class="hljs-title function_">ensureMdmSettingsLoaded</span>(), <span class="hljs-title function_">ensureKeychainPrefetchCompleted</span>()]);
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">init</span>();
-  <span class="hljs-comment">// 设置进程标题</span>
-  process.<span class="hljs-property">title</span> = <span class="hljs-string">'claude'</span>;
-  <span class="hljs-comment">// 附加日志 sink</span>
-  <span class="hljs-keyword">const</span> { initSinks } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./utils/sinks.js'</span>);
-  <span class="hljs-title function_">initSinks</span>();
-  <span class="hljs-comment">// 处理 --plugin-dir</span>
-  <span class="hljs-comment">// 运行迁移</span>
-  <span class="hljs-title function_">runMigrations</span>();
-  <span class="hljs-comment">// 加载远程管理设置</span>
-  <span class="hljs-built_in">void</span> <span class="hljs-title function_">loadRemoteManagedSettings</span>();
-  <span class="hljs-built_in">void</span> <span class="hljs-title function_">loadPolicyLimits</span>();
+<pre><code class="lang-typescript">// src/main.tsx 第907-967行
+program.hook('preAction', async thisCommand =&gt; {
+  await Promise.all([ensureMdmSettingsLoaded(), ensureKeychainPrefetchCompleted()]);
+  await init();
+  // 设置进程标题
+  process.title = 'claude';
+  // 附加日志 sink
+  const { initSinks } = await import('./utils/sinks.js');
+  initSinks();
+  // 处理 --plugin-dir
+  // 运行迁移
+  runMigrations();
+  // 加载远程管理设置
+  void loadRemoteManagedSettings();
+  void loadPolicyLimits();
 });
 </code></pre>
 <p>Commander 的 <code>preAction</code> 钩子在<strong>任何命令执行前</strong>运行。这里完成了：</p>
@@ -1281,16 +1122,16 @@ program.<span class="hljs-title function_">hook</span>(<span class="hljs-string"
 <li>加载远程管理设置和策略限制</li>
 </ol>
 <h3 id="282-迁移系统">2.8.2 迁移系统</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/main.tsx 第325-352行</span>
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CURRENT_MIGRATION_VERSION</span> = <span class="hljs-number">11</span>;
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">runMigrations</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">void</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">getGlobalConfig</span>().<span class="hljs-property">migrationVersion</span> !== <span class="hljs-variable constant_">CURRENT_MIGRATION_VERSION</span>) {
-    <span class="hljs-title function_">migrateAutoUpdatesToSettings</span>();
-    <span class="hljs-title function_">migrateBypassPermissionsAcceptedToSettings</span>();
-    <span class="hljs-comment">// ... 共 10 个迁移 ...</span>
-    <span class="hljs-title function_">saveGlobalConfig</span>(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({
+<pre><code class="lang-typescript">// src/main.tsx 第325-352行
+const CURRENT_MIGRATION_VERSION = 11;
+function runMigrations(): void {
+  if (getGlobalConfig().migrationVersion !== CURRENT_MIGRATION_VERSION) {
+    migrateAutoUpdatesToSettings();
+    migrateBypassPermissionsAcceptedToSettings();
+    // ... 共 10 个迁移 ...
+    saveGlobalConfig(prev =&gt; ({
       ...prev,
-      <span class="hljs-attr">migrationVersion</span>: <span class="hljs-variable constant_">CURRENT_MIGRATION_VERSION</span>,
+      migrationVersion: CURRENT_MIGRATION_VERSION,
     }));
   }
 }
@@ -1379,7 +1220,7 @@ program.<span class="hljs-title function_">hook</span>(<span class="hljs-string"
             |-- 构建初始消息
             |-- import('src/components/App.js')
             |-- import('src/screens/REPL.js')
-            +-- launchRepl(root, &lt;App&gt;&lt;REPL /&gt;&lt;/App&gt;)
+            +-- launchRepl(root, <app><repl></repl></app>)
 </code></pre><h2 id="210-本章总结">2.10 本章总结</h2>
 <p>Claude Code 的启动流程体现了三个核心工程目标：</p>
 <ol>
@@ -1431,7 +1272,7 @@ program.<span class="hljs-title function_">hook</span>(<span class="hljs-string"
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第2章 - 构建系统与启动流程","level":"1.3","depth":1,"next":{"title":"第3章 - 终端UI渲染引擎","level":"2.1","depth":1,"path":"第03章-终端UI渲染引擎.md","ref":"第03章-终端UI渲染引擎.md","articles":[]},"previous":{"title":"第1章 - 项目概述与架构全景","level":"1.2","depth":1,"path":"第01章-项目概述与架构全景.md","ref":"第01章-项目概述与架构全景.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第02章-构建系统与启动流程.md","mtime":"2026-04-01T06:17:33.448Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第2章 - 构建系统与启动流程","level":"1.3","depth":1,"next":{"title":"第3章 - 终端UI渲染引擎","level":"2.1","depth":1,"path":"第03章-终端UI渲染引擎.md","ref":"第03章-终端UI渲染引擎.md","articles":[]},"previous":{"title":"第1章 - 项目概述与架构全景","level":"1.2","depth":1,"path":"第01章-项目概述与架构全景.md","ref":"第01章-项目概述与架构全景.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","mermaid"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第02章-构建系统与启动流程.md","mtime":"2026-04-03T06:45:16.313Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:57:12.977Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -1483,6 +1324,14 @@ program.<span class="hljs-title function_">hook</span>(<span class="hljs-string"
     </script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid-load.js"></script>
+        
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid.min.js"></script>
+        
     
         
         <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>

