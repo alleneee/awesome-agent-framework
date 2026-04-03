@@ -30,7 +30,21 @@
 * [第11章 - 插件、Skills与Hook系统](第11章-插件Skills与Hook系统.md)
 * [第12章 - 状态管理、安全模型与基础设施](第12章-状态管理安全模型与基础设施.md)
 
+## 第七部分：Agent 工程问题专题
+
+* [专题导读](Agent工程问题专题/README.md)
+* [问题1 - 长期记忆应该放在哪里](Agent工程问题专题/01-long-term-memory.md)
+* [问题2 - 会话中断后如何恢复](Agent工程问题专题/02-session-resume.md)
+* [问题3 - 窗口快爆了时如何处理上下文](Agent工程问题专题/03-context-window-management.md)
+* [问题4 - 压缩后如何补回真正的任务状态](Agent工程问题专题/04-post-compact-task-restoration.md)
+* [问题5 - 计划如何持久化并参与恢复](Agent工程问题专题/05-plan-persistence.md)
+* [问题6 - 后台 agent 状态如何管理](Agent工程问题专题/06-background-agent-state.md)
+* [问题7 - 子 agent 如何恢复运行](Agent工程问题专题/07-subagent-resume.md)
+* [问题8 - 多 agent 之间如何可靠通信](Agent工程问题专题/08-multi-agent-messaging.md)
+* [问题9 - 异常、循环过长和输出截断如何收口](Agent工程问题专题/09-failure-recovery-and-loop-bounds.md)
+* [问题10 - 消息结构和工具调用不变量如何维护](Agent工程问题专题/10-message-invariants.md)
+* [Claude Code 系统总览](Agent工程问题专题/11-claude-code-system-overview.md)
+
 ## 附录
 
 * [附录A - 核心提示词工程全解析](附录A-核心提示词工程全解析.md)
-

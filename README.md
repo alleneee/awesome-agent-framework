@@ -54,6 +54,16 @@ Claude Code v2.1.88 源码从 0 到 1 的深度教学指南。面向有经验的
 | [第11章 - 插件、Skills与Hook系统](第11章-插件Skills与Hook系统.md) | 插件架构、Skills 执行、Hook 机制、MCP 集成、Cron | `plugins/`, `skills/`, `hooks/`, `tools/SkillTool/` |
 | [第12章 - 状态管理、安全模型与基础设施](第12章-状态管理安全模型与基础设施.md) | Store 设计、Settings 合并、权限体系、持久化、Bridge | `state/`, `types/permissions.ts`, `history.ts`, `bridge/` |
 
+### 第七部分：Agent 工程问题专题
+
+这一部分不是按源码模块划分，而是按 Agent 开发中的关键工程问题来组织，适合已经读完主章节、准备从“做一个可靠 Agent 系统”角度重新梳理一遍的人。
+
+| 文档 | 内容 | 适合解决的问题 |
+|------|------|---------------|
+| [专题导读](Agent工程问题专题/README.md) | 学习路线、问题分类、阅读方式 | 从哪里开始、怎么把问题串起来 |
+| [Claude Code 系统总览](Agent工程问题专题/11-claude-code-system-overview.md) | 生命周期、协作、工具、上下文、恢复、持久化的整体图景 | 先建立系统级认知 |
+| [问题 1~10](Agent工程问题专题/01-long-term-memory.md) | 长期记忆、会话恢复、上下文压缩、计划持久化、后台 Agent、多 Agent 通信、恢复边界等 | 针对单个工程难题深入学习 |
+
 ## 英文文件名索引
 
 每章均提供英文命名的同内容副本，方便非中文环境导航：
