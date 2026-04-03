@@ -1,0 +1,1389 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Chapter 12 - State Security and Infrastructure · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="Chapter-11-Plugin-Skills-and-Hook-System.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Chapter 12 - State Security and Infrastructure</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第12章-状态管理、安全模型与基础设施">第12章 状态管理、安全模型与基础设施</h1>
+<p>本章是 Claude Code 源码教学指南的收官篇。我们将深入剖析四个横切关注点：极简状态管理、多层安全模型、对话历史持久化，以及支撑整个系统运转的基础设施（记忆系统、Bridge 协议、运行时迁移）。</p>
+<hr></hr>
+<h2 id="121-34-行-store-实现的精妙设计">12.1 34 行 Store 实现的精妙设计</h2>
+<p>Claude Code 没有使用 Redux、Zustand 或任何第三方状态库，而是用 34 行代码实现了一个完整的响应式 Store。</p>
+<p>源码位于 <code>src/state/store.ts</code>，完整内容如下：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">Listener</span> = <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">OnChange</span>&lt;T&gt; = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">args</span>: { newState: T; oldState: T }</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">Store</span>&lt;T&gt; = {
+  <span class="hljs-attr">getState</span>: <span class="hljs-function">() =&gt;</span> T
+  <span class="hljs-attr">setState</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">updater</span>: (prev: T) =&gt; T</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">subscribe</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">listener</span>: <span class="hljs-title class_">Listener</span></span>) =&gt;</span> <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> createStore&lt;T&gt;(
+  <span class="hljs-attr">initialState</span>: T,
+  <span class="hljs-attr">onChange</span>?: <span class="hljs-title class_">OnChange</span>&lt;T&gt;,
+): <span class="hljs-title class_">Store</span>&lt;T&gt; {
+  <span class="hljs-keyword">let</span> state = initialState
+  <span class="hljs-keyword">const</span> listeners = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-title class_">Listener</span>&gt;()
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">getState</span>: <span class="hljs-function">() =&gt;</span> state,
+
+    <span class="hljs-attr">setState</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">updater</span>: (prev: T) =&gt; T</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> prev = state
+      <span class="hljs-keyword">const</span> next = <span class="hljs-title function_">updater</span>(prev)
+      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">is</span>(next, prev)) <span class="hljs-keyword">return</span>
+      state = next
+      onChange?.({ <span class="hljs-attr">newState</span>: next, <span class="hljs-attr">oldState</span>: prev })
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> listener <span class="hljs-keyword">of</span> listeners) <span class="hljs-title function_">listener</span>()
+    },
+
+    <span class="hljs-attr">subscribe</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">listener</span>: <span class="hljs-title class_">Listener</span></span>) =&gt;</span> {
+      listeners.<span class="hljs-title function_">add</span>(listener)
+      <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> listeners.<span class="hljs-title function_">delete</span>(listener)
+    },
+  }
+}
+</code></pre>
+<p>逐行解析：</p>
+<p><strong>第 1-2 行：类型定义</strong></p>
+<ul>
+<li><code>Listener</code> 是无参无返回值的回调，用于通知 UI 重新渲染</li>
+<li><code>OnChange&lt;T&gt;</code> 接收新旧状态对，用于副作用分发</li>
+</ul>
+<p><strong>第 4-8 行：Store 接口</strong></p>
+<ul>
+<li><code>getState()</code> -- 同步读取当前快照</li>
+<li><code>setState()</code> -- 接受一个 updater 函数（而非直接值），保证基于最新状态计算</li>
+<li><code>subscribe()</code> -- 返回取消订阅函数，与 React <code>useSyncExternalStore</code> 完美对接</li>
+</ul>
+<p><strong>第 14-15 行：闭包状态</strong></p>
+<ul>
+<li><code>state</code> 用 <code>let</code> 而非外部对象持有，闭包保证了封装性</li>
+<li><code>listeners</code> 用 <code>Set</code> 而非数组，避免重复注册且删除是 O(1)</li>
+</ul>
+<p><strong>第 21-23 行：引用相等性检查</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> prev = state
+<span class="hljs-keyword">const</span> next = <span class="hljs-title function_">updater</span>(prev)
+<span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">is</span>(next, prev)) <span class="hljs-keyword">return</span>
+</code></pre>
+<p><code>Object.is</code> 做严格引用相等比较。如果 updater 返回了同一个引用（例如无状态变化时直接返回 prev），则跳过所有通知。这是性能关键路径——避免了无意义的重渲染。</p>
+<p><strong>第 24-26 行：状态更新与通知</strong></p>
+<pre><code class="lang-typescript">state = next
+onChange?.({ <span class="hljs-attr">newState</span>: next, <span class="hljs-attr">oldState</span>: prev })
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> listener <span class="hljs-keyword">of</span> listeners) <span class="hljs-title function_">listener</span>()
+</code></pre>
+<p>先调用 <code>onChange</code> 处理副作用（同步），再逐个通知所有 listener。这个顺序至关重要：副作用在 UI 重渲染之前完成，保证 UI 读到的外部状态（如 globalConfig）已经同步更新。</p>
+<p><strong>第 29-31 行：订阅机制</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-attr">subscribe</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">listener</span>: <span class="hljs-title class_">Listener</span></span>) =&gt;</span> {
+  listeners.<span class="hljs-title function_">add</span>(listener)
+  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> listeners.<span class="hljs-title function_">delete</span>(listener)
+}
+</code></pre>
+<p>返回的是一个闭包——取消订阅函数。这是经典的观察者模式变体，与 React 的 <code>useEffect</code> 清理函数天然契合。</p>
+<p><strong>设计取舍</strong>：这个 Store 故意不支持中间件、时间旅行、action type 分发。整个应用只有一个 Store 实例（AppStateStore），所有复杂逻辑都推到了 <code>onChange</code> 回调和各 <code>setState</code> 调用点。简单胜过灵活。</p>
+<hr></hr>
+<h2 id="122-appstate-的状态域全景图">12.2 AppState 的状态域全景图</h2>
+<p><code>src/state/AppStateStore.ts</code> 定义了全局状态类型 <code>AppState</code>，它是整个应用的"单一事实源"。</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">AppState</span> = <span class="hljs-title class_">DeepImmutable</span>&lt;{
+  <span class="hljs-attr">settings</span>: <span class="hljs-title class_">SettingsJson</span>
+  <span class="hljs-attr">verbose</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">mainLoopModel</span>: <span class="hljs-title class_">ModelSetting</span>
+  <span class="hljs-attr">statusLineText</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">toolPermissionContext</span>: <span class="hljs-title class_">ToolPermissionContext</span>
+  <span class="hljs-comment">// ... 数十个字段</span>
+}&gt; &amp; {
+  <span class="hljs-attr">tasks</span>: { [<span class="hljs-attr">taskId</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-title class_">TaskState</span> }
+  <span class="hljs-attr">mcp</span>: { <span class="hljs-attr">clients</span>: <span class="hljs-title class_">MCPServerConnection</span>[]; <span class="hljs-attr">tools</span>: <span class="hljs-title class_">Tool</span>[]; ... }
+  <span class="hljs-attr">plugins</span>: { <span class="hljs-attr">enabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[]; ... }
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>AppState 可分为以下几个状态域：</p>
+<table>
+<thead>
+<tr>
+<th>状态域</th>
+<th>核心字段</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配置</td>
+<td><code>settings</code>, <code>verbose</code>, <code>mainLoopModel</code></td>
+<td>运行时配置快照</td>
+</tr>
+<tr>
+<td>权限</td>
+<td><code>toolPermissionContext</code>, <code>denialTracking</code></td>
+<td>权限模式与规则</td>
+</tr>
+<tr>
+<td>UI 视图</td>
+<td><code>expandedView</code>, <code>footerSelection</code>, <code>isBriefOnly</code></td>
+<td>渲染状态</td>
+</tr>
+<tr>
+<td>Bridge</td>
+<td><code>replBridgeEnabled</code>, <code>replBridgeConnected</code>, <code>replBridgeSessionUrl</code></td>
+<td>远程控制连接</td>
+</tr>
+<tr>
+<td>任务</td>
+<td><code>tasks</code>, <code>foregroundedTaskId</code></td>
+<td>多 Agent 任务池</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>mcp.clients</code>, <code>mcp.tools</code>, <code>mcp.commands</code></td>
+<td>MCP 服务连接与工具</td>
+</tr>
+<tr>
+<td>插件</td>
+<td><code>plugins.enabled</code>, <code>plugins.errors</code></td>
+<td>插件加载状态</td>
+</tr>
+<tr>
+<td>投机执行</td>
+<td><code>speculation</code>, <code>speculationSessionTimeSavedMs</code></td>
+<td>预测执行状态</td>
+</tr>
+<tr>
+<td>记忆</td>
+<td>(通过文件系统，不在 AppState 内)</td>
+<td>持久化记忆</td>
+</tr>
+<tr>
+<td>团队</td>
+<td><code>teamContext</code>, <code>inbox</code>, <code>agentNameRegistry</code></td>
+<td>多 Agent 协作</td>
+</tr>
+</tbody>
+</table>
+<p>注意 <code>DeepImmutable&lt;...&gt;</code> 的使用：大部分字段被标记为深度不可变，但 <code>tasks</code> 和 <code>mcp</code> 等包含函数类型的字段被排除在外，通过交叉类型 <code>&amp;</code> 单独声明。</p>
+<p><code>getDefaultAppState()</code> 提供了完整的默认值工厂：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getDefaultAppState</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">AppState</span> {
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">initialMode</span>: <span class="hljs-title class_">PermissionMode</span> =
+    teammateUtils.<span class="hljs-title function_">isTeammate</span>() &amp;&amp; teammateUtils.<span class="hljs-title function_">isPlanModeRequired</span>()
+      ? <span class="hljs-string">'plan'</span>
+      : <span class="hljs-string">'default'</span>
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">settings</span>: <span class="hljs-title function_">getInitialSettings</span>(),
+    <span class="hljs-attr">tasks</span>: {},
+    <span class="hljs-attr">agentNameRegistry</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>(),
+    <span class="hljs-attr">toolPermissionContext</span>: {
+      ...<span class="hljs-title function_">getEmptyToolPermissionContext</span>(),
+      <span class="hljs-attr">mode</span>: initialMode,
+    },
+    <span class="hljs-attr">speculation</span>: <span class="hljs-variable constant_">IDLE_SPECULATION_STATE</span>,
+    <span class="hljs-comment">// ... 60+ 字段默认值</span>
+  }
+}
+</code></pre>
+<p>每个会话启动时调用一次，创建全新的状态快照。注意 <code>initialMode</code> 的计算——当进程作为 teammate 被 spawn 且要求 plan mode 时，权限模式从 <code>'default'</code> 变为 <code>'plan'</code>，这是安全约束的体现。</p>
+<hr></hr>
+<h2 id="123-副作用分发机制">12.3 副作用分发机制</h2>
+<p><code>src/state/onChangeAppState.ts</code> 是 Store 的 <code>onChange</code> 回调，承担所有状态变更的副作用处理。</p>
+<p>核心设计理念：<strong>不在每个 setState 调用点手动同步外部状态，而是集中在 onChange 中做差分检测</strong>。</p>
+<h3 id="权限模式同步">权限模式同步</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> prevMode = oldState.<span class="hljs-property">toolPermissionContext</span>.<span class="hljs-property">mode</span>
+<span class="hljs-keyword">const</span> newMode = newState.<span class="hljs-property">toolPermissionContext</span>.<span class="hljs-property">mode</span>
+<span class="hljs-keyword">if</span> (prevMode !== newMode) {
+  <span class="hljs-keyword">const</span> prevExternal = <span class="hljs-title function_">toExternalPermissionMode</span>(prevMode)
+  <span class="hljs-keyword">const</span> newExternal = <span class="hljs-title function_">toExternalPermissionMode</span>(newMode)
+  <span class="hljs-keyword">if</span> (prevExternal !== newExternal) {
+    <span class="hljs-title function_">notifySessionMetadataChanged</span>({
+      <span class="hljs-attr">permission_mode</span>: newExternal,
+      <span class="hljs-attr">is_ultraplan_mode</span>: isUltraplan,
+    })
+  }
+  <span class="hljs-title function_">notifyPermissionModeChanged</span>(newMode)
+}
+</code></pre>
+<p>源码注释中解释了为什么这段代码至关重要：此前权限模式的变更有 8+ 个入口（Shift+Tab 切换、ExitPlanMode 对话框、/plan 命令、rewind、Bridge 的 onSetPermissionMode 等），但只有 2 个路径会通知 CCR（Claude Code Remote）。将通知逻辑统一到 onChange，任何 <code>setState</code> 调用只要改变了 mode，都会自动同步到 CCR 和 SDK。</p>
+<p>注意二级过滤：<code>toExternalPermissionMode</code> 将内部模式（如 <code>'bubble'</code>、<code>'auto'</code>）映射为外部模式。如果外部表示未变（例如 <code>default -&gt; bubble -&gt; default</code>），则跳过 CCR 通知。</p>
+<h3 id="模型变更持久化">模型变更持久化</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (newState.<span class="hljs-property">mainLoopModel</span> !== oldState.<span class="hljs-property">mainLoopModel</span> &amp;&amp;
+    newState.<span class="hljs-property">mainLoopModel</span> !== <span class="hljs-literal">null</span>) {
+  <span class="hljs-title function_">updateSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>, { <span class="hljs-attr">model</span>: newState.<span class="hljs-property">mainLoopModel</span> })
+  <span class="hljs-title function_">setMainLoopModelOverride</span>(newState.<span class="hljs-property">mainLoopModel</span>)
+}
+</code></pre>
+<p>当用户通过 <code>/model</code> 命令切换模型时，onChange 自动将选择写入 <code>userSettings</code>，下次启动自动恢复。</p>
+<h3 id="settings-变更清理缓存">Settings 变更清理缓存</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (newState.<span class="hljs-property">settings</span> !== oldState.<span class="hljs-property">settings</span>) {
+  <span class="hljs-title function_">clearApiKeyHelperCache</span>()
+  <span class="hljs-title function_">clearAwsCredentialsCache</span>()
+  <span class="hljs-title function_">clearGcpCredentialsCache</span>()
+  <span class="hljs-keyword">if</span> (newState.<span class="hljs-property">settings</span>.<span class="hljs-property">env</span> !== oldState.<span class="hljs-property">settings</span>.<span class="hljs-property">env</span>) {
+    <span class="hljs-title function_">applyConfigEnvironmentVariables</span>()
+  }
+}
+</code></pre>
+<p>settings 引用变化时，清除所有认证缓存并重新应用环境变量。这保证了通过 <code>/config</code> 或文件编辑修改 API key 后立即生效。</p>
+<hr></hr>
+<h2 id="124-五层-settings-合并策略">12.4 五层 Settings 合并策略</h2>
+<p><code>src/utils/settings/settings.ts</code> 实现了 Claude Code 最复杂的配置系统。五个层级按优先级从低到高排列：</p>
+<pre><code>userSettings &lt; projectSettings &lt; localSettings &lt; flagSettings &lt; policySettings
+</code></pre><p>对应的文件路径由 <code>src/utils/settings/constants.ts</code> 定义：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">SETTING_SOURCES</span> = [
+  <span class="hljs-string">'userSettings'</span>,      <span class="hljs-comment">// ~/.claude/settings.json</span>
+  <span class="hljs-string">'projectSettings'</span>,   <span class="hljs-comment">// .claude/settings.json（项目共享，提交到仓库）</span>
+  <span class="hljs-string">'localSettings'</span>,     <span class="hljs-comment">// .claude/settings.local.json（gitignored）</span>
+  <span class="hljs-string">'flagSettings'</span>,      <span class="hljs-comment">// --settings CLI 参数指定的文件</span>
+  <span class="hljs-string">'policySettings'</span>,    <span class="hljs-comment">// 企业管理策略（远程/MDM/managed-settings.json）</span>
+] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+</code></pre>
+<h3 id="合并流程">合并流程</h3>
+<p>核心函数 <code>loadSettingsFromDisk()</code> 的合并逻辑：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">loadSettingsFromDisk</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">SettingsWithErrors</span> {
+  <span class="hljs-comment">// 先加载插件 settings 作为最低优先级基础</span>
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">mergedSettings</span>: <span class="hljs-title class_">SettingsJson</span> = {}
+  <span class="hljs-keyword">const</span> pluginSettings = <span class="hljs-title function_">getPluginSettingsBase</span>()
+  <span class="hljs-keyword">if</span> (pluginSettings) {
+    mergedSettings = <span class="hljs-title function_">mergeWith</span>(mergedSettings, pluginSettings, settingsMergeCustomizer)
+  }
+
+  <span class="hljs-comment">// 按优先级顺序逐层合并</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> source <span class="hljs-keyword">of</span> <span class="hljs-title function_">getEnabledSettingSources</span>()) {
+    <span class="hljs-comment">// policySettings 内部有子优先级：remote &gt; HKLM/plist &gt; file &gt; HKCU</span>
+    <span class="hljs-keyword">if</span> (source === <span class="hljs-string">'policySettings'</span>) {
+      <span class="hljs-comment">// ... 特殊处理</span>
+      <span class="hljs-keyword">continue</span>
+    }
+
+    <span class="hljs-keyword">const</span> { settings } = <span class="hljs-title function_">parseSettingsFile</span>(filePath)
+    <span class="hljs-keyword">if</span> (settings) {
+      mergedSettings = <span class="hljs-title function_">mergeWith</span>(mergedSettings, settings, settingsMergeCustomizer)
+    }
+  }
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">settings</span>: mergedSettings, <span class="hljs-attr">errors</span>: allErrors }
+}
+</code></pre>
+<h3 id="自定义合并器">自定义合并器</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">settingsMergeCustomizer</span>(<span class="hljs-params">
+  <span class="hljs-attr">objValue</span>: <span class="hljs-built_in">unknown</span>,
+  <span class="hljs-attr">srcValue</span>: <span class="hljs-built_in">unknown</span>,
+</span>): <span class="hljs-built_in">unknown</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(objValue) &amp;&amp; <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(srcValue)) {
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">mergeArrays</span>(objValue, srcValue)  <span class="hljs-comment">// 数组：拼接去重</span>
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>  <span class="hljs-comment">// 其他类型：lodash 默认深合并</span>
+}
+</code></pre>
+<p>数组字段（如 <code>permissions.allow</code>）不是覆盖而是合并去重。这意味着：用户级别配置的 allow 规则会和项目级别的规则叠加，而非被替换。</p>
+<h3 id="policysettings-的子优先级">policySettings 的子优先级</h3>
+<p>policySettings 内部还有四层优先级，采用"第一个有内容的源胜出"策略：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// 1. 远程管理（最高）</span>
+<span class="hljs-keyword">const</span> remoteSettings = <span class="hljs-title function_">getRemoteManagedSettingsSyncFromCache</span>()
+<span class="hljs-comment">// 2. 系统级 MDM（macOS plist / Windows HKLM）</span>
+<span class="hljs-keyword">const</span> mdmResult = <span class="hljs-title function_">getMdmSettings</span>()
+<span class="hljs-comment">// 3. 文件级（managed-settings.json + managed-settings.d/*.json）</span>
+<span class="hljs-keyword">const</span> { <span class="hljs-attr">settings</span>: fileSettings } = <span class="hljs-title function_">loadManagedFileSettings</span>()
+<span class="hljs-comment">// 4. 用户级注册表（Windows HKCU，最低）</span>
+<span class="hljs-keyword">const</span> hkcu = <span class="hljs-title function_">getHkcuSettings</span>()
+</code></pre>
+<p>文件级策略还支持 drop-in 目录（<code>managed-settings.d/*.json</code>），按字母序合并，遵循 systemd 风格约定。</p>
+<h3 id="安全关键：projectsettings-的排除">安全关键：projectSettings 的排除</h3>
+<p>多个安全敏感的查询函数故意排除 <code>projectSettings</code>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">hasSkipDangerousModePermissionPrompt</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">boolean</span> {
+  <span class="hljs-keyword">return</span> !!(
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>)?.<span class="hljs-property">skipDangerousModePermissionPrompt</span> ||
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'localSettings'</span>)?.<span class="hljs-property">skipDangerousModePermissionPrompt</span> ||
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'flagSettings'</span>)?.<span class="hljs-property">skipDangerousModePermissionPrompt</span> ||
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'policySettings'</span>)?.<span class="hljs-property">skipDangerousModePermissionPrompt</span>
+  )
+  <span class="hljs-comment">// 注意：没有 projectSettings！</span>
+}
+</code></pre>
+<p>原因在注释中说得很清楚：<strong>恶意项目可以通过 <code>.claude/settings.json</code> 自动绕过权限确认对话框，构成远程代码执行（RCE）风险</strong>。同样的模式在 <code>hasAutoModeOptIn()</code>、<code>getAutoModeConfig()</code> 中都有体现。</p>
+<hr></hr>
+<h2 id="125-权限类型体系四层设计">12.5 权限类型体系四层设计</h2>
+<p><code>src/types/permissions.ts</code> 定义了 Claude Code 的权限模型。这个文件有意只包含类型定义和常量，不依赖任何运行时模块，以打破循环依赖。</p>
+<h3 id="第一层：模式层（permission-modes）">第一层：模式层（Permission Modes）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">EXTERNAL_PERMISSION_MODES</span> = [
+  <span class="hljs-string">'acceptEdits'</span>,
+  <span class="hljs-string">'bypassPermissions'</span>,
+  <span class="hljs-string">'default'</span>,
+  <span class="hljs-string">'dontAsk'</span>,
+  <span class="hljs-string">'plan'</span>,
+] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">InternalPermissionMode</span> = <span class="hljs-title class_">ExternalPermissionMode</span> | <span class="hljs-string">'auto'</span> | <span class="hljs-string">'bubble'</span>
+</code></pre>
+<p>外部模式是面向用户和 CCR 的标准模式集。内部模式增加了 <code>'auto'</code>（分类器自动判断）和 <code>'bubble'</code>（子 Agent 冒泡到父级），这两个模式对外部不可见。</p>
+<h3 id="第二层：规则层（permission-rules）">第二层：规则层（Permission Rules）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PermissionRule</span> = {
+  <span class="hljs-attr">source</span>: <span class="hljs-title class_">PermissionRuleSource</span>     <span class="hljs-comment">// 来源：userSettings/projectSettings/...</span>
+  <span class="hljs-attr">ruleBehavior</span>: <span class="hljs-title class_">PermissionBehavior</span> <span class="hljs-comment">// 行为：'allow' | 'deny' | 'ask'</span>
+  <span class="hljs-attr">ruleValue</span>: <span class="hljs-title class_">PermissionRuleValue</span>   <span class="hljs-comment">// 目标：{ toolName, ruleContent? }</span>
+}
+</code></pre>
+<p>每条规则绑定一个来源（决定优先级和信任度）、一个行为（允许/拒绝/询问）和一个目标（工具名 + 可选的内容匹配）。</p>
+<p>规则来源的类型定义揭示了所有可能的入口：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PermissionRuleSource</span> =
+  | <span class="hljs-string">'userSettings'</span>
+  | <span class="hljs-string">'projectSettings'</span>
+  | <span class="hljs-string">'localSettings'</span>
+  | <span class="hljs-string">'flagSettings'</span>
+  | <span class="hljs-string">'policySettings'</span>
+  | <span class="hljs-string">'cliArg'</span>      <span class="hljs-comment">// CLI --allowedTools 等参数</span>
+  | <span class="hljs-string">'command'</span>      <span class="hljs-comment">// 命令配置</span>
+  | <span class="hljs-string">'session'</span>      <span class="hljs-comment">// 当前会话临时规则</span>
+</code></pre>
+<h3 id="第三层：决策层（permission-decisions）">第三层：决策层（Permission Decisions）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PermissionDecision</span>&lt;<span class="hljs-title class_">Input</span>&gt; =
+  | <span class="hljs-title class_">PermissionAllowDecision</span>&lt;<span class="hljs-title class_">Input</span>&gt;  <span class="hljs-comment">// 允许，可能附带修改后的输入</span>
+  | <span class="hljs-title class_">PermissionAskDecision</span>&lt;<span class="hljs-title class_">Input</span>&gt;    <span class="hljs-comment">// 需要询问用户，附带消息和建议</span>
+  | <span class="hljs-title class_">PermissionDenyDecision</span>          <span class="hljs-comment">// 拒绝，附带原因</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PermissionResult</span>&lt;<span class="hljs-title class_">Input</span>&gt; =
+  | <span class="hljs-title class_">PermissionDecision</span>&lt;<span class="hljs-title class_">Input</span>&gt;
+  | { <span class="hljs-attr">behavior</span>: <span class="hljs-string">'passthrough'</span>; ... }  <span class="hljs-comment">// 透传给下一个检查器</span>
+</code></pre>
+<p><code>PermissionAllowDecision</code> 的 <code>updatedInput</code> 字段很有意思——权限检查器不仅能放行，还能修改工具的输入参数。例如 Bash 权限检查器可以在放行时清理命令中的危险部分。</p>
+<p><code>PermissionAskDecision</code> 的 <code>pendingClassifierCheck</code> 字段支持异步分类器：当模式为 <code>auto</code> 时，先显示"询问"对话框，同时异步运行分类器。如果分类器在用户回复前判定为安全，则自动批准。</p>
+<h3 id="第四层：原因层（decision-reasons）">第四层：原因层（Decision Reasons）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">PermissionDecisionReason</span> =
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'rule'</span>; <span class="hljs-attr">rule</span>: <span class="hljs-title class_">PermissionRule</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'mode'</span>; <span class="hljs-attr">mode</span>: <span class="hljs-title class_">PermissionMode</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'subcommandResults'</span>; <span class="hljs-attr">reasons</span>: <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">PermissionResult</span>&gt; }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'hook'</span>; <span class="hljs-attr">hookName</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">hookSource</span>?: <span class="hljs-built_in">string</span>; <span class="hljs-attr">reason</span>?: <span class="hljs-built_in">string</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'classifier'</span>; <span class="hljs-attr">classifier</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">reason</span>: <span class="hljs-built_in">string</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'safetyCheck'</span>; <span class="hljs-attr">reason</span>: <span class="hljs-built_in">string</span>; <span class="hljs-attr">classifierApprovable</span>: <span class="hljs-built_in">boolean</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'workingDir'</span>; <span class="hljs-attr">reason</span>: <span class="hljs-built_in">string</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'sandboxOverride'</span>; <span class="hljs-attr">reason</span>: <span class="hljs-string">'excludedCommand'</span> | <span class="hljs-string">'dangerouslyDisableSandbox'</span> }
+  | { <span class="hljs-attr">type</span>: <span class="hljs-string">'other'</span>; <span class="hljs-attr">reason</span>: <span class="hljs-built_in">string</span> }
+</code></pre>
+<p>每个决策都必须附带原因。<code>safetyCheck</code> 类型中的 <code>classifierApprovable</code> 布尔值特别值得注意：</p>
+<ul>
+<li><code>true</code>：敏感文件路径（<code>.claude/</code>、<code>.git/</code>、shell 配置），分类器可以看上下文后决定</li>
+<li><code>false</code>：Windows 路径绕过尝试、跨机器 Bridge 消息——绝对不允许分类器自动批准</li>
+</ul>
+<hr></hr>
+<h2 id="126-对话历史-jsonl-持久化">12.6 对话历史 JSONL 持久化</h2>
+<p><code>src/history.ts</code> 实现了对话历史的持久化存储，供上下键和 Ctrl+R 搜索使用。</p>
+<h3 id="存储格式">存储格式</h3>
+<p>每条记录是 JSONL 格式的一行：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">LogEntry</span> = {
+  <span class="hljs-attr">display</span>: <span class="hljs-built_in">string</span>                              <span class="hljs-comment">// 显示文本</span>
+  <span class="hljs-attr">pastedContents</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">number</span>, <span class="hljs-title class_">StoredPastedContent</span>&gt;  <span class="hljs-comment">// 粘贴内容</span>
+  <span class="hljs-attr">timestamp</span>: <span class="hljs-built_in">number</span>                            <span class="hljs-comment">// 时间戳</span>
+  <span class="hljs-attr">project</span>: <span class="hljs-built_in">string</span>                              <span class="hljs-comment">// 项目路径</span>
+  <span class="hljs-attr">sessionId</span>?: <span class="hljs-built_in">string</span>                           <span class="hljs-comment">// 会话 ID</span>
+}
+</code></pre>
+<p>文件位于 <code>~/.claude/history.jsonl</code>，所有项目共享一个文件。</p>
+<h3 id="粘贴内容策略">粘贴内容策略</h3>
+<p>大文本的存储策略是分级的：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_PASTED_CONTENT_LENGTH</span> = <span class="hljs-number">1024</span>
+
+<span class="hljs-comment">// 小于 1KB：内联存储在 JSONL 行中</span>
+<span class="hljs-keyword">if</span> (content.<span class="hljs-property">content</span>.<span class="hljs-property">length</span> &lt;= <span class="hljs-variable constant_">MAX_PASTED_CONTENT_LENGTH</span>) {
+  storedPastedContents[<span class="hljs-title class_">Number</span>(id)] = {
+    <span class="hljs-attr">id</span>: content.<span class="hljs-property">id</span>,
+    <span class="hljs-attr">type</span>: content.<span class="hljs-property">type</span>,
+    <span class="hljs-attr">content</span>: content.<span class="hljs-property">content</span>,
+  }
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-comment">// 大于 1KB：计算哈希，存储引用，内容写入独立的 paste store</span>
+  <span class="hljs-keyword">const</span> hash = <span class="hljs-title function_">hashPastedText</span>(content.<span class="hljs-property">content</span>)
+  storedPastedContents[<span class="hljs-title class_">Number</span>(id)] = {
+    <span class="hljs-attr">id</span>: content.<span class="hljs-property">id</span>,
+    <span class="hljs-attr">type</span>: content.<span class="hljs-property">type</span>,
+    <span class="hljs-attr">contentHash</span>: hash,
+  }
+  <span class="hljs-built_in">void</span> <span class="hljs-title function_">storePastedText</span>(hash, content.<span class="hljs-property">content</span>)  <span class="hljs-comment">// fire-and-forget</span>
+}
+</code></pre>
+<p>图片内容直接跳过（它们存在独立的 image-cache 中）。这保证了 JSONL 文件不会因大量粘贴而膨胀。</p>
+<h3 id="并发写入与锁机制">并发写入与锁机制</h3>
+<p>多个 Claude Code 进程可能同时写入同一个 history.jsonl：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">immediateFlushHistory</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
+  <span class="hljs-keyword">let</span> release
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> historyPath = <span class="hljs-title function_">join</span>(<span class="hljs-title function_">getClaudeConfigHomeDir</span>(), <span class="hljs-string">'history.jsonl'</span>)
+
+    <span class="hljs-comment">// 确保文件存在（append 模式自动创建）</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeFile</span>(historyPath, <span class="hljs-string">''</span>, { <span class="hljs-attr">flag</span>: <span class="hljs-string">'a'</span> })
+
+    <span class="hljs-comment">// 使用 proper-lockfile 获取文件锁</span>
+    release = <span class="hljs-keyword">await</span> <span class="hljs-title function_">lock</span>(historyPath, {
+      <span class="hljs-attr">stale</span>: <span class="hljs-number">10000</span>,        <span class="hljs-comment">// 10 秒后认为锁已过期</span>
+      <span class="hljs-attr">retries</span>: { <span class="hljs-attr">retries</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">minTimeout</span>: <span class="hljs-number">50</span> },
+    })
+
+    <span class="hljs-keyword">const</span> jsonLines = pendingEntries.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">entry</span> =&gt;</span> <span class="hljs-title function_">jsonStringify</span>(entry) + <span class="hljs-string">'\n'</span>)
+    pendingEntries = []
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">appendFile</span>(historyPath, jsonLines.<span class="hljs-title function_">join</span>(<span class="hljs-string">''</span>), { <span class="hljs-attr">mode</span>: <span class="hljs-number">0o600</span> })
+  } <span class="hljs-keyword">finally</span> {
+    <span class="hljs-keyword">if</span> (release) <span class="hljs-keyword">await</span> <span class="hljs-title function_">release</span>()
+  }
+}
+</code></pre>
+<p><code>lock()</code> 来自 <code>src/utils/lockfile.ts</code>，它是对 <code>proper-lockfile</code> 的延迟加载封装：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">let</span> <span class="hljs-attr">_lockfile</span>: <span class="hljs-title class_">Lockfile</span> | <span class="hljs-literal">undefined</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">getLockfile</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">Lockfile</span> {
+  <span class="hljs-keyword">if</span> (!_lockfile) {
+    _lockfile = <span class="hljs-built_in">require</span>(<span class="hljs-string">'proper-lockfile'</span>) <span class="hljs-keyword">as</span> <span class="hljs-title class_">Lockfile</span>
+  }
+  <span class="hljs-keyword">return</span> _lockfile
+}
+</code></pre>
+<p>延迟加载的原因：<code>proper-lockfile</code> 依赖 <code>graceful-fs</code>，后者在首次 require 时会 monkey-patch 所有 fs 方法（约 8ms）。如果在启动路径中静态导入，<code>--help</code> 这样的命令也要付出这个代价。</p>
+<h3 id="写入重试与批量合并">写入重试与批量合并</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">flushPromptHistory</span>(<span class="hljs-params"><span class="hljs-attr">retries</span>: <span class="hljs-built_in">number</span></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
+  <span class="hljs-keyword">if</span> (isWriting || pendingEntries.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span>
+  <span class="hljs-keyword">if</span> (retries &gt; <span class="hljs-number">5</span>) <span class="hljs-keyword">return</span>  <span class="hljs-comment">// 超过 5 次重试则放弃</span>
+
+  isWriting = <span class="hljs-literal">true</span>
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">immediateFlushHistory</span>()
+  } <span class="hljs-keyword">finally</span> {
+    isWriting = <span class="hljs-literal">false</span>
+    <span class="hljs-keyword">if</span> (pendingEntries.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">sleep</span>(<span class="hljs-number">500</span>)
+      <span class="hljs-built_in">void</span> <span class="hljs-title function_">flushPromptHistory</span>(retries + <span class="hljs-number">1</span>)
+    }
+  }
+}
+</code></pre>
+<p>写入采用"积攒-批量刷新"模式：<code>addToHistory</code> 将条目推入 <code>pendingEntries</code> 数组，然后触发异步 flush。如果 flush 期间有新条目到来，它们会在下一次 flush 中一起写入。退出时通过 <code>registerCleanup</code> 确保未刷新的条目不会丢失。</p>
+<h3 id="历史读取：当前会话优先">历史读取：当前会话优先</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">getHistory</span>(): <span class="hljs-title class_">AsyncGenerator</span>&lt;<span class="hljs-title class_">HistoryEntry</span>&gt; {
+  <span class="hljs-keyword">const</span> currentSession = <span class="hljs-title function_">getSessionId</span>()
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">otherSessionEntries</span>: <span class="hljs-title class_">LogEntry</span>[] = []
+
+  <span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> entry <span class="hljs-keyword">of</span> <span class="hljs-title function_">makeLogEntryReader</span>()) {
+    <span class="hljs-keyword">if</span> (entry.<span class="hljs-property">project</span> !== currentProject) <span class="hljs-keyword">continue</span>
+
+    <span class="hljs-keyword">if</span> (entry.<span class="hljs-property">sessionId</span> === currentSession) {
+      <span class="hljs-keyword">yield</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">logEntryToHistoryEntry</span>(entry)
+      yielded++
+    } <span class="hljs-keyword">else</span> {
+      otherSessionEntries.<span class="hljs-title function_">push</span>(entry)  <span class="hljs-comment">// 暂存其他会话的条目</span>
+    }
+    <span class="hljs-keyword">if</span> (yielded + otherSessionEntries.<span class="hljs-property">length</span> &gt;= <span class="hljs-variable constant_">MAX_HISTORY_ITEMS</span>) <span class="hljs-keyword">break</span>
+  }
+
+  <span class="hljs-comment">// 先输出当前会话的条目，再输出其他会话的</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> entry <span class="hljs-keyword">of</span> otherSessionEntries) {
+    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">logEntryToHistoryEntry</span>(entry)
+  }
+}
+</code></pre>
+<p>当多个会话并发运行时，上箭头历史不会交错显示。当前会话的条目总是排在最前面。</p>
+<hr></hr>
+<h2 id="127-记忆系统四种类型分类法">12.7 记忆系统四种类型分类法</h2>
+<p><code>src/memdir/</code> 目录实现了 Claude Code 的持久化记忆系统。记忆不是存在状态里，而是存在文件系统中——这是一个关键设计决策。</p>
+<h3 id="四种记忆类型">四种记忆类型</h3>
+<p><code>src/memdir/memoryTypes.ts</code> 定义了封闭的类型分类法：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MEMORY_TYPES</span> = [
+  <span class="hljs-string">'user'</span>,       <span class="hljs-comment">// 用户画像：角色、目标、偏好</span>
+  <span class="hljs-string">'feedback'</span>,   <span class="hljs-comment">// 行为反馈：用户纠正或确认的工作方式</span>
+  <span class="hljs-string">'project'</span>,    <span class="hljs-comment">// 项目上下文：正在进行的工作、截止日期、决策</span>
+  <span class="hljs-string">'reference'</span>,  <span class="hljs-comment">// 外部引用：Linear 项目、Grafana 看板等外部系统的指针</span>
+] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+</code></pre>
+<p>分类法的核心原则是：<strong>只存储无法从当前项目状态推导出来的信息</strong>。代码模式、架构、git 历史、文件结构都可以通过 grep/git/CLAUDE.md 获取，不应作为记忆保存。</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">WHAT_NOT_TO_SAVE_SECTION</span>: <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span>[] = [
+  <span class="hljs-string">'## What NOT to save in memory'</span>,
+  <span class="hljs-string">''</span>,
+  <span class="hljs-string">'- Code patterns, conventions, architecture, file paths, or project structure'</span>,
+  <span class="hljs-string">'- Git history, recent changes, or who-changed-what'</span>,
+  <span class="hljs-string">'- Debugging solutions or fix recipes'</span>,
+  <span class="hljs-string">'- Anything already documented in CLAUDE.md files.'</span>,
+  <span class="hljs-string">'- Ephemeral task details: in-progress work, temporary state'</span>,
+]
+</code></pre>
+<h3 id="存储格式">存储格式</h3>
+<p>每条记忆是一个独立的 Markdown 文件，带有 YAML frontmatter：</p>
+<pre><code class="lang-markdown">---
+name: {{memory name}}
+description: {{one-line description}}
+<span class="hljs-section">type: {{user, feedback, project, reference}}
+---</span>
+
+{{memory content}}
+</code></pre>
+<p><code>MEMORY.md</code> 是索引文件，每行一个指针（约 150 字符以内），指向具体的记忆文件。索引文件有严格的大小限制：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_ENTRYPOINT_LINES</span> = <span class="hljs-number">200</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_ENTRYPOINT_BYTES</span> = <span class="hljs-number">25_000</span>
+</code></pre>
+<h3 id="记忆扫描">记忆扫描</h3>
+<p><code>src/memdir/memoryScan.ts</code> 实现了高效的记忆目录扫描：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">scanMemoryFiles</span>(<span class="hljs-params">
+  <span class="hljs-attr">memoryDir</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">signal</span>: <span class="hljs-title class_">AbortSignal</span>,
+</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">MemoryHeader</span>[]&gt; {
+  <span class="hljs-keyword">const</span> entries = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readdir</span>(memoryDir, { <span class="hljs-attr">recursive</span>: <span class="hljs-literal">true</span> })
+  <span class="hljs-keyword">const</span> mdFiles = entries.<span class="hljs-title function_">filter</span>(
+    <span class="hljs-function"><span class="hljs-params">f</span> =&gt;</span> f.<span class="hljs-title function_">endsWith</span>(<span class="hljs-string">'.md'</span>) &amp;&amp; <span class="hljs-title function_">basename</span>(f) !== <span class="hljs-string">'MEMORY.md'</span>,
+  )
+
+  <span class="hljs-keyword">const</span> headerResults = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">allSettled</span>(
+    mdFiles.<span class="hljs-title function_">map</span>(<span class="hljs-title function_">async</span> (relativePath): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">MemoryHeader</span>&gt; =&gt; {
+      <span class="hljs-keyword">const</span> { content, mtimeMs } = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFileInRange</span>(
+        filePath, <span class="hljs-number">0</span>, <span class="hljs-variable constant_">FRONTMATTER_MAX_LINES</span>, <span class="hljs-literal">undefined</span>, signal,
+      )
+      <span class="hljs-keyword">const</span> { frontmatter } = <span class="hljs-title function_">parseFrontmatter</span>(content, filePath)
+      <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">filename</span>: relativePath,
+        mtimeMs,
+        <span class="hljs-attr">description</span>: frontmatter.<span class="hljs-property">description</span> || <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">type</span>: <span class="hljs-title function_">parseMemoryType</span>(frontmatter.<span class="hljs-property">type</span>),
+      }
+    }),
+  )
+
+  <span class="hljs-keyword">return</span> headerResults
+    .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> r.<span class="hljs-property">status</span> === <span class="hljs-string">'fulfilled'</span>)
+    .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> r.<span class="hljs-property">value</span>)
+    .<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> b.<span class="hljs-property">mtimeMs</span> - a.<span class="hljs-property">mtimeMs</span>)  <span class="hljs-comment">// 最新优先</span>
+    .<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-variable constant_">MAX_MEMORY_FILES</span>)              <span class="hljs-comment">// 上限 200 个</span>
+}
+</code></pre>
+<p>只读取每个文件的前 30 行（frontmatter 区域），不加载全文内容。<code>Promise.allSettled</code> 保证单个文件损坏不影响其他文件。按修改时间排序后截断到 200 个。</p>
+<h3 id="路径安全">路径安全</h3>
+<p><code>src/memdir/paths.ts</code> 中的 <code>validateMemoryPath</code> 函数对记忆目录路径做了严格验证：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">validateMemoryPath</span>(<span class="hljs-params"><span class="hljs-attr">raw</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>, <span class="hljs-attr">expandTilde</span>: <span class="hljs-built_in">boolean</span></span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span> {
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-keyword">const</span> normalized = <span class="hljs-title function_">normalize</span>(candidate).<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/[/\\]+$/</span>, <span class="hljs-string">''</span>)
+  <span class="hljs-keyword">if</span> (
+    !<span class="hljs-title function_">isAbsolute</span>(normalized) ||
+    normalized.<span class="hljs-property">length</span> &lt; <span class="hljs-number">3</span> ||                    <span class="hljs-comment">// 拒绝根路径</span>
+    <span class="hljs-regexp">/^[A-Za-z]:$/</span>.<span class="hljs-title function_">test</span>(normalized) ||           <span class="hljs-comment">// 拒绝 Windows 驱动器根</span>
+    normalized.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'\\\\'</span>) ||            <span class="hljs-comment">// 拒绝 UNC 路径</span>
+    normalized.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'//'</span>) ||              <span class="hljs-comment">// 拒绝 UNC 路径</span>
+    normalized.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'\0'</span>)                   <span class="hljs-comment">// 拒绝 null 字节</span>
+  ) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">undefined</span>
+  }
+  <span class="hljs-keyword">return</span> (normalized + sep).<span class="hljs-title function_">normalize</span>(<span class="hljs-string">'NFC'</span>)
+}
+</code></pre>
+<p>同时，<code>autoMemoryDirectory</code> 设置项故意排除 projectSettings 来源：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// SECURITY: projectSettings (.claude/settings.json committed to the repo) is</span>
+<span class="hljs-comment">// intentionally excluded — a malicious repo could otherwise set</span>
+<span class="hljs-comment">// autoMemoryDirectory: "~/.ssh" and gain silent write access to sensitive</span>
+<span class="hljs-comment">// directories</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">getAutoMemPathSetting</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span> {
+  <span class="hljs-keyword">const</span> dir =
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'policySettings'</span>)?.<span class="hljs-property">autoMemoryDirectory</span> ??
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'flagSettings'</span>)?.<span class="hljs-property">autoMemoryDirectory</span> ??
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'localSettings'</span>)?.<span class="hljs-property">autoMemoryDirectory</span> ??
+    <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>)?.<span class="hljs-property">autoMemoryDirectory</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">validateMemoryPath</span>(dir, <span class="hljs-literal">true</span>)
+}
+</code></pre>
+<hr></hr>
+<h2 id="128-bridge-协议概述">12.8 Bridge 协议概述</h2>
+<p><code>src/bridge/</code> 目录实现了 Claude Code 的远程控制协议，让 claude.ai 网页端能够连接并操控本地 CLI 实例。</p>
+<h3 id="生命周期">生命周期</h3>
+<p>Bridge 协议的核心流程（<code>src/bridge/initReplBridge.ts</code>）：</p>
+<ol>
+<li><p><strong>运行时门控检查</strong>：</p>
+<ul>
+<li><code>isBridgeEnabledBlocking()</code> -- 功能是否启用</li>
+<li>OAuth 令牌检查 -- 必须登录 claude.ai</li>
+<li>组织策略检查 -- <code>isPolicyAllowed('allow_remote_control')</code></li>
+</ul>
+</li>
+<li><p><strong>OAuth 令牌管理</strong>（环境变量覆盖以外的路径）：</p>
+<ul>
+<li>跨进程退避：如果 3 个进程都发现同一个过期令牌，后续进程直接跳过</li>
+<li>主动刷新：在首次 API 调用前检查令牌是否过期</li>
+<li>死令牌检测：刷新失败后标记到 globalConfig，避免无限 401 循环</li>
+</ul>
+</li>
+<li><p><strong>会话创建</strong>：</p>
+<ul>
+<li>生成会话标题（先用快速截断，后用 Haiku 模型生成更好的标题）</li>
+<li>收集 git 上下文（分支、远程 URL）</li>
+<li>选择 worker 类型（<code>claude_code</code> 或 <code>claude_code_assistant</code>）</li>
+</ul>
+</li>
+<li><p><strong>两种传输路径</strong>：</p>
+</li>
+</ol>
+<pre><code class="lang-typescript"><span class="hljs-comment">// 环境无关路径（v2）：直接连接，无 poll 循环</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">isEnvLessBridgeEnabled</span>() &amp;&amp; !perpetual) {
+  <span class="hljs-keyword">const</span> { initEnvLessBridgeCore } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'./remoteBridgeCore.js'</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">initEnvLessBridgeCore</span>({ ... })
+}
+
+<span class="hljs-comment">// 环境注册路径（v1）：注册 -&gt; 轮询 -&gt; 会话派发</span>
+<span class="hljs-keyword">return</span> <span class="hljs-title function_">initBridgeCore</span>({ ... })
+</code></pre>
+<p>v1 路径：注册环境 -&gt; 长轮询等待连接 -&gt; 建立 WebSocket 会话
+v2 路径：跳过环境层，直接 POST /bridge 获取 worker JWT -&gt; WebSocket</p>
+<h3 id="核心回调接口">核心回调接口</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">InitBridgeOptions</span> = {
+  <span class="hljs-attr">onInboundMessage</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">msg</span>: <span class="hljs-title class_">SDKMessage</span></span>) =&gt;</span> <span class="hljs-built_in">void</span> | <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;
+  <span class="hljs-attr">onPermissionResponse</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">response</span>: <span class="hljs-title class_">SDKControlResponse</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">onInterrupt</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">onSetModel</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">model</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">onSetPermissionMode</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">mode</span>: <span class="hljs-title class_">PermissionMode</span></span>) =&gt;</span> { <span class="hljs-attr">ok</span>: <span class="hljs-literal">true</span> } | { <span class="hljs-attr">ok</span>: <span class="hljs-literal">false</span>; <span class="hljs-attr">error</span>: <span class="hljs-built_in">string</span> }
+  <span class="hljs-attr">onStateChange</span>?: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">state</span>: <span class="hljs-title class_">BridgeState</span>, <span class="hljs-attr">detail</span>?: <span class="hljs-built_in">string</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">outboundOnly</span>?: <span class="hljs-built_in">boolean</span>   <span class="hljs-comment">// 仅转发事件，拒绝入站控制</span>
+}
+</code></pre>
+<p><code>outboundOnly</code> 模式特别有趣——CCR 镜像模式使用它：本地会话在 claude.ai 上可见，但不接受远程控制。</p>
+<h3 id="会话标题推导">会话标题推导</h3>
+<p>标题在三个时机推导：</p>
+<ul>
+<li>首条消息时：快速截取前 50 字符作为占位标题</li>
+<li>首条消息后：异步调用 Haiku 模型生成正式标题</li>
+<li>第三条消息后：用完整对话上下文重新生成更准确的标题</li>
+</ul>
+<p>如果用户通过 <code>/rename</code> 或 <code>/remote-control &lt;name&gt;</code> 显式设置了标题，则不会被自动推导覆盖。</p>
+<hr></hr>
+<h2 id="129-运行时迁移模式">12.9 运行时迁移模式</h2>
+<p><code>src/migrations/</code> 目录包含了 11 个迁移函数。Claude Code 的迁移设计与传统数据库迁移有本质不同：<strong>没有版本号，没有迁移记录表，每次启动都全部运行</strong>。</p>
+<h3 id="幂等性保证">幂等性保证</h3>
+<p>每个迁移函数的第一件事就是检查"是否需要迁移"：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// migrateAutoUpdatesToSettings.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">migrateAutoUpdatesToSettings</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> globalConfig = <span class="hljs-title function_">getGlobalConfig</span>()
+
+  <span class="hljs-comment">// 只有当 autoUpdates 被用户显式设为 false 时才迁移</span>
+  <span class="hljs-keyword">if</span> (globalConfig.<span class="hljs-property">autoUpdates</span> !== <span class="hljs-literal">false</span> ||
+      globalConfig.<span class="hljs-property">autoUpdatesProtectedForNative</span> === <span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">return</span>  <span class="hljs-comment">// 幂等：条件不满足则直接返回</span>
+  }
+
+  <span class="hljs-comment">// 执行迁移...</span>
+
+  <span class="hljs-comment">// 迁移完成后删除旧字段</span>
+  <span class="hljs-title function_">saveGlobalConfig</span>(<span class="hljs-function"><span class="hljs-params">current</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">autoUpdates</span>: _, <span class="hljs-attr">autoUpdatesProtectedForNative</span>: __, ...rest } = current
+    <span class="hljs-keyword">return</span> rest
+  })
+}
+</code></pre>
+<p>模式：<strong>读取旧状态 -&gt; 检查是否需要迁移 -&gt; 写入新位置 -&gt; 删除旧位置</strong>。删除旧位置后，下次启动时检查条件不满足，自然跳过。</p>
+<h3 id="模型别名迁移">模型别名迁移</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// migrateFennecToOpus.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">migrateFennecToOpus</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">USER_TYPE</span> !== <span class="hljs-string">'ant'</span>) <span class="hljs-keyword">return</span>  <span class="hljs-comment">// 仅 Anthropic 内部</span>
+
+  <span class="hljs-keyword">const</span> settings = <span class="hljs-title function_">getSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>)
+  <span class="hljs-keyword">const</span> model = settings?.<span class="hljs-property">model</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> model === <span class="hljs-string">'string'</span>) {
+    <span class="hljs-keyword">if</span> (model.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'fennec-latest[1m]'</span>)) {
+      <span class="hljs-title function_">updateSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>, { <span class="hljs-attr">model</span>: <span class="hljs-string">'opus[1m]'</span> })
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (model.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'fennec-latest'</span>)) {
+      <span class="hljs-title function_">updateSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>, { <span class="hljs-attr">model</span>: <span class="hljs-string">'opus'</span> })
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (model.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'fennec-fast-latest'</span>) ||
+               model.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'opus-4-5-fast'</span>)) {
+      <span class="hljs-title function_">updateSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>, { <span class="hljs-attr">model</span>: <span class="hljs-string">'opus[1m]'</span>, <span class="hljs-attr">fastMode</span>: <span class="hljs-literal">true</span> })
+    }
+  }
+}
+</code></pre>
+<p>这个迁移只读写 <code>userSettings</code>，不接触 <code>projectSettings</code> 或其他来源。注释中解释原因：如果读合并后的 settings，可能导致项目级别的配置被"提升"到用户级别，引发无限重跑。</p>
+<h3 id="权限确认迁移">权限确认迁移</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// migrateBypassPermissionsAcceptedToSettings.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">migrateBypassPermissionsAcceptedToSettings</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> globalConfig = <span class="hljs-title function_">getGlobalConfig</span>()
+
+  <span class="hljs-keyword">if</span> (!globalConfig.<span class="hljs-property">bypassPermissionsModeAccepted</span>) <span class="hljs-keyword">return</span>
+
+  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">hasSkipDangerousModePermissionPrompt</span>()) {
+    <span class="hljs-title function_">updateSettingsForSource</span>(<span class="hljs-string">'userSettings'</span>, {
+      <span class="hljs-attr">skipDangerousModePermissionPrompt</span>: <span class="hljs-literal">true</span>,
+    })
+  }
+
+  <span class="hljs-title function_">saveGlobalConfig</span>(<span class="hljs-function"><span class="hljs-params">current</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span> (!(<span class="hljs-string">'bypassPermissionsModeAccepted'</span> <span class="hljs-keyword">in</span> current)) <span class="hljs-keyword">return</span> current
+    <span class="hljs-keyword">const</span> { <span class="hljs-attr">bypassPermissionsModeAccepted</span>: _, ...updatedConfig } = current
+    <span class="hljs-keyword">return</span> updatedConfig
+  })
+}
+</code></pre>
+<p>将旧的 globalConfig 布尔值迁移到 settings.json，同时确保不会覆盖已存在的设置。</p>
+<hr></hr>
+<h2 id="1210-安全纵深防御要点">12.10 安全纵深防御要点</h2>
+<p>通过前文分析，我们可以总结 Claude Code 安全模型的关键设计原则：</p>
+<h3 id="路径验证">路径验证</h3>
+<p>记忆系统的路径验证拒绝以下所有危险输入：</p>
+<ul>
+<li>相对路径（<code>../foo</code>）</li>
+<li>根路径或近根路径（<code>/</code>、<code>/a</code>）</li>
+<li>Windows 驱动器根（<code>C:\</code>）</li>
+<li>UNC 路径（<code>\\server\share</code>）</li>
+<li>null 字节注入（<code>\0</code>）</li>
+</ul>
+<p>所有路径在使用前都经过 <code>normalize()</code> + <code>isAbsolute()</code> 双重检查。</p>
+<h3 id="projectsettings-排除">projectSettings 排除</h3>
+<p>Claude Code 对"项目可以配置什么"有清晰的边界。以下安全敏感操作一律排除 <code>projectSettings</code>：</p>
+<ul>
+<li><code>hasSkipDangerousModePermissionPrompt()</code> -- 跳过危险模式确认</li>
+<li><code>hasAutoModeOptIn()</code> -- 自动模式激活</li>
+<li><code>getAutoModeConfig()</code> -- 分类器 allow/deny 规则</li>
+<li><code>getAutoMemPathSetting()</code> -- 记忆目录重定向</li>
+</ul>
+<p>原因统一：恶意仓库可以在 <code>.claude/settings.json</code> 中注入配置，如果这些配置能控制安全行为，就构成了 RCE 攻击面。</p>
+<h3 id="token-堆隔离">Token 堆隔离</h3>
+<p>Bridge 协议中的 OAuth 令牌管理展示了防御性编程：</p>
+<ul>
+<li>跨进程退避机制：通过 <code>bridgeOauthDeadExpiresAt</code> 标记死令牌，避免多进程重复 401</li>
+<li>刷新窗口与死亡判定分离：5 分钟的主动刷新窗口（<code>isOAuthTokenExpired</code>）和实际过期判定（<code>expiresAt &lt;= Date.now()</code>）使用不同的检查逻辑</li>
+<li>环境变量令牌绕过：<code>CLAUDE_BRIDGE_OAUTH_TOKEN</code> 设置时跳过所有 keychain 相关检查</li>
+</ul>
+<h3 id="权限决策的可审计性">权限决策的可审计性</h3>
+<p>每个权限决策都必须附带 <code>PermissionDecisionReason</code>，这不仅是调试信息，更是安全审计的基础。<code>safetyCheck</code> 类型中 <code>classifierApprovable: false</code> 的硬编码确保了某些安全检查永远不能被自动化分类器绕过（如 Windows 路径遍历尝试、跨机器 Bridge 消息）。</p>
+<h3 id="迁移安全">迁移安全</h3>
+<p>迁移函数只操作单一来源（通常是 <code>userSettings</code>），不读取合并后的 settings。这防止了"一个迁移触发另一个迁移"的级联效应，也防止了低优先级来源的配置被提升到高优先级。</p>
+<hr></hr>
+<h2 id="本章小结">本章小结</h2>
+<p>本章剖析了 Claude Code 的基础设施层。几个核心设计决策值得铭记：</p>
+<ol>
+<li><p><strong>34 行 Store</strong> 证明了"够用就好"的工程哲学。没有中间件、没有 devtools，但闭包 + Set + Object.is 足以支撑数百个状态字段的高效管理。</p>
+</li>
+<li><p><strong>五层 Settings 合并</strong> 既满足了企业管理需求（policySettings 不可覆盖），又保留了灵活性（localSettings 不提交到仓库）。数组合并去重而非覆盖，这个细节在实际使用中至关重要。</p>
+</li>
+<li><p><strong>projectSettings 排除模式</strong> 是安全架构的核心——任何可以通过提交到仓库来控制的配置，都不应拥有安全特权。</p>
+</li>
+<li><p><strong>无版本号的幂等迁移</strong> 在 CLI 工具场景下比传统数据库迁移更实用。没有 migration table 要维护，没有回滚要考虑，每次冷启动都从头检查一遍。</p>
+</li>
+<li><p><strong>记忆系统</strong> 选择文件系统而非数据库，用 Markdown + frontmatter 而非 JSON/SQLite，使得用户可以用任何文本编辑器查看和修改自己的记忆——这是对用户主权的尊重。</p>
+</li>
+</ol>
+<p>至此，Claude Code v2.1.88 的核心源码分析全部完成。从构建系统到 UI 渲染，从对话引擎到工具系统，从上下文管理到安全模型，我们系统性地走过了这个 20 万行 TypeScript 项目的每一个关键子系统。</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Chapter 11 - Plugin Skills and Hook System">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Chapter 12 - State Security and Infrastructure","level":"8.12","depth":1,"previous":{"title":"Chapter 11 - Plugin Skills and Hook System","level":"8.11","depth":1,"path":"Chapter-11-Plugin-Skills-and-Hook-System.md","ref":"Chapter-11-Plugin-Skills-and-Hook-System.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"Chapter-12-State-Security-and-Infrastructure.md","mtime":"2026-04-01T02:25:17.966Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

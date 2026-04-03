@@ -1,0 +1,939 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Introduction · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第01章-项目概述与架构全景.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter active" data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Introduction</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="claude-code-源码教学指南">Claude Code 源码教学指南</h1>
+<p>Claude Code v2.1.88 源码从 0 到 1 的深度教学指南。面向有经验的开发者，大量引用源码片段并逐行讲解。</p>
+<h2 id="项目概况">项目概况</h2>
+<ul>
+<li><strong>代码规模</strong>: 1908 个 TypeScript 文件，约 38 万行代码</li>
+<li><strong>技术栈</strong>: TypeScript + React (Ink) + Bun bundler + Zod v4</li>
+<li><strong>定位</strong>: Anthropic 官方 CLI 工具，基于 Ink (React for CLI) 构建终端 UI</li>
+</ul>
+<h2 id="学习路径">学习路径</h2>
+<p>建议按以下顺序阅读，从宏观架构到核心引擎，再到扩展系统：</p>
+<h3 id="第一部分：基础架构">第一部分：基础架构</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第01章-项目概述与架构全景.html">第1章 - 项目概述与架构全景</a></td>
+<td>技术选型、架构分层、模块依赖、设计理念</td>
+<td><code>package.json</code>, <code>build.ts</code>, <code>tsconfig.json</code></td>
+</tr>
+<tr>
+<td><a href="第02章-构建系统与启动流程.html">第2章 - 构建系统与启动流程</a></td>
+<td>Bun bundler、CLI 入口、启动链路、REPL/print 分叉</td>
+<td><code>build.ts</code>, <code>entrypoints/cli.tsx</code>, <code>main.tsx</code>, <code>setup.ts</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="第二部分：终端-ui-层">第二部分：终端 UI 层</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第03章-终端UI渲染引擎.html">第3章 - 终端UI渲染引擎</a></td>
+<td>自定义 React reconciler、DOM 模型、Yoga 布局、双缓冲渲染</td>
+<td><code>ink/ink.tsx</code>, <code>ink/reconciler.ts</code>, <code>ink/dom.ts</code>, <code>ink/layout/</code></td>
+</tr>
+<tr>
+<td><a href="第04章-事件系统与输入处理.html">第4章 - 事件系统与输入处理</a></td>
+<td>W3C 事件模型、键绑定、Vim 状态机、焦点管理</td>
+<td><code>ink/events/</code>, <code>keybindings/</code>, <code>vim/</code>, <code>ink/parse-keypress.ts</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="第三部分：核心-ai-引擎">第三部分：核心 AI 引擎</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第05章-核心对话引擎QueryEngine.html">第5章 - 核心对话引擎 QueryEngine</a></td>
+<td>QueryEngine 生命周期、queryLoop 循环、Token 预算、Stop Hooks</td>
+<td><code>QueryEngine.ts</code>, <code>query.ts</code>, <code>query/</code></td>
+</tr>
+<tr>
+<td><a href="第06章-LLM-API调用与流式处理.html">第6章 - LLM API 调用与流式处理</a></td>
+<td>Raw Stream、流式事件、重试框架、成本追踪、Fallback</td>
+<td><code>services/api/claude.ts</code>, <code>services/api/withRetry.ts</code></td>
+</tr>
+<tr>
+<td><a href="第08章-上下文管理与压缩策略.html">第8章 - 上下文管理与压缩策略</a></td>
+<td>五层渐进式压缩、Autocompact、Token 估算</td>
+<td><code>services/compact/</code>, <code>utils/tokens.ts</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="第四部分：工具生态">第四部分：工具生态</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第07章-工具系统架构与实现.html">第7章 - 工具系统架构与实现</a></td>
+<td>Tool 接口、权限模型、BashTool/FileEditTool 深入分析</td>
+<td><code>Tool.ts</code>, <code>tools.ts</code>, <code>tools/</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="第五部分：agent-与任务">第五部分：Agent 与任务</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第09章-任务系统与多Agent架构.html">第9章 - 任务系统与多Agent架构</a></td>
+<td>Task 类型体系、Agent 生命周期、Fork Subagent</td>
+<td><code>Task.ts</code>, <code>tasks/</code>, <code>tools/AgentTool/</code></td>
+</tr>
+<tr>
+<td><a href="第10章-团队协作与远程通信.html">第10章 - 团队协作与远程通信</a></td>
+<td>Team 创建、消息路由、Shutdown 协议、WebSocket</td>
+<td><code>tools/TeamCreateTool/</code>, <code>tools/SendMessageTool/</code>, <code>remote/</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="第六部分：扩展与基础设施">第六部分：扩展与基础设施</h3>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>内容</th>
+<th>核心文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="第11章-插件Skills与Hook系统.html">第11章 - 插件、Skills与Hook系统</a></td>
+<td>插件架构、Skills 执行、Hook 机制、MCP 集成、Cron</td>
+<td><code>plugins/</code>, <code>skills/</code>, <code>hooks/</code>, <code>tools/SkillTool/</code></td>
+</tr>
+<tr>
+<td><a href="第12章-状态管理安全模型与基础设施.html">第12章 - 状态管理、安全模型与基础设施</a></td>
+<td>Store 设计、Settings 合并、权限体系、持久化、Bridge</td>
+<td><code>state/</code>, <code>types/permissions.ts</code>, <code>history.ts</code>, <code>bridge/</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="英文文件名索引">英文文件名索引</h2>
+<p>每章均提供英文命名的同内容副本，方便非中文环境导航：</p>
+<table>
+<thead>
+<tr>
+<th>English Filename</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Chapter-01-Project-Overview-and-Architecture.html">Chapter-01</a></td>
+<td>Project Overview and Architecture</td>
+</tr>
+<tr>
+<td><a href="Chapter-02-Build-System-and-Startup-Flow.html">Chapter-02</a></td>
+<td>Build System and Startup Flow</td>
+</tr>
+<tr>
+<td><a href="Chapter-03-Terminal-UI-Rendering-Engine.html">Chapter-03</a></td>
+<td>Terminal UI Rendering Engine</td>
+</tr>
+<tr>
+<td><a href="Chapter-04-Event-System-and-Input-Handling.html">Chapter-04</a></td>
+<td>Event System and Input Handling</td>
+</tr>
+<tr>
+<td><a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">Chapter-05</a></td>
+<td>Core Conversation Engine</td>
+</tr>
+<tr>
+<td><a href="Chapter-06-LLM-API-and-Streaming.html">Chapter-06</a></td>
+<td>LLM API and Streaming</td>
+</tr>
+<tr>
+<td><a href="Chapter-07-Tool-System-Architecture.html">Chapter-07</a></td>
+<td>Tool System Architecture</td>
+</tr>
+<tr>
+<td><a href="Chapter-08-Context-Management-and-Compression.html">Chapter-08</a></td>
+<td>Context Management and Compression</td>
+</tr>
+<tr>
+<td><a href="Chapter-09-Task-System-and-Multi-Agent.html">Chapter-09</a></td>
+<td>Task System and Multi-Agent</td>
+</tr>
+<tr>
+<td><a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">Chapter-10</a></td>
+<td>Team Collaboration and Remote Communication</td>
+</tr>
+<tr>
+<td><a href="Chapter-11-Plugin-Skills-and-Hook-System.html">Chapter-11</a></td>
+<td>Plugin, Skills and Hook System</td>
+</tr>
+<tr>
+<td><a href="Chapter-12-State-Security-and-Infrastructure.html">Chapter-12</a></td>
+<td>State, Security and Infrastructure</td>
+</tr>
+</tbody>
+</table>
+<h2 id="代码流程图索引">代码流程图索引</h2>
+<p>以下章节包含 Mermaid 格式的代码流程图，帮助可视化理解核心流程：</p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>流程图</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第2章</td>
+<td>完整启动链路</td>
+<td>CLI 入口 → 快速路径分发 → init() → setup() → REPL</td>
+</tr>
+<tr>
+<td>第5章</td>
+<td>submitMessage 生命周期</td>
+<td>8 阶段异步生成器流程</td>
+</tr>
+<tr>
+<td>第5章</td>
+<td>queryLoop while(true)</td>
+<td>10 步循环体：预处理 → 压缩 → 调用 → 工具执行 → 下一轮</td>
+</tr>
+<tr>
+<td>第6章</td>
+<td>queryModel 五阶段流水线</td>
+<td>前置检查 → 消息规范化 → 参数构建 → 重试调用 → 流式事件</td>
+</tr>
+<tr>
+<td>第7章</td>
+<td>工具调用执行流水线</td>
+<td>Schema 解析 → 验证 → 权限 → 执行 → 结果转换</td>
+</tr>
+<tr>
+<td>第8章</td>
+<td>五层渐进式压缩管道</td>
+<td>L1~L5 逐层压缩 + Reactive Compact 应急</td>
+</tr>
+<tr>
+<td>第9章</td>
+<td>Task 状态机</td>
+<td>pending → running → completed/failed/killed</td>
+</tr>
+<tr>
+<td>第9章</td>
+<td>Agent 生命周期</td>
+<td>AgentTool → fork QueryEngine → 通知 → 结果回传</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>流程图使用 Mermaid 语法，可在 GitHub、VS Code (Markdown Preview Mermaid) 等环境直接渲染。</p>
+</blockquote>
+<h2 id="核心架构图">核心架构图</h2>
+<pre><code>CLI Entry (entrypoints/cli.tsx)
+    |
+    v
+Bootstrap (setup.ts + bootstrap/)
+    |
+    v
+REPL Screen (screens/REPL.tsx)
+    |
+    |-- Ink Renderer (ink/)            [第3-4章]
+    |   |-- Custom React Reconciler
+    |   |-- Yoga Layout Engine (TS)
+    |   |-- W3C Event System
+    |   |-- Vim Mode State Machine
+    |
+    |-- QueryEngine                    [第5-6章]
+    |   |-- query() loop
+    |   |-- queryModel() streaming
+    |   |-- 5-layer context compression [第8章]
+    |
+    |-- Tool System (tools/)           [第7章]
+    |   |-- 30+ built-in tools
+    |   |-- MCP tool integration
+    |   |-- Permission model
+    |
+    |-- Task System (tasks/)           [第9-10章]
+    |   |-- Local/Remote/InProcess
+    |   |-- Team collaboration
+    |   |-- WebSocket protocol
+    |
+    |-- Extensions                     [第11章]
+    |   |-- Plugin system
+    |   |-- Skills system
+    |   |-- Hook mechanism
+    |
+    |-- Infrastructure                 [第12章]
+    |   |-- 34-line Store
+    |   |-- 5-layer Settings
+    |   |-- JSONL persistence
+    |   |-- Bridge / Remote Control
+    |
+    v
+Anthropic API (services/api/)
+</code></pre>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="第01章-项目概述与架构全景.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 第1章 - 项目概述与架构全景">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"next":{"title":"第1章 - 项目概述与架构全景","level":"1.2","depth":1,"path":"第01章-项目概述与架构全景.md","ref":"第01章-项目概述与架构全景.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"README.md","mtime":"2026-04-01T06:21:33.397Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

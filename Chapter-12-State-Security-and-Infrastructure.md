@@ -1,0 +1,894 @@
+# 第12章 状态管理、安全模型与基础设施
+
+本章是 Claude Code 源码教学指南的收官篇。我们将深入剖析四个横切关注点：极简状态管理、多层安全模型、对话历史持久化，以及支撑整个系统运转的基础设施（记忆系统、Bridge 协议、运行时迁移）。
+
+---
+
+## 12.1 34 行 Store 实现的精妙设计
+
+Claude Code 没有使用 Redux、Zustand 或任何第三方状态库，而是用 34 行代码实现了一个完整的响应式 Store。
+
+源码位于 `src/state/store.ts`，完整内容如下：
+
+```typescript
+type Listener = () => void
+type OnChange<T> = (args: { newState: T; oldState: T }) => void
+
+export type Store<T> = {
+  getState: () => T
+  setState: (updater: (prev: T) => T) => void
+  subscribe: (listener: Listener) => () => void
+}
+
+export function createStore<T>(
+  initialState: T,
+  onChange?: OnChange<T>,
+): Store<T> {
+  let state = initialState
+  const listeners = new Set<Listener>()
+
+  return {
+    getState: () => state,
+
+    setState: (updater: (prev: T) => T) => {
+      const prev = state
+      const next = updater(prev)
+      if (Object.is(next, prev)) return
+      state = next
+      onChange?.({ newState: next, oldState: prev })
+      for (const listener of listeners) listener()
+    },
+
+    subscribe: (listener: Listener) => {
+      listeners.add(listener)
+      return () => listeners.delete(listener)
+    },
+  }
+}
+```
+
+逐行解析：
+
+**第 1-2 行：类型定义**
+
+- `Listener` 是无参无返回值的回调，用于通知 UI 重新渲染
+- `OnChange<T>` 接收新旧状态对，用于副作用分发
+
+**第 4-8 行：Store 接口**
+
+- `getState()` -- 同步读取当前快照
+- `setState()` -- 接受一个 updater 函数（而非直接值），保证基于最新状态计算
+- `subscribe()` -- 返回取消订阅函数，与 React `useSyncExternalStore` 完美对接
+
+**第 14-15 行：闭包状态**
+
+- `state` 用 `let` 而非外部对象持有，闭包保证了封装性
+- `listeners` 用 `Set` 而非数组，避免重复注册且删除是 O(1)
+
+**第 21-23 行：引用相等性检查**
+
+```typescript
+const prev = state
+const next = updater(prev)
+if (Object.is(next, prev)) return
+```
+
+`Object.is` 做严格引用相等比较。如果 updater 返回了同一个引用（例如无状态变化时直接返回 prev），则跳过所有通知。这是性能关键路径——避免了无意义的重渲染。
+
+**第 24-26 行：状态更新与通知**
+
+```typescript
+state = next
+onChange?.({ newState: next, oldState: prev })
+for (const listener of listeners) listener()
+```
+
+先调用 `onChange` 处理副作用（同步），再逐个通知所有 listener。这个顺序至关重要：副作用在 UI 重渲染之前完成，保证 UI 读到的外部状态（如 globalConfig）已经同步更新。
+
+**第 29-31 行：订阅机制**
+
+```typescript
+subscribe: (listener: Listener) => {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
+}
+```
+
+返回的是一个闭包——取消订阅函数。这是经典的观察者模式变体，与 React 的 `useEffect` 清理函数天然契合。
+
+**设计取舍**：这个 Store 故意不支持中间件、时间旅行、action type 分发。整个应用只有一个 Store 实例（AppStateStore），所有复杂逻辑都推到了 `onChange` 回调和各 `setState` 调用点。简单胜过灵活。
+
+---
+
+## 12.2 AppState 的状态域全景图
+
+`src/state/AppStateStore.ts` 定义了全局状态类型 `AppState`，它是整个应用的"单一事实源"。
+
+```typescript
+export type AppState = DeepImmutable<{
+  settings: SettingsJson
+  verbose: boolean
+  mainLoopModel: ModelSetting
+  statusLineText: string | undefined
+  toolPermissionContext: ToolPermissionContext
+  // ... 数十个字段
+}> & {
+  tasks: { [taskId: string]: TaskState }
+  mcp: { clients: MCPServerConnection[]; tools: Tool[]; ... }
+  plugins: { enabled: LoadedPlugin[]; ... }
+  // ...
+}
+```
+
+AppState 可分为以下几个状态域：
+
+| 状态域 | 核心字段 | 用途 |
+|--------|----------|------|
+| 配置 | `settings`, `verbose`, `mainLoopModel` | 运行时配置快照 |
+| 权限 | `toolPermissionContext`, `denialTracking` | 权限模式与规则 |
+| UI 视图 | `expandedView`, `footerSelection`, `isBriefOnly` | 渲染状态 |
+| Bridge | `replBridgeEnabled`, `replBridgeConnected`, `replBridgeSessionUrl` | 远程控制连接 |
+| 任务 | `tasks`, `foregroundedTaskId` | 多 Agent 任务池 |
+| MCP | `mcp.clients`, `mcp.tools`, `mcp.commands` | MCP 服务连接与工具 |
+| 插件 | `plugins.enabled`, `plugins.errors` | 插件加载状态 |
+| 投机执行 | `speculation`, `speculationSessionTimeSavedMs` | 预测执行状态 |
+| 记忆 | (通过文件系统，不在 AppState 内) | 持久化记忆 |
+| 团队 | `teamContext`, `inbox`, `agentNameRegistry` | 多 Agent 协作 |
+
+注意 `DeepImmutable<...>` 的使用：大部分字段被标记为深度不可变，但 `tasks` 和 `mcp` 等包含函数类型的字段被排除在外，通过交叉类型 `&` 单独声明。
+
+`getDefaultAppState()` 提供了完整的默认值工厂：
+
+```typescript
+export function getDefaultAppState(): AppState {
+  const initialMode: PermissionMode =
+    teammateUtils.isTeammate() && teammateUtils.isPlanModeRequired()
+      ? 'plan'
+      : 'default'
+
+  return {
+    settings: getInitialSettings(),
+    tasks: {},
+    agentNameRegistry: new Map(),
+    toolPermissionContext: {
+      ...getEmptyToolPermissionContext(),
+      mode: initialMode,
+    },
+    speculation: IDLE_SPECULATION_STATE,
+    // ... 60+ 字段默认值
+  }
+}
+```
+
+每个会话启动时调用一次，创建全新的状态快照。注意 `initialMode` 的计算——当进程作为 teammate 被 spawn 且要求 plan mode 时，权限模式从 `'default'` 变为 `'plan'`，这是安全约束的体现。
+
+---
+
+## 12.3 副作用分发机制
+
+`src/state/onChangeAppState.ts` 是 Store 的 `onChange` 回调，承担所有状态变更的副作用处理。
+
+核心设计理念：**不在每个 setState 调用点手动同步外部状态，而是集中在 onChange 中做差分检测**。
+
+### 权限模式同步
+
+```typescript
+const prevMode = oldState.toolPermissionContext.mode
+const newMode = newState.toolPermissionContext.mode
+if (prevMode !== newMode) {
+  const prevExternal = toExternalPermissionMode(prevMode)
+  const newExternal = toExternalPermissionMode(newMode)
+  if (prevExternal !== newExternal) {
+    notifySessionMetadataChanged({
+      permission_mode: newExternal,
+      is_ultraplan_mode: isUltraplan,
+    })
+  }
+  notifyPermissionModeChanged(newMode)
+}
+```
+
+源码注释中解释了为什么这段代码至关重要：此前权限模式的变更有 8+ 个入口（Shift+Tab 切换、ExitPlanMode 对话框、/plan 命令、rewind、Bridge 的 onSetPermissionMode 等），但只有 2 个路径会通知 CCR（Claude Code Remote）。将通知逻辑统一到 onChange，任何 `setState` 调用只要改变了 mode，都会自动同步到 CCR 和 SDK。
+
+注意二级过滤：`toExternalPermissionMode` 将内部模式（如 `'bubble'`、`'auto'`）映射为外部模式。如果外部表示未变（例如 `default -> bubble -> default`），则跳过 CCR 通知。
+
+### 模型变更持久化
+
+```typescript
+if (newState.mainLoopModel !== oldState.mainLoopModel &&
+    newState.mainLoopModel !== null) {
+  updateSettingsForSource('userSettings', { model: newState.mainLoopModel })
+  setMainLoopModelOverride(newState.mainLoopModel)
+}
+```
+
+当用户通过 `/model` 命令切换模型时，onChange 自动将选择写入 `userSettings`，下次启动自动恢复。
+
+### Settings 变更清理缓存
+
+```typescript
+if (newState.settings !== oldState.settings) {
+  clearApiKeyHelperCache()
+  clearAwsCredentialsCache()
+  clearGcpCredentialsCache()
+  if (newState.settings.env !== oldState.settings.env) {
+    applyConfigEnvironmentVariables()
+  }
+}
+```
+
+settings 引用变化时，清除所有认证缓存并重新应用环境变量。这保证了通过 `/config` 或文件编辑修改 API key 后立即生效。
+
+---
+
+## 12.4 五层 Settings 合并策略
+
+`src/utils/settings/settings.ts` 实现了 Claude Code 最复杂的配置系统。五个层级按优先级从低到高排列：
+
+```
+userSettings < projectSettings < localSettings < flagSettings < policySettings
+```
+
+对应的文件路径由 `src/utils/settings/constants.ts` 定义：
+
+```typescript
+export const SETTING_SOURCES = [
+  'userSettings',      // ~/.claude/settings.json
+  'projectSettings',   // .claude/settings.json（项目共享，提交到仓库）
+  'localSettings',     // .claude/settings.local.json（gitignored）
+  'flagSettings',      // --settings CLI 参数指定的文件
+  'policySettings',    // 企业管理策略（远程/MDM/managed-settings.json）
+] as const
+```
+
+### 合并流程
+
+核心函数 `loadSettingsFromDisk()` 的合并逻辑：
+
+```typescript
+function loadSettingsFromDisk(): SettingsWithErrors {
+  // 先加载插件 settings 作为最低优先级基础
+  let mergedSettings: SettingsJson = {}
+  const pluginSettings = getPluginSettingsBase()
+  if (pluginSettings) {
+    mergedSettings = mergeWith(mergedSettings, pluginSettings, settingsMergeCustomizer)
+  }
+
+  // 按优先级顺序逐层合并
+  for (const source of getEnabledSettingSources()) {
+    // policySettings 内部有子优先级：remote > HKLM/plist > file > HKCU
+    if (source === 'policySettings') {
+      // ... 特殊处理
+      continue
+    }
+
+    const { settings } = parseSettingsFile(filePath)
+    if (settings) {
+      mergedSettings = mergeWith(mergedSettings, settings, settingsMergeCustomizer)
+    }
+  }
+  return { settings: mergedSettings, errors: allErrors }
+}
+```
+
+### 自定义合并器
+
+```typescript
+export function settingsMergeCustomizer(
+  objValue: unknown,
+  srcValue: unknown,
+): unknown {
+  if (Array.isArray(objValue) && Array.isArray(srcValue)) {
+    return mergeArrays(objValue, srcValue)  // 数组：拼接去重
+  }
+  return undefined  // 其他类型：lodash 默认深合并
+}
+```
+
+数组字段（如 `permissions.allow`）不是覆盖而是合并去重。这意味着：用户级别配置的 allow 规则会和项目级别的规则叠加，而非被替换。
+
+### policySettings 的子优先级
+
+policySettings 内部还有四层优先级，采用"第一个有内容的源胜出"策略：
+
+```typescript
+// 1. 远程管理（最高）
+const remoteSettings = getRemoteManagedSettingsSyncFromCache()
+// 2. 系统级 MDM（macOS plist / Windows HKLM）
+const mdmResult = getMdmSettings()
+// 3. 文件级（managed-settings.json + managed-settings.d/*.json）
+const { settings: fileSettings } = loadManagedFileSettings()
+// 4. 用户级注册表（Windows HKCU，最低）
+const hkcu = getHkcuSettings()
+```
+
+文件级策略还支持 drop-in 目录（`managed-settings.d/*.json`），按字母序合并，遵循 systemd 风格约定。
+
+### 安全关键：projectSettings 的排除
+
+多个安全敏感的查询函数故意排除 `projectSettings`：
+
+```typescript
+export function hasSkipDangerousModePermissionPrompt(): boolean {
+  return !!(
+    getSettingsForSource('userSettings')?.skipDangerousModePermissionPrompt ||
+    getSettingsForSource('localSettings')?.skipDangerousModePermissionPrompt ||
+    getSettingsForSource('flagSettings')?.skipDangerousModePermissionPrompt ||
+    getSettingsForSource('policySettings')?.skipDangerousModePermissionPrompt
+  )
+  // 注意：没有 projectSettings！
+}
+```
+
+原因在注释中说得很清楚：**恶意项目可以通过 `.claude/settings.json` 自动绕过权限确认对话框，构成远程代码执行（RCE）风险**。同样的模式在 `hasAutoModeOptIn()`、`getAutoModeConfig()` 中都有体现。
+
+---
+
+## 12.5 权限类型体系四层设计
+
+`src/types/permissions.ts` 定义了 Claude Code 的权限模型。这个文件有意只包含类型定义和常量，不依赖任何运行时模块，以打破循环依赖。
+
+### 第一层：模式层（Permission Modes）
+
+```typescript
+export const EXTERNAL_PERMISSION_MODES = [
+  'acceptEdits',
+  'bypassPermissions',
+  'default',
+  'dontAsk',
+  'plan',
+] as const
+
+export type InternalPermissionMode = ExternalPermissionMode | 'auto' | 'bubble'
+```
+
+外部模式是面向用户和 CCR 的标准模式集。内部模式增加了 `'auto'`（分类器自动判断）和 `'bubble'`（子 Agent 冒泡到父级），这两个模式对外部不可见。
+
+### 第二层：规则层（Permission Rules）
+
+```typescript
+export type PermissionRule = {
+  source: PermissionRuleSource     // 来源：userSettings/projectSettings/...
+  ruleBehavior: PermissionBehavior // 行为：'allow' | 'deny' | 'ask'
+  ruleValue: PermissionRuleValue   // 目标：{ toolName, ruleContent? }
+}
+```
+
+每条规则绑定一个来源（决定优先级和信任度）、一个行为（允许/拒绝/询问）和一个目标（工具名 + 可选的内容匹配）。
+
+规则来源的类型定义揭示了所有可能的入口：
+
+```typescript
+export type PermissionRuleSource =
+  | 'userSettings'
+  | 'projectSettings'
+  | 'localSettings'
+  | 'flagSettings'
+  | 'policySettings'
+  | 'cliArg'      // CLI --allowedTools 等参数
+  | 'command'      // 命令配置
+  | 'session'      // 当前会话临时规则
+```
+
+### 第三层：决策层（Permission Decisions）
+
+```typescript
+export type PermissionDecision<Input> =
+  | PermissionAllowDecision<Input>  // 允许，可能附带修改后的输入
+  | PermissionAskDecision<Input>    // 需要询问用户，附带消息和建议
+  | PermissionDenyDecision          // 拒绝，附带原因
+
+export type PermissionResult<Input> =
+  | PermissionDecision<Input>
+  | { behavior: 'passthrough'; ... }  // 透传给下一个检查器
+```
+
+`PermissionAllowDecision` 的 `updatedInput` 字段很有意思——权限检查器不仅能放行，还能修改工具的输入参数。例如 Bash 权限检查器可以在放行时清理命令中的危险部分。
+
+`PermissionAskDecision` 的 `pendingClassifierCheck` 字段支持异步分类器：当模式为 `auto` 时，先显示"询问"对话框，同时异步运行分类器。如果分类器在用户回复前判定为安全，则自动批准。
+
+### 第四层：原因层（Decision Reasons）
+
+```typescript
+export type PermissionDecisionReason =
+  | { type: 'rule'; rule: PermissionRule }
+  | { type: 'mode'; mode: PermissionMode }
+  | { type: 'subcommandResults'; reasons: Map<string, PermissionResult> }
+  | { type: 'hook'; hookName: string; hookSource?: string; reason?: string }
+  | { type: 'classifier'; classifier: string; reason: string }
+  | { type: 'safetyCheck'; reason: string; classifierApprovable: boolean }
+  | { type: 'workingDir'; reason: string }
+  | { type: 'sandboxOverride'; reason: 'excludedCommand' | 'dangerouslyDisableSandbox' }
+  | { type: 'other'; reason: string }
+```
+
+每个决策都必须附带原因。`safetyCheck` 类型中的 `classifierApprovable` 布尔值特别值得注意：
+
+- `true`：敏感文件路径（`.claude/`、`.git/`、shell 配置），分类器可以看上下文后决定
+- `false`：Windows 路径绕过尝试、跨机器 Bridge 消息——绝对不允许分类器自动批准
+
+---
+
+## 12.6 对话历史 JSONL 持久化
+
+`src/history.ts` 实现了对话历史的持久化存储，供上下键和 Ctrl+R 搜索使用。
+
+### 存储格式
+
+每条记录是 JSONL 格式的一行：
+
+```typescript
+type LogEntry = {
+  display: string                              // 显示文本
+  pastedContents: Record<number, StoredPastedContent>  // 粘贴内容
+  timestamp: number                            // 时间戳
+  project: string                              // 项目路径
+  sessionId?: string                           // 会话 ID
+}
+```
+
+文件位于 `~/.claude/history.jsonl`，所有项目共享一个文件。
+
+### 粘贴内容策略
+
+大文本的存储策略是分级的：
+
+```typescript
+const MAX_PASTED_CONTENT_LENGTH = 1024
+
+// 小于 1KB：内联存储在 JSONL 行中
+if (content.content.length <= MAX_PASTED_CONTENT_LENGTH) {
+  storedPastedContents[Number(id)] = {
+    id: content.id,
+    type: content.type,
+    content: content.content,
+  }
+} else {
+  // 大于 1KB：计算哈希，存储引用，内容写入独立的 paste store
+  const hash = hashPastedText(content.content)
+  storedPastedContents[Number(id)] = {
+    id: content.id,
+    type: content.type,
+    contentHash: hash,
+  }
+  void storePastedText(hash, content.content)  // fire-and-forget
+}
+```
+
+图片内容直接跳过（它们存在独立的 image-cache 中）。这保证了 JSONL 文件不会因大量粘贴而膨胀。
+
+### 并发写入与锁机制
+
+多个 Claude Code 进程可能同时写入同一个 history.jsonl：
+
+```typescript
+async function immediateFlushHistory(): Promise<void> {
+  let release
+  try {
+    const historyPath = join(getClaudeConfigHomeDir(), 'history.jsonl')
+
+    // 确保文件存在（append 模式自动创建）
+    await writeFile(historyPath, '', { flag: 'a' })
+
+    // 使用 proper-lockfile 获取文件锁
+    release = await lock(historyPath, {
+      stale: 10000,        // 10 秒后认为锁已过期
+      retries: { retries: 3, minTimeout: 50 },
+    })
+
+    const jsonLines = pendingEntries.map(entry => jsonStringify(entry) + '\n')
+    pendingEntries = []
+    await appendFile(historyPath, jsonLines.join(''), { mode: 0o600 })
+  } finally {
+    if (release) await release()
+  }
+}
+```
+
+`lock()` 来自 `src/utils/lockfile.ts`，它是对 `proper-lockfile` 的延迟加载封装：
+
+```typescript
+let _lockfile: Lockfile | undefined
+
+function getLockfile(): Lockfile {
+  if (!_lockfile) {
+    _lockfile = require('proper-lockfile') as Lockfile
+  }
+  return _lockfile
+}
+```
+
+延迟加载的原因：`proper-lockfile` 依赖 `graceful-fs`，后者在首次 require 时会 monkey-patch 所有 fs 方法（约 8ms）。如果在启动路径中静态导入，`--help` 这样的命令也要付出这个代价。
+
+### 写入重试与批量合并
+
+```typescript
+async function flushPromptHistory(retries: number): Promise<void> {
+  if (isWriting || pendingEntries.length === 0) return
+  if (retries > 5) return  // 超过 5 次重试则放弃
+
+  isWriting = true
+  try {
+    await immediateFlushHistory()
+  } finally {
+    isWriting = false
+    if (pendingEntries.length > 0) {
+      await sleep(500)
+      void flushPromptHistory(retries + 1)
+    }
+  }
+}
+```
+
+写入采用"积攒-批量刷新"模式：`addToHistory` 将条目推入 `pendingEntries` 数组，然后触发异步 flush。如果 flush 期间有新条目到来，它们会在下一次 flush 中一起写入。退出时通过 `registerCleanup` 确保未刷新的条目不会丢失。
+
+### 历史读取：当前会话优先
+
+```typescript
+export async function* getHistory(): AsyncGenerator<HistoryEntry> {
+  const currentSession = getSessionId()
+  const otherSessionEntries: LogEntry[] = []
+
+  for await (const entry of makeLogEntryReader()) {
+    if (entry.project !== currentProject) continue
+
+    if (entry.sessionId === currentSession) {
+      yield await logEntryToHistoryEntry(entry)
+      yielded++
+    } else {
+      otherSessionEntries.push(entry)  // 暂存其他会话的条目
+    }
+    if (yielded + otherSessionEntries.length >= MAX_HISTORY_ITEMS) break
+  }
+
+  // 先输出当前会话的条目，再输出其他会话的
+  for (const entry of otherSessionEntries) {
+    yield await logEntryToHistoryEntry(entry)
+  }
+}
+```
+
+当多个会话并发运行时，上箭头历史不会交错显示。当前会话的条目总是排在最前面。
+
+---
+
+## 12.7 记忆系统四种类型分类法
+
+`src/memdir/` 目录实现了 Claude Code 的持久化记忆系统。记忆不是存在状态里，而是存在文件系统中——这是一个关键设计决策。
+
+### 四种记忆类型
+
+`src/memdir/memoryTypes.ts` 定义了封闭的类型分类法：
+
+```typescript
+export const MEMORY_TYPES = [
+  'user',       // 用户画像：角色、目标、偏好
+  'feedback',   // 行为反馈：用户纠正或确认的工作方式
+  'project',    // 项目上下文：正在进行的工作、截止日期、决策
+  'reference',  // 外部引用：Linear 项目、Grafana 看板等外部系统的指针
+] as const
+```
+
+分类法的核心原则是：**只存储无法从当前项目状态推导出来的信息**。代码模式、架构、git 历史、文件结构都可以通过 grep/git/CLAUDE.md 获取，不应作为记忆保存。
+
+```typescript
+export const WHAT_NOT_TO_SAVE_SECTION: readonly string[] = [
+  '## What NOT to save in memory',
+  '',
+  '- Code patterns, conventions, architecture, file paths, or project structure',
+  '- Git history, recent changes, or who-changed-what',
+  '- Debugging solutions or fix recipes',
+  '- Anything already documented in CLAUDE.md files.',
+  '- Ephemeral task details: in-progress work, temporary state',
+]
+```
+
+### 存储格式
+
+每条记忆是一个独立的 Markdown 文件，带有 YAML frontmatter：
+
+```markdown
+---
+name: {{memory name}}
+description: {{one-line description}}
+type: {{user, feedback, project, reference}}
+---
+
+{{memory content}}
+```
+
+`MEMORY.md` 是索引文件，每行一个指针（约 150 字符以内），指向具体的记忆文件。索引文件有严格的大小限制：
+
+```typescript
+export const MAX_ENTRYPOINT_LINES = 200
+export const MAX_ENTRYPOINT_BYTES = 25_000
+```
+
+### 记忆扫描
+
+`src/memdir/memoryScan.ts` 实现了高效的记忆目录扫描：
+
+```typescript
+export async function scanMemoryFiles(
+  memoryDir: string,
+  signal: AbortSignal,
+): Promise<MemoryHeader[]> {
+  const entries = await readdir(memoryDir, { recursive: true })
+  const mdFiles = entries.filter(
+    f => f.endsWith('.md') && basename(f) !== 'MEMORY.md',
+  )
+
+  const headerResults = await Promise.allSettled(
+    mdFiles.map(async (relativePath): Promise<MemoryHeader> => {
+      const { content, mtimeMs } = await readFileInRange(
+        filePath, 0, FRONTMATTER_MAX_LINES, undefined, signal,
+      )
+      const { frontmatter } = parseFrontmatter(content, filePath)
+      return {
+        filename: relativePath,
+        mtimeMs,
+        description: frontmatter.description || null,
+        type: parseMemoryType(frontmatter.type),
+      }
+    }),
+  )
+
+  return headerResults
+    .filter(r => r.status === 'fulfilled')
+    .map(r => r.value)
+    .sort((a, b) => b.mtimeMs - a.mtimeMs)  // 最新优先
+    .slice(0, MAX_MEMORY_FILES)              // 上限 200 个
+}
+```
+
+只读取每个文件的前 30 行（frontmatter 区域），不加载全文内容。`Promise.allSettled` 保证单个文件损坏不影响其他文件。按修改时间排序后截断到 200 个。
+
+### 路径安全
+
+`src/memdir/paths.ts` 中的 `validateMemoryPath` 函数对记忆目录路径做了严格验证：
+
+```typescript
+function validateMemoryPath(raw: string | undefined, expandTilde: boolean): string | undefined {
+  // ...
+  const normalized = normalize(candidate).replace(/[/\\]+$/, '')
+  if (
+    !isAbsolute(normalized) ||
+    normalized.length < 3 ||                    // 拒绝根路径
+    /^[A-Za-z]:$/.test(normalized) ||           // 拒绝 Windows 驱动器根
+    normalized.startsWith('\\\\') ||            // 拒绝 UNC 路径
+    normalized.startsWith('//') ||              // 拒绝 UNC 路径
+    normalized.includes('\0')                   // 拒绝 null 字节
+  ) {
+    return undefined
+  }
+  return (normalized + sep).normalize('NFC')
+}
+```
+
+同时，`autoMemoryDirectory` 设置项故意排除 projectSettings 来源：
+
+```typescript
+// SECURITY: projectSettings (.claude/settings.json committed to the repo) is
+// intentionally excluded — a malicious repo could otherwise set
+// autoMemoryDirectory: "~/.ssh" and gain silent write access to sensitive
+// directories
+function getAutoMemPathSetting(): string | undefined {
+  const dir =
+    getSettingsForSource('policySettings')?.autoMemoryDirectory ??
+    getSettingsForSource('flagSettings')?.autoMemoryDirectory ??
+    getSettingsForSource('localSettings')?.autoMemoryDirectory ??
+    getSettingsForSource('userSettings')?.autoMemoryDirectory
+  return validateMemoryPath(dir, true)
+}
+```
+
+---
+
+## 12.8 Bridge 协议概述
+
+`src/bridge/` 目录实现了 Claude Code 的远程控制协议，让 claude.ai 网页端能够连接并操控本地 CLI 实例。
+
+### 生命周期
+
+Bridge 协议的核心流程（`src/bridge/initReplBridge.ts`）：
+
+1. **运行时门控检查**：
+   - `isBridgeEnabledBlocking()` -- 功能是否启用
+   - OAuth 令牌检查 -- 必须登录 claude.ai
+   - 组织策略检查 -- `isPolicyAllowed('allow_remote_control')`
+
+2. **OAuth 令牌管理**（环境变量覆盖以外的路径）：
+   - 跨进程退避：如果 3 个进程都发现同一个过期令牌，后续进程直接跳过
+   - 主动刷新：在首次 API 调用前检查令牌是否过期
+   - 死令牌检测：刷新失败后标记到 globalConfig，避免无限 401 循环
+
+3. **会话创建**：
+   - 生成会话标题（先用快速截断，后用 Haiku 模型生成更好的标题）
+   - 收集 git 上下文（分支、远程 URL）
+   - 选择 worker 类型（`claude_code` 或 `claude_code_assistant`）
+
+4. **两种传输路径**：
+
+```typescript
+// 环境无关路径（v2）：直接连接，无 poll 循环
+if (isEnvLessBridgeEnabled() && !perpetual) {
+  const { initEnvLessBridgeCore } = await import('./remoteBridgeCore.js')
+  return initEnvLessBridgeCore({ ... })
+}
+
+// 环境注册路径（v1）：注册 -> 轮询 -> 会话派发
+return initBridgeCore({ ... })
+```
+
+v1 路径：注册环境 -> 长轮询等待连接 -> 建立 WebSocket 会话
+v2 路径：跳过环境层，直接 POST /bridge 获取 worker JWT -> WebSocket
+
+### 核心回调接口
+
+```typescript
+export type InitBridgeOptions = {
+  onInboundMessage?: (msg: SDKMessage) => void | Promise<void>
+  onPermissionResponse?: (response: SDKControlResponse) => void
+  onInterrupt?: () => void
+  onSetModel?: (model: string | undefined) => void
+  onSetPermissionMode?: (mode: PermissionMode) => { ok: true } | { ok: false; error: string }
+  onStateChange?: (state: BridgeState, detail?: string) => void
+  outboundOnly?: boolean   // 仅转发事件，拒绝入站控制
+}
+```
+
+`outboundOnly` 模式特别有趣——CCR 镜像模式使用它：本地会话在 claude.ai 上可见，但不接受远程控制。
+
+### 会话标题推导
+
+标题在三个时机推导：
+
+- 首条消息时：快速截取前 50 字符作为占位标题
+- 首条消息后：异步调用 Haiku 模型生成正式标题
+- 第三条消息后：用完整对话上下文重新生成更准确的标题
+
+如果用户通过 `/rename` 或 `/remote-control <name>` 显式设置了标题，则不会被自动推导覆盖。
+
+---
+
+## 12.9 运行时迁移模式
+
+`src/migrations/` 目录包含了 11 个迁移函数。Claude Code 的迁移设计与传统数据库迁移有本质不同：**没有版本号，没有迁移记录表，每次启动都全部运行**。
+
+### 幂等性保证
+
+每个迁移函数的第一件事就是检查"是否需要迁移"：
+
+```typescript
+// migrateAutoUpdatesToSettings.ts
+export function migrateAutoUpdatesToSettings(): void {
+  const globalConfig = getGlobalConfig()
+
+  // 只有当 autoUpdates 被用户显式设为 false 时才迁移
+  if (globalConfig.autoUpdates !== false ||
+      globalConfig.autoUpdatesProtectedForNative === true) {
+    return  // 幂等：条件不满足则直接返回
+  }
+
+  // 执行迁移...
+
+  // 迁移完成后删除旧字段
+  saveGlobalConfig(current => {
+    const { autoUpdates: _, autoUpdatesProtectedForNative: __, ...rest } = current
+    return rest
+  })
+}
+```
+
+模式：**读取旧状态 -> 检查是否需要迁移 -> 写入新位置 -> 删除旧位置**。删除旧位置后，下次启动时检查条件不满足，自然跳过。
+
+### 模型别名迁移
+
+```typescript
+// migrateFennecToOpus.ts
+export function migrateFennecToOpus(): void {
+  if (process.env.USER_TYPE !== 'ant') return  // 仅 Anthropic 内部
+
+  const settings = getSettingsForSource('userSettings')
+  const model = settings?.model
+  if (typeof model === 'string') {
+    if (model.startsWith('fennec-latest[1m]')) {
+      updateSettingsForSource('userSettings', { model: 'opus[1m]' })
+    } else if (model.startsWith('fennec-latest')) {
+      updateSettingsForSource('userSettings', { model: 'opus' })
+    } else if (model.startsWith('fennec-fast-latest') ||
+               model.startsWith('opus-4-5-fast')) {
+      updateSettingsForSource('userSettings', { model: 'opus[1m]', fastMode: true })
+    }
+  }
+}
+```
+
+这个迁移只读写 `userSettings`，不接触 `projectSettings` 或其他来源。注释中解释原因：如果读合并后的 settings，可能导致项目级别的配置被"提升"到用户级别，引发无限重跑。
+
+### 权限确认迁移
+
+```typescript
+// migrateBypassPermissionsAcceptedToSettings.ts
+export function migrateBypassPermissionsAcceptedToSettings(): void {
+  const globalConfig = getGlobalConfig()
+
+  if (!globalConfig.bypassPermissionsModeAccepted) return
+
+  if (!hasSkipDangerousModePermissionPrompt()) {
+    updateSettingsForSource('userSettings', {
+      skipDangerousModePermissionPrompt: true,
+    })
+  }
+
+  saveGlobalConfig(current => {
+    if (!('bypassPermissionsModeAccepted' in current)) return current
+    const { bypassPermissionsModeAccepted: _, ...updatedConfig } = current
+    return updatedConfig
+  })
+}
+```
+
+将旧的 globalConfig 布尔值迁移到 settings.json，同时确保不会覆盖已存在的设置。
+
+---
+
+## 12.10 安全纵深防御要点
+
+通过前文分析，我们可以总结 Claude Code 安全模型的关键设计原则：
+
+### 路径验证
+
+记忆系统的路径验证拒绝以下所有危险输入：
+- 相对路径（`../foo`）
+- 根路径或近根路径（`/`、`/a`）
+- Windows 驱动器根（`C:\`）
+- UNC 路径（`\\server\share`）
+- null 字节注入（`\0`）
+
+所有路径在使用前都经过 `normalize()` + `isAbsolute()` 双重检查。
+
+### projectSettings 排除
+
+Claude Code 对"项目可以配置什么"有清晰的边界。以下安全敏感操作一律排除 `projectSettings`：
+
+- `hasSkipDangerousModePermissionPrompt()` -- 跳过危险模式确认
+- `hasAutoModeOptIn()` -- 自动模式激活
+- `getAutoModeConfig()` -- 分类器 allow/deny 规则
+- `getAutoMemPathSetting()` -- 记忆目录重定向
+
+原因统一：恶意仓库可以在 `.claude/settings.json` 中注入配置，如果这些配置能控制安全行为，就构成了 RCE 攻击面。
+
+### Token 堆隔离
+
+Bridge 协议中的 OAuth 令牌管理展示了防御性编程：
+
+- 跨进程退避机制：通过 `bridgeOauthDeadExpiresAt` 标记死令牌，避免多进程重复 401
+- 刷新窗口与死亡判定分离：5 分钟的主动刷新窗口（`isOAuthTokenExpired`）和实际过期判定（`expiresAt <= Date.now()`）使用不同的检查逻辑
+- 环境变量令牌绕过：`CLAUDE_BRIDGE_OAUTH_TOKEN` 设置时跳过所有 keychain 相关检查
+
+### 权限决策的可审计性
+
+每个权限决策都必须附带 `PermissionDecisionReason`，这不仅是调试信息，更是安全审计的基础。`safetyCheck` 类型中 `classifierApprovable: false` 的硬编码确保了某些安全检查永远不能被自动化分类器绕过（如 Windows 路径遍历尝试、跨机器 Bridge 消息）。
+
+### 迁移安全
+
+迁移函数只操作单一来源（通常是 `userSettings`），不读取合并后的 settings。这防止了"一个迁移触发另一个迁移"的级联效应，也防止了低优先级来源的配置被提升到高优先级。
+
+---
+
+## 本章小结
+
+本章剖析了 Claude Code 的基础设施层。几个核心设计决策值得铭记：
+
+1. **34 行 Store** 证明了"够用就好"的工程哲学。没有中间件、没有 devtools，但闭包 + Set + Object.is 足以支撑数百个状态字段的高效管理。
+
+2. **五层 Settings 合并** 既满足了企业管理需求（policySettings 不可覆盖），又保留了灵活性（localSettings 不提交到仓库）。数组合并去重而非覆盖，这个细节在实际使用中至关重要。
+
+3. **projectSettings 排除模式** 是安全架构的核心——任何可以通过提交到仓库来控制的配置，都不应拥有安全特权。
+
+4. **无版本号的幂等迁移** 在 CLI 工具场景下比传统数据库迁移更实用。没有 migration table 要维护，没有回滚要考虑，每次冷启动都从头检查一遍。
+
+5. **记忆系统** 选择文件系统而非数据库，用 Markdown + frontmatter 而非 JSON/SQLite，使得用户可以用任何文本编辑器查看和修改自己的记忆——这是对用户主权的尊重。
+
+至此，Claude Code v2.1.88 的核心源码分析全部完成。从构建系统到 UI 渲染，从对话引擎到工具系统，从上下文管理到安全模型，我们系统性地走过了这个 20 万行 TypeScript 项目的每一个关键子系统。

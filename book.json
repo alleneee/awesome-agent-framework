@@ -1,0 +1,10 @@
+{
+  "title": "Claude Code 源码深度教学指南",
+  "description": "Claude Code v2.1.88 源码从 0 到 1 的深度教学指南",
+  "language": "zh-hans",
+  "plugins": ["-sharing"],
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  }
+}

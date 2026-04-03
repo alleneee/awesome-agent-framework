@@ -1,0 +1,1819 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Chapter 10 - Team Collaboration and Remote Communication · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Chapter-11-Plugin-Skills-and-Hook-System.html" />
+    
+    
+    <link rel="prev" href="Chapter-09-Task-System-and-Multi-Agent.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Chapter 10 - Team Collaboration and Remote Communication</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第10章：团队协作与远程通信">第10章：团队协作与远程通信</h1>
+<p>本章讲解 Claude Code 的多 Agent 团队协作机制，包括 Team 创建与管理、消息路由、Shutdown 协议、Plan 审批、远程 WebSocket 通信、以及进程内 Teammate 的完整运行循环。</p>
+<hr></hr>
+<h2 id="101-team-创建与配置">10.1 Team 创建与配置</h2>
+<h3 id="1011-teamcreatetool">10.1.1 TeamCreateTool</h3>
+<p>文件：<code>src/tools/TeamCreateTool/TeamCreateTool.ts</code></p>
+<p><strong>输入 Schema</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> inputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">strictObject</span>({
+    <span class="hljs-attr">team_name</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'Name for the new team to create.'</span>),
+    <span class="hljs-attr">description</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'Team description/purpose.'</span>),
+    <span class="hljs-attr">agent_type</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>().<span class="hljs-title function_">describe</span>(
+      <span class="hljs-string">'Type/role of the team lead (e.g., "researcher", "test-runner").'</span>
+    ),
+  })
+)
+</code></pre>
+<p><strong>创建流程</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">input, context</span>) {
+  <span class="hljs-keyword">const</span> { setAppState, getAppState } = context
+  <span class="hljs-keyword">const</span> { team_name, description, agent_type } = input
+
+  <span class="hljs-comment">// 1. 检查是否已有团队（每个 Leader 只能管理一个）</span>
+  <span class="hljs-keyword">const</span> existingTeam = appState.<span class="hljs-property">teamContext</span>?.<span class="hljs-property">teamName</span>
+  <span class="hljs-keyword">if</span> (existingTeam) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`Already leading team "<span class="hljs-subst">${existingTeam}</span>". ...`</span>)
+  }
+
+  <span class="hljs-comment">// 2. 团队名冲突时自动生成唯一名称</span>
+  <span class="hljs-keyword">const</span> finalTeamName = <span class="hljs-title function_">generateUniqueTeamName</span>(team_name)
+
+  <span class="hljs-comment">// 3. 创建 Leader 的确定性 Agent ID</span>
+  <span class="hljs-keyword">const</span> leadAgentId = <span class="hljs-title function_">formatAgentId</span>(<span class="hljs-variable constant_">TEAM_LEAD_NAME</span>, finalTeamName)
+
+  <span class="hljs-comment">// 4. 构造 TeamFile</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">teamFile</span>: <span class="hljs-title class_">TeamFile</span> = {
+    <span class="hljs-attr">name</span>: finalTeamName,
+    description,
+    <span class="hljs-attr">createdAt</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(),
+    leadAgentId,
+    <span class="hljs-attr">leadSessionId</span>: <span class="hljs-title function_">getSessionId</span>(),
+    <span class="hljs-attr">members</span>: [{
+      <span class="hljs-attr">agentId</span>: leadAgentId, <span class="hljs-attr">name</span>: <span class="hljs-variable constant_">TEAM_LEAD_NAME</span>,
+      <span class="hljs-attr">agentType</span>: leadAgentType, <span class="hljs-attr">model</span>: leadModel,
+      <span class="hljs-attr">joinedAt</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(), <span class="hljs-attr">tmuxPaneId</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">cwd</span>: <span class="hljs-title function_">getCwd</span>(),
+      <span class="hljs-attr">subscriptions</span>: [],
+    }],
+  }
+
+  <span class="hljs-comment">// 5. 写入磁盘并注册清理</span>
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeTeamFileAsync</span>(finalTeamName, teamFile)
+  <span class="hljs-title function_">registerTeamForSessionCleanup</span>(finalTeamName)
+
+  <span class="hljs-comment">// 6. 重置任务列表</span>
+  <span class="hljs-keyword">const</span> taskListId = <span class="hljs-title function_">sanitizeName</span>(finalTeamName)
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">resetTaskList</span>(taskListId)
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">ensureTasksDir</span>(taskListId)
+  <span class="hljs-title function_">setLeaderTeamName</span>(<span class="hljs-title function_">sanitizeName</span>(finalTeamName))
+
+  <span class="hljs-comment">// 7. 更新 AppState</span>
+  <span class="hljs-title function_">setAppState</span>(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({
+    ...prev,
+    <span class="hljs-attr">teamContext</span>: {
+      <span class="hljs-attr">teamName</span>: finalTeamName, teamFilePath,
+      leadAgentId,
+      <span class="hljs-attr">teammates</span>: {
+        [leadAgentId]: {
+          <span class="hljs-attr">name</span>: <span class="hljs-variable constant_">TEAM_LEAD_NAME</span>, <span class="hljs-attr">agentType</span>: leadAgentType,
+          <span class="hljs-attr">color</span>: <span class="hljs-title function_">assignTeammateColor</span>(leadAgentId),
+          <span class="hljs-attr">tmuxSessionName</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">tmuxPaneId</span>: <span class="hljs-string">''</span>,
+          <span class="hljs-attr">cwd</span>: <span class="hljs-title function_">getCwd</span>(), <span class="hljs-attr">spawnedAt</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(),
+        },
+      },
+    },
+  }))
+}
+</code></pre>
+<p><strong>TeamFile 结构</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>团队名称</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string?</td>
+<td>团队描述</td>
+</tr>
+<tr>
+<td><code>createdAt</code></td>
+<td>number</td>
+<td>创建时间戳</td>
+</tr>
+<tr>
+<td><code>leadAgentId</code></td>
+<td>string</td>
+<td>Leader 的 Agent ID，格式 <code>team-lead@teamName</code></td>
+</tr>
+<tr>
+<td><code>leadSessionId</code></td>
+<td>string</td>
+<td>Leader 的 session ID</td>
+</tr>
+<tr>
+<td><code>members</code></td>
+<td>TeamMember[]</td>
+<td>成员列表（包括 Leader）</td>
+</tr>
+</tbody>
+</table>
+<p>成员结构包含 <code>agentId</code>、<code>name</code>、<code>agentType</code>、<code>model</code>、<code>joinedAt</code>、<code>tmuxPaneId</code>、<code>cwd</code>、<code>subscriptions</code>、<code>isActive</code>、<code>backendType</code> 等字段。</p>
+<p>关键设计决策：</p>
+<ul>
+<li><strong>Leader 不设置 <code>CLAUDE_CODE_AGENT_ID</code> 环境变量</strong>：注释明确说明，Leader 不是"Teammate"，<code>isTeammate()</code> 应该对 Leader 返回 <code>false</code>。设置此环境变量会错误地让 Leader 开始轮询收件箱。</li>
+<li><strong><code>registerTeamForSessionCleanup</code></strong>：确保 session 结束时团队目录被清理，防止磁盘泄漏。</li>
+<li><strong>任务列表与团队绑定</strong>：每个 Team = Project = TaskList，保证任务编号从 1 开始。</li>
+</ul>
+<h3 id="1012-teamdeletetool">10.1.2 TeamDeleteTool</h3>
+<p>文件：<code>src/tools/TeamDeleteTool/TeamDeleteTool.ts</code></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">_input, context</span>) {
+  <span class="hljs-keyword">const</span> teamName = appState.<span class="hljs-property">teamContext</span>?.<span class="hljs-property">teamName</span>
+
+  <span class="hljs-keyword">if</span> (teamName) {
+    <span class="hljs-keyword">const</span> teamFile = <span class="hljs-title function_">readTeamFile</span>(teamName)
+    <span class="hljs-keyword">if</span> (teamFile) {
+      <span class="hljs-comment">// 检查是否有活跃成员（排除 Leader）</span>
+      <span class="hljs-keyword">const</span> nonLeadMembers = teamFile.<span class="hljs-property">members</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">name</span> !== <span class="hljs-variable constant_">TEAM_LEAD_NAME</span>)
+      <span class="hljs-keyword">const</span> activeMembers = nonLeadMembers.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">isActive</span> !== <span class="hljs-literal">false</span>)
+
+      <span class="hljs-keyword">if</span> (activeMembers.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> {
+          <span class="hljs-attr">data</span>: {
+            <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">message</span>: <span class="hljs-string">`Cannot cleanup team with <span class="hljs-subst">${activeMembers.length}</span> active member(s): <span class="hljs-subst">${memberNames}</span>. Use requestShutdown to gracefully terminate teammates first.`</span>,
+          },
+        }
+      }
+    }
+
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">cleanupTeamDirectories</span>(teamName)
+    <span class="hljs-title function_">unregisterTeamForSessionCleanup</span>(teamName)
+    <span class="hljs-title function_">clearTeammateColors</span>()
+    <span class="hljs-title function_">clearLeaderTeamName</span>()
+  }
+
+  <span class="hljs-title function_">setAppState</span>(<span class="hljs-function"><span class="hljs-params">prev</span> =&gt;</span> ({
+    ...prev,
+    <span class="hljs-attr">teamContext</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">inbox</span>: { <span class="hljs-attr">messages</span>: [] },
+  }))
+}
+</code></pre>
+<p>删除前的安全检查：</p>
+<ol>
+<li>只检查<strong>非 Leader</strong> 成员</li>
+<li>区分"真正活跃"和"闲置/已退出"（<code>isActive === false</code>）</li>
+<li>如果有活跃成员，<strong>拒绝删除</strong>，要求先用 <code>requestShutdown</code> 优雅终止</li>
+</ol>
+<hr></hr>
+<h2 id="102-sendmessage-消息路由">10.2 SendMessage 消息路由</h2>
+<p>文件：<code>src/tools/SendMessageTool/SendMessageTool.ts</code></p>
+<p>SendMessageTool 是团队通信的核心枢纽。它支持 5 种消息路由路径，优先级从高到低：</p>
+<h3 id="1021-路由一：bridge（跨机器远程通信）">10.2.1 路由一：Bridge（跨机器远程通信）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'UDS_INBOX'</span>) &amp;&amp; <span class="hljs-keyword">typeof</span> input.<span class="hljs-property">message</span> === <span class="hljs-string">'string'</span>) {
+  <span class="hljs-keyword">const</span> addr = <span class="hljs-title function_">parseAddress</span>(input.<span class="hljs-property">to</span>)
+  <span class="hljs-keyword">if</span> (addr.<span class="hljs-property">scheme</span> === <span class="hljs-string">'bridge'</span>) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">getReplBridgeHandle</span>() || !<span class="hljs-title function_">isReplBridgeActive</span>()) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Remote Control disconnected...'</span> } }
+    }
+    <span class="hljs-keyword">const</span> { postInterClaudeMessage } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../bridge/peerSessions.js'</span>)
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">postInterClaudeMessage</span>(addr.<span class="hljs-property">target</span>, input.<span class="hljs-property">message</span>)
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: result.<span class="hljs-property">ok</span>, <span class="hljs-attr">message</span>: ... } }
+  }
+}
+</code></pre>
+<p>发送到 <code>bridge:&lt;session-id&gt;</code> 格式的地址，通过 Anthropic 服务器中转到另一台机器上的 Claude 实例。需要 Remote Control 连接活跃。安全检查在 <code>checkPermissions</code> 中通过 <code>safetyCheck</code> 强制用户确认。</p>
+<h3 id="1022-路由二：uds-socket（本地跨进程通信）">10.2.2 路由二：UDS Socket（本地跨进程通信）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (addr.<span class="hljs-property">scheme</span> === <span class="hljs-string">'uds'</span>) {
+  <span class="hljs-keyword">const</span> { sendToUdsSocket } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../utils/udsClient.js'</span>)
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">sendToUdsSocket</span>(addr.<span class="hljs-property">target</span>, input.<span class="hljs-property">message</span>)
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`"<span class="hljs-subst">${preview}</span>" -&gt; <span class="hljs-subst">${input.to}</span>`</span> } }
+}
+</code></pre>
+<p>发送到 <code>uds:&lt;socket-path&gt;</code> 格式的地址，通过 Unix Domain Socket 通信。用于同一机器上不同 Claude 实例间的消息传递。</p>
+<h3 id="1023-路由三：进程内-subagent（直接内存路由）">10.2.3 路由三：进程内 Subagent（直接内存路由）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> input.<span class="hljs-property">message</span> === <span class="hljs-string">'string'</span> &amp;&amp; input.<span class="hljs-property">to</span> !== <span class="hljs-string">'*'</span>) {
+  <span class="hljs-keyword">const</span> appState = context.<span class="hljs-title function_">getAppState</span>()
+  <span class="hljs-keyword">const</span> registered = appState.<span class="hljs-property">agentNameRegistry</span>.<span class="hljs-title function_">get</span>(input.<span class="hljs-property">to</span>)
+  <span class="hljs-keyword">const</span> agentId = registered ?? <span class="hljs-title function_">toAgentId</span>(input.<span class="hljs-property">to</span>)
+  <span class="hljs-keyword">if</span> (agentId) {
+    <span class="hljs-keyword">const</span> task = appState.<span class="hljs-property">tasks</span>[agentId]
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isLocalAgentTask</span>(task) &amp;&amp; !<span class="hljs-title function_">isMainSessionTask</span>(task)) {
+      <span class="hljs-keyword">if</span> (task.<span class="hljs-property">status</span> === <span class="hljs-string">'running'</span>) {
+        <span class="hljs-comment">// 运行中 -&gt; 排队到 pendingMessages</span>
+        <span class="hljs-title function_">queuePendingMessage</span>(agentId, input.<span class="hljs-property">message</span>,
+          context.<span class="hljs-property">setAppStateForTasks</span> ?? context.<span class="hljs-property">setAppState</span>)
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Message queued...'</span> } }
+      }
+      <span class="hljs-comment">// 已停止 -&gt; 自动恢复</span>
+      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">resumeAgentBackground</span>({ agentId, <span class="hljs-attr">prompt</span>: input.<span class="hljs-property">message</span>, ... })
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`Agent "<span class="hljs-subst">${input.to}</span>" was stopped; resumed...`</span> } }
+    }
+  }
+}
+</code></pre>
+<p>优先检查 <code>agentNameRegistry</code>（注册名到 ID 的映射），然后尝试 <code>toAgentId</code> 格式匹配。三种子情况：</p>
+<ul>
+<li><strong>运行中</strong>：通过 <code>queuePendingMessage()</code> 写入 <code>pendingMessages</code> 队列，在 Agent 的下一个 tool-round 边界被排空</li>
+<li><strong>已停止但 task 存在</strong>：自动从 transcript 恢复并在后台运行</li>
+<li><strong>task 已被驱逐</strong>：同样尝试从磁盘 transcript 恢复</li>
+</ul>
+<h3 id="1024-路由四：广播（团队全员）">10.2.4 路由四：广播（团队全员）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (input.<span class="hljs-property">to</span> === <span class="hljs-string">'*'</span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">handleBroadcast</span>(input.<span class="hljs-property">message</span>, input.<span class="hljs-property">summary</span>, context)
+}
+</code></pre>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleBroadcast</span>(<span class="hljs-params">content, summary, context</span>) {
+  <span class="hljs-keyword">const</span> teamFile = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readTeamFileAsync</span>(teamName)
+  <span class="hljs-keyword">const</span> recipients = teamFile.<span class="hljs-property">members</span>
+    .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">name</span>.<span class="hljs-title function_">toLowerCase</span>() !== senderName.<span class="hljs-title function_">toLowerCase</span>())
+    .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">name</span>)
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> recipientName <span class="hljs-keyword">of</span> recipients) {
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(recipientName, { <span class="hljs-attr">from</span>: senderName, <span class="hljs-attr">text</span>: content, ... }, teamName)
+  }
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`Message broadcast to <span class="hljs-subst">${recipients.length}</span> teammate(s)`</span>, recipients } }
+}
+</code></pre>
+<p>广播排除发送者自己，遍历所有成员写入各自的文件邮箱。</p>
+<h3 id="1025-路由五：点对点（文件邮箱）">10.2.5 路由五：点对点（文件邮箱）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">return</span> <span class="hljs-title function_">handleMessage</span>(input.<span class="hljs-property">to</span>, input.<span class="hljs-property">message</span>, input.<span class="hljs-property">summary</span>, context)
+</code></pre>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleMessage</span>(<span class="hljs-params">recipientName, content, summary, context</span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(recipientName, {
+    <span class="hljs-attr">from</span>: senderName, <span class="hljs-attr">text</span>: content, summary,
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>(), <span class="hljs-attr">color</span>: senderColor,
+  }, teamName)
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">`Message sent to <span class="hljs-subst">${recipientName}</span>'s inbox`</span> } }
+}
+</code></pre>
+<p>最基础的路由：写入接收者的文件邮箱。邮箱路径基于团队名和成员名确定。</p>
+<h3 id="1026-路由优先级总结">10.2.6 路由优先级总结</h3>
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>路由类型</th>
+<th>条件</th>
+<th>传输方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Bridge</td>
+<td><code>bridge:</code> 前缀</td>
+<td>HTTP/Anthropic 服务器</td>
+</tr>
+<tr>
+<td>2</td>
+<td>UDS Socket</td>
+<td><code>uds:</code> 前缀</td>
+<td>Unix Domain Socket</td>
+</tr>
+<tr>
+<td>3</td>
+<td>进程内 Subagent</td>
+<td>名称匹配 agentNameRegistry 或 task</td>
+<td>AppState 内存</td>
+</tr>
+<tr>
+<td>4</td>
+<td>广播</td>
+<td><code>to === '*'</code></td>
+<td>文件邮箱（遍历）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>点对点</td>
+<td>其他</td>
+<td>文件邮箱</td>
+</tr>
+</tbody>
+</table>
+<hr></hr>
+<h2 id="103-结构化消息协议">10.3 结构化消息协议</h2>
+<h3 id="1031-消息类型定义">10.3.1 消息类型定义</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">StructuredMessage</span> = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">discriminatedUnion</span>(<span class="hljs-string">'type'</span>, [
+    z.<span class="hljs-title function_">object</span>({
+      <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'shutdown_request'</span>),
+      <span class="hljs-attr">reason</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+    }),
+    z.<span class="hljs-title function_">object</span>({
+      <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'shutdown_response'</span>),
+      <span class="hljs-attr">request_id</span>: z.<span class="hljs-title function_">string</span>(),
+      <span class="hljs-attr">approve</span>: <span class="hljs-title function_">semanticBoolean</span>(),
+      <span class="hljs-attr">reason</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+    }),
+    z.<span class="hljs-title function_">object</span>({
+      <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'plan_approval_response'</span>),
+      <span class="hljs-attr">request_id</span>: z.<span class="hljs-title function_">string</span>(),
+      <span class="hljs-attr">approve</span>: <span class="hljs-title function_">semanticBoolean</span>(),
+      <span class="hljs-attr">feedback</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+    }),
+  ])
+)
+</code></pre>
+<p>三种结构化消息：<code>shutdown_request</code>、<code>shutdown_response</code>、<code>plan_approval_response</code>。使用 <code>semanticBoolean()</code> 解析布尔值（支持 <code>"yes"</code> / <code>"true"</code> / <code>1</code> 等模糊表示）。</p>
+<p>结构化消息的限制：</p>
+<ul>
+<li>不能广播（<code>to: '*'</code>）</li>
+<li>不能跨 session 发送（bridge / UDS）</li>
+<li><code>shutdown_response</code> 只能发给 <code>team-lead</code></li>
+<li>拒绝 shutdown 时必须提供 <code>reason</code></li>
+</ul>
+<h3 id="1032-shutdown-协议三步握手">10.3.2 Shutdown 协议三步握手</h3>
+<p><strong>步骤一：Leader 发起 shutdown_request</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleShutdownRequest</span>(<span class="hljs-params">targetName, reason, context</span>) {
+  <span class="hljs-keyword">const</span> requestId = <span class="hljs-title function_">generateRequestId</span>(<span class="hljs-string">'shutdown'</span>, targetName)
+  <span class="hljs-keyword">const</span> shutdownMessage = <span class="hljs-title function_">createShutdownRequestMessage</span>({ requestId, <span class="hljs-attr">from</span>: senderName, reason })
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(targetName, { <span class="hljs-attr">from</span>: senderName, <span class="hljs-attr">text</span>: <span class="hljs-title function_">jsonStringify</span>(shutdownMessage), ... }, teamName)
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">request_id</span>: requestId, <span class="hljs-attr">target</span>: targetName } }
+}
+</code></pre>
+<p>生成唯一的 <code>requestId</code>，写入目标 Teammate 的邮箱。</p>
+<p><strong>步骤二：Teammate 回应 shutdown_response (approve)</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleShutdownApproval</span>(<span class="hljs-params">requestId, context</span>) {
+  <span class="hljs-comment">// 获取自己的 pane ID 和 backend type</span>
+  <span class="hljs-keyword">const</span> selfMember = teamFile.<span class="hljs-property">members</span>.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.<span class="hljs-property">agentId</span> === agentId)
+  ownPaneId = selfMember.<span class="hljs-property">tmuxPaneId</span>
+  ownBackendType = selfMember.<span class="hljs-property">backendType</span>
+
+  <span class="hljs-comment">// 构造审批消息</span>
+  <span class="hljs-keyword">const</span> approvedMessage = <span class="hljs-title function_">createShutdownApprovedMessage</span>({
+    requestId, <span class="hljs-attr">from</span>: agentName, <span class="hljs-attr">paneId</span>: ownPaneId, <span class="hljs-attr">backendType</span>: ownBackendType,
+  })
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(<span class="hljs-variable constant_">TEAM_LEAD_NAME</span>, { <span class="hljs-attr">from</span>: agentName, <span class="hljs-attr">text</span>: <span class="hljs-title function_">jsonStringify</span>(approvedMessage), ... }, teamName)
+
+  <span class="hljs-comment">// 根据后端类型执行退出</span>
+  <span class="hljs-keyword">if</span> (ownBackendType === <span class="hljs-string">'in-process'</span>) {
+    <span class="hljs-comment">// 进程内 Teammate：中止 AbortController</span>
+    <span class="hljs-keyword">const</span> task = <span class="hljs-title function_">findTeammateTaskByAgentId</span>(agentId, appState.<span class="hljs-property">tasks</span>)
+    task?.<span class="hljs-property">abortController</span>?.<span class="hljs-title function_">abort</span>()
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// 进程外 Teammate：gracefulShutdown</span>
+    <span class="hljs-title function_">setImmediate</span>(<span class="hljs-title function_">async</span> () =&gt; { <span class="hljs-keyword">await</span> <span class="hljs-title function_">gracefulShutdown</span>(<span class="hljs-number">0</span>, <span class="hljs-string">'other'</span>) })
+  }
+}
+</code></pre>
+<p>区分两种退出路径：</p>
+<ul>
+<li><strong>进程内 Teammate</strong>：通过 <code>abortController.abort()</code> 触发 Agent 循环退出</li>
+<li><strong>进程外 Teammate</strong>（tmux/iTerm2）：调用 <code>gracefulShutdown()</code> 优雅退出整个进程</li>
+</ul>
+<p><strong>步骤二（替代）：Teammate 拒绝 shutdown</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handleShutdownRejection</span>(<span class="hljs-params">requestId, reason</span>) {
+  <span class="hljs-keyword">const</span> rejectedMessage = <span class="hljs-title function_">createShutdownRejectedMessage</span>({ requestId, <span class="hljs-attr">from</span>: agentName, reason })
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(<span class="hljs-variable constant_">TEAM_LEAD_NAME</span>, { ... }, teamName)
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: { <span class="hljs-attr">message</span>: <span class="hljs-string">`Shutdown rejected. Reason: "<span class="hljs-subst">${reason}</span>". Continuing to work.`</span> } }
+}
+</code></pre>
+<p>拒绝后 Teammate 继续工作，Leader 收到通知可以决定后续操作。</p>
+<p><strong>步骤三：Leader 收到审批确认后执行 TeamDelete</strong></p>
+<p>Leader 确认所有 Teammate 已停止后，调用 <code>TeamDeleteTool</code> 清理团队。</p>
+<h3 id="1033-plan-审批协议">10.3.3 Plan 审批协议</h3>
+<p><strong>Teammate 在 Plan 模式下完成计划后，Leader 审批：</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handlePlanApproval</span>(<span class="hljs-params">recipientName, requestId, context</span>) {
+  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isTeamLead</span>(appState.<span class="hljs-property">teamContext</span>)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Only the team lead can approve plans.'</span>)
+  }
+  <span class="hljs-keyword">const</span> leaderMode = appState.<span class="hljs-property">toolPermissionContext</span>.<span class="hljs-property">mode</span>
+  <span class="hljs-keyword">const</span> modeToInherit = leaderMode === <span class="hljs-string">'plan'</span> ? <span class="hljs-string">'default'</span> : leaderMode
+  <span class="hljs-keyword">const</span> approvalResponse = {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'plan_approval_response'</span>,
+    requestId, <span class="hljs-attr">approved</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>(),
+    <span class="hljs-attr">permissionMode</span>: modeToInherit,
+  }
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(recipientName, { <span class="hljs-attr">from</span>: <span class="hljs-variable constant_">TEAM_LEAD_NAME</span>, <span class="hljs-attr">text</span>: <span class="hljs-title function_">jsonStringify</span>(approvalResponse), ... }, teamName)
+}
+</code></pre>
+<p>审批时传递 <code>permissionMode</code>：</p>
+<ul>
+<li>如果 Leader 处于 <code>plan</code> 模式，Teammate 继承 <code>default</code>（避免无限 plan 循环）</li>
+<li>否则继承 Leader 当前模式</li>
+</ul>
+<p><strong>拒绝审批</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">handlePlanRejection</span>(<span class="hljs-params">recipientName, requestId, feedback, context</span>) {
+  <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isTeamLead</span>(appState.<span class="hljs-property">teamContext</span>)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Only the team lead can reject plans.'</span>)
+  }
+  <span class="hljs-keyword">const</span> rejectionResponse = {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'plan_approval_response'</span>, requestId,
+    <span class="hljs-attr">approved</span>: <span class="hljs-literal">false</span>, feedback,
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>(),
+  }
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeToMailbox</span>(recipientName, { ... }, teamName)
+}
+</code></pre>
+<p>拒绝时附带反馈，Teammate 根据反馈修改计划。</p>
+<hr></hr>
+<h2 id="104-远程-agent-websocket-通信">10.4 远程 Agent WebSocket 通信</h2>
+<h3 id="1041-sessionswebsocket">10.4.1 SessionsWebSocket</h3>
+<p>文件：<code>src/remote/SessionsWebSocket.ts</code></p>
+<p><strong>连接协议</strong>：</p>
+<pre><code>1. 连接到 wss://api.anthropic.com/v1/sessions/ws/{sessionId}/subscribe?organization_uuid=...
+2. 通过 HTTP Header 传递 OAuth token：Authorization: Bearer &lt;token&gt;
+3. 接收 SDKMessage 流
+</code></pre><p><strong>常量配置</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">RECONNECT_DELAY_MS</span> = <span class="hljs-number">2000</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_RECONNECT_ATTEMPTS</span> = <span class="hljs-number">5</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">PING_INTERVAL_MS</span> = <span class="hljs-number">30000</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_SESSION_NOT_FOUND_RETRIES</span> = <span class="hljs-number">3</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">PERMANENT_CLOSE_CODES</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([<span class="hljs-number">4003</span>]) <span class="hljs-comment">// unauthorized</span>
+</code></pre>
+<p><strong>双运行时支持</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Bun</span> !== <span class="hljs-string">'undefined'</span>) {
+  <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> globalThis.<span class="hljs-title class_">WebSocket</span>(url, { headers, <span class="hljs-attr">proxy</span>: <span class="hljs-title function_">getWebSocketProxyUrl</span>(url), <span class="hljs-attr">tls</span>: <span class="hljs-title function_">getWebSocketTLSOptions</span>() })
+  <span class="hljs-comment">// Bun WebSocket event handlers...</span>
+} <span class="hljs-keyword">else</span> {
+  <span class="hljs-keyword">const</span> { <span class="hljs-attr">default</span>: <span class="hljs-variable constant_">WS</span> } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">'ws'</span>)
+  <span class="hljs-keyword">const</span> ws = <span class="hljs-keyword">new</span> <span class="hljs-title function_">WS</span>(url, { headers, <span class="hljs-attr">agent</span>: <span class="hljs-title function_">getWebSocketProxyAgent</span>(url), ...<span class="hljs-title function_">getWebSocketTLSOptions</span>() })
+  <span class="hljs-comment">// Node.js ws event handlers...</span>
+}
+</code></pre>
+<p>同时支持 Bun 原生 WebSocket 和 Node.js <code>ws</code> 库。Bun 环境下使用 <code>globalThis.WebSocket</code>（支持 <code>proxy</code> 和 <code>tls</code> 选项），Node.js 环境下使用 <code>ws</code> 包。</p>
+<p><strong>重连策略</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">handleClose</span>(<span class="hljs-attr">closeCode</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-comment">// 永久关闭码（如 4003 unauthorized）-&gt; 不重连</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">PERMANENT_CLOSE_CODES</span>.<span class="hljs-title function_">has</span>(closeCode)) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-property">onClose</span>?.()
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-comment">// 4001 session not found -&gt; 有限重试（压缩期间可能暂时找不到）</span>
+  <span class="hljs-keyword">if</span> (closeCode === <span class="hljs-number">4001</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">sessionNotFoundRetries</span>++
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">sessionNotFoundRetries</span> &gt; <span class="hljs-variable constant_">MAX_SESSION_NOT_FOUND_RETRIES</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-property">onClose</span>?.()
+      <span class="hljs-keyword">return</span>
+    }
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">scheduleReconnect</span>(<span class="hljs-variable constant_">RECONNECT_DELAY_MS</span> * <span class="hljs-variable language_">this</span>.<span class="hljs-property">sessionNotFoundRetries</span>, ...)
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-comment">// 普通断连 -&gt; 5 次重试</span>
+  <span class="hljs-keyword">if</span> (previousState === <span class="hljs-string">'connected'</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">reconnectAttempts</span> &lt; <span class="hljs-variable constant_">MAX_RECONNECT_ATTEMPTS</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">reconnectAttempts</span>++
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">scheduleReconnect</span>(<span class="hljs-variable constant_">RECONNECT_DELAY_MS</span>, ...)
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-property">onClose</span>?.()
+  }
+}
+</code></pre>
+<p>4001 错误码特殊处理的原因在注释中说明：compaction 期间服务器可能暂时认为 session 过期，短暂重试窗口允许客户端恢复。</p>
+<p><strong>心跳机制</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">startPingInterval</span>(): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">pingInterval</span> = <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span> &amp;&amp; <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> === <span class="hljs-string">'connected'</span>) {
+      <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-property">ping</span>?.()
+    }
+  }, <span class="hljs-variable constant_">PING_INTERVAL_MS</span>)  <span class="hljs-comment">// 30秒</span>
+}
+</code></pre>
+<p><strong>消息发送</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-title function_">sendControlResponse</span>(<span class="hljs-attr">response</span>: <span class="hljs-title class_">SDKControlResponse</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title function_">jsonStringify</span>(response))
+}
+
+<span class="hljs-title function_">sendControlRequest</span>(<span class="hljs-attr">request</span>: <span class="hljs-title class_">SDKControlRequestInner</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">controlRequest</span>: <span class="hljs-title class_">SDKControlRequest</span> = {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'control_request'</span>,
+    <span class="hljs-attr">request_id</span>: <span class="hljs-title function_">randomUUID</span>(),
+    request,
+  }
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">ws</span>.<span class="hljs-title function_">send</span>(<span class="hljs-title function_">jsonStringify</span>(controlRequest))
+}
+</code></pre>
+<p>控制消息分为 <code>control_request</code>（客户端发起，如 interrupt）和 <code>control_response</code>（客户端回应服务端的权限请求）。</p>
+<h3 id="1042-消息类型验证">10.4.2 消息类型验证</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">isSessionsMessage</span>(<span class="hljs-params"><span class="hljs-attr">value</span>: <span class="hljs-built_in">unknown</span></span>): value is <span class="hljs-title class_">SessionsMessage</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> value !== <span class="hljs-string">'object'</span> || value === <span class="hljs-literal">null</span> || !(<span class="hljs-string">'type'</span> <span class="hljs-keyword">in</span> value)) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> value.<span class="hljs-property">type</span> === <span class="hljs-string">'string'</span>
+}
+</code></pre>
+<p>设计上接受<strong>任何带 string <code>type</code> 字段的消息</strong>，不使用硬编码的允许列表。原因：下游处理器决定如何处理未知类型，硬编码列表会在后端添加新消息类型时静默丢弃消息。</p>
+<hr></hr>
+<h2 id="105-remotesessionmanager-三通道协调">10.5 RemoteSessionManager 三通道协调</h2>
+<p>文件：<code>src/remote/RemoteSessionManager.ts</code></p>
+<h3 id="1051-架构概览">10.5.1 架构概览</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RemoteSessionManager</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">websocket</span>: <span class="hljs-title class_">SessionsWebSocket</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">pendingPermissionRequests</span>: <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">SDKControlPermissionRequest</span>&gt; = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>()
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">config</span>: <span class="hljs-title class_">RemoteSessionConfig</span>,
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-attr">callbacks</span>: <span class="hljs-title class_">RemoteSessionCallbacks</span>,
+  </span>) {}
+}
+</code></pre>
+<p>三个通道：</p>
+<ol>
+<li><strong>WebSocket 接收通道</strong>：订阅远程 session 的消息流</li>
+<li><strong>HTTP POST 发送通道</strong>：向远程 session 发送用户消息</li>
+<li><strong>权限代理通道</strong>：处理远程 Agent 的权限请求/响应</li>
+</ol>
+<h3 id="1052-消息接收与分发">10.5.2 消息接收与分发</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">handleMessage</span>(message): <span class="hljs-built_in">void</span> {
+  <span class="hljs-comment">// 权限请求 -&gt; 存入 pending 并通知回调</span>
+  <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'control_request'</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">handleControlRequest</span>(message)
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-comment">// 权限取消 -&gt; 从 pending 移除并通知</span>
+  <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'control_cancel_request'</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">pendingPermissionRequests</span>.<span class="hljs-title function_">delete</span>(request_id)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-property">onPermissionCancelled</span>?.(request_id, pendingRequest?.<span class="hljs-property">tool_use_id</span>)
+    <span class="hljs-keyword">return</span>
+  }
+
+  <span class="hljs-comment">// 控制响应（确认） -&gt; 仅记录</span>
+  <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'control_response'</span>) { <span class="hljs-keyword">return</span> }
+
+  <span class="hljs-comment">// SDK 消息 -&gt; 转发给回调</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isSDKMessage</span>(message)) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-title function_">onMessage</span>(message)
+  }
+}
+</code></pre>
+<p>四种消息处理路径清晰分离。权限请求存入 <code>pendingPermissionRequests</code> Map，以 <code>request_id</code> 为键，支持后续响应时查找。</p>
+<h3 id="1053-权限代理流程">10.5.3 权限代理流程</h3>
+<p><strong>远程 Agent 请求权限</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">private</span> <span class="hljs-title function_">handleControlRequest</span>(<span class="hljs-attr">request</span>: <span class="hljs-title class_">SDKControlRequest</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> { request_id, <span class="hljs-attr">request</span>: inner } = request
+  <span class="hljs-keyword">if</span> (inner.<span class="hljs-property">subtype</span> === <span class="hljs-string">'can_use_tool'</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">pendingPermissionRequests</span>.<span class="hljs-title function_">set</span>(request_id, inner)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbacks</span>.<span class="hljs-title function_">onPermissionRequest</span>(inner, request_id)
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-comment">// 不认识的 subtype -&gt; 返回错误响应，避免服务端无限等待</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">response</span>: <span class="hljs-title class_">SDKControlResponse</span> = {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'control_response'</span>,
+      <span class="hljs-attr">response</span>: { <span class="hljs-attr">subtype</span>: <span class="hljs-string">'error'</span>, request_id,
+        <span class="hljs-attr">error</span>: <span class="hljs-string">`Unsupported control request subtype: <span class="hljs-subst">${inner.subtype}</span>`</span> },
+    }
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">websocket</span>?.<span class="hljs-title function_">sendControlResponse</span>(response)
+  }
+}
+</code></pre>
+<p><strong>本地用户响应权限</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-title function_">respondToPermissionRequest</span>(<span class="hljs-attr">requestId</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">result</span>: <span class="hljs-title class_">RemotePermissionResponse</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> pendingRequest = <span class="hljs-variable language_">this</span>.<span class="hljs-property">pendingPermissionRequests</span>.<span class="hljs-title function_">get</span>(requestId)
+  <span class="hljs-keyword">if</span> (!pendingRequest) { <span class="hljs-title function_">logError</span>(...); <span class="hljs-keyword">return</span> }
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">pendingPermissionRequests</span>.<span class="hljs-title function_">delete</span>(requestId)
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">response</span>: <span class="hljs-title class_">SDKControlResponse</span> = {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'control_response'</span>,
+    <span class="hljs-attr">response</span>: {
+      <span class="hljs-attr">subtype</span>: <span class="hljs-string">'success'</span>, <span class="hljs-attr">request_id</span>: requestId,
+      <span class="hljs-attr">response</span>: {
+        <span class="hljs-attr">behavior</span>: result.<span class="hljs-property">behavior</span>,
+        ...(result.<span class="hljs-property">behavior</span> === <span class="hljs-string">'allow'</span>
+          ? { <span class="hljs-attr">updatedInput</span>: result.<span class="hljs-property">updatedInput</span> }
+          : { <span class="hljs-attr">message</span>: result.<span class="hljs-property">message</span> }),
+      },
+    },
+  }
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">websocket</span>?.<span class="hljs-title function_">sendControlResponse</span>(response)
+}
+</code></pre>
+<p>权限代理的完整流程：</p>
+<pre><code>远程 Agent 需要权限 -&gt; CCR 服务器
+    -&gt; WebSocket control_request -&gt; 本地 RemoteSessionManager
+    -&gt; onPermissionRequest 回调 -&gt; 本地 UI 展示权限对话框
+    -&gt; 用户允许/拒绝
+    -&gt; respondToPermissionRequest -&gt; WebSocket control_response
+    -&gt; CCR 服务器 -&gt; 远程 Agent 继续/中止
+</code></pre><h3 id="1054-消息发送">10.5.4 消息发送</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">sendMessage</span>(<span class="hljs-attr">content</span>: <span class="hljs-title class_">RemoteMessageContent</span>, opts?): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">boolean</span>&gt; {
+  <span class="hljs-keyword">const</span> success = <span class="hljs-keyword">await</span> <span class="hljs-title function_">sendEventToRemoteSession</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>.<span class="hljs-property">sessionId</span>, content, opts)
+  <span class="hljs-keyword">return</span> success
+}
+</code></pre>
+<p>发送通过 HTTP POST API（<code>sendEventToRemoteSession</code>），而非 WebSocket。这是因为 WebSocket 是单向的（subscribe），发送使用独立的 HTTP 通道。</p>
+<h3 id="1055-中断控制">10.5.5 中断控制</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">cancelSession</span>(): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">websocket</span>?.<span class="hljs-title function_">sendControlRequest</span>({ <span class="hljs-attr">subtype</span>: <span class="hljs-string">'interrupt'</span> })
+}
+</code></pre>
+<p>发送 <code>interrupt</code> 控制请求取消远程 session 的当前请求。</p>
+<h3 id="1056-remotesessionconfig">10.5.6 RemoteSessionConfig</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">RemoteSessionConfig</span> = {
+  <span class="hljs-attr">sessionId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">getAccessToken</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">orgUuid</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">hasInitialPrompt</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">viewerOnly</span>?: <span class="hljs-built_in">boolean</span>  <span class="hljs-comment">// 纯查看模式：Ctrl+C 不发中断，无重连超时</span>
+}
+</code></pre>
+<p><code>viewerOnly</code> 模式用于 <code>claude assistant</code> 命令，此模式下：</p>
+<ul>
+<li>Ctrl+C/Escape 不发送 interrupt</li>
+<li>60 秒重连超时被禁用</li>
+<li>Session title 不更新</li>
+</ul>
+<hr></hr>
+<h2 id="106-sdk-消息适配">10.6 SDK 消息适配</h2>
+<p>文件：<code>src/remote/sdkMessageAdapter.ts</code></p>
+<h3 id="1061-消息转换">10.6.1 消息转换</h3>
+<p><code>sdkMessageAdapter</code> 将 CCR 后端的 SDK 格式消息转换为 REPL 内部的 Message 类型。</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">convertSDKMessage</span>(<span class="hljs-params"><span class="hljs-attr">msg</span>: <span class="hljs-title class_">SDKMessage</span>, opts?</span>): <span class="hljs-title class_">ConvertedMessage</span> {
+  <span class="hljs-keyword">switch</span> (msg.<span class="hljs-property">type</span>) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'assistant'</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>, <span class="hljs-attr">message</span>: <span class="hljs-title function_">convertAssistantMessage</span>(msg) }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'user'</span>:
+      <span class="hljs-comment">// 工具结果消息需要特殊处理</span>
+      <span class="hljs-comment">// 用户文本消息根据模式决定是否转换</span>
+      <span class="hljs-keyword">return</span> ...
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'stream_event'</span>:
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'stream_event'</span>, <span class="hljs-attr">event</span>: <span class="hljs-title function_">convertStreamEvent</span>(msg) }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'result'</span>:
+      <span class="hljs-comment">// 只转换错误结果，成功结果是噪音</span>
+      <span class="hljs-keyword">if</span> (msg.<span class="hljs-property">subtype</span> !== <span class="hljs-string">'success'</span>) {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'message'</span>, <span class="hljs-attr">message</span>: <span class="hljs-title function_">convertResultMessage</span>(msg) }
+      }
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'ignored'</span> }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'system'</span>:
+      <span class="hljs-comment">// init / status / compact_boundary 各有处理</span>
+      <span class="hljs-comment">// hook_response 等忽略</span>
+      <span class="hljs-keyword">return</span> ...
+  }
+}
+</code></pre>
+<p><strong>转换类型对照表</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>SDKMessage 类型</th>
+<th>转换结果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assistant</code></td>
+<td><code>AssistantMessage</code></td>
+<td>直接映射</td>
+</tr>
+<tr>
+<td><code>stream_event</code></td>
+<td><code>StreamEvent</code></td>
+<td>流式增量</td>
+</tr>
+<tr>
+<td><code>user</code> (tool_result)</td>
+<td><code>UserMessage</code></td>
+<td>仅 <code>convertToolResults</code> 模式</td>
+</tr>
+<tr>
+<td><code>user</code> (text)</td>
+<td><code>UserMessage</code></td>
+<td>仅 <code>convertUserTextMessages</code> 模式</td>
+</tr>
+<tr>
+<td><code>result</code> (error)</td>
+<td><code>SystemMessage</code></td>
+<td>错误结果</td>
+</tr>
+<tr>
+<td><code>result</code> (success)</td>
+<td>ignored</td>
+<td>成功结果是噪音</td>
+</tr>
+<tr>
+<td><code>system</code> (init)</td>
+<td><code>SystemMessage</code></td>
+<td>远程 session 初始化</td>
+</tr>
+<tr>
+<td><code>system</code> (status)</td>
+<td><code>SystemMessage</code></td>
+<td>如 "compacting"</td>
+</tr>
+<tr>
+<td><code>system</code> (compact_boundary)</td>
+<td><code>SystemMessage</code></td>
+<td>对话压缩标记</td>
+</tr>
+<tr>
+<td><code>tool_progress</code></td>
+<td><code>SystemMessage</code></td>
+<td>工具进度（简化版）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>转换选项</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">ConvertOptions</span> = {
+  <span class="hljs-attr">convertToolResults</span>?: <span class="hljs-built_in">boolean</span>       <span class="hljs-comment">// direct connect 模式需要</span>
+  <span class="hljs-attr">convertUserTextMessages</span>?: <span class="hljs-built_in">boolean</span>  <span class="hljs-comment">// 历史事件回放需要</span>
+}
+</code></pre>
+<ul>
+<li><code>convertToolResults</code>：Direct connect 模式下，工具结果来自远程服务器，需要转换为本地消息以正确渲染和折叠</li>
+<li><code>convertUserTextMessages</code>：历史事件转换时需要，因为用户消息没有被本地 REPL 添加过</li>
+</ul>
+<h3 id="1062-assistant-消息转换">10.6.2 Assistant 消息转换</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">convertAssistantMessage</span>(<span class="hljs-params"><span class="hljs-attr">msg</span>: <span class="hljs-title class_">SDKAssistantMessage</span></span>): <span class="hljs-title class_">AssistantMessage</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'assistant'</span>,
+    <span class="hljs-attr">message</span>: msg.<span class="hljs-property">message</span>,
+    <span class="hljs-attr">uuid</span>: msg.<span class="hljs-property">uuid</span>,
+    <span class="hljs-attr">requestId</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>(),
+    <span class="hljs-attr">error</span>: msg.<span class="hljs-property">error</span>,
+  }
+}
+</code></pre>
+<p><code>requestId</code> 设为 <code>undefined</code>，因为远程消息没有本地 request 上下文。</p>
+<h3 id="1063-stream-event-转换">10.6.3 Stream Event 转换</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">convertStreamEvent</span>(<span class="hljs-params"><span class="hljs-attr">msg</span>: <span class="hljs-title class_">SDKPartialAssistantMessage</span></span>): <span class="hljs-title class_">StreamEvent</span> {
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'stream_event'</span>, <span class="hljs-attr">event</span>: msg.<span class="hljs-property">event</span> }
+}
+</code></pre>
+<p>直接透传事件，不添加额外元数据。</p>
+<hr></hr>
+<h2 id="107-进程内-teammate-的-spawn-与运行循环">10.7 进程内 Teammate 的 Spawn 与运行循环</h2>
+<h3 id="1071-spawn-流程">10.7.1 Spawn 流程</h3>
+<p>文件：<code>src/utils/swarm/spawnInProcess.ts</code></p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">spawnInProcessTeammate</span>(<span class="hljs-params">config, context</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">InProcessSpawnOutput</span>&gt; {
+  <span class="hljs-keyword">const</span> { name, teamName, prompt, color, planModeRequired, model } = config
+
+  <span class="hljs-comment">// 1. 生成确定性 Agent ID</span>
+  <span class="hljs-keyword">const</span> agentId = <span class="hljs-title function_">formatAgentId</span>(name, teamName)  <span class="hljs-comment">// "name@team"</span>
+  <span class="hljs-keyword">const</span> taskId = <span class="hljs-title function_">generateTaskId</span>(<span class="hljs-string">'in_process_teammate'</span>)  <span class="hljs-comment">// "t" + 8位随机</span>
+
+  <span class="hljs-comment">// 2. 创建独立的 AbortController</span>
+  <span class="hljs-keyword">const</span> abortController = <span class="hljs-title function_">createAbortController</span>()
+
+  <span class="hljs-comment">// 3. 创建 TeammateIdentity（存储在 AppState 的纯数据）</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">identity</span>: <span class="hljs-title class_">TeammateIdentity</span> = {
+    agentId, <span class="hljs-attr">agentName</span>: name, teamName, color,
+    planModeRequired, <span class="hljs-attr">parentSessionId</span>: <span class="hljs-title function_">getSessionId</span>(),
+  }
+
+  <span class="hljs-comment">// 4. 创建 TeammateContext（用于 AsyncLocalStorage）</span>
+  <span class="hljs-keyword">const</span> teammateContext = <span class="hljs-title function_">createTeammateContext</span>({
+    agentId, <span class="hljs-attr">agentName</span>: name, teamName, color,
+    planModeRequired, parentSessionId, abortController,
+  })
+
+  <span class="hljs-comment">// 5. 注册 Perfetto 追踪</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isPerfettoTracingEnabled</span>()) {
+    <span class="hljs-title function_">registerPerfettoAgent</span>(agentId, name, parentSessionId)
+  }
+
+  <span class="hljs-comment">// 6. 构造任务状态</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">taskState</span>: <span class="hljs-title class_">InProcessTeammateTaskState</span> = {
+    ...<span class="hljs-title function_">createTaskStateBase</span>(taskId, <span class="hljs-string">'in_process_teammate'</span>, description, context.<span class="hljs-property">toolUseId</span>),
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'in_process_teammate'</span>,
+    <span class="hljs-attr">status</span>: <span class="hljs-string">'running'</span>,
+    identity, prompt, model, abortController,
+    <span class="hljs-attr">awaitingPlanApproval</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">spinnerVerb</span>: <span class="hljs-title function_">sample</span>(<span class="hljs-title function_">getSpinnerVerbs</span>()),  <span class="hljs-comment">// 随机选择加载动词</span>
+    <span class="hljs-attr">pastTenseVerb</span>: <span class="hljs-title function_">sample</span>(<span class="hljs-variable constant_">TURN_COMPLETION_VERBS</span>),
+    <span class="hljs-attr">permissionMode</span>: planModeRequired ? <span class="hljs-string">'plan'</span> : <span class="hljs-string">'default'</span>,
+    <span class="hljs-attr">isIdle</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">shutdownRequested</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">lastReportedToolCount</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">lastReportedTokenCount</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">pendingUserMessages</span>: [],
+    <span class="hljs-attr">messages</span>: [],
+  }
+
+  <span class="hljs-comment">// 7. 注册清理回调</span>
+  <span class="hljs-keyword">const</span> unregisterCleanup = <span class="hljs-title function_">registerCleanup</span>(<span class="hljs-title function_">async</span> () =&gt; {
+    abortController.<span class="hljs-title function_">abort</span>()
+  })
+  taskState.<span class="hljs-property">unregisterCleanup</span> = unregisterCleanup
+
+  <span class="hljs-comment">// 8. 写入 AppState</span>
+  <span class="hljs-title function_">registerTask</span>(taskState, setAppState)
+
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, agentId, taskId, abortController, teammateContext }
+}
+</code></pre>
+<p><code>TeammateIdentity</code> 和 <code>TeammateContext</code> 的区别：</p>
+<ul>
+<li><code>TeammateIdentity</code>：纯数据，存储在 AppState 中，用于 UI 展示和序列化</li>
+<li><code>TeammateContext</code>：运行时对象，存储在 AsyncLocalStorage 中，用于上下文隔离</li>
+</ul>
+<h3 id="1072-kill-流程">10.7.2 Kill 流程</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">killInProcessTeammate</span>(<span class="hljs-params">taskId, setAppState</span>): <span class="hljs-built_in">boolean</span> {
+  <span class="hljs-keyword">let</span> killed = <span class="hljs-literal">false</span>
+  <span class="hljs-title function_">setAppState</span>(<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">prev</span>: <span class="hljs-title class_">AppState</span></span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> task = prev.<span class="hljs-property">tasks</span>[taskId]
+    <span class="hljs-keyword">if</span> (!task || task.<span class="hljs-property">type</span> !== <span class="hljs-string">'in_process_teammate'</span>) <span class="hljs-keyword">return</span> prev
+    <span class="hljs-keyword">const</span> teammateTask = task <span class="hljs-keyword">as</span> <span class="hljs-title class_">InProcessTeammateTaskState</span>
+    <span class="hljs-keyword">if</span> (teammateTask.<span class="hljs-property">status</span> !== <span class="hljs-string">'running'</span>) <span class="hljs-keyword">return</span> prev
+
+    killed = <span class="hljs-literal">true</span>
+    teamName = teammateTask.<span class="hljs-property">identity</span>.<span class="hljs-property">teamName</span>
+    agentId = teammateTask.<span class="hljs-property">identity</span>.<span class="hljs-property">agentId</span>
+
+    teammateTask.<span class="hljs-property">abortController</span>?.<span class="hljs-title function_">abort</span>()
+    teammateTask.<span class="hljs-property">unregisterCleanup</span>?.()
+
+    <span class="hljs-keyword">return</span> {
+      ...prev,
+      <span class="hljs-attr">tasks</span>: { ...prev.<span class="hljs-property">tasks</span>, [taskId]: {
+        ...teammateTask,
+        <span class="hljs-attr">status</span>: <span class="hljs-string">'killed'</span>, <span class="hljs-attr">endTime</span>: <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>(),
+        <span class="hljs-attr">abortController</span>: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">unregisterCleanup</span>: <span class="hljs-literal">undefined</span>,
+        <span class="hljs-attr">currentWorkAbortController</span>: <span class="hljs-literal">undefined</span>, <span class="hljs-attr">selectedAgent</span>: <span class="hljs-literal">undefined</span>,
+      }}
+    }
+  })
+
+  <span class="hljs-keyword">if</span> (killed) {
+    <span class="hljs-built_in">void</span> <span class="hljs-title function_">evictTaskOutput</span>(taskId)
+    <span class="hljs-title function_">unregisterPerfettoAgent</span>(agentId)
+    <span class="hljs-title function_">emitTaskTerminatedSdk</span>(taskId, toolUseId, description)
+    <span class="hljs-comment">// 延迟驱逐给 UI 时间展示终态</span>
+    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">evictTerminalTask</span>(taskId, setAppState), <span class="hljs-variable constant_">STOPPED_DISPLAY_MS</span>)
+    <span class="hljs-comment">// 从团队文件中移除成员</span>
+    <span class="hljs-built_in">void</span> <span class="hljs-title function_">removeMemberByAgentId</span>(teamName, agentId)
+  }
+}
+</code></pre>
+<p>Kill 后的 3 秒展示期（<code>STOPPED_DISPLAY_MS</code>），让 UI 有时间显示终态状态后再从 AppState 中驱逐。</p>
+<h3 id="1073-运行循环">10.7.3 运行循环</h3>
+<p>文件：<code>src/utils/swarm/inProcessRunner.ts</code></p>
+<p><code>runInProcessTeammate()</code> 是进程内 Teammate 的核心运行循环：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">runInProcessTeammate</span>(<span class="hljs-params">config</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">InProcessRunnerResult</span>&gt; {
+  <span class="hljs-comment">// 构建系统提示（支持 replace/append/default 模式）</span>
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">teammateSystemPrompt</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-keyword">if</span> (systemPromptMode === <span class="hljs-string">'replace'</span> &amp;&amp; systemPrompt) {
+    teammateSystemPrompt = systemPrompt
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">const</span> systemPromptParts = [...fullSystemPromptParts, <span class="hljs-variable constant_">TEAMMATE_SYSTEM_PROMPT_ADDENDUM</span>]
+    <span class="hljs-keyword">if</span> (agentDefinition) {
+      systemPromptParts.<span class="hljs-title function_">push</span>(<span class="hljs-string">`\n# Custom Agent Instructions\n<span class="hljs-subst">${customPrompt}</span>`</span>)
+    }
+    <span class="hljs-keyword">if</span> (systemPromptMode === <span class="hljs-string">'append'</span> &amp;&amp; systemPrompt) {
+      systemPromptParts.<span class="hljs-title function_">push</span>(systemPrompt)
+    }
+    teammateSystemPrompt = systemPromptParts.<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>)
+  }
+
+  <span class="hljs-comment">// 确保团队工具始终可用</span>
+  <span class="hljs-keyword">const</span> resolvedAgentDefinition = {
+    <span class="hljs-attr">agentType</span>: identity.<span class="hljs-property">agentName</span>,
+    <span class="hljs-attr">tools</span>: agentDefinition?.<span class="hljs-property">tools</span>
+      ? [...<span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>([...agentDefinition.<span class="hljs-property">tools</span>,
+          <span class="hljs-variable constant_">SEND_MESSAGE_TOOL_NAME</span>, <span class="hljs-variable constant_">TEAM_CREATE_TOOL_NAME</span>,
+          <span class="hljs-variable constant_">TEAM_DELETE_TOOL_NAME</span>, <span class="hljs-variable constant_">TASK_CREATE_TOOL_NAME</span>,
+          <span class="hljs-variable constant_">TASK_GET_TOOL_NAME</span>, <span class="hljs-variable constant_">TASK_LIST_TOOL_NAME</span>,
+          <span class="hljs-variable constant_">TASK_UPDATE_TOOL_NAME</span>,
+        ])]
+      : [<span class="hljs-string">'*'</span>],
+    <span class="hljs-attr">permissionMode</span>: <span class="hljs-string">'default'</span>,
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">allMessages</span>: <span class="hljs-title class_">Message</span>[] = []
+  <span class="hljs-keyword">let</span> currentPrompt = wrappedInitialPrompt
+  <span class="hljs-keyword">let</span> shouldExit = <span class="hljs-literal">false</span>
+
+  <span class="hljs-comment">// 主循环</span>
+  <span class="hljs-keyword">while</span> (!abortController.<span class="hljs-property">signal</span>.<span class="hljs-property">aborted</span> &amp;&amp; !shouldExit) {
+    <span class="hljs-comment">// 1. 创建每轮次的 AbortController</span>
+    <span class="hljs-keyword">const</span> currentWorkAbortController = <span class="hljs-title function_">createAbortController</span>()
+    <span class="hljs-title function_">updateTaskState</span>(taskId, <span class="hljs-function"><span class="hljs-params">task</span> =&gt;</span> ({ ...task, currentWorkAbortController }), setAppState)
+
+    <span class="hljs-comment">// 2. 准备上下文（可能需要 compaction）</span>
+    <span class="hljs-keyword">let</span> contextMessages = allMessages
+    <span class="hljs-keyword">const</span> tokenCount = <span class="hljs-title function_">tokenCountWithEstimation</span>(allMessages)
+    <span class="hljs-keyword">if</span> (tokenCount &gt; <span class="hljs-title function_">getAutoCompactThreshold</span>(model)) {
+      <span class="hljs-keyword">const</span> compactedSummary = <span class="hljs-keyword">await</span> <span class="hljs-title function_">compactConversation</span>(allMessages, isolatedContext, ...)
+      contextMessages = <span class="hljs-title function_">buildPostCompactMessages</span>(compactedSummary, allMessages)
+      <span class="hljs-title function_">resetMicrocompactState</span>(allMessages)
+    }
+
+    <span class="hljs-comment">// 3. 在 TeammateContext 中运行 Agent</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">runWithTeammateContext</span>(teammateContext, <span class="hljs-title function_">async</span> () =&gt; {
+      <span class="hljs-keyword">await</span> <span class="hljs-title function_">runWithAgentContext</span>(agentContext, <span class="hljs-title function_">async</span> () =&gt; {
+        <span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> <span class="hljs-title function_">runAgent</span>({
+          <span class="hljs-attr">agentDefinition</span>: resolvedAgentDefinition,
+          promptMessages, toolUseContext, canUseTool,
+          <span class="hljs-attr">isAsync</span>: <span class="hljs-literal">true</span>,
+          <span class="hljs-attr">canShowPermissionPrompts</span>: allowPermissionPrompts ?? <span class="hljs-literal">true</span>,
+          <span class="hljs-attr">forkContextMessages</span>: contextMessages,
+          <span class="hljs-attr">querySource</span>: <span class="hljs-string">'agent:teammate'</span>,
+          <span class="hljs-attr">override</span>: {
+            <span class="hljs-attr">abortController</span>: currentWorkAbortController,
+            <span class="hljs-attr">agentId</span>: <span class="hljs-title function_">toAgentId</span>(identity.<span class="hljs-property">agentId</span>),
+            <span class="hljs-attr">systemPrompt</span>: <span class="hljs-title function_">asSystemPrompt</span>(teammateSystemPrompt),
+          },
+          <span class="hljs-attr">preserveToolUseResults</span>: <span class="hljs-literal">true</span>,
+          availableTools, allowedTools,
+          <span class="hljs-attr">contentReplacementState</span>: teammateReplacementState,
+        })) {
+          allMessages.<span class="hljs-title function_">push</span>(message)
+          <span class="hljs-comment">// 更新进度和 UI 消息</span>
+          <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'assistant'</span>) {
+            <span class="hljs-title function_">updateProgressFromMessage</span>(tracker, message, ...)
+            <span class="hljs-title function_">updateTaskState</span>(taskId, <span class="hljs-function"><span class="hljs-params">task</span> =&gt;</span> ({
+              ...task,
+              <span class="hljs-attr">progress</span>: <span class="hljs-title function_">getProgressUpdate</span>(tracker),
+              <span class="hljs-attr">messages</span>: <span class="hljs-title function_">appendCappedMessage</span>(task.<span class="hljs-property">messages</span>, message),
+            }), setAppState)
+          }
+        }
+      })
+    })
+
+    <span class="hljs-comment">// 4. 设为 idle 状态</span>
+    <span class="hljs-title function_">updateTaskState</span>(taskId, <span class="hljs-function"><span class="hljs-params">task</span> =&gt;</span> ({ ...task, <span class="hljs-attr">isIdle</span>: <span class="hljs-literal">true</span> }), setAppState)
+
+    <span class="hljs-comment">// 5. 发送 idle 通知到 Leader 邮箱</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">sendIdleNotification</span>(identity.<span class="hljs-property">agentName</span>, identity.<span class="hljs-property">color</span>, identity.<span class="hljs-property">teamName</span>, ...)
+
+    <span class="hljs-comment">// 6. 等待新消息或 shutdown</span>
+    <span class="hljs-keyword">const</span> waitResult = <span class="hljs-keyword">await</span> <span class="hljs-title function_">waitForNextPromptOrShutdown</span>(
+      identity, abortController, taskId, getAppState, setAppState, taskListId
+    )
+
+    <span class="hljs-keyword">switch</span> (waitResult.<span class="hljs-property">type</span>) {
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'shutdown_request'</span>:
+        <span class="hljs-comment">// 注入 shutdown 请求到对话，让模型决定</span>
+        currentPrompt = <span class="hljs-title function_">formatAsTeammateMessage</span>(waitResult.<span class="hljs-property">request</span>.<span class="hljs-property">from</span>, waitResult.<span class="hljs-property">originalMessage</span>)
+        <span class="hljs-title function_">updateTaskState</span>(taskId, <span class="hljs-function"><span class="hljs-params">task</span> =&gt;</span> ({ ...task, <span class="hljs-attr">isIdle</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">shutdownRequested</span>: <span class="hljs-literal">true</span> }), setAppState)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'new_message'</span>:
+        currentPrompt = <span class="hljs-title function_">formatAsTeammateMessage</span>(waitResult.<span class="hljs-property">from</span>, waitResult.<span class="hljs-property">message</span>, ...)
+        <span class="hljs-title function_">updateTaskState</span>(taskId, <span class="hljs-function"><span class="hljs-params">task</span> =&gt;</span> ({ ...task, <span class="hljs-attr">isIdle</span>: <span class="hljs-literal">false</span> }), setAppState)
+        <span class="hljs-keyword">break</span>
+      <span class="hljs-keyword">case</span> <span class="hljs-string">'aborted'</span>:
+        shouldExit = <span class="hljs-literal">true</span>
+        <span class="hljs-keyword">break</span>
+    }
+  }
+}
+</code></pre>
+<h3 id="1074-等待循环的消息优先级">10.7.4 等待循环的消息优先级</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">waitForNextPromptOrShutdown</span>(<span class="hljs-params">identity, abortController, taskId, getAppState, setAppState, taskListId</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">WaitResult</span>&gt; {
+  <span class="hljs-keyword">while</span> (!abortController.<span class="hljs-property">signal</span>.<span class="hljs-property">aborted</span>) {
+    <span class="hljs-comment">// 优先级 1: 进程内 pendingUserMessages（用户在 transcript 视图中发送的消息）</span>
+    <span class="hljs-keyword">const</span> task = <span class="hljs-title function_">getAppState</span>().<span class="hljs-property">tasks</span>[taskId]
+    <span class="hljs-keyword">if</span> (task?.<span class="hljs-property">pendingUserMessages</span>.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'new_message'</span>, <span class="hljs-attr">message</span>: task.<span class="hljs-property">pendingUserMessages</span>[<span class="hljs-number">0</span>] }
+    }
+
+    <span class="hljs-comment">// 优先级 2: 邮箱中的 shutdown 请求</span>
+    <span class="hljs-keyword">const</span> allMessages = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readMailbox</span>(identity.<span class="hljs-property">agentName</span>, identity.<span class="hljs-property">teamName</span>)
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> m <span class="hljs-keyword">of</span> allMessages) {
+      <span class="hljs-keyword">if</span> (!m.<span class="hljs-property">read</span>) {
+        <span class="hljs-keyword">const</span> parsed = <span class="hljs-title function_">isShutdownRequest</span>(m.<span class="hljs-property">text</span>)
+        <span class="hljs-keyword">if</span> (parsed) {
+          <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'shutdown_request'</span>, <span class="hljs-attr">request</span>: parsed, <span class="hljs-attr">originalMessage</span>: m.<span class="hljs-property">text</span> }
+        }
+      }
+    }
+
+    <span class="hljs-comment">// 优先级 3: Leader 的邮箱消息</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> m <span class="hljs-keyword">of</span> allMessages) {
+      <span class="hljs-keyword">if</span> (!m.<span class="hljs-property">read</span> &amp;&amp; m.<span class="hljs-property">from</span> === <span class="hljs-variable constant_">TEAM_LEAD_NAME</span>) {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'new_message'</span>, <span class="hljs-attr">message</span>: m.<span class="hljs-property">text</span>, <span class="hljs-attr">from</span>: m.<span class="hljs-property">from</span> }
+      }
+    }
+
+    <span class="hljs-comment">// 优先级 4: 任何其他未读邮箱消息</span>
+    <span class="hljs-keyword">const</span> firstUnread = allMessages.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> !m.<span class="hljs-property">read</span>)
+    <span class="hljs-keyword">if</span> (firstUnread) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'new_message'</span>, <span class="hljs-attr">message</span>: firstUnread.<span class="hljs-property">text</span>, <span class="hljs-attr">from</span>: firstUnread.<span class="hljs-property">from</span> }
+    }
+
+    <span class="hljs-comment">// 优先级 5: 任务列表中的待认领任务</span>
+    <span class="hljs-keyword">const</span> taskPrompt = <span class="hljs-keyword">await</span> <span class="hljs-title function_">tryClaimNextTask</span>(taskListId, identity.<span class="hljs-property">agentName</span>)
+    <span class="hljs-keyword">if</span> (taskPrompt) {
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'new_message'</span>, <span class="hljs-attr">message</span>: taskPrompt, <span class="hljs-attr">from</span>: <span class="hljs-string">'task-list'</span> }
+    }
+
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">sleep</span>(<span class="hljs-number">500</span>)
+  }
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'aborted'</span> }
+}
+</code></pre>
+<p>消息优先级设计原则：</p>
+<ol>
+<li><strong>内存中的用户消息最优先</strong>：直接的用户交互不应该等待</li>
+<li><strong>Shutdown 请求优先于普通消息</strong>：防止消息洪水阻塞 shutdown</li>
+<li><strong>Leader 消息优先于 Peer 消息</strong>：Leader 代表用户意图和协调指令</li>
+<li><strong>Peer 消息 FIFO</strong>：同等级消息按到达顺序处理</li>
+<li><strong>任务列表作为兜底</strong>：无消息时主动认领待完成任务</li>
+</ol>
+<h3 id="1075-权限代理（进程内-teammate）">10.7.5 权限代理（进程内 Teammate）</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">createInProcessCanUseTool</span>(<span class="hljs-params">identity, abortController, onPermissionWaitMs?</span>): <span class="hljs-title class_">CanUseToolFn</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">async</span> (tool, input, toolUseContext, assistantMessage, toolUseID, forceDecision) =&gt; {
+    <span class="hljs-keyword">const</span> result = forceDecision ?? <span class="hljs-keyword">await</span> <span class="hljs-title function_">hasPermissionsToUseTool</span>(...)
+    <span class="hljs-keyword">if</span> (result.<span class="hljs-property">behavior</span> !== <span class="hljs-string">'ask'</span>) { <span class="hljs-keyword">return</span> result }
+
+    <span class="hljs-comment">// Bash 命令先尝试分类器自动审批</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'BASH_CLASSIFIER'</span>) &amp;&amp; tool.<span class="hljs-property">name</span> === <span class="hljs-variable constant_">BASH_TOOL_NAME</span> &amp;&amp; result.<span class="hljs-property">pendingClassifierCheck</span>) {
+      <span class="hljs-keyword">const</span> classifierDecision = <span class="hljs-keyword">await</span> <span class="hljs-title function_">awaitClassifierAutoApproval</span>(...)
+      <span class="hljs-keyword">if</span> (classifierDecision) { <span class="hljs-keyword">return</span> { <span class="hljs-attr">behavior</span>: <span class="hljs-string">'allow'</span>, ... } }
+    }
+
+    <span class="hljs-comment">// 优先路径：使用 Leader 的 ToolUseConfirm 对话框</span>
+    <span class="hljs-keyword">const</span> setToolUseConfirmQueue = <span class="hljs-title function_">getLeaderToolUseConfirmQueue</span>()
+    <span class="hljs-keyword">if</span> (setToolUseConfirmQueue) {
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> {
+        <span class="hljs-title function_">setToolUseConfirmQueue</span>(<span class="hljs-function"><span class="hljs-params">queue</span> =&gt;</span> [...queue, {
+          tool, description, input, toolUseContext, toolUseID,
+          <span class="hljs-attr">permissionResult</span>: result,
+          <span class="hljs-attr">workerBadge</span>: identity.<span class="hljs-property">color</span> ? { <span class="hljs-attr">name</span>: identity.<span class="hljs-property">agentName</span>, <span class="hljs-attr">color</span>: identity.<span class="hljs-property">color</span> } : <span class="hljs-literal">undefined</span>,
+          <span class="hljs-title function_">onAllow</span>(<span class="hljs-params">...</span>) { <span class="hljs-title function_">resolve</span>({ <span class="hljs-attr">behavior</span>: <span class="hljs-string">'allow'</span>, ... }) },
+          <span class="hljs-title function_">onReject</span>(<span class="hljs-params">feedback?</span>) { <span class="hljs-title function_">resolve</span>({ <span class="hljs-attr">behavior</span>: <span class="hljs-string">'ask'</span>, <span class="hljs-attr">message</span>: ... }) },
+          <span class="hljs-title function_">recheckPermission</span>(<span class="hljs-params"></span>) { ... },
+        }])
+      })
+    }
+
+    <span class="hljs-comment">// 降级路径：通过邮箱系统</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> {
+      <span class="hljs-keyword">const</span> request = <span class="hljs-title function_">createPermissionRequest</span>({
+        toolName, toolUseId, input, description,
+        <span class="hljs-attr">workerId</span>: identity.<span class="hljs-property">agentId</span>, <span class="hljs-attr">workerName</span>: identity.<span class="hljs-property">agentName</span>,
+        <span class="hljs-attr">workerColor</span>: identity.<span class="hljs-property">color</span>, <span class="hljs-attr">teamName</span>: identity.<span class="hljs-property">teamName</span>,
+      })
+      <span class="hljs-title function_">registerPermissionCallback</span>({ <span class="hljs-attr">requestId</span>: request.<span class="hljs-property">id</span>, onAllow, onReject })
+      <span class="hljs-built_in">void</span> <span class="hljs-title function_">sendPermissionRequestViaMailbox</span>(request)
+      <span class="hljs-comment">// 轮询邮箱等待响应...</span>
+    })
+  }
+}
+</code></pre>
+<p>两条权限路径：</p>
+<ul>
+<li><strong>Leader UI 队列</strong>（优先）：直接复用 Leader 的 <code>ToolUseConfirm</code> 对话框，显示 worker badge（名称+颜色），用户体验与 Leader 自己的工具权限提示一致</li>
+<li><strong>邮箱系统</strong>（降级）：当 Leader UI 不可用时，通过文件邮箱异步交换权限请求和响应</li>
+</ul>
+<p>权限允许后，更新会写回 Leader 的共享上下文，但<strong>保留 Leader 的模式</strong>（<code>preserveMode: true</code>），防止 Worker 的权限上下文泄漏到 Coordinator。</p>
+<hr></hr>
+<h2 id="108-消息格式化">10.8 消息格式化</h2>
+<h3 id="1081-xml-teammate-message">10.8.1 XML Teammate Message</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">formatAsTeammateMessage</span>(<span class="hljs-params"><span class="hljs-keyword">from</span>, content, color?, summary?</span>): <span class="hljs-built_in">string</span> {
+  <span class="hljs-keyword">const</span> colorAttr = color ? <span class="hljs-string">` color="<span class="hljs-subst">${color}</span>"`</span> : <span class="hljs-string">''</span>
+  <span class="hljs-keyword">const</span> summaryAttr = summary ? <span class="hljs-string">` summary="<span class="hljs-subst">${summary}</span>"`</span> : <span class="hljs-string">''</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-string">`&lt;<span class="hljs-subst">${TEAMMATE_MESSAGE_TAG}</span> teammate_id="<span class="hljs-subst">${<span class="hljs-keyword">from</span>}</span>"<span class="hljs-subst">${colorAttr}</span><span class="hljs-subst">${summaryAttr}</span>&gt;\n<span class="hljs-subst">${content}</span>\n&lt;/<span class="hljs-subst">${TEAMMATE_MESSAGE_TAG}</span>&gt;`</span>
+}
+</code></pre>
+<p>统一的 XML 格式确保模型看到的消息结构一致，无论来源是 tmux Teammate、进程内 Teammate 还是文件邮箱。</p>
+<h3 id="1082-idle-通知">10.8.2 Idle 通知</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sendIdleNotification</span>(<span class="hljs-params">agentName, agentColor, teamName, options?</span>) {
+  <span class="hljs-keyword">const</span> notification = <span class="hljs-title function_">createIdleNotification</span>(agentName, options)
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">sendMessageToLeader</span>(agentName, <span class="hljs-title function_">jsonStringify</span>(notification), agentColor, teamName)
+}
+</code></pre>
+<p>idle 通知包含可选字段：</p>
+<ul>
+<li><code>idleReason</code>：<code>'available'</code> / <code>'interrupted'</code> / <code>'failed'</code></li>
+<li><code>summary</code>：完成的工作摘要</li>
+<li><code>completedTaskId</code>：完成的任务 ID</li>
+<li><code>completedStatus</code>：<code>'resolved'</code> / <code>'blocked'</code> / <code>'failed'</code></li>
+<li><code>failureReason</code>：失败原因</li>
+</ul>
+<hr></hr>
+<h2 id="109-remoteagenttask">10.9 RemoteAgentTask</h2>
+<p>文件：<code>src/tasks/RemoteAgentTask/RemoteAgentTask.tsx</code></p>
+<h3 id="1091-远程任务类型">10.9.1 远程任务类型</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">REMOTE_TASK_TYPES</span> = [<span class="hljs-string">'remote-agent'</span>, <span class="hljs-string">'ultraplan'</span>, <span class="hljs-string">'ultrareview'</span>, <span class="hljs-string">'autofix-pr'</span>, <span class="hljs-string">'background-pr'</span>] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">RemoteTaskType</span> = (<span class="hljs-keyword">typeof</span> <span class="hljs-variable constant_">REMOTE_TASK_TYPES</span>)[<span class="hljs-built_in">number</span>]
+</code></pre>
+<p>五种远程任务类型，各有不同的完成检测和通知逻辑。</p>
+<h3 id="1092-状态类型">10.9.2 状态类型</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">RemoteAgentTaskState</span> = <span class="hljs-title class_">TaskStateBase</span> &amp; {
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'remote_agent'</span>
+  <span class="hljs-attr">remoteTaskType</span>: <span class="hljs-title class_">RemoteTaskType</span>
+  <span class="hljs-attr">remoteTaskMetadata</span>?: <span class="hljs-title class_">RemoteTaskMetadata</span>
+  <span class="hljs-attr">sessionId</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">command</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">todoList</span>: <span class="hljs-title class_">TodoList</span>
+  <span class="hljs-attr">log</span>: <span class="hljs-title class_">SDKMessage</span>[]
+  <span class="hljs-attr">isLongRunning</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">pollStartedAt</span>: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">isRemoteReview</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">reviewProgress</span>?: { stage?, bugsFound, bugsVerified, bugsRefuted }
+  <span class="hljs-attr">isUltraplan</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">ultraplanPhase</span>?: <span class="hljs-title class_">Exclude</span>&lt;<span class="hljs-title class_">UltraplanPhase</span>, <span class="hljs-string">'running'</span>&gt;
+}
+</code></pre>
+<p><code>pollStartedAt</code> 特殊处理：记录的是轮询<strong>开始</strong>时间而非任务创建时间。这样 <code>--resume</code> 恢复的会话不会因为"30 分钟前创建"而立即超时。</p>
+<h3 id="1093-完成检测器">10.9.3 完成检测器</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> completionCheckers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>&lt;<span class="hljs-title class_">RemoteTaskType</span>, <span class="hljs-title class_">RemoteTaskCompletionChecker</span>&gt;()
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">registerCompletionChecker</span>(<span class="hljs-params">
+  <span class="hljs-attr">remoteTaskType</span>: <span class="hljs-title class_">RemoteTaskType</span>,
+  <span class="hljs-attr">checker</span>: <span class="hljs-title class_">RemoteTaskCompletionChecker</span>
+</span>): <span class="hljs-built_in">void</span> {
+  completionCheckers.<span class="hljs-title function_">set</span>(remoteTaskType, checker)
+}
+</code></pre>
+<p>插件式设计：不同的远程任务类型可以注册自己的完成检测器。检测器在每次轮询时被调用，返回非 null 字符串表示任务完成。</p>
+<h3 id="1094-元数据持久化">10.9.4 元数据持久化</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">persistRemoteAgentMetadata</span>(<span class="hljs-params"><span class="hljs-attr">meta</span>: <span class="hljs-title class_">RemoteAgentMetadata</span></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">writeRemoteAgentMetadata</span>(meta.<span class="hljs-property">taskId</span>, meta)
+}
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">removeRemoteAgentMetadata</span>(<span class="hljs-params"><span class="hljs-attr">taskId</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
+  <span class="hljs-keyword">await</span> <span class="hljs-title function_">deleteRemoteAgentMetadata</span>(taskId)
+}
+</code></pre>
+<p>元数据写入 session sidecar，确保 <code>--resume</code> 可以恢复。任务完成/kill 时删除，防止恢复时复活已完成的任务。</p>
+<h3 id="1095-review-内容提取">10.9.5 Review 内容提取</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">extractReviewFromLog</span>(<span class="hljs-params"><span class="hljs-attr">log</span>: <span class="hljs-title class_">SDKMessage</span>[]</span>): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
+  <span class="hljs-comment">// 路径一：hook_progress / hook_response（bughunter 模式）</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = log.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+    <span class="hljs-keyword">const</span> msg = log[i]
+    <span class="hljs-keyword">if</span> (msg?.<span class="hljs-property">type</span> === <span class="hljs-string">'system'</span> &amp;&amp; (msg.<span class="hljs-property">subtype</span> === <span class="hljs-string">'hook_progress'</span> || msg.<span class="hljs-property">subtype</span> === <span class="hljs-string">'hook_response'</span>)) {
+      <span class="hljs-keyword">const</span> tagged = <span class="hljs-title function_">extractTag</span>(msg.<span class="hljs-property">stdout</span>, <span class="hljs-variable constant_">REMOTE_REVIEW_TAG</span>)
+      <span class="hljs-keyword">if</span> (tagged?.<span class="hljs-title function_">trim</span>()) <span class="hljs-keyword">return</span> tagged.<span class="hljs-title function_">trim</span>()
+    }
+  }
+
+  <span class="hljs-comment">// 路径二：assistant 消息（prompt 模式）</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = log.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+    <span class="hljs-keyword">const</span> msg = log[i]
+    <span class="hljs-keyword">if</span> (msg?.<span class="hljs-property">type</span> !== <span class="hljs-string">'assistant'</span>) <span class="hljs-keyword">continue</span>
+    <span class="hljs-keyword">const</span> tagged = <span class="hljs-title function_">extractTag</span>(fullText, <span class="hljs-variable constant_">REMOTE_REVIEW_TAG</span>)
+    <span class="hljs-keyword">if</span> (tagged?.<span class="hljs-title function_">trim</span>()) <span class="hljs-keyword">return</span> tagged.<span class="hljs-title function_">trim</span>()
+  }
+
+  <span class="hljs-comment">// 路径三：Hook stdout 拼接（大 JSON 跨事件分割）</span>
+  <span class="hljs-keyword">const</span> hookStdout = log.<span class="hljs-title function_">filter</span>(...).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">msg</span> =&gt;</span> msg.<span class="hljs-property">stdout</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">''</span>)
+  <span class="hljs-keyword">const</span> hookTagged = <span class="hljs-title function_">extractTag</span>(hookStdout, <span class="hljs-variable constant_">REMOTE_REVIEW_TAG</span>)
+  <span class="hljs-keyword">if</span> (hookTagged?.<span class="hljs-title function_">trim</span>()) <span class="hljs-keyword">return</span> hookTagged.<span class="hljs-title function_">trim</span>()
+
+  <span class="hljs-comment">// 降级：拼接所有 assistant 文本</span>
+  <span class="hljs-keyword">const</span> allText = log.<span class="hljs-title function_">filter</span>(...).<span class="hljs-title function_">map</span>(...).<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>).<span class="hljs-title function_">trim</span>()
+  <span class="hljs-keyword">return</span> allText || <span class="hljs-literal">null</span>
+}
+</code></pre>
+<p>四级提取策略，从最精确到最宽松：</p>
+<ol>
+<li>单个 hook 事件中的 <code>&lt;remote-review&gt;</code> 标签</li>
+<li>单个 assistant 消息中的标签</li>
+<li>跨 hook 事件拼接后的标签（管道缓冲区分割场景）</li>
+<li>所有 assistant 文本拼接（兜底）</li>
+</ol>
+<hr></hr>
+<h2 id="1010-小结">10.10 小结</h2>
+<p>Claude Code 的团队协作架构展现了几个核心设计原则：</p>
+<ol>
+<li><p><strong>多层消息路由</strong>：从高性能的进程内内存传递，到跨机器的 Bridge 通信，统一由 SendMessageTool 分发。每一层都有明确的适用场景和降级路径。</p>
+</li>
+<li><p><strong>协议化通信</strong>：Shutdown 三步握手、Plan 审批协议通过结构化 JSON 消息实现，避免自然语言解析的歧义性。</p>
+</li>
+<li><p><strong>权限安全</strong>：进程内 Teammate 的权限请求优先通过 Leader 的 UI 队列展示，降级到邮箱系统。跨机器消息需要 safetyCheck 级别的用户确认。</p>
+</li>
+<li><p><strong>容错设计</strong>：WebSocket 的分级重连策略（永久错误/瞬时错误/session-not-found 各有不同处理），远程任务的 pollStartedAt 机制防止恢复后误超时。</p>
+</li>
+<li><p><strong>上下文隔离</strong>：AsyncLocalStorage 为进程内 Teammate 提供身份隔离，独立的 AbortController 和 permissionMode 确保 Teammate 之间互不干扰。</p>
+</li>
+<li><p><strong>内存安全</strong>：50 条消息 UI 上限、任务驱逐机制、定时清理回调，在支持数百并发 Agent 的同时控制内存增长。</p>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html" class="navigation navigation-prev " aria-label="Previous page: Chapter 09 - Task System and Multi-Agent">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html" class="navigation navigation-next " aria-label="Next page: Chapter 11 - Plugin Skills and Hook System">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Chapter 10 - Team Collaboration and Remote Communication","level":"8.10","depth":1,"next":{"title":"Chapter 11 - Plugin Skills and Hook System","level":"8.11","depth":1,"path":"Chapter-11-Plugin-Skills-and-Hook-System.md","ref":"Chapter-11-Plugin-Skills-and-Hook-System.md","articles":[]},"previous":{"title":"Chapter 09 - Task System and Multi-Agent","level":"8.9","depth":1,"path":"Chapter-09-Task-System-and-Multi-Agent.md","ref":"Chapter-09-Task-System-and-Multi-Agent.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"Chapter-10-Team-Collaboration-and-Remote-Communication.md","mtime":"2026-04-01T02:19:38.965Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

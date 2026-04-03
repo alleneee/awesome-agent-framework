@@ -1,0 +1,1446 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Chapter 06 - LLM API and Streaming · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Chapter-07-Tool-System-Architecture.html" />
+    
+    
+    <link rel="prev" href="Chapter-05-Core-Conversation-Engine-QueryEngine.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Chapter 06 - LLM API and Streaming</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第6章-llm-api-调用与流式处理">第6章 LLM API 调用与流式处理</h1>
+<h2 id="61-架构概览">6.1 架构概览</h2>
+<p>Claude Code 的 API 调用层由以下核心模块组成：</p>
+<ul>
+<li><strong>queryModel</strong> (<code>src/services/api/claude.ts</code>)：API 请求构建与流式事件处理</li>
+<li><strong>getAnthropicClient</strong> (<code>src/services/api/client.ts</code>)：SDK 客户端工厂（支持 1P/Bedrock/Vertex/Foundry）</li>
+<li><strong>withRetry</strong> (<code>src/services/api/withRetry.ts</code>)：重试框架（退避策略、529 处理、模型降级）</li>
+<li><strong>StreamingToolExecutor</strong> (<code>src/services/tools/StreamingToolExecutor.ts</code>)：流式工具并发执行</li>
+<li><strong>cost-tracker</strong> (<code>src/cost-tracker.ts</code>)：成本追踪与持久化</li>
+</ul>
+<h3 id="代码流程图：querymodel-五阶段流水线">代码流程图：queryModel 五阶段流水线</h3>
+<pre><code class="lang-mermaid">flowchart TD
+    A["queryModel() 入口"] --&gt; B["阶段一: 前置检查"]
+
+    subgraph stage1["阶段一: 前置检查与工具 Schema"]
+        B --&gt; B1{{"off-switch 检查&lt;br/&gt;非订阅用户?"}}
+        B1 --&gt;|触发| B2["yield error → return"]
+        B1 --&gt;|通过| B3["构建工具 Schema&lt;br/&gt;ToolSearch 延迟加载过滤"]
+    end
+
+    B3 --&gt; C["阶段二: 消息规范化"]
+    subgraph stage2["阶段二: 消息与系统提示"]
+        C --&gt; C1["normalizeMessagesForAPI"]
+        C1 --&gt; C2["ensureToolResultPairing&lt;br/&gt;修复配对"]
+        C2 --&gt; C3["stripExcessMediaItems&lt;br/&gt;限制 &lt; 100"]
+        C3 --&gt; C4["系统提示组装&lt;br/&gt;归因头 + CLI前缀 + 用户提示"]
+    end
+
+    C4 --&gt; D["阶段三: paramsFromContext 闭包"]
+    subgraph stage3["阶段三: 请求参数"]
+        D --&gt; D1["动态 Beta Headers&lt;br/&gt;Latch 粘性机制"]
+        D1 --&gt; D2["Thinking 配置&lt;br/&gt;adaptive vs budget"]
+        D2 --&gt; D3["addCacheBreakpoints&lt;br/&gt;缓存断点"]
+    end
+
+    D3 --&gt; E["阶段四: withRetry 包装"]
+    subgraph stage4["阶段四: 流式 API 调用"]
+        E --&gt; E1["getAnthropicClient()"]
+        E1 --&gt; E2["Raw Stream 创建&lt;br/&gt;(避免 O(n^2) partialParse)"]
+        E2 --&gt; E3{{"请求成功?"}}
+        E3 --&gt;|重试| E4["yield SystemAPIErrorMessage&lt;br/&gt;退避等待"]
+        E4 --&gt; E1
+        E3 --&gt;|529 连续失败| E5["FallbackTriggeredError&lt;br/&gt;切换 fallback 模型"]
+        E3 --&gt;|成功| E6["获得 Stream"]
+    end
+
+    E6 --&gt; F["阶段五: 流式事件处理"]
+    subgraph stage5["阶段五: 事件循环"]
+        direction TB
+        F --&gt; F1["for await (part of stream)"]
+        F1 --&gt; F2{{"part.type?"}}
+        F2 --&gt;|message_start| F3["记录 TTFB&lt;br/&gt;初始化 usage"]
+        F2 --&gt;|content_block_start| F4["克隆 block&lt;br/&gt;重置文本字段"]
+        F2 --&gt;|content_block_delta| F5["字符串拼接&lt;br/&gt;(text/json/thinking)"]
+        F2 --&gt;|content_block_stop| F6["JSON.parse input&lt;br/&gt;yield AssistantMessage"]
+        F2 --&gt;|message_delta| F7["累加 usage&lt;br/&gt;捕获 stop_reason"]
+        F2 --&gt;|message_stop| F8["break"]
+        F3 --&gt; G1["yield stream_event"]
+        F4 --&gt; G1
+        F5 --&gt; G1
+        F6 --&gt; G1
+        F7 --&gt; G1
+        G1 --&gt; F1
+    end
+
+    style A fill:#e1f5fe
+    style stage1 fill:#fce4ec
+    style stage2 fill:#e8eaf6
+    style stage3 fill:#fff3e0
+    style stage4 fill:#f3e5f5
+    style stage5 fill:#e8f5e9
+</code></pre>
+<h2 id="62-querymodel-函数的完整结构">6.2 queryModel() 函数的完整结构</h2>
+<p><code>queryModel</code> 是核心 API 调用函数，定义在 <code>src/services/api/claude.ts</code> 第1017行。它是一个异步生成器，产出三种事件类型：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1017-1027行</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">queryModel</span>(
+  <span class="hljs-attr">messages</span>: <span class="hljs-title class_">Message</span>[],
+  <span class="hljs-attr">systemPrompt</span>: <span class="hljs-title class_">SystemPrompt</span>,
+  <span class="hljs-attr">thinkingConfig</span>: <span class="hljs-title class_">ThinkingConfig</span>,
+  <span class="hljs-attr">tools</span>: <span class="hljs-title class_">Tools</span>,
+  <span class="hljs-attr">signal</span>: <span class="hljs-title class_">AbortSignal</span>,
+  <span class="hljs-attr">options</span>: <span class="hljs-title class_">Options</span>,
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;
+  <span class="hljs-title class_">StreamEvent</span> | <span class="hljs-title class_">AssistantMessage</span> | <span class="hljs-title class_">SystemAPIErrorMessage</span>,
+  <span class="hljs-built_in">void</span>
+&gt; {
+</code></pre>
+<p>整个函数分为五个大阶段。</p>
+<h3 id="621-阶段一：前置检查与工具-schema-构建（第1028-1257行）">6.2.1 阶段一：前置检查与工具 Schema 构建（第1028-1257行）</h3>
+<p><strong>Off-switch 检查</strong>（第1031-1049行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1031-1042行</span>
+<span class="hljs-keyword">if</span> (
+  !<span class="hljs-title function_">isClaudeAISubscriber</span>() &amp;&amp;
+  <span class="hljs-title function_">isNonCustomOpusModel</span>(options.<span class="hljs-property">model</span>) &amp;&amp;
+  (<span class="hljs-keyword">await</span> getDynamicConfig_BLOCKS_ON_INIT&lt;{ <span class="hljs-attr">activated</span>: <span class="hljs-built_in">boolean</span> }&gt;(
+    <span class="hljs-string">'tengu-off-switch'</span>, { <span class="hljs-attr">activated</span>: <span class="hljs-literal">false</span> },
+  )).<span class="hljs-property">activated</span>
+) {
+  <span class="hljs-title function_">logEvent</span>(<span class="hljs-string">'tengu_off_switch_query'</span>, {})
+  <span class="hljs-keyword">yield</span> <span class="hljs-title function_">getAssistantMessageFromError</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-variable constant_">CUSTOM_OFF_SWITCH_MESSAGE</span>), options.<span class="hljs-property">model</span>)
+  <span class="hljs-keyword">return</span>
+}
+</code></pre>
+<p>Off-switch 只对非订阅用户的非自定义 Opus 模型生效。这是一个紧急关停机制。</p>
+<p><strong>工具 Schema 构建</strong>（第1064-1257行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1235-1246行</span>
+<span class="hljs-keyword">const</span> toolSchemas = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>(
+  filteredTools.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">tool</span> =&gt;</span>
+    <span class="hljs-title function_">toolToAPISchema</span>(tool, {
+      <span class="hljs-attr">getToolPermissionContext</span>: options.<span class="hljs-property">getToolPermissionContext</span>,
+      tools,
+      <span class="hljs-attr">agents</span>: options.<span class="hljs-property">agents</span>,
+      <span class="hljs-attr">allowedAgentTypes</span>: options.<span class="hljs-property">allowedAgentTypes</span>,
+      <span class="hljs-attr">model</span>: options.<span class="hljs-property">model</span>,
+      <span class="hljs-attr">deferLoading</span>: <span class="hljs-title function_">willDefer</span>(tool),
+    }),
+  ),
+)
+</code></pre>
+<p>关键逻辑：</p>
+<ul>
+<li><strong>Tool Search</strong>：启用时，未被发现的 deferred tools 不会发送给 API（通过 <code>defer_loading</code> 标记），减少 token 消耗</li>
+<li><strong>LSP 延迟加载</strong>：LSP 初始化未完成时，LSP 工具标记为 deferred</li>
+<li><strong>全局缓存策略</strong>：MCP 工具是 per-user 的，存在时不能使用全局缓存 scope</li>
+</ul>
+<h3 id="622-阶段二：消息规范化与系统提示装配（第1260-1396行）">6.2.2 阶段二：消息规范化与系统提示装配（第1260-1396行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1266行</span>
+<span class="hljs-keyword">let</span> messagesForAPI = <span class="hljs-title function_">normalizeMessagesForAPI</span>(messages, filteredTools)
+
+<span class="hljs-comment">// 修复 tool_use/tool_result 配对</span>
+messagesForAPI = <span class="hljs-title function_">ensureToolResultPairing</span>(messagesForAPI)
+
+<span class="hljs-comment">// 剥离 advisor blocks（无 beta header 时 API 会拒绝）</span>
+<span class="hljs-keyword">if</span> (!betas.<span class="hljs-title function_">includes</span>(<span class="hljs-variable constant_">ADVISOR_BETA_HEADER</span>)) {
+  messagesForAPI = <span class="hljs-title function_">stripAdvisorBlocks</span>(messagesForAPI)
+}
+
+<span class="hljs-comment">// 限制媒体项数量 &lt; 100</span>
+messagesForAPI = <span class="hljs-title function_">stripExcessMediaItems</span>(messagesForAPI, <span class="hljs-variable constant_">API_MAX_MEDIA_PER_REQUEST</span>)
+</code></pre>
+<p>系统提示的最终组装：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1358-1369行</span>
+systemPrompt = <span class="hljs-title function_">asSystemPrompt</span>(
+  [
+    <span class="hljs-title function_">getAttributionHeader</span>(fingerprint),       <span class="hljs-comment">// 归因头</span>
+    <span class="hljs-title function_">getCLISyspromptPrefix</span>({ ... }),           <span class="hljs-comment">// CLI 前缀</span>
+    ...systemPrompt,                          <span class="hljs-comment">// 用户/默认系统提示</span>
+    ...(advisorModel ? [<span class="hljs-variable constant_">ADVISOR_TOOL_INSTRUCTIONS</span>] : []),
+    ...(injectChromeHere ? [<span class="hljs-variable constant_">CHROME_TOOL_SEARCH_INSTRUCTIONS</span>] : []),
+  ].<span class="hljs-title function_">filter</span>(<span class="hljs-title class_">Boolean</span>),
+)
+</code></pre>
+<h3 id="623-阶段三：请求参数构建（paramsfromcontext）（第1538-1729行）">6.2.3 阶段三：请求参数构建（paramsFromContext）（第1538-1729行）</h3>
+<p><code>paramsFromContext</code> 是一个闭包，在每次重试时被调用来生成请求参数：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1538-1729行</span>
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">paramsFromContext</span> = (<span class="hljs-params"><span class="hljs-attr">retryContext</span>: <span class="hljs-title class_">RetryContext</span></span>) =&gt; {
+  <span class="hljs-keyword">const</span> betasParams = [...betas]
+
+  <span class="hljs-comment">// 动态 beta headers</span>
+  <span class="hljs-comment">// ...Sonnet 1M, Bedrock, effort, task_budget, structured_outputs</span>
+
+  <span class="hljs-keyword">const</span> maxOutputTokens =
+    retryContext?.<span class="hljs-property">maxTokensOverride</span> ||
+    options.<span class="hljs-property">maxOutputTokensOverride</span> ||
+    <span class="hljs-title function_">getMaxOutputTokensForModel</span>(options.<span class="hljs-property">model</span>)
+
+  <span class="hljs-comment">// Thinking 配置</span>
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">thinking</span>: <span class="hljs-title class_">BetaMessageStreamParams</span>[<span class="hljs-string">'thinking'</span>] | <span class="hljs-literal">undefined</span> = <span class="hljs-literal">undefined</span>
+  <span class="hljs-keyword">if</span> (hasThinking &amp;&amp; <span class="hljs-title function_">modelSupportsThinking</span>(options.<span class="hljs-property">model</span>)) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">modelSupportsAdaptiveThinking</span>(options.<span class="hljs-property">model</span>)) {
+      thinking = { <span class="hljs-attr">type</span>: <span class="hljs-string">'adaptive'</span> }
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">let</span> thinkingBudget = <span class="hljs-title function_">getMaxThinkingTokensForModel</span>(options.<span class="hljs-property">model</span>)
+      thinkingBudget = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(maxOutputTokens - <span class="hljs-number">1</span>, thinkingBudget)
+      thinking = { <span class="hljs-attr">budget_tokens</span>: thinkingBudget, <span class="hljs-attr">type</span>: <span class="hljs-string">'enabled'</span> }
+    }
+  }
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">model</span>: <span class="hljs-title function_">normalizeModelStringForAPI</span>(options.<span class="hljs-property">model</span>),
+    <span class="hljs-attr">messages</span>: <span class="hljs-title function_">addCacheBreakpoints</span>(messagesForAPI, ...),
+    system, <span class="hljs-attr">tools</span>: allTools, <span class="hljs-attr">tool_choice</span>: options.<span class="hljs-property">toolChoice</span>,
+    ...(useBetas &amp;&amp; { <span class="hljs-attr">betas</span>: betasParams }),
+    <span class="hljs-attr">metadata</span>: <span class="hljs-title function_">getAPIMetadata</span>(),
+    <span class="hljs-attr">max_tokens</span>: maxOutputTokens,
+    thinking,
+    <span class="hljs-comment">// ...temperature, context_management, speed 等</span>
+  }
+}
+</code></pre>
+<p><strong>Thinking 配置的选择逻辑</strong>：</p>
+<ol>
+<li>如果模型支持 adaptive thinking -&gt; 使用 <code>{ type: 'adaptive' }</code>（无预算限制）</li>
+<li>否则使用 enabled + budget_tokens（budget = min(maxOutput-1, modelDefault)）</li>
+</ol>
+<p><strong>Beta Headers 的 Latch 机制</strong>（第1405-1456行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1412-1422行</span>
+<span class="hljs-keyword">let</span> afkHeaderLatched = <span class="hljs-title function_">getAfkModeHeaderLatched</span>() === <span class="hljs-literal">true</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'TRANSCRIPT_CLASSIFIER'</span>)) {
+  <span class="hljs-keyword">if</span> (!afkHeaderLatched &amp;&amp; isAgenticQuery &amp;&amp; <span class="hljs-title function_">shouldIncludeFirstPartyOnlyBetas</span>()
+      &amp;&amp; (autoModeStateModule?.<span class="hljs-title function_">isAutoModeActive</span>() ?? <span class="hljs-literal">false</span>)) {
+    afkHeaderLatched = <span class="hljs-literal">true</span>
+    <span class="hljs-title function_">setAfkModeHeaderLatched</span>(<span class="hljs-literal">true</span>)
+  }
+}
+</code></pre>
+<p>Latch 是一个"粘性开关"设计：一旦某个 beta header 在会话中首次发送，就在整个会话中持续发送。这防止了中途切换 header 导致服务端缓存失效（约 50-70K tokens 的缓存代价）。</p>
+<h3 id="624-阶段四：流式-api-调用（第1776-2304行）">6.2.4 阶段四：流式 API 调用（第1776-2304行）</h3>
+<h4 id="为什么使用-raw-stream">为什么使用 Raw Stream</h4>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1818-1832行</span>
+<span class="hljs-comment">// Use raw stream instead of BetaMessageStream to avoid O(n^2) partial JSON parsing</span>
+<span class="hljs-comment">// BetaMessageStream calls partialParse() on every input_json_delta, which we don't need</span>
+<span class="hljs-comment">// since we handle tool input accumulation ourselves</span>
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> anthropic.<span class="hljs-property">beta</span>.<span class="hljs-property">messages</span>
+  .<span class="hljs-title function_">create</span>(
+    { ...params, <span class="hljs-attr">stream</span>: <span class="hljs-literal">true</span> },
+    { signal, ...(clientRequestId &amp;&amp; {
+        <span class="hljs-attr">headers</span>: { [<span class="hljs-variable constant_">CLIENT_REQUEST_ID_HEADER</span>]: clientRequestId },
+      }),
+    },
+  )
+  .<span class="hljs-title function_">withResponse</span>()
+</code></pre>
+<p>使用 Raw Stream 而非 <code>BetaMessageStream</code> 的原因：</p>
+<ul>
+<li><code>BetaMessageStream</code> 在每个 <code>input_json_delta</code> 上执行 <code>partialParse()</code>，时间复杂度是 O(n^2)</li>
+<li>Claude Code 自己管理 tool input 的字符串拼接，不需要部分 JSON 解析</li>
+<li>Raw Stream 的开销更小，且给予更精细的控制</li>
+</ul>
+<h4 id="withretry-包装">withRetry 包装</h4>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1778-1846行</span>
+<span class="hljs-keyword">const</span> generator = <span class="hljs-title function_">withRetry</span>(
+  <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">getAnthropicClient</span>({
+    <span class="hljs-attr">maxRetries</span>: <span class="hljs-number">0</span>,  <span class="hljs-comment">// 禁用 SDK 自动重试，改用手动实现</span>
+    <span class="hljs-attr">model</span>: options.<span class="hljs-property">model</span>,
+    <span class="hljs-attr">fetchOverride</span>: options.<span class="hljs-property">fetchOverride</span>,
+    <span class="hljs-attr">source</span>: options.<span class="hljs-property">querySource</span>,
+  }),
+  <span class="hljs-title function_">async</span> (anthropic, attempt, context) =&gt; {
+    <span class="hljs-comment">// ...构建参数、发送请求</span>
+    <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> anthropic.<span class="hljs-property">beta</span>.<span class="hljs-property">messages</span>.<span class="hljs-title function_">create</span>(...)
+    streamRequestId = result.<span class="hljs-property">request_id</span>
+    streamResponse = result.<span class="hljs-property">response</span>
+    <span class="hljs-keyword">return</span> result.<span class="hljs-property">data</span>
+  },
+  { <span class="hljs-attr">model</span>: options.<span class="hljs-property">model</span>, <span class="hljs-attr">fallbackModel</span>: options.<span class="hljs-property">fallbackModel</span>, ... },
+)
+
+<span class="hljs-comment">// 消费 withRetry 产出的 system error messages</span>
+<span class="hljs-keyword">let</span> e
+<span class="hljs-keyword">do</span> {
+  e = <span class="hljs-keyword">await</span> generator.<span class="hljs-title function_">next</span>()
+  <span class="hljs-keyword">if</span> (!(<span class="hljs-string">'controller'</span> <span class="hljs-keyword">in</span> e.<span class="hljs-property">value</span>)) {
+    <span class="hljs-keyword">yield</span> e.<span class="hljs-property">value</span>  <span class="hljs-comment">// yield API error messages</span>
+  }
+} <span class="hljs-keyword">while</span> (!e.<span class="hljs-property">done</span>)
+stream = e.<span class="hljs-property">value</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">Stream</span>&lt;<span class="hljs-title class_">BetaRawMessageStreamEvent</span>&gt;
+</code></pre>
+<p><code>withRetry</code> 返回的是一个 AsyncGenerator：</p>
+<ul>
+<li>每次重试前 yield 一个 <code>SystemAPIErrorMessage</code>（包含延迟信息）</li>
+<li>最终 return 重试成功后的结果</li>
+</ul>
+<h3 id="625-阶段五：流式事件处理循环（第1940-2304行）">6.2.5 阶段五：流式事件处理循环（第1940-2304行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1940行</span>
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> part <span class="hljs-keyword">of</span> stream) {
+  <span class="hljs-title function_">resetStreamIdleTimer</span>()
+  <span class="hljs-comment">// ...stall detection</span>
+
+  <span class="hljs-keyword">switch</span> (part.<span class="hljs-property">type</span>) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'message_start'</span>: { ... }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_start'</span>: { ... }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_delta'</span>: { ... }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_stop'</span>: { ... }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'message_delta'</span>: { ... }
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'message_stop'</span>: <span class="hljs-keyword">break</span>
+  }
+
+  <span class="hljs-keyword">yield</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'stream_event'</span>, <span class="hljs-attr">event</span>: part, ... }
+}
+</code></pre>
+<p>逐个事件类型讲解：</p>
+<p><strong>message_start</strong>（第1980-1993行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'message_start'</span>: {
+  partialMessage = part.<span class="hljs-property">message</span>
+  ttftMs = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() - start
+  usage = <span class="hljs-title function_">updateUsage</span>(usage, part.<span class="hljs-property">message</span>?.<span class="hljs-property">usage</span>)
+  <span class="hljs-comment">// 捕获 research 字段（仅内部用户）</span>
+  <span class="hljs-keyword">break</span>
+}
+</code></pre>
+<p>记录 TTFB（Time To First Byte），初始化 partialMessage。</p>
+<p><strong>content_block_start</strong>（第1995-2051行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_start'</span>:
+  <span class="hljs-keyword">switch</span> (part.<span class="hljs-property">content_block</span>.<span class="hljs-property">type</span>) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'tool_use'</span>:
+      contentBlocks[part.<span class="hljs-property">index</span>] = { ...part.<span class="hljs-property">content_block</span>, <span class="hljs-attr">input</span>: <span class="hljs-string">''</span> }
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'server_tool_use'</span>:
+      contentBlocks[part.<span class="hljs-property">index</span>] = { ...part.<span class="hljs-property">content_block</span>, <span class="hljs-attr">input</span>: <span class="hljs-string">''</span> }
+      <span class="hljs-keyword">if</span> ((part.<span class="hljs-property">content_block</span>.<span class="hljs-property">name</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>) === <span class="hljs-string">'advisor'</span>) {
+        isAdvisorInProgress = <span class="hljs-literal">true</span>
+      }
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'text'</span>:
+      contentBlocks[part.<span class="hljs-property">index</span>] = { ...part.<span class="hljs-property">content_block</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">''</span> }
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'thinking'</span>:
+      contentBlocks[part.<span class="hljs-property">index</span>] = {
+        ...part.<span class="hljs-property">content_block</span>, <span class="hljs-attr">thinking</span>: <span class="hljs-string">''</span>, <span class="hljs-attr">signature</span>: <span class="hljs-string">''</span>,
+      }
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-attr">default</span>:
+      contentBlocks[part.<span class="hljs-property">index</span>] = { ...part.<span class="hljs-property">content_block</span> }
+      <span class="hljs-keyword">break</span>
+  }
+</code></pre>
+<p>关键设计：所有 content block 都被克隆后存入 <code>contentBlocks</code> 数组，并重置文本字段为空字符串。这是因为 SDK 有时会在 <code>content_block_start</code> 中包含文本，然后在 <code>content_block_delta</code> 中重复发送相同文本。</p>
+<p><strong>content_block_delta</strong>（第2053-2169行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_delta'</span>: {
+  <span class="hljs-keyword">const</span> contentBlock = contentBlocks[part.<span class="hljs-property">index</span>]
+  <span class="hljs-keyword">switch</span> (delta.<span class="hljs-property">type</span>) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'input_json_delta'</span>:
+      contentBlock.<span class="hljs-property">input</span> += delta.<span class="hljs-property">partial_json</span>   <span class="hljs-comment">// 字符串拼接</span>
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'text_delta'</span>:
+      contentBlock.<span class="hljs-property">text</span> += delta.<span class="hljs-property">text</span>
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'signature_delta'</span>:
+      contentBlock.<span class="hljs-property">signature</span> = delta.<span class="hljs-property">signature</span>
+      <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'thinking_delta'</span>:
+      contentBlock.<span class="hljs-property">thinking</span> += delta.<span class="hljs-property">thinking</span>
+      <span class="hljs-keyword">break</span>
+  }
+}
+</code></pre>
+<p>核心操作就是字符串拼接。tool_use 的 input 被存为原始 JSON 字符串（不做部分解析），直到 <code>content_block_stop</code> 时才一次性解析。这就是避免 O(n^2) 的关键。</p>
+<p><strong>content_block_stop</strong>（第2171-2211行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'content_block_stop'</span>: {
+  <span class="hljs-keyword">const</span> contentBlock = contentBlocks[part.<span class="hljs-property">index</span>]
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">m</span>: <span class="hljs-title class_">AssistantMessage</span> = {
+    <span class="hljs-attr">message</span>: {
+      ...partialMessage,
+      <span class="hljs-attr">content</span>: <span class="hljs-title function_">normalizeContentFromAPI</span>(
+        [contentBlock] <span class="hljs-keyword">as</span> <span class="hljs-title class_">BetaContentBlock</span>[], tools, options.<span class="hljs-property">agentId</span>,
+      ),
+    },
+    <span class="hljs-attr">requestId</span>: streamRequestId ?? <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'assistant'</span>,
+    <span class="hljs-attr">uuid</span>: <span class="hljs-title function_">randomUUID</span>(),
+    <span class="hljs-attr">timestamp</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toISOString</span>(),
+  }
+  newMessages.<span class="hljs-title function_">push</span>(m)
+  <span class="hljs-keyword">yield</span> m
+}
+</code></pre>
+<p>每个 content block 完成时，立即构造并 yield 一个 <code>AssistantMessage</code>。<code>normalizeContentFromAPI</code> 负责将累积的 JSON 字符串解析为 tool input 对象。</p>
+<p><strong>message_delta</strong>（第2213-2293行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'message_delta'</span>: {
+  usage = <span class="hljs-title function_">updateUsage</span>(usage, part.<span class="hljs-property">usage</span>)
+  stopReason = part.<span class="hljs-property">delta</span>.<span class="hljs-property">stop_reason</span>
+
+  <span class="hljs-comment">// 直接属性变异（不是对象替换）</span>
+  <span class="hljs-keyword">const</span> lastMsg = newMessages.<span class="hljs-title function_">at</span>(-<span class="hljs-number">1</span>)
+  <span class="hljs-keyword">if</span> (lastMsg) {
+    lastMsg.<span class="hljs-property">message</span>.<span class="hljs-property">usage</span> = usage
+    lastMsg.<span class="hljs-property">message</span>.<span class="hljs-property">stop_reason</span> = stopReason
+  }
+
+  <span class="hljs-comment">// 计算成本</span>
+  <span class="hljs-keyword">const</span> costUSDForPart = <span class="hljs-title function_">calculateUSDCost</span>(resolvedModel, usage)
+  costUSD += <span class="hljs-title function_">addToTotalSessionCost</span>(costUSDForPart, usage, options.<span class="hljs-property">model</span>)
+
+  <span class="hljs-comment">// max_tokens 处理</span>
+  <span class="hljs-keyword">if</span> (stopReason === <span class="hljs-string">'max_tokens'</span>) {
+    <span class="hljs-keyword">yield</span> <span class="hljs-title function_">createAssistantAPIErrorMessage</span>({
+      <span class="hljs-attr">content</span>: <span class="hljs-string">`...exceeded the <span class="hljs-subst">${maxOutputTokens}</span> output token maximum...`</span>,
+      <span class="hljs-attr">apiError</span>: <span class="hljs-string">'max_output_tokens'</span>,
+    })
+  }
+}
+</code></pre>
+<p><strong>直接属性变异</strong>（而非对象替换）是一个关键设计决策。注释明确解释了原因：transcript 写入队列持有对 <code>message.message</code> 的引用，使用 100ms 的延迟刷新。如果创建新对象，队列持有的旧引用就会过时。</p>
+<p><strong>message_stop</strong>（第2295-2296行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">case</span> <span class="hljs-string">'message_stop'</span>:
+  <span class="hljs-keyword">break</span>
+</code></pre>
+<p>不需要特殊处理，后续的清理逻辑在循环外。</p>
+<h2 id="63-streamingtoolexecutor-的并发执行策略">6.3 StreamingToolExecutor 的并发执行策略</h2>
+<h3 id="631-核心状态模型">6.3.1 核心状态模型</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tools/StreamingToolExecutor.ts 第19行</span>
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">ToolStatus</span> = <span class="hljs-string">'queued'</span> | <span class="hljs-string">'executing'</span> | <span class="hljs-string">'completed'</span> | <span class="hljs-string">'yielded'</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">TrackedTool</span> = {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">block</span>: <span class="hljs-title class_">ToolUseBlock</span>
+  <span class="hljs-attr">assistantMessage</span>: <span class="hljs-title class_">AssistantMessage</span>
+  <span class="hljs-attr">status</span>: <span class="hljs-title class_">ToolStatus</span>
+  <span class="hljs-attr">isConcurrencySafe</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">promise</span>?: <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;
+  <span class="hljs-attr">results</span>?: <span class="hljs-title class_">Message</span>[]
+  <span class="hljs-attr">pendingProgress</span>: <span class="hljs-title class_">Message</span>[]
+  <span class="hljs-attr">contextModifiers</span>?: <span class="hljs-title class_">Array</span>&lt;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">context</span>: <span class="hljs-title class_">ToolUseContext</span></span>) =&gt;</span> <span class="hljs-title class_">ToolUseContext</span>&gt;
+}
+</code></pre>
+<p>每个工具有四个状态：queued -&gt; executing -&gt; completed -&gt; yielded。</p>
+<h3 id="632-并发控制规则">6.3.2 并发控制规则</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tools/StreamingToolExecutor.ts 第129-135行</span>
+<span class="hljs-keyword">private</span> <span class="hljs-title function_">canExecuteTool</span>(<span class="hljs-attr">isConcurrencySafe</span>: <span class="hljs-built_in">boolean</span>): <span class="hljs-built_in">boolean</span> {
+  <span class="hljs-keyword">const</span> executingTools = <span class="hljs-variable language_">this</span>.<span class="hljs-property">tools</span>.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> t.<span class="hljs-property">status</span> === <span class="hljs-string">'executing'</span>)
+  <span class="hljs-keyword">return</span> (
+    executingTools.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> ||
+    (isConcurrencySafe &amp;&amp; executingTools.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">t</span> =&gt;</span> t.<span class="hljs-property">isConcurrencySafe</span>))
+  )
+}
+</code></pre>
+<p>规则简明：</p>
+<ul>
+<li>如果没有工具在执行，任何工具都可以开始</li>
+<li>如果有工具在执行，只有当"所有执行中的工具"和"当前工具"都标记为 <code>isConcurrencySafe</code> 时才能并发</li>
+<li>非并发安全的工具必须独占执行</li>
+</ul>
+<p>实际效果：多个 Read/Grep 可以并发执行，但 Bash/Edit 必须独占。</p>
+<h3 id="633-bash-错误级联">6.3.3 Bash 错误级联</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tools/StreamingToolExecutor.ts 第358-363行</span>
+<span class="hljs-keyword">if</span> (tool.<span class="hljs-property">block</span>.<span class="hljs-property">name</span> === <span class="hljs-variable constant_">BASH_TOOL_NAME</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">hasErrored</span> = <span class="hljs-literal">true</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">erroredToolDescription</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getToolDescription</span>(tool)
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">siblingAbortController</span>.<span class="hljs-title function_">abort</span>(<span class="hljs-string">'sibling_error'</span>)
+}
+</code></pre>
+<p>只有 Bash 工具的错误会触发级联取消。原因是 Bash 命令之间经常有隐式依赖（如 <code>mkdir</code> 失败后续命令无意义），而 Read/WebFetch 等工具是独立的。</p>
+<p><code>siblingAbortController</code> 是 <code>toolUseContext.abortController</code> 的子控制器。取消它只会影响同级工具，不会终止整个 query 循环。</p>
+<h3 id="634-进度消息的即时分发">6.3.4 进度消息的即时分发</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tools/StreamingToolExecutor.ts 第367-374行</span>
+<span class="hljs-keyword">if</span> (update.<span class="hljs-property">message</span>.<span class="hljs-property">type</span> === <span class="hljs-string">'progress'</span>) {
+  tool.<span class="hljs-property">pendingProgress</span>.<span class="hljs-title function_">push</span>(update.<span class="hljs-property">message</span>)
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">progressAvailableResolve</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">progressAvailableResolve</span>()
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">progressAvailableResolve</span> = <span class="hljs-literal">undefined</span>
+  }
+}
+</code></pre>
+<p>进度消息（如工具执行状态）通过 Promise resolve 机制即时通知消费者，不需要等待工具完成。<code>getRemainingResults()</code> 同时等待工具完成和进度可用：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/tools/StreamingToolExecutor.ts 第472-484行</span>
+<span class="hljs-keyword">const</span> progressPromise = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">progressAvailableResolve</span> = resolve
+})
+<span class="hljs-keyword">if</span> (executingPromises.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+  <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">race</span>([...executingPromises, progressPromise])
+}
+</code></pre>
+<h2 id="64-withretry-重试框架">6.4 withRetry 重试框架</h2>
+<h3 id="641-签名与核心循环">6.4.1 签名与核心循环</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第170-178行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* withRetry&lt;T&gt;(
+  <span class="hljs-attr">getClient</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Anthropic</span>&gt;,
+  <span class="hljs-attr">operation</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">client</span>: <span class="hljs-title class_">Anthropic</span>, <span class="hljs-attr">attempt</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">context</span>: <span class="hljs-title class_">RetryContext</span></span>) =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;T&gt;,
+  <span class="hljs-attr">options</span>: <span class="hljs-title class_">RetryOptions</span>,
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;<span class="hljs-title class_">SystemAPIErrorMessage</span>, T&gt; {
+</code></pre>
+<p><code>withRetry</code> 是一个泛型异步生成器：</p>
+<ul>
+<li>yield 类型：<code>SystemAPIErrorMessage</code>（重试前的错误通知）</li>
+<li>return 类型：<code>T</code>（操作成功的结果）</li>
+</ul>
+<p>核心循环逻辑：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第189-514行</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> attempt = <span class="hljs-number">1</span>; attempt &lt;= maxRetries + <span class="hljs-number">1</span>; attempt++) {
+  <span class="hljs-keyword">if</span> (options.<span class="hljs-property">signal</span>?.<span class="hljs-property">aborted</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">APIUserAbortError</span>()
+
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// 获取或复用客户端</span>
+    <span class="hljs-keyword">if</span> (client === <span class="hljs-literal">null</span> || <span class="hljs-title function_">isAuthError</span>(lastError) || <span class="hljs-title function_">isStaleConnection</span>(lastError)) {
+      client = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getClient</span>()
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-title function_">operation</span>(client, attempt, retryContext)
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-comment">// ...错误处理与重试逻辑</span>
+  }
+}
+</code></pre>
+<h3 id="642-529-处理策略">6.4.2 529 处理策略</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第326-365行</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">is529Error</span>(error) &amp;&amp; (process.<span class="hljs-property">env</span>.<span class="hljs-property">FALLBACK_FOR_ALL_PRIMARY_MODELS</span> ||
+    (!<span class="hljs-title function_">isClaudeAISubscriber</span>() &amp;&amp; <span class="hljs-title function_">isNonCustomOpusModel</span>(options.<span class="hljs-property">model</span>)))) {
+  consecutive529Errors++
+  <span class="hljs-keyword">if</span> (consecutive529Errors &gt;= <span class="hljs-variable constant_">MAX_529_RETRIES</span>) {
+    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">fallbackModel</span>) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FallbackTriggeredError</span>(options.<span class="hljs-property">model</span>, options.<span class="hljs-property">fallbackModel</span>)
+    }
+    <span class="hljs-comment">// 外部用户：抛出友好错误</span>
+    <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">USER_TYPE</span> === <span class="hljs-string">'external'</span> &amp;&amp; !<span class="hljs-title function_">isPersistentRetryEnabled</span>()) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CannotRetryError</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-variable constant_">REPEATED_529_ERROR_MESSAGE</span>), retryContext)
+    }
+  }
+}
+</code></pre>
+<p>529 (Overloaded) 处理的三级策略：</p>
+<ol>
+<li><strong>前3次</strong>：正常重试加退避</li>
+<li><strong>第3次后</strong>：如果有 fallbackModel，抛出 <code>FallbackTriggeredError</code> 触发模型切换</li>
+<li><strong>无 fallback</strong>：外部用户直接报错，内部用户（ant）可以无限重试</li>
+</ol>
+<p><strong>Foreground vs Background 区分</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第62-82行</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">FOREGROUND_529_RETRY_SOURCES</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-title class_">QuerySource</span>&gt;([
+  <span class="hljs-string">'repl_main_thread'</span>, <span class="hljs-string">'sdk'</span>, <span class="hljs-string">'agent:custom'</span>, <span class="hljs-string">'agent:default'</span>,
+  <span class="hljs-string">'compact'</span>, <span class="hljs-string">'hook_agent'</span>, <span class="hljs-string">'side_question'</span>, <span class="hljs-string">'auto_mode'</span>, ...
+])
+</code></pre>
+<p>后台任务（摘要生成、标题生成等）在遇到 529 时立即失败，不重试。原因是在容量紧张时，每次重试都是 3-10 倍的网关放大。</p>
+<h3 id="643-退避策略">6.4.3 退避策略</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第530-548行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getRetryDelay</span>(<span class="hljs-params">
+  <span class="hljs-attr">attempt</span>: <span class="hljs-built_in">number</span>,
+  <span class="hljs-attr">retryAfterHeader</span>?: <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>,
+  maxDelayMs = <span class="hljs-number">32000</span>,
+</span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-comment">// 优先使用服务器 Retry-After 头</span>
+  <span class="hljs-keyword">if</span> (retryAfterHeader) {
+    <span class="hljs-keyword">const</span> seconds = <span class="hljs-built_in">parseInt</span>(retryAfterHeader, <span class="hljs-number">10</span>)
+    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isNaN</span>(seconds)) <span class="hljs-keyword">return</span> seconds * <span class="hljs-number">1000</span>
+  }
+  <span class="hljs-comment">// 指数退避 + 25% 抖动</span>
+  <span class="hljs-keyword">const</span> baseDelay = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(<span class="hljs-variable constant_">BASE_DELAY_MS</span> * <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">pow</span>(<span class="hljs-number">2</span>, attempt - <span class="hljs-number">1</span>), maxDelayMs)
+  <span class="hljs-keyword">const</span> jitter = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">random</span>() * <span class="hljs-number">0.25</span> * baseDelay
+  <span class="hljs-keyword">return</span> baseDelay + jitter
+}
+</code></pre>
+<p>退避公式：<code>min(500ms * 2^(attempt-1), 32s) + random(0, 25%)</code></p>
+<p>对于 persistent 模式（无人值守会话），最大退避上限提升到 5 分钟，且总等待时间上限 6 小时。</p>
+<h3 id="644-fast-mode-降级">6.4.4 Fast Mode 降级</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第267-304行</span>
+<span class="hljs-keyword">if</span> (wasFastModeActive &amp;&amp; error <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">APIError</span> &amp;&amp;
+    (error.<span class="hljs-property">status</span> === <span class="hljs-number">429</span> || <span class="hljs-title function_">is529Error</span>(error))) {
+  <span class="hljs-keyword">const</span> retryAfterMs = <span class="hljs-title function_">getRetryAfterMs</span>(error)
+  <span class="hljs-keyword">if</span> (retryAfterMs !== <span class="hljs-literal">null</span> &amp;&amp; retryAfterMs &lt; <span class="hljs-variable constant_">SHORT_RETRY_THRESHOLD_MS</span>) {
+    <span class="hljs-comment">// 短延迟（&lt;20s）：保持 fast mode 重试（保留缓存）</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">sleep</span>(retryAfterMs, options.<span class="hljs-property">signal</span>, { abortError })
+    <span class="hljs-keyword">continue</span>
+  }
+  <span class="hljs-comment">// 长延迟：进入 cooldown（切换到标准速度）</span>
+  <span class="hljs-keyword">const</span> cooldownMs = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(retryAfterMs ?? 30min, 10min)
+  <span class="hljs-title function_">triggerFastModeCooldown</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() + cooldownMs, cooldownReason)
+  retryContext.<span class="hljs-property">fastMode</span> = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">continue</span>
+}
+</code></pre>
+<p>Fast Mode 的降级策略：</p>
+<ul>
+<li>retry-after &lt; 20s：保持 fast mode 重试（保留 prompt cache 缓存键一致性）</li>
+<li>retry-after &gt;= 20s 或未知：进入 cooldown 周期（至少 10 分钟），切回标准速度</li>
+</ul>
+<h3 id="645-persistent-retry-模式">6.4.5 Persistent Retry 模式</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/withRetry.ts 第477-506行</span>
+<span class="hljs-keyword">if</span> (persistent) {
+  <span class="hljs-keyword">let</span> remaining = delayMs
+  <span class="hljs-keyword">while</span> (remaining &gt; <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">if</span> (options.<span class="hljs-property">signal</span>?.<span class="hljs-property">aborted</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">APIUserAbortError</span>()
+    <span class="hljs-keyword">if</span> (error <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">APIError</span>) {
+      <span class="hljs-keyword">yield</span> <span class="hljs-title function_">createSystemAPIErrorMessage</span>(error, remaining, reportedAttempt, maxRetries)
+    }
+    <span class="hljs-keyword">const</span> chunk = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(remaining, <span class="hljs-variable constant_">HEARTBEAT_INTERVAL_MS</span>)  <span class="hljs-comment">// 30s</span>
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">sleep</span>(chunk, options.<span class="hljs-property">signal</span>, { abortError })
+    remaining -= chunk
+  }
+  <span class="hljs-comment">// 钳制 attempt 使 for-loop 永不终止</span>
+  <span class="hljs-keyword">if</span> (attempt &gt;= maxRetries) attempt = maxRetries
+}
+</code></pre>
+<p>Persistent 模式通过 <code>CLAUDE_CODE_UNATTENDED_RETRY</code> 环境变量启用（仅内部用户）。长等待被切分为 30 秒的心跳块，每次心跳 yield 一个 SystemAPIErrorMessage，防止宿主环境认为会话空闲。</p>
+<h2 id="65-客户端工厂（getanthropicclient）">6.5 客户端工厂（getAnthropicClient）</h2>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/client.ts 第88-316行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getAnthropicClient</span>(<span class="hljs-params">{
+  apiKey, maxRetries, model, fetchOverride, source,
+}: { ... }</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">Anthropic</span>&gt; {
+</code></pre>
+<p>工厂模式支持四种 API provider：</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>环境变量</th>
+<th>SDK 类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1P (First Party)</td>
+<td>默认</td>
+<td><code>Anthropic</code></td>
+</tr>
+<tr>
+<td>Bedrock</td>
+<td><code>CLAUDE_CODE_USE_BEDROCK</code></td>
+<td><code>AnthropicBedrock</code></td>
+</tr>
+<tr>
+<td>Foundry (Azure)</td>
+<td><code>CLAUDE_CODE_USE_FOUNDRY</code></td>
+<td><code>AnthropicFoundry</code></td>
+</tr>
+<tr>
+<td>Vertex AI</td>
+<td><code>CLAUDE_CODE_USE_VERTEX</code></td>
+<td><code>AnthropicVertex</code></td>
+</tr>
+</tbody>
+</table>
+<p>每种 provider 有独立的认证流程：</p>
+<ul>
+<li><strong>1P</strong>：API Key 或 OAuth（Claude.ai 订阅用户）</li>
+<li><strong>Bedrock</strong>：AWS credentials（支持 Bearer Token 和 IAM）</li>
+<li><strong>Foundry</strong>：Azure AD Token Provider 或 API Key</li>
+<li><strong>Vertex</strong>：Google Auth（支持 service account 和 ADC）</li>
+</ul>
+<p><strong>Fetch 包装</strong>（第358-389行）：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/client.ts 第358-389行</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">buildFetch</span>(<span class="hljs-params">
+  <span class="hljs-attr">fetchOverride</span>: <span class="hljs-title class_">ClientOptions</span>[<span class="hljs-string">'fetch'</span>],
+  <span class="hljs-attr">source</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>,
+</span>): <span class="hljs-title class_">ClientOptions</span>[<span class="hljs-string">'fetch'</span>] {
+  <span class="hljs-keyword">const</span> inner = fetchOverride ?? globalThis.<span class="hljs-property">fetch</span>
+  <span class="hljs-keyword">const</span> injectClientRequestId =
+    <span class="hljs-title function_">getAPIProvider</span>() === <span class="hljs-string">'firstParty'</span> &amp;&amp; <span class="hljs-title function_">isFirstPartyAnthropicBaseUrl</span>()
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">input, init</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> headers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Headers</span>(init?.<span class="hljs-property">headers</span>)
+    <span class="hljs-keyword">if</span> (injectClientRequestId &amp;&amp; !headers.<span class="hljs-title function_">has</span>(<span class="hljs-variable constant_">CLIENT_REQUEST_ID_HEADER</span>)) {
+      headers.<span class="hljs-title function_">set</span>(<span class="hljs-variable constant_">CLIENT_REQUEST_ID_HEADER</span>, <span class="hljs-title function_">randomUUID</span>())
+    }
+    <span class="hljs-comment">// ...日志</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">inner</span>(input, { ...init, headers })
+  }
+}
+</code></pre>
+<p>每个请求注入 <code>x-client-request-id</code> 头（仅 1P），用于超时场景下与服务端日志关联。</p>
+<h2 id="66-成本追踪实现">6.6 成本追踪实现</h2>
+<h3 id="661-实时成本计算">6.6.1 实时成本计算</h3>
+<p>成本在 <code>message_delta</code> 事件中实时计算：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第2251-2256行</span>
+<span class="hljs-keyword">const</span> costUSDForPart = <span class="hljs-title function_">calculateUSDCost</span>(resolvedModel, usage)
+costUSD += <span class="hljs-title function_">addToTotalSessionCost</span>(costUSDForPart, usage, options.<span class="hljs-property">model</span>)
+</code></pre>
+<p><code>addToTotalSessionCost</code> 做三件事：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/cost-tracker.ts 第278-323行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">addToTotalSessionCost</span>(<span class="hljs-params">
+  <span class="hljs-attr">cost</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">usage</span>: <span class="hljs-title class_">Usage</span>, <span class="hljs-attr">model</span>: <span class="hljs-built_in">string</span>,
+</span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-comment">// 1. 按模型累加用量</span>
+  <span class="hljs-keyword">const</span> modelUsage = <span class="hljs-title function_">addToTotalModelUsage</span>(cost, usage, model)
+
+  <span class="hljs-comment">// 2. 更新全局状态</span>
+  <span class="hljs-title function_">addToTotalCostState</span>(cost, modelUsage, model)
+
+  <span class="hljs-comment">// 3. OpenTelemetry 指标上报</span>
+  <span class="hljs-title function_">getCostCounter</span>()?.<span class="hljs-title function_">add</span>(cost, attrs)
+  <span class="hljs-title function_">getTokenCounter</span>()?.<span class="hljs-title function_">add</span>(usage.<span class="hljs-property">input_tokens</span>, { ...attrs, <span class="hljs-attr">type</span>: <span class="hljs-string">'input'</span> })
+  <span class="hljs-title function_">getTokenCounter</span>()?.<span class="hljs-title function_">add</span>(usage.<span class="hljs-property">output_tokens</span>, { ...attrs, <span class="hljs-attr">type</span>: <span class="hljs-string">'output'</span> })
+
+  <span class="hljs-comment">// 4. Advisor 递归计费</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> advisorUsage <span class="hljs-keyword">of</span> <span class="hljs-title function_">getAdvisorUsage</span>(usage)) {
+    <span class="hljs-keyword">const</span> advisorCost = <span class="hljs-title function_">calculateUSDCost</span>(advisorUsage.<span class="hljs-property">model</span>, advisorUsage)
+    totalCost += <span class="hljs-title function_">addToTotalSessionCost</span>(advisorCost, advisorUsage, advisorUsage.<span class="hljs-property">model</span>)
+  }
+  <span class="hljs-keyword">return</span> totalCost
+}
+</code></pre>
+<h3 id="662-持久化与恢复">6.6.2 持久化与恢复</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/cost-tracker.ts 第143-175行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">saveCurrentSessionCosts</span>(<span class="hljs-params"><span class="hljs-attr">fpsMetrics</span>?: <span class="hljs-title class_">FpsMetrics</span></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-title function_">saveCurrentProjectConfig</span>(<span class="hljs-function"><span class="hljs-params">current</span> =&gt;</span> ({
+    ...current,
+    <span class="hljs-attr">lastCost</span>: <span class="hljs-title function_">getTotalCostUSD</span>(),
+    <span class="hljs-attr">lastAPIDuration</span>: <span class="hljs-title function_">getTotalAPIDuration</span>(),
+    <span class="hljs-attr">lastModelUsage</span>: <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">fromEntries</span>(
+      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(<span class="hljs-title function_">getModelUsage</span>()).<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">[model, usage]</span>) =&gt;</span> [
+        model, { <span class="hljs-attr">inputTokens</span>: usage.<span class="hljs-property">inputTokens</span>, <span class="hljs-attr">outputTokens</span>: usage.<span class="hljs-property">outputTokens</span>, ... },
+      ]),
+    ),
+    <span class="hljs-attr">lastSessionId</span>: <span class="hljs-title function_">getSessionId</span>(),
+  }))
+}
+</code></pre>
+<p>成本数据保存到项目级配置文件（<code>.claude/projects/...</code>），以 sessionId 为键。恢复时通过 <code>restoreCostStateForSession(sessionId)</code> 加载。</p>
+<h2 id="67-非流式-fallback-机制">6.7 非流式 Fallback 机制</h2>
+<p>当流式传输失败时（网络错误、空流等），系统会降级到非流式 API 调用：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts（流式 catch 块中）</span>
+<span class="hljs-comment">// 检测空流</span>
+<span class="hljs-keyword">if</span> (!partialMessage || (newMessages.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> &amp;&amp; !stopReason)) {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">'Stream ended without receiving any events'</span>)
+}
+</code></pre>
+<p>非流式 fallback 通过 <code>executeNonStreamingRequest</code> 实现：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第818-917行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">executeNonStreamingRequest</span>(
+  clientOptions, retryOptions, paramsFromContext, onAttempt, captureRequest,
+  originatingRequestId?,
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;<span class="hljs-title class_">SystemAPIErrorMessage</span>, <span class="hljs-title class_">BetaMessage</span>&gt; {
+  <span class="hljs-keyword">const</span> fallbackTimeoutMs = <span class="hljs-title function_">getNonstreamingFallbackTimeoutMs</span>()
+  <span class="hljs-comment">// 远程会话 120s，本地 300s</span>
+  <span class="hljs-keyword">const</span> generator = <span class="hljs-title function_">withRetry</span>(
+    <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">getAnthropicClient</span>({ ... }),
+    <span class="hljs-title function_">async</span> (anthropic, attempt, context) =&gt; {
+      <span class="hljs-keyword">const</span> adjustedParams = <span class="hljs-title function_">adjustParamsForNonStreaming</span>(retryParams, <span class="hljs-variable constant_">MAX_NON_STREAMING_TOKENS</span>)
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> anthropic.<span class="hljs-property">beta</span>.<span class="hljs-property">messages</span>.<span class="hljs-title function_">create</span>(
+        { ...adjustedParams, <span class="hljs-attr">model</span>: <span class="hljs-title function_">normalizeModelStringForAPI</span>(...) },
+        { signal, <span class="hljs-attr">timeout</span>: fallbackTimeoutMs },
+      )
+    },
+    { ... },
+  )
+}
+</code></pre>
+<p>非流式 fallback 会调整 <code>max_tokens</code> 上限（<code>MAX_NON_STREAMING_TOKENS</code>），因为非流式请求有更严格的超时限制。</p>
+<p>可通过 <code>CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK</code> 环境变量或 statsig gate 禁用。禁用原因：当启用 StreamingToolExecutor 时，中途 fallback 会导致工具被执行两次。</p>
+<h2 id="68-idle-watchdog-和-stall-检测">6.8 Idle Watchdog 和 Stall 检测</h2>
+<h3 id="681-idle-watchdog">6.8.1 Idle Watchdog</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1874-1928行</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">STREAM_IDLE_TIMEOUT_MS</span> =
+  <span class="hljs-built_in">parseInt</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_STREAM_IDLE_TIMEOUT_MS</span> || <span class="hljs-string">''</span>, <span class="hljs-number">10</span>) || <span class="hljs-number">90_000</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">STREAM_IDLE_WARNING_MS</span> = <span class="hljs-variable constant_">STREAM_IDLE_TIMEOUT_MS</span> / <span class="hljs-number">2</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">resetStreamIdleTimer</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-title function_">clearStreamIdleTimers</span>()
+  <span class="hljs-keyword">if</span> (!streamWatchdogEnabled) <span class="hljs-keyword">return</span>
+
+  streamIdleWarningTimer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    <span class="hljs-title function_">logForDebugging</span>(<span class="hljs-string">`Streaming idle warning: no chunks for <span class="hljs-subst">${warnMs/<span class="hljs-number">1000</span>}</span>s`</span>)
+  }, <span class="hljs-variable constant_">STREAM_IDLE_WARNING_MS</span>)
+
+  streamIdleTimer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> {
+    streamIdleAborted = <span class="hljs-literal">true</span>
+    <span class="hljs-title function_">releaseStreamResources</span>()
+  }, <span class="hljs-variable constant_">STREAM_IDLE_TIMEOUT_MS</span>)
+}
+</code></pre>
+<p>Watchdog 机制：</p>
+<ul>
+<li>每收到一个 chunk 就重置定时器</li>
+<li>45 秒无 chunk：打印警告</li>
+<li>90 秒无 chunk：中止流并释放资源</li>
+<li>通过 <code>CLAUDE_ENABLE_STREAM_WATCHDOG</code> 环境变量启用</li>
+<li>与 SDK 的 request timeout 互补（SDK timeout 只覆盖初始 fetch，不覆盖流式 body）</li>
+</ul>
+<h3 id="682-stall-检测">6.8.2 Stall 检测</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/api/claude.ts 第1936-1966行</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">STALL_THRESHOLD_MS</span> = <span class="hljs-number">30_000</span>  <span class="hljs-comment">// 30 seconds</span>
+
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> part <span class="hljs-keyword">of</span> stream) {
+  <span class="hljs-keyword">const</span> now = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>()
+  <span class="hljs-keyword">if</span> (lastEventTime !== <span class="hljs-literal">null</span>) {
+    <span class="hljs-keyword">const</span> timeSinceLastEvent = now - lastEventTime
+    <span class="hljs-keyword">if</span> (timeSinceLastEvent &gt; <span class="hljs-variable constant_">STALL_THRESHOLD_MS</span>) {
+      stallCount++
+      totalStallTime += timeSinceLastEvent
+      <span class="hljs-title function_">logEvent</span>(<span class="hljs-string">'tengu_streaming_stall'</span>, { ... })
+    }
+  }
+  lastEventTime = now
+}
+</code></pre>
+<p>Stall 检测是被动的（只在收到下一个 chunk 时才能检测到），与 Watchdog 的主动 setTimeout 互补。Stall 只记录日志不中断流，用于监控和诊断。</p>
+<h2 id="69-maxoutputtokens-恢复策略">6.9 max_output_tokens 恢复策略</h2>
+<p>当模型回复被截断（<code>stop_reason === 'max_tokens'</code> 或 <code>'model_context_window_exceeded'</code>），queryLoop 执行分级恢复：</p>
+<p><strong>第一级：Escalate（第1195-1221行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1199-1220行</span>
+<span class="hljs-keyword">if</span> (capEnabled &amp;&amp; maxOutputTokensOverride === <span class="hljs-literal">undefined</span> &amp;&amp;
+    !process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_MAX_OUTPUT_TOKENS</span>) {
+  <span class="hljs-comment">// 从默认 8k 升级到 64k (ESCALATED_MAX_TOKENS)</span>
+  state = { ...state, <span class="hljs-attr">maxOutputTokensOverride</span>: <span class="hljs-variable constant_">ESCALATED_MAX_TOKENS</span>,
+            <span class="hljs-attr">transition</span>: { <span class="hljs-attr">reason</span>: <span class="hljs-string">'max_output_tokens_escalate'</span> } }
+  <span class="hljs-keyword">continue</span>
+}
+</code></pre>
+<p>同一个请求以更大的 max_tokens 重试（不注入任何消息），用户无感知。</p>
+<p><strong>第二级：Multi-turn Recovery（第1223-1252行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1224-1229行</span>
+<span class="hljs-keyword">const</span> recoveryMessage = <span class="hljs-title function_">createUserMessage</span>({
+  <span class="hljs-attr">content</span>:
+    <span class="hljs-string">`Output token limit hit. Resume directly - no apology, no recap. `</span> +
+    <span class="hljs-string">`Pick up mid-thought if that is where the cut happened. Break remaining work into smaller pieces.`</span>,
+  <span class="hljs-attr">isMeta</span>: <span class="hljs-literal">true</span>,
+})
+</code></pre>
+<p>注入一条隐藏的用户消息，指示模型从中断处继续。最多重试 <code>MAX_OUTPUT_TOKENS_RECOVERY_LIMIT = 3</code> 次。</p>
+<p><strong>第三级：放弃恢复</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1254-1256行</span>
+<span class="hljs-comment">// Recovery exhausted - surface the withheld error now.</span>
+<span class="hljs-keyword">yield</span> lastMessage
+</code></pre>
+<p>3 次恢复后仍然被截断，暴露被暂扣的错误消息给调用方。</p>
+<h2 id="610-小结">6.10 小结</h2>
+<p>Claude Code 的 API 调用层体现了几个工程原则：</p>
+<ol>
+<li><strong>渐进式降级</strong>：流式 -&gt; 非流式 fallback -&gt; 模型 fallback -&gt; 错误暴露</li>
+<li><strong>缓存感知</strong>：Beta header latch 机制、fast mode 短延迟重试都是为了保护服务端 prompt cache</li>
+<li><strong>可观测性</strong>：每个关键路径都有 <code>logEvent</code>、<code>queryCheckpoint</code>、<code>logForDiagnosticsNoPII</code> 三级遥测</li>
+<li><strong>资源管理</strong>：<code>releaseStreamResources()</code> 显式释放 TLS/socket 缓冲区（V8 堆外内存）；<code>siblingAbortController</code> 做工具级隔离</li>
+<li><strong>并发控制</strong>：StreamingToolExecutor 通过简单的 <code>isConcurrencySafe</code> 标记实现安全的并行工具执行，Bash 错误级联保护依赖链</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html" class="navigation navigation-prev " aria-label="Previous page: Chapter 05 - Core Conversation Engine QueryEngine">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Chapter-07-Tool-System-Architecture.html" class="navigation navigation-next " aria-label="Next page: Chapter 07 - Tool System Architecture">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Chapter 06 - LLM API and Streaming","level":"8.6","depth":1,"next":{"title":"Chapter 07 - Tool System Architecture","level":"8.7","depth":1,"path":"Chapter-07-Tool-System-Architecture.md","ref":"Chapter-07-Tool-System-Architecture.md","articles":[]},"previous":{"title":"Chapter 05 - Core Conversation Engine QueryEngine","level":"8.5","depth":1,"path":"Chapter-05-Core-Conversation-Engine-QueryEngine.md","ref":"Chapter-05-Core-Conversation-Engine-QueryEngine.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"Chapter-06-LLM-API-and-Streaming.md","mtime":"2026-04-01T06:20:27.089Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

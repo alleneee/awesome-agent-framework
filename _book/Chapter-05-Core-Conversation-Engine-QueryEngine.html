@@ -1,0 +1,1532 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Chapter 05 - Core Conversation Engine QueryEngine · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Chapter-06-LLM-API-and-Streaming.html" />
+    
+    
+    <link rel="prev" href="Chapter-04-Event-System-and-Input-Handling.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Chapter 05 - Core Conversation Engine QueryEngine</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第5章-核心对话引擎----queryengine">第5章 核心对话引擎 -- QueryEngine</h1>
+<h2 id="51-架构概览">5.1 架构概览</h2>
+<p>Claude Code 的对话引擎由两个核心模块构成：</p>
+<ul>
+<li><strong>QueryEngine</strong> (<code>src/QueryEngine.ts</code>)：对话生命周期管理器，负责会话状态、消息持久化、SDK 事件分发</li>
+<li><strong>queryLoop</strong> (<code>src/query.ts</code>)：核心推理循环，负责 LLM 调用、工具执行、自动压缩、终止判断</li>
+</ul>
+<p>两者的关系是：QueryEngine 是面向外部的接口层，queryLoop 是内部的推理引擎。QueryEngine 通过异步生成器 <code>submitMessage()</code> 驱动 queryLoop，并将 queryLoop 产生的内部消息类型转换为 SDK 兼容的外部消息类型。</p>
+<h3 id="代码流程图：submitmessage-完整生命周期">代码流程图：submitMessage 完整生命周期</h3>
+<pre><code class="lang-mermaid">flowchart TD
+    A["submitMessage(prompt)"] --&gt; B["阶段1: 配置解构&lt;br/&gt;清空 discoveredSkillNames"]
+    B --&gt; C["阶段2: 权限跟踪包装&lt;br/&gt;wrappedCanUseTool 装饰器"]
+    C --&gt; D["阶段3: 系统提示构建&lt;br/&gt;fetchSystemPromptParts()"]
+    D --&gt; E["阶段4: processUserInput()&lt;br/&gt;解析斜杠命令/附件"]
+    E --&gt; F{{"shouldQuery?"}}
+
+    F --&gt;|否| G["阶段5: 短路返回&lt;br/&gt;yield 本地命令结果"]
+    F --&gt;|是| H["阶段6: 进入 query()"]
+
+    H --&gt; I["for await...of queryLoop"]
+    I --&gt; J{{"message.type?"}}
+
+    J --&gt;|assistant| K["推入 mutableMessages&lt;br/&gt;yield SDKMessage"]
+    J --&gt;|stream_event| L["追踪 usage&lt;br/&gt;捕获 stop_reason"]
+    J --&gt;|progress| M["记录到 transcript"]
+    J --&gt;|user| N["推入 mutableMessages"]
+    J --&gt;|system| O["处理 compact_boundary&lt;br/&gt;API error 等"]
+
+    K --&gt; P{{"更多消息?"}}
+    L --&gt; P
+    M --&gt; P
+    N --&gt; P
+    O --&gt; P
+    P --&gt;|是| J
+    P --&gt;|否| Q["阶段8: 预算检查&lt;br/&gt;totalCost &gt;= maxBudgetUsd?"]
+
+    Q --&gt;|超限| R["yield error_max_budget_usd"]
+    Q --&gt;|正常| S["yield result: success"]
+
+    style A fill:#e1f5fe
+    style F fill:#fff9c4
+    style G fill:#ffcdd2
+    style S fill:#c8e6c9
+    style R fill:#ffcdd2
+</code></pre>
+<h3 id="代码流程图：queryloop-whiletrue-循环">代码流程图：queryLoop while(true) 循环</h3>
+<pre><code class="lang-mermaid">flowchart TD
+    START["queryLoop 入口&lt;br/&gt;初始化 State"] --&gt; S1
+
+    S1["步骤1: 解构 state&lt;br/&gt;skill 发现预取"] --&gt; S2
+
+    S2["步骤2: 消息预处理管线"] --&gt; S2a
+    subgraph pipeline["四级预处理"]
+        direction TB
+        S2a["L1: applyToolResultBudget&lt;br/&gt;超大结果 → 磁盘引用"] --&gt; S2b
+        S2b["L2: snipCompactIfNeeded&lt;br/&gt;删除中间消息"] --&gt; S2c
+        S2c["L3: microcompact&lt;br/&gt;清除旧工具结果"] --&gt; S2d
+        S2d["L4: contextCollapse&lt;br/&gt;上下文折叠"]
+    end
+
+    S2d --&gt; S3["步骤3: autocompact&lt;br/&gt;全量对话摘要 (如需要)"]
+    S3 --&gt; S4["步骤4: StreamingToolExecutor 初始化&lt;br/&gt;模型选择"]
+    S4 --&gt; S5{{"步骤5: 阻塞限制检查&lt;br/&gt;token &gt; 上限?"}}
+
+    S5 --&gt;|是| BLOCK["return: blocking_limit"]
+    S5 --&gt;|否| S6["步骤6: callModel() 流式调用"]
+
+    S6 --&gt; S6a{{"检测到 tool_use?"}}
+    S6a --&gt;|是| S6b["StreamingToolExecutor&lt;br/&gt;立即并行启动工具"]
+    S6a --&gt;|否| S6c["累积 assistantMessages"]
+    S6b --&gt; S6c
+
+    S6c --&gt; S7["步骤7: 中断检查 + 工具摘要"]
+    S7 --&gt; S8{{"步骤8: needsFollowUp?"}}
+
+    S8 --&gt;|"否 (无 tool_use)"| S8a{{"终止判断"}}
+    S8a --&gt;|prompt-too-long| S8b["reactive compact → continue"]
+    S8a --&gt;|max_output_tokens| S8c["escalate/recovery → continue"]
+    S8a --&gt;|stop hook 阻塞| S8d["continue"]
+    S8a --&gt;|token budget 未完| S8e["continue"]
+    S8a --&gt;|正常完成| DONE["return: completed"]
+
+    S8 --&gt;|"是 (有 tool_use)"| S9["步骤9: 工具执行&lt;br/&gt;收集结果"]
+    S9 --&gt; S10["步骤10: 附件注入&lt;br/&gt;maxTurns 检查"]
+    S10 --&gt; S10a{{"超过 maxTurns?"}}
+    S10a --&gt;|是| TURNS["return: max_turns"]
+    S10a --&gt;|否| S10b["构建下一轮 State&lt;br/&gt;state = next"]
+    S10b --&gt; S1
+
+    style START fill:#e1f5fe
+    style pipeline fill:#fff3e0
+    style DONE fill:#c8e6c9
+    style BLOCK fill:#ffcdd2
+    style TURNS fill:#ffcdd2
+    style S6b fill:#e8eaf6
+</code></pre>
+<h2 id="52-queryengine-类的职责与生命周期">5.2 QueryEngine 类的职责与生命周期</h2>
+<h3 id="521-类定义与核心状态">5.2.1 类定义与核心状态</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第184-198行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">QueryEngine</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">config</span>: <span class="hljs-title class_">QueryEngineConfig</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">mutableMessages</span>: <span class="hljs-title class_">Message</span>[]
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">abortController</span>: <span class="hljs-title class_">AbortController</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">permissionDenials</span>: <span class="hljs-title class_">SDKPermissionDenial</span>[]
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">totalUsage</span>: <span class="hljs-title class_">NonNullableUsage</span>
+  <span class="hljs-keyword">private</span> hasHandledOrphanedPermission = <span class="hljs-literal">false</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">readFileState</span>: <span class="hljs-title class_">FileStateCache</span>
+  <span class="hljs-keyword">private</span> discoveredSkillNames = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-built_in">string</span>&gt;()
+  <span class="hljs-keyword">private</span> loadedNestedMemoryPaths = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-built_in">string</span>&gt;()
+</code></pre>
+<p>关键设计：</p>
+<ul>
+<li><code>mutableMessages</code>：整个会话的消息历史，跨多个 turn 持久化</li>
+<li><code>totalUsage</code>：累计 token 用量，跨 turn 累加</li>
+<li><code>permissionDenials</code>：记录用户拒绝的工具调用，用于 SDK 上报</li>
+<li><code>discoveredSkillNames</code>：每个 turn 开始时清空，追踪本轮发现的 skill</li>
+<li><code>readFileState</code>：文件读取缓存，跨 turn 持久化（避免重复读取相同文件）</li>
+</ul>
+<h3 id="522-生命周期模型">5.2.2 生命周期模型</h3>
+<pre><code>创建 QueryEngine (一次)
+  |
+  v
+submitMessage("用户消息1")  --&gt; turn 1
+  |  yield SDKMessage...
+  v
+submitMessage("用户消息2")  --&gt; turn 2
+  |  yield SDKMessage...
+  v
+...（每次 turn 共享同一个 mutableMessages 数组）
+</code></pre><p>一个 QueryEngine 实例对应一个完整的对话。每次 <code>submitMessage()</code> 调用是一个 turn，turn 之间共享消息历史、文件缓存、累计费用等状态。</p>
+<h2 id="53-submitmessage-异步生成器的完整流程">5.3 submitMessage() 异步生成器的完整流程</h2>
+<p><code>submitMessage()</code> 是一个 <code>AsyncGenerator&lt;SDKMessage, void, unknown&gt;</code>，使用 <code>yield</code> 向调用方流式推送事件。以下逐阶段讲解。</p>
+<h3 id="阶段1：配置解构与环境初始化（第213-241行）">阶段1：配置解构与环境初始化（第213-241行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第209-241行</span>
+<span class="hljs-keyword">async</span> *<span class="hljs-title function_">submitMessage</span>(
+  <span class="hljs-attr">prompt</span>: <span class="hljs-built_in">string</span> | <span class="hljs-title class_">ContentBlockParam</span>[],
+  <span class="hljs-attr">options</span>?: { <span class="hljs-attr">uuid</span>?: <span class="hljs-built_in">string</span>; <span class="hljs-attr">isMeta</span>?: <span class="hljs-built_in">boolean</span> },
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;<span class="hljs-title class_">SDKMessage</span>, <span class="hljs-built_in">void</span>, <span class="hljs-built_in">unknown</span>&gt; {
+  <span class="hljs-keyword">const</span> {
+    cwd, commands, tools, mcpClients, verbose = <span class="hljs-literal">false</span>,
+    thinkingConfig, maxTurns, maxBudgetUsd, taskBudget,
+    canUseTool, customSystemPrompt, appendSystemPrompt,
+    userSpecifiedModel, fallbackModel, jsonSchema,
+    getAppState, setAppState, replayUserMessages = <span class="hljs-literal">false</span>,
+    includePartialMessages = <span class="hljs-literal">false</span>, agents = [], setSDKStatus,
+    orphanedPermission,
+  } = <span class="hljs-variable language_">this</span>.<span class="hljs-property">config</span>
+
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">discoveredSkillNames</span>.<span class="hljs-title function_">clear</span>()
+  <span class="hljs-title function_">setCwd</span>(cwd)
+</code></pre>
+<p>注意 <code>this.discoveredSkillNames.clear()</code> 确保每个 turn 的 skill 发现追踪是独立的。</p>
+<h3 id="阶段2：权限跟踪包装（第244-271行）">阶段2：权限跟踪包装（第244-271行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第244-271行</span>
+<span class="hljs-keyword">const</span> <span class="hljs-attr">wrappedCanUseTool</span>: <span class="hljs-title class_">CanUseToolFn</span> = <span class="hljs-title function_">async</span> (
+  tool, input, toolUseContext, assistantMessage, toolUseID, forceDecision,
+) =&gt; {
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">canUseTool</span>(
+    tool, input, toolUseContext, assistantMessage, toolUseID, forceDecision,
+  )
+  <span class="hljs-keyword">if</span> (result.<span class="hljs-property">behavior</span> !== <span class="hljs-string">'allow'</span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">permissionDenials</span>.<span class="hljs-title function_">push</span>({
+      <span class="hljs-attr">tool_name</span>: <span class="hljs-title function_">sdkCompatToolName</span>(tool.<span class="hljs-property">name</span>),
+      <span class="hljs-attr">tool_use_id</span>: toolUseID,
+      <span class="hljs-attr">tool_input</span>: input,
+    })
+  }
+  <span class="hljs-keyword">return</span> result
+}
+</code></pre>
+<p>这是一个装饰器模式：在原始 <code>canUseTool</code> 之上包装一层，额外记录权限拒绝信息。所有被拒绝的工具调用都会在最终 result 中上报给 SDK 调用方。</p>
+<h3 id="阶段3：系统提示构建（第284-325行）">阶段3：系统提示构建（第284-325行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第289-325行</span>
+<span class="hljs-keyword">const</span> {
+  defaultSystemPrompt,
+  <span class="hljs-attr">userContext</span>: baseUserContext,
+  systemContext,
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetchSystemPromptParts</span>({
+  tools, <span class="hljs-attr">mainLoopModel</span>: initialMainLoopModel,
+  <span class="hljs-attr">additionalWorkingDirectories</span>: <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(...),
+  mcpClients,
+  <span class="hljs-attr">customSystemPrompt</span>: customPrompt,
+})
+
+<span class="hljs-keyword">const</span> systemPrompt = <span class="hljs-title function_">asSystemPrompt</span>([
+  ...(customPrompt !== <span class="hljs-literal">undefined</span> ? [customPrompt] : defaultSystemPrompt),
+  ...(memoryMechanicsPrompt ? [memoryMechanicsPrompt] : []),
+  ...(appendSystemPrompt ? [appendSystemPrompt] : []),
+])
+</code></pre>
+<p>系统提示的组装逻辑：</p>
+<ol>
+<li>如果用户提供了 <code>customSystemPrompt</code>，则替代默认提示</li>
+<li>如果启用了 memory 机制且有 <code>CLAUDE_COWORK_MEMORY_PATH_OVERRIDE</code>，追加 memory 机制提示</li>
+<li>如果有 <code>appendSystemPrompt</code>，追加到末尾</li>
+</ol>
+<h3 id="阶段4：用户输入处理（第410-428行）">阶段4：用户输入处理（第410-428行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第410-428行</span>
+<span class="hljs-keyword">const</span> {
+  <span class="hljs-attr">messages</span>: messagesFromUserInput,
+  shouldQuery,
+  allowedTools,
+  <span class="hljs-attr">model</span>: modelFromUserInput,
+  resultText,
+} = <span class="hljs-keyword">await</span> <span class="hljs-title function_">processUserInput</span>({
+  <span class="hljs-attr">input</span>: prompt,
+  <span class="hljs-attr">mode</span>: <span class="hljs-string">'prompt'</span>,
+  <span class="hljs-attr">setToolJSX</span>: <span class="hljs-function">() =&gt;</span> {},
+  <span class="hljs-attr">context</span>: { ...processUserInputContext, <span class="hljs-attr">messages</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">mutableMessages</span> },
+  <span class="hljs-attr">messages</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">mutableMessages</span>,
+  <span class="hljs-attr">uuid</span>: options?.<span class="hljs-property">uuid</span>,
+  <span class="hljs-attr">isMeta</span>: options?.<span class="hljs-property">isMeta</span>,
+  <span class="hljs-attr">querySource</span>: <span class="hljs-string">'sdk'</span>,
+})
+
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">mutableMessages</span>.<span class="hljs-title function_">push</span>(...messagesFromUserInput)
+</code></pre>
+<p><code>processUserInput</code> 是一个关键函数，它：</p>
+<ul>
+<li>解析斜杠命令（/compact、/clear 等）</li>
+<li>处理附件（图片、文件）</li>
+<li>判断是否需要调用 LLM（<code>shouldQuery</code>）</li>
+<li>如果是本地命令，直接返回结果而不调 API</li>
+</ul>
+<h3 id="阶段5：短路返回（本地命令）（第556-639行）">阶段5：短路返回（本地命令）（第556-639行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第556行</span>
+<span class="hljs-keyword">if</span> (!shouldQuery) {
+  <span class="hljs-comment">// 返回本地斜杠命令的结果</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> msg <span class="hljs-keyword">of</span> messagesFromUserInput) {
+    <span class="hljs-comment">// ...yield 各种消息类型</span>
+  }
+  <span class="hljs-keyword">yield</span> {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'result'</span>,
+    <span class="hljs-attr">subtype</span>: <span class="hljs-string">'success'</span>,
+    <span class="hljs-comment">// ...</span>
+  }
+  <span class="hljs-keyword">return</span>
+}
+</code></pre>
+<p>当用户输入的是本地命令（如 <code>/help</code>、<code>/compact</code>）时，不需要调用 LLM，直接 yield 结果并 return。</p>
+<h3 id="阶段6：进入核心查询循环（第675-686行）">阶段6：进入核心查询循环（第675-686行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第675-686行</span>
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> <span class="hljs-title function_">query</span>({
+  messages,
+  systemPrompt,
+  userContext,
+  systemContext,
+  <span class="hljs-attr">canUseTool</span>: wrappedCanUseTool,
+  <span class="hljs-attr">toolUseContext</span>: processUserInputContext,
+  fallbackModel,
+  <span class="hljs-attr">querySource</span>: <span class="hljs-string">'sdk'</span>,
+  maxTurns,
+  taskBudget,
+})) {
+</code></pre>
+<p>这里启动了 <code>query()</code> 函数，它内部调用 <code>queryLoop()</code>。<code>submitMessage()</code> 通过 <code>for await...of</code> 消费 queryLoop 产出的每一个事件。</p>
+<h3 id="阶段7：消息分发与状态管理（第757-968行）">阶段7：消息分发与状态管理（第757-968行）</h3>
+<p>这是 submitMessage 的核心 switch 语句，处理 queryLoop 产出的每种消息类型：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第757行</span>
+<span class="hljs-keyword">switch</span> (message.<span class="hljs-property">type</span>) {
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'tombstone'</span>:    <span class="hljs-comment">// 控制信号，跳过</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'assistant'</span>:    <span class="hljs-comment">// 助手回复 -&gt; 推入 mutableMessages + yield 给 SDK</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'progress'</span>:     <span class="hljs-comment">// 工具进度 -&gt; 推入 mutableMessages + 记录到 transcript</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'user'</span>:         <span class="hljs-comment">// 工具结果等 -&gt; 推入 mutableMessages</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'stream_event'</span>: <span class="hljs-comment">// 流式事件 -&gt; 追踪 usage、stop_reason</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'attachment'</span>:   <span class="hljs-comment">// 附件 -&gt; 处理 max_turns_reached、structured_output 等</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'system'</span>:       <span class="hljs-comment">// 系统消息 -&gt; 处理 compact_boundary、api_error 等</span>
+  <span class="hljs-keyword">case</span> <span class="hljs-string">'tool_use_summary'</span>: <span class="hljs-comment">// 工具摘要 -&gt; 直接 yield 给 SDK</span>
+}
+</code></pre>
+<p>关键设计点：</p>
+<ul>
+<li><code>stream_event</code> 中的 <code>message_start</code> 重置当前消息的 usage 计数器</li>
+<li><code>message_delta</code> 中累加 usage 并捕获真实的 <code>stop_reason</code></li>
+<li><code>message_stop</code> 时将当前消息的 usage 累加到 <code>totalUsage</code></li>
+<li>compact_boundary 消息触发内存释放：<code>this.mutableMessages.splice(0, mutableBoundaryIdx)</code></li>
+</ul>
+<h3 id="阶段8：预算检查与最终结果（第971-1000行）">阶段8：预算检查与最终结果（第971-1000行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/QueryEngine.ts 第972行</span>
+<span class="hljs-keyword">if</span> (maxBudgetUsd !== <span class="hljs-literal">undefined</span> &amp;&amp; <span class="hljs-title function_">getTotalCost</span>() &gt;= maxBudgetUsd) {
+  <span class="hljs-keyword">yield</span> {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">'result'</span>,
+    <span class="hljs-attr">subtype</span>: <span class="hljs-string">'error_max_budget_usd'</span>,
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-attr">errors</span>: [<span class="hljs-string">`Reached maximum budget ($<span class="hljs-subst">${maxBudgetUsd}</span>)`</span>],
+  }
+  <span class="hljs-keyword">return</span>
+}
+</code></pre>
+<p>每处理完一个消息后，检查是否超出 USD 预算。这是 QueryEngine 级别的硬限制，与 queryLoop 内部的 turn 限制互补。</p>
+<h2 id="54-queryloop-的-whiletrue-循环结构">5.4 queryLoop() 的 while(true) 循环结构</h2>
+<h3 id="541-入口与状态初始化">5.4.1 入口与状态初始化</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第241-280行</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">queryLoop</span>(
+  <span class="hljs-attr">params</span>: <span class="hljs-title class_">QueryParams</span>,
+  <span class="hljs-attr">consumedCommandUuids</span>: <span class="hljs-built_in">string</span>[],
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;...&gt; {
+  <span class="hljs-keyword">const</span> { systemPrompt, userContext, systemContext, canUseTool,
+          fallbackModel, querySource, maxTurns, skipCacheWrite } = params
+  <span class="hljs-keyword">const</span> deps = params.<span class="hljs-property">deps</span> ?? <span class="hljs-title function_">productionDeps</span>()
+
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">state</span>: <span class="hljs-title class_">State</span> = {
+    <span class="hljs-attr">messages</span>: params.<span class="hljs-property">messages</span>,
+    <span class="hljs-attr">toolUseContext</span>: params.<span class="hljs-property">toolUseContext</span>,
+    <span class="hljs-attr">maxOutputTokensOverride</span>: params.<span class="hljs-property">maxOutputTokensOverride</span>,
+    <span class="hljs-attr">autoCompactTracking</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">stopHookActive</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">maxOutputTokensRecoveryCount</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">hasAttemptedReactiveCompact</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">turnCount</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">pendingToolUseSummary</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">transition</span>: <span class="hljs-literal">undefined</span>,
+  }
+  <span class="hljs-keyword">const</span> budgetTracker = <span class="hljs-title function_">feature</span>(<span class="hljs-string">'TOKEN_BUDGET'</span>) ? <span class="hljs-title function_">createBudgetTracker</span>() : <span class="hljs-literal">null</span>
+</code></pre>
+<p><strong>State 结构</strong>是循环迭代之间传递状态的核心载体，每次 continue 时通过 <code>state = { ...newState }</code> 整体替换。</p>
+<h3 id="542-循环体的10个步骤">5.4.2 循环体的10个步骤</h3>
+<p>以下逐一讲解 <code>while(true)</code> 循环内的每个阶段。</p>
+<p><strong>步骤1：状态解构与 skill 发现预取（第307-335行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第311-335行</span>
+<span class="hljs-keyword">let</span> { toolUseContext } = state
+<span class="hljs-keyword">const</span> { messages, autoCompactTracking, maxOutputTokensRecoveryCount,
+        hasAttemptedReactiveCompact, maxOutputTokensOverride,
+        pendingToolUseSummary, stopHookActive, turnCount } = state
+
+<span class="hljs-keyword">const</span> pendingSkillPrefetch = skillPrefetch?.<span class="hljs-title function_">startSkillDiscoveryPrefetch</span>(
+  <span class="hljs-literal">null</span>, messages, toolUseContext,
+)
+
+<span class="hljs-keyword">yield</span> { <span class="hljs-attr">type</span>: <span class="hljs-string">'stream_request_start'</span> }
+</code></pre>
+<p>每轮迭代开始时，解构 state 为局部变量。同时启动 skill 发现的异步预取（不阻塞）。</p>
+<p><strong>步骤2：消息预处理管线（第365-447行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第365-447行</span>
+<span class="hljs-keyword">let</span> messagesForQuery = [...<span class="hljs-title function_">getMessagesAfterCompactBoundary</span>(messages)]
+
+<span class="hljs-comment">// 2a. Tool result budget（第379行）</span>
+messagesForQuery = <span class="hljs-keyword">await</span> <span class="hljs-title function_">applyToolResultBudget</span>(messagesForQuery, ...)
+
+<span class="hljs-comment">// 2b. Snip compact（第401行）</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'HISTORY_SNIP'</span>)) {
+  <span class="hljs-keyword">const</span> snipResult = snipModule!.<span class="hljs-title function_">snipCompactIfNeeded</span>(messagesForQuery)
+  messagesForQuery = snipResult.<span class="hljs-property">messages</span>
+}
+
+<span class="hljs-comment">// 2c. Microcompact（第414行）</span>
+<span class="hljs-keyword">const</span> microcompactResult = <span class="hljs-keyword">await</span> deps.<span class="hljs-title function_">microcompact</span>(
+  messagesForQuery, toolUseContext, querySource,
+)
+messagesForQuery = microcompactResult.<span class="hljs-property">messages</span>
+
+<span class="hljs-comment">// 2d. Context collapse（第440行）</span>
+<span class="hljs-keyword">if</span> (<span class="hljs-title function_">feature</span>(<span class="hljs-string">'CONTEXT_COLLAPSE'</span>) &amp;&amp; contextCollapse) {
+  <span class="hljs-keyword">const</span> collapseResult = <span class="hljs-keyword">await</span> contextCollapse.<span class="hljs-title function_">applyCollapsesIfNeeded</span>(...)
+  messagesForQuery = collapseResult.<span class="hljs-property">messages</span>
+}
+</code></pre>
+<p>消息预处理管线按顺序执行四个阶段：</p>
+<ol>
+<li><strong>Tool result budget</strong>：对工具结果的总大小进行裁剪</li>
+<li><strong>Snip compact</strong>：基于标记的历史消息裁剪</li>
+<li><strong>Microcompact</strong>：微级别压缩（删除冗余内容）</li>
+<li><strong>Context collapse</strong>：上下文折叠（将旧对话折叠为摘要）</li>
+</ol>
+<p><strong>步骤3：自动压缩（第453-543行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第454-467行</span>
+<span class="hljs-keyword">const</span> { compactionResult, consecutiveFailures } = <span class="hljs-keyword">await</span> deps.<span class="hljs-title function_">autocompact</span>(
+  messagesForQuery, toolUseContext,
+  { systemPrompt, userContext, systemContext, toolUseContext,
+    <span class="hljs-attr">forkContextMessages</span>: messagesForQuery },
+  querySource, tracking, snipTokensFreed,
+)
+
+<span class="hljs-keyword">if</span> (compactionResult) {
+  <span class="hljs-comment">// ...发送压缩后的消息</span>
+  <span class="hljs-keyword">const</span> postCompactMessages = <span class="hljs-title function_">buildPostCompactMessages</span>(compactionResult)
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> postCompactMessages) {
+    <span class="hljs-keyword">yield</span> message
+  }
+  messagesForQuery = postCompactMessages
+}
+</code></pre>
+<p>自动压缩是 Claude Code 应对长上下文的关键机制。当 token 数量接近模型上下文窗口时，自动将历史消息压缩为摘要。</p>
+<p><strong>步骤4：模型选择与流式工具执行器初始化（第560-580行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第561-568行</span>
+<span class="hljs-keyword">const</span> useStreamingToolExecution = config.<span class="hljs-property">gates</span>.<span class="hljs-property">streamingToolExecution</span>
+<span class="hljs-keyword">let</span> streamingToolExecutor = useStreamingToolExecution
+  ? <span class="hljs-keyword">new</span> <span class="hljs-title class_">StreamingToolExecutor</span>(
+      toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">tools</span>,
+      canUseTool,
+      toolUseContext,
+    )
+  : <span class="hljs-literal">null</span>
+
+<span class="hljs-keyword">let</span> currentModel = <span class="hljs-title function_">getRuntimeMainLoopModel</span>({
+  permissionMode,
+  <span class="hljs-attr">mainLoopModel</span>: toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">mainLoopModel</span>,
+  <span class="hljs-attr">exceeds200kTokens</span>: permissionMode === <span class="hljs-string">'plan'</span> &amp;&amp;
+    <span class="hljs-title function_">doesMostRecentAssistantMessageExceed200k</span>(messagesForQuery),
+})
+</code></pre>
+<p><code>StreamingToolExecutor</code> 允许在 LLM 流式输出的同时并行执行工具，而不必等到整个回复完成。</p>
+<p><strong>步骤5：阻塞限制检查（第628-648行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第637-647行</span>
+<span class="hljs-keyword">if</span> (!compactionResult &amp;&amp; querySource !== <span class="hljs-string">'compact'</span> &amp;&amp; ...) {
+  <span class="hljs-keyword">const</span> { isAtBlockingLimit } = <span class="hljs-title function_">calculateTokenWarningState</span>(
+    <span class="hljs-title function_">tokenCountWithEstimation</span>(messagesForQuery) - snipTokensFreed,
+    toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">mainLoopModel</span>,
+  )
+  <span class="hljs-keyword">if</span> (isAtBlockingLimit) {
+    <span class="hljs-keyword">yield</span> <span class="hljs-title function_">createAssistantAPIErrorMessage</span>({
+      <span class="hljs-attr">content</span>: <span class="hljs-variable constant_">PROMPT_TOO_LONG_ERROR_MESSAGE</span>,
+      <span class="hljs-attr">error</span>: <span class="hljs-string">'invalid_request'</span>,
+    })
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">reason</span>: <span class="hljs-string">'blocking_limit'</span> }
+  }
+}
+</code></pre>
+<p>这是一个硬阻塞：如果 token 数量超过上限且无法自动压缩，直接终止循环。</p>
+<p><strong>步骤6：LLM API 调用与流式处理（第654-863行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第659-708行</span>
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> deps.<span class="hljs-title function_">callModel</span>({
+  <span class="hljs-attr">messages</span>: <span class="hljs-title function_">prependUserContext</span>(messagesForQuery, userContext),
+  <span class="hljs-attr">systemPrompt</span>: fullSystemPrompt,
+  <span class="hljs-attr">thinkingConfig</span>: toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">thinkingConfig</span>,
+  <span class="hljs-attr">tools</span>: toolUseContext.<span class="hljs-property">options</span>.<span class="hljs-property">tools</span>,
+  <span class="hljs-attr">signal</span>: toolUseContext.<span class="hljs-property">abortController</span>.<span class="hljs-property">signal</span>,
+  <span class="hljs-attr">options</span>: { ... },
+})) {
+  <span class="hljs-comment">// ...处理流式事件、收集 assistantMessages、toolUseBlocks</span>
+  <span class="hljs-comment">// ...StreamingToolExecutor 在此处并行启动工具执行</span>
+  <span class="hljs-keyword">if</span> (message.<span class="hljs-property">type</span> === <span class="hljs-string">'assistant'</span>) {
+    assistantMessages.<span class="hljs-title function_">push</span>(message)
+    <span class="hljs-keyword">const</span> msgToolUseBlocks = message.<span class="hljs-property">message</span>.<span class="hljs-property">content</span>.<span class="hljs-title function_">filter</span>(
+      <span class="hljs-function"><span class="hljs-params">content</span> =&gt;</span> content.<span class="hljs-property">type</span> === <span class="hljs-string">'tool_use'</span>,
+    ) <span class="hljs-keyword">as</span> <span class="hljs-title class_">ToolUseBlock</span>[]
+    <span class="hljs-keyword">if</span> (msgToolUseBlocks.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+      toolUseBlocks.<span class="hljs-title function_">push</span>(...msgToolUseBlocks)
+      needsFollowUp = <span class="hljs-literal">true</span>
+    }
+    <span class="hljs-comment">// 流式工具执行：一旦检测到 tool_use 块就立即开始执行</span>
+    <span class="hljs-keyword">if</span> (streamingToolExecutor &amp;&amp; !toolUseContext.<span class="hljs-property">abortController</span>.<span class="hljs-property">signal</span>.<span class="hljs-property">aborted</span>) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> toolBlock <span class="hljs-keyword">of</span> msgToolUseBlocks) {
+        streamingToolExecutor.<span class="hljs-title function_">addTool</span>(toolBlock, message)
+      }
+    }
+  }
+}
+</code></pre>
+<p>这是循环体中最长的部分。LLM 的流式响应被逐块处理：</p>
+<ul>
+<li>文本块被累积到 assistantMessages</li>
+<li>tool_use 块立即被 StreamingToolExecutor 接收并开始并行执行</li>
+<li>可恢复错误（prompt-too-long、max_output_tokens）被暂扣（withheld），等后续恢复逻辑判断</li>
+</ul>
+<p>Fallback 机制：如果 <code>FallbackTriggeredError</code> 被抛出（连续 529 错误），切换到 fallback 模型重试。</p>
+<p><strong>步骤7：中断检查与摘要（第1011-1060行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1015行</span>
+<span class="hljs-keyword">if</span> (toolUseContext.<span class="hljs-property">abortController</span>.<span class="hljs-property">signal</span>.<span class="hljs-property">aborted</span>) {
+  <span class="hljs-comment">// ...消费 StreamingToolExecutor 的剩余结果</span>
+  <span class="hljs-comment">// ...生成中断消息</span>
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">reason</span>: <span class="hljs-string">'aborted_streaming'</span> }
+}
+
+<span class="hljs-comment">// Yield上一轮的工具摘要</span>
+<span class="hljs-keyword">if</span> (pendingToolUseSummary) {
+  <span class="hljs-keyword">const</span> summary = <span class="hljs-keyword">await</span> pendingToolUseSummary
+  <span class="hljs-keyword">if</span> (summary) { <span class="hljs-keyword">yield</span> summary }
+}
+</code></pre>
+<p><strong>步骤8：无工具调用时的终止路径（第1062-1357行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1062行</span>
+<span class="hljs-keyword">if</span> (!needsFollowUp) {
+  <span class="hljs-comment">// 8a. prompt-too-long 恢复（collapse drain -&gt; reactive compact）</span>
+  <span class="hljs-comment">// 8b. max_output_tokens 恢复（escalate -&gt; multi-turn recovery）</span>
+  <span class="hljs-comment">// 8c. API error 跳过 stop hooks</span>
+  <span class="hljs-comment">// 8d. 执行 Stop Hooks</span>
+  <span class="hljs-comment">// 8e. Token Budget 检查</span>
+  <span class="hljs-comment">// 8f. return { reason: 'completed' }</span>
+}
+</code></pre>
+<p>当 LLM 回复中没有 tool_use 块时，进入终止判断。这里有多条 continue 路径和 return 路径：</p>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>动作</th>
+<th>转换原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prompt-too-long 且有 collapse 可 drain</td>
+<td>continue</td>
+<td><code>collapse_drain_retry</code></td>
+</tr>
+<tr>
+<td>prompt-too-long 且 reactive compact 成功</td>
+<td>continue</td>
+<td><code>reactive_compact_retry</code></td>
+</tr>
+<tr>
+<td>max_output_tokens 且未 escalate</td>
+<td>continue</td>
+<td><code>max_output_tokens_escalate</code></td>
+</tr>
+<tr>
+<td>max_output_tokens 且恢复次数 &lt; 3</td>
+<td>continue</td>
+<td><code>max_output_tokens_recovery</code></td>
+</tr>
+<tr>
+<td>stop hook 有 blocking error</td>
+<td>continue</td>
+<td><code>stop_hook_blocking</code></td>
+</tr>
+<tr>
+<td>token budget 未用完</td>
+<td>continue</td>
+<td><code>token_budget_continuation</code></td>
+</tr>
+<tr>
+<td>正常完成</td>
+<td>return</td>
+<td><code>completed</code></td>
+</tr>
+<tr>
+<td>stop hook 阻止继续</td>
+<td>return</td>
+<td><code>stop_hook_prevented</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>步骤9：工具执行（第1360-1408行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1380-1408行</span>
+<span class="hljs-keyword">const</span> toolUpdates = streamingToolExecutor
+  ? streamingToolExecutor.<span class="hljs-title function_">getRemainingResults</span>()
+  : <span class="hljs-title function_">runTools</span>(toolUseBlocks, assistantMessages, canUseTool, toolUseContext)
+
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> update <span class="hljs-keyword">of</span> toolUpdates) {
+  <span class="hljs-keyword">if</span> (update.<span class="hljs-property">message</span>) {
+    <span class="hljs-keyword">yield</span> update.<span class="hljs-property">message</span>
+    toolResults.<span class="hljs-title function_">push</span>(
+      ...<span class="hljs-title function_">normalizeMessagesForAPI</span>([update.<span class="hljs-property">message</span>], ...).<span class="hljs-title function_">filter</span>(...)
+    )
+  }
+  <span class="hljs-keyword">if</span> (update.<span class="hljs-property">newContext</span>) {
+    updatedToolUseContext = { ...update.<span class="hljs-property">newContext</span>, queryTracking }
+  }
+}
+</code></pre>
+<p>如果使用了 StreamingToolExecutor，工具可能在步骤6时已经开始执行（甚至已完成），这里只是收集剩余结果。否则通过 <code>runTools</code> 串行执行。</p>
+<p><strong>步骤10：附件注入与下一轮准备（第1580-1728行）</strong></p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query.ts 第1580-1590行</span>
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> attachment <span class="hljs-keyword">of</span> <span class="hljs-title function_">getAttachmentMessages</span>(
+  <span class="hljs-literal">null</span>, updatedToolUseContext, <span class="hljs-literal">null</span>,
+  queuedCommandsSnapshot,
+  [...messagesForQuery, ...assistantMessages, ...toolResults],
+  querySource,
+)) {
+  <span class="hljs-keyword">yield</span> attachment
+  toolResults.<span class="hljs-title function_">push</span>(attachment)
+}
+
+<span class="hljs-comment">// 检查 maxTurns 限制</span>
+<span class="hljs-keyword">if</span> (maxTurns &amp;&amp; nextTurnCount &gt; maxTurns) {
+  <span class="hljs-keyword">yield</span> <span class="hljs-title function_">createAttachmentMessage</span>({ <span class="hljs-attr">type</span>: <span class="hljs-string">'max_turns_reached'</span>, maxTurns, <span class="hljs-attr">turnCount</span>: nextTurnCount })
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">reason</span>: <span class="hljs-string">'max_turns'</span>, <span class="hljs-attr">turnCount</span>: nextTurnCount }
+}
+
+<span class="hljs-comment">// 构建下一轮的 state</span>
+<span class="hljs-keyword">const</span> <span class="hljs-attr">next</span>: <span class="hljs-title class_">State</span> = {
+  <span class="hljs-attr">messages</span>: [...messagesForQuery, ...assistantMessages, ...toolResults],
+  <span class="hljs-attr">toolUseContext</span>: toolUseContextWithQueryTracking,
+  <span class="hljs-attr">autoCompactTracking</span>: tracking,
+  <span class="hljs-attr">turnCount</span>: nextTurnCount,
+  <span class="hljs-attr">maxOutputTokensRecoveryCount</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">hasAttemptedReactiveCompact</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">pendingToolUseSummary</span>: nextPendingToolUseSummary,
+  <span class="hljs-attr">maxOutputTokensOverride</span>: <span class="hljs-literal">undefined</span>,
+  stopHookActive,
+  <span class="hljs-attr">transition</span>: { <span class="hljs-attr">reason</span>: <span class="hljs-string">'next_turn'</span> },
+}
+state = next
+</code></pre>
+<p>附件注入包括：</p>
+<ul>
+<li>内存预取的结果（CLAUDE.md 等）</li>
+<li>Skill 发现的结果</li>
+<li>排队的命令（来自 message queue）</li>
+<li>文件变更通知</li>
+</ul>
+<p>然后构建下一轮的 State 并 <code>continue</code> 回到循环顶部。</p>
+<h2 id="55-依赖注入设计（querydeps）">5.5 依赖注入设计（QueryDeps）</h2>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/deps.ts 第21-40行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">QueryDeps</span> = {
+  <span class="hljs-attr">callModel</span>: <span class="hljs-keyword">typeof</span> queryModelWithStreaming
+  <span class="hljs-attr">microcompact</span>: <span class="hljs-keyword">typeof</span> microcompactMessages
+  <span class="hljs-attr">autocompact</span>: <span class="hljs-keyword">typeof</span> autoCompactIfNeeded
+  <span class="hljs-attr">uuid</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">string</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">productionDeps</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">QueryDeps</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">callModel</span>: queryModelWithStreaming,
+    <span class="hljs-attr">microcompact</span>: microcompactMessages,
+    <span class="hljs-attr">autocompact</span>: autoCompactIfNeeded,
+    <span class="hljs-attr">uuid</span>: randomUUID,
+  }
+}
+</code></pre>
+<p>为什么这样设计：</p>
+<ol>
+<li><strong>测试友好</strong>：测试可以注入 fake 实现，避免 <code>spyOn</code> 模块导入的样板代码</li>
+<li><strong>类型安全</strong>：使用 <code>typeof fn</code> 让类型与真实实现自动同步</li>
+<li><strong>零成本</strong>：生产环境直接返回真实函数引用，没有额外间接层</li>
+<li><strong>范围克制</strong>：只注入了 4 个依赖，不过度设计</li>
+</ol>
+<p>测试中的用法示例：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-attr">fakeDeps</span>: <span class="hljs-title class_">QueryDeps</span> = {
+  <span class="hljs-attr">callModel</span>: <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* () { <span class="hljs-keyword">yield</span> fakeMessage },
+  <span class="hljs-attr">microcompact</span>: <span class="hljs-title function_">async</span> (msgs) =&gt; ({ <span class="hljs-attr">messages</span>: msgs }),
+  <span class="hljs-attr">autocompact</span>: <span class="hljs-title function_">async</span> () =&gt; ({ <span class="hljs-attr">compactionResult</span>: <span class="hljs-literal">null</span> }),
+  <span class="hljs-attr">uuid</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-string">'test-uuid'</span>,
+}
+<span class="hljs-title function_">query</span>({ ..., <span class="hljs-attr">deps</span>: fakeDeps })
+</code></pre>
+<h2 id="56-循环终止条件汇总">5.6 循环终止条件汇总</h2>
+<p>queryLoop 有以下所有 <code>return</code> 路径：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>原因</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第647行</td>
+<td><code>blocking_limit</code></td>
+<td>token 数超硬限制且自动压缩不可用</td>
+</tr>
+<tr>
+<td>第977行</td>
+<td><code>image_error</code></td>
+<td>ImageSizeError 或 ImageResizeError</td>
+</tr>
+<tr>
+<td>第996行</td>
+<td><code>model_error</code></td>
+<td>LLM API 抛出未处理异常</td>
+</tr>
+<tr>
+<td>第1051行</td>
+<td><code>aborted_streaming</code></td>
+<td>用户在流式传输期间中断</td>
+</tr>
+<tr>
+<td>第1175行</td>
+<td><code>image_error</code>/<code>prompt_too_long</code></td>
+<td>恢复失败后暴露被暂扣的错误</td>
+</tr>
+<tr>
+<td>第1182行</td>
+<td><code>prompt_too_long</code></td>
+<td>context collapse 无法恢复</td>
+</tr>
+<tr>
+<td>第1264行</td>
+<td><code>completed</code></td>
+<td>API error 消息（跳过 stop hooks）</td>
+</tr>
+<tr>
+<td>第1279行</td>
+<td><code>stop_hook_prevented</code></td>
+<td>Stop hook 阻止继续</td>
+</tr>
+<tr>
+<td>第1357行</td>
+<td><code>completed</code></td>
+<td>正常完成（无工具调用且通过所有检查）</td>
+</tr>
+<tr>
+<td>第1515行</td>
+<td><code>aborted_tools</code></td>
+<td>用户在工具执行期间中断</td>
+</tr>
+<tr>
+<td>第1520行</td>
+<td><code>hook_stopped</code></td>
+<td>工具执行期间 hook 阻止继续</td>
+</tr>
+<tr>
+<td>第1711行</td>
+<td><code>max_turns</code></td>
+<td>达到最大 turn 数限制</td>
+</tr>
+</tbody>
+</table>
+<p>所有 continue 路径（保持循环运行）：</p>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>原因</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第1115行</td>
+<td><code>collapse_drain_retry</code></td>
+<td>context collapse drain 后重试</td>
+</tr>
+<tr>
+<td>第1165行</td>
+<td><code>reactive_compact_retry</code></td>
+<td>reactive compact 后重试</td>
+</tr>
+<tr>
+<td>第1220行</td>
+<td><code>max_output_tokens_escalate</code></td>
+<td>从 8k 升级到 64k max_tokens</td>
+</tr>
+<tr>
+<td>第1251行</td>
+<td><code>max_output_tokens_recovery</code></td>
+<td>注入恢复消息继续</td>
+</tr>
+<tr>
+<td>第1305行</td>
+<td><code>stop_hook_blocking</code></td>
+<td>stop hook 有阻塞错误需要重试</td>
+</tr>
+<tr>
+<td>第1340行</td>
+<td><code>token_budget_continuation</code></td>
+<td>token budget 未用完</td>
+</tr>
+<tr>
+<td>第1727行</td>
+<td><code>next_turn</code></td>
+<td>正常的工具调用后继续下一轮</td>
+</tr>
+</tbody>
+</table>
+<h2 id="57-token-预算系统（budgettracker）">5.7 Token 预算系统（BudgetTracker）</h2>
+<h3 id="571-数据结构">5.7.1 数据结构</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/tokenBudget.ts 第6-11行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">BudgetTracker</span> = {
+  <span class="hljs-attr">continuationCount</span>: <span class="hljs-built_in">number</span>     <span class="hljs-comment">// 已连续继续的次数</span>
+  <span class="hljs-attr">lastDeltaTokens</span>: <span class="hljs-built_in">number</span>       <span class="hljs-comment">// 上次检查时的增量 token 数</span>
+  <span class="hljs-attr">lastGlobalTurnTokens</span>: <span class="hljs-built_in">number</span>  <span class="hljs-comment">// 上次检查时的全局 turn token 数</span>
+  <span class="hljs-attr">startedAt</span>: <span class="hljs-built_in">number</span>             <span class="hljs-comment">// 开始时间戳</span>
+}
+</code></pre>
+<h3 id="572-递减检测算法">5.7.2 递减检测算法</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/tokenBudget.ts 第45-93行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">checkTokenBudget</span>(<span class="hljs-params">
+  <span class="hljs-attr">tracker</span>: <span class="hljs-title class_">BudgetTracker</span>,
+  <span class="hljs-attr">agentId</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>,
+  <span class="hljs-attr">budget</span>: <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">globalTurnTokens</span>: <span class="hljs-built_in">number</span>,
+</span>): <span class="hljs-title class_">TokenBudgetDecision</span> {
+  <span class="hljs-comment">// 子代理或无预算时直接停止</span>
+  <span class="hljs-keyword">if</span> (agentId || budget === <span class="hljs-literal">null</span> || budget &lt;= <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">action</span>: <span class="hljs-string">'stop'</span>, <span class="hljs-attr">completionEvent</span>: <span class="hljs-literal">null</span> }
+  }
+
+  <span class="hljs-keyword">const</span> turnTokens = globalTurnTokens
+  <span class="hljs-keyword">const</span> pct = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">round</span>((turnTokens / budget) * <span class="hljs-number">100</span>)
+  <span class="hljs-keyword">const</span> deltaSinceLastCheck = globalTurnTokens - tracker.<span class="hljs-property">lastGlobalTurnTokens</span>
+
+  <span class="hljs-comment">// 递减检测：连续3次以上且每次增量 &lt; 500 tokens</span>
+  <span class="hljs-keyword">const</span> isDiminishing =
+    tracker.<span class="hljs-property">continuationCount</span> &gt;= <span class="hljs-number">3</span> &amp;&amp;
+    deltaSinceLastCheck &lt; <span class="hljs-variable constant_">DIMINISHING_THRESHOLD</span> &amp;&amp;
+    tracker.<span class="hljs-property">lastDeltaTokens</span> &lt; <span class="hljs-variable constant_">DIMINISHING_THRESHOLD</span>
+
+  <span class="hljs-comment">// 未递减且未达90%阈值 -&gt; 继续</span>
+  <span class="hljs-keyword">if</span> (!isDiminishing &amp;&amp; turnTokens &lt; budget * <span class="hljs-variable constant_">COMPLETION_THRESHOLD</span>) {
+    tracker.<span class="hljs-property">continuationCount</span>++
+    tracker.<span class="hljs-property">lastDeltaTokens</span> = deltaSinceLastCheck
+    tracker.<span class="hljs-property">lastGlobalTurnTokens</span> = globalTurnTokens
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">action</span>: <span class="hljs-string">'continue'</span>, <span class="hljs-attr">nudgeMessage</span>: ..., ... }
+  }
+
+  <span class="hljs-comment">// 递减或之前有过继续 -&gt; 停止</span>
+  <span class="hljs-keyword">if</span> (isDiminishing || tracker.<span class="hljs-property">continuationCount</span> &gt; <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">action</span>: <span class="hljs-string">'stop'</span>, <span class="hljs-attr">completionEvent</span>: { ... } }
+  }
+
+  <span class="hljs-keyword">return</span> { <span class="hljs-attr">action</span>: <span class="hljs-string">'stop'</span>, <span class="hljs-attr">completionEvent</span>: <span class="hljs-literal">null</span> }
+}
+</code></pre>
+<p>算法逻辑：</p>
+<ol>
+<li><strong>子代理不参与</strong>：<code>agentId</code> 不为空时直接停止</li>
+<li><strong>继续条件</strong>：尚未递减 且 token 用量 &lt; 预算的 90%</li>
+<li><strong>递减检测</strong>：连续 3 次以上继续，且最近两次增量都 &lt; 500 tokens。这意味着模型在做重复或无意义的工作</li>
+<li><strong>停止条件</strong>：检测到递减，或已达到 90% 预算</li>
+</ol>
+<p>两个关键常量：</p>
+<ul>
+<li><code>COMPLETION_THRESHOLD = 0.9</code>：达到预算 90% 时停止</li>
+<li><code>DIMINISHING_THRESHOLD = 500</code>：每次增量低于 500 tokens 视为递减</li>
+</ul>
+<h2 id="58-stop-hooks-机制">5.8 Stop Hooks 机制</h2>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/stopHooks.ts 第65-81行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>* <span class="hljs-title function_">handleStopHooks</span>(
+  <span class="hljs-attr">messagesForQuery</span>: <span class="hljs-title class_">Message</span>[],
+  <span class="hljs-attr">assistantMessages</span>: <span class="hljs-title class_">AssistantMessage</span>[],
+  <span class="hljs-attr">systemPrompt</span>: <span class="hljs-title class_">SystemPrompt</span>,
+  <span class="hljs-attr">userContext</span>: { [<span class="hljs-attr">k</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> },
+  <span class="hljs-attr">systemContext</span>: { [<span class="hljs-attr">k</span>: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">string</span> },
+  <span class="hljs-attr">toolUseContext</span>: <span class="hljs-title class_">ToolUseContext</span>,
+  <span class="hljs-attr">querySource</span>: <span class="hljs-title class_">QuerySource</span>,
+  <span class="hljs-attr">stopHookActive</span>?: <span class="hljs-built_in">boolean</span>,
+): <span class="hljs-title class_">AsyncGenerator</span>&lt;..., <span class="hljs-title class_">StopHookResult</span>&gt; {
+</code></pre>
+<p>Stop Hooks 在模型完成回复（没有工具调用）后执行，分为多个阶段：</p>
+<h3 id="阶段1：后台任务（第133-173行）">阶段1：后台任务（第133-173行）</h3>
+<p>非阻塞的后台任务，fire-and-forget：</p>
+<ul>
+<li><code>executePromptSuggestion</code>：生成下一步建议</li>
+<li><code>executeExtractMemories</code>：提取记忆</li>
+<li><code>executeAutoDream</code>：自动梦境</li>
+<li><code>cleanupComputerUseAfterTurn</code>：CU 清理</li>
+</ul>
+<h3 id="阶段2：stop-hook-执行（第180-306行）">阶段2：Stop Hook 执行（第180-306行）</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/stopHooks.ts 第180-189行</span>
+<span class="hljs-keyword">const</span> generator = <span class="hljs-title function_">executeStopHooks</span>(
+  permissionMode,
+  toolUseContext.<span class="hljs-property">abortController</span>.<span class="hljs-property">signal</span>,
+  <span class="hljs-literal">undefined</span>,
+  stopHookActive ?? <span class="hljs-literal">false</span>,
+  toolUseContext.<span class="hljs-property">agentId</span>,
+  toolUseContext,
+  [...messagesForQuery, ...assistantMessages],
+  toolUseContext.<span class="hljs-property">agentType</span>,
+)
+</code></pre>
+<p>Stop hooks 可以产生三种结果：</p>
+<ul>
+<li><strong>非阻塞错误</strong>（non_blocking_error）：记录但不影响流程</li>
+<li><strong>阻塞错误</strong>（blockingError）：注入为 user message，触发模型重新回复</li>
+<li><strong>阻止继续</strong>（preventContinuation）：直接终止对话</li>
+</ul>
+<h3 id="阶段3：teammate-hooks（第335-453行）">阶段3：Teammate Hooks（第335-453行）</h3>
+<p>如果当前是 teammate 模式，额外执行：</p>
+<ul>
+<li><code>TaskCompleted</code> hooks：对进行中的任务执行完成 hooks</li>
+<li><code>TeammateIdle</code> hooks：通知 teammate 空闲</li>
+</ul>
+<h3 id="返回值">返回值</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">StopHookResult</span> = {
+  <span class="hljs-attr">blockingErrors</span>: <span class="hljs-title class_">Message</span>[]       <span class="hljs-comment">// 阻塞错误消息（将注入对话）</span>
+  <span class="hljs-attr">preventContinuation</span>: <span class="hljs-built_in">boolean</span>    <span class="hljs-comment">// 是否阻止继续</span>
+}
+</code></pre>
+<h2 id="59-queryconfig：不可变的快照配置">5.9 QueryConfig：不可变的快照配置</h2>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/query/config.ts 第18-27行</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">QueryConfig</span> = {
+  <span class="hljs-attr">sessionId</span>: <span class="hljs-title class_">SessionId</span>
+  <span class="hljs-attr">gates</span>: {
+    <span class="hljs-attr">streamingToolExecution</span>: <span class="hljs-built_in">boolean</span>  <span class="hljs-comment">// 是否启用流式工具执行</span>
+    <span class="hljs-attr">emitToolUseSummaries</span>: <span class="hljs-built_in">boolean</span>    <span class="hljs-comment">// 是否生成工具摘要</span>
+    <span class="hljs-attr">isAnt</span>: <span class="hljs-built_in">boolean</span>                   <span class="hljs-comment">// 是否为 Anthropic 内部用户</span>
+    <span class="hljs-attr">fastModeEnabled</span>: <span class="hljs-built_in">boolean</span>         <span class="hljs-comment">// 是否启用快速模式</span>
+  }
+}
+</code></pre>
+<p><code>QueryConfig</code> 在 <code>queryLoop</code> 入口处创建一次，整个循环期间不变。这是有意为之的设计：</p>
+<ul>
+<li>避免在循环迭代之间出现配置漂移</li>
+<li>Statsig feature gate 使用 <code>CACHED_MAY_BE_STALE</code>，本身就允许一定的陈旧性</li>
+<li>feature() gate 被刻意排除在外，因为它们是 tree-shaking 的边界</li>
+</ul>
+<h2 id="510-小结">5.10 小结</h2>
+<p>QueryEngine 和 queryLoop 的设计体现了几个核心原则：</p>
+<ol>
+<li><strong>异步生成器作为流式协议</strong>：整个对话引擎通过 <code>yield</code> 驱动，调用方通过 <code>for await...of</code> 消费，天然支持背压控制</li>
+<li><strong>状态机模式</strong>：queryLoop 的 State 在每次 continue 时整体替换，每次 continue 都携带明确的 <code>transition.reason</code>，使状态转换可追踪</li>
+<li><strong>渐进式恢复</strong>：错误不是立即终止，而是尝试多级恢复（collapse drain -&gt; reactive compact -&gt; max_output_tokens escalate -&gt; recovery message）</li>
+<li><strong>依赖注入</strong>：通过 QueryDeps 实现测试隔离，避免全局 mock</li>
+<li><strong>关注点分离</strong>：QueryEngine 管理会话生命周期和 SDK 协议，queryLoop 管理推理逻辑，两者通过 AsyncGenerator 协议解耦</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Chapter-04-Event-System-and-Input-Handling.html" class="navigation navigation-prev " aria-label="Previous page: Chapter 04 - Event System and Input Handling">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Chapter-06-LLM-API-and-Streaming.html" class="navigation navigation-next " aria-label="Next page: Chapter 06 - LLM API and Streaming">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Chapter 05 - Core Conversation Engine QueryEngine","level":"8.5","depth":1,"next":{"title":"Chapter 06 - LLM API and Streaming","level":"8.6","depth":1,"path":"Chapter-06-LLM-API-and-Streaming.md","ref":"Chapter-06-LLM-API-and-Streaming.md","articles":[]},"previous":{"title":"Chapter 04 - Event System and Input Handling","level":"8.4","depth":1,"path":"Chapter-04-Event-System-and-Input-Handling.md","ref":"Chapter-04-Event-System-and-Input-Handling.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"Chapter-05-Core-Conversation-Engine-QueryEngine.md","mtime":"2026-04-01T06:20:09.478Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

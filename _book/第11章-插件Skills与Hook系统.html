@@ -1,0 +1,1630 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>第11章 - 插件、Skills与Hook系统 · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="第12章-状态管理安全模型与基础设施.html" />
+    
+    
+    <link rel="prev" href="第10章-团队协作与远程通信.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter active" data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >第11章 - 插件、Skills与Hook系统</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第11章：插件、skills与hook系统">第11章：插件、Skills与Hook系统</h1>
+<p>Claude Code 的扩展性建立在三大支柱之上：<strong>插件</strong>（Plugin）、<strong>Skills</strong>（技能）和 <strong>Hooks</strong>（钩子）。三者互相交织，共同构成了一套完整的"可编程能力注入"体系。本章将逐一拆解其内部实现。</p>
+<h2 id="111-插件三来源架构">11.1 插件三来源架构</h2>
+<p>Claude Code 的插件系统采用三来源架构：<strong>Built-in</strong>（内置）、<strong>Marketplace</strong>（市场）和 <strong>Session</strong>（会话级）。核心类型定义位于 <code>src/types/plugin.ts</code>。</p>
+<h3 id="1111-builtinplugindefinition-类型">11.1.1 BuiltinPluginDefinition 类型</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/types/plugin.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">BuiltinPluginDefinition</span> = {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">version</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">skills</span>?: <span class="hljs-title class_">BundledSkillDefinition</span>[]
+  <span class="hljs-attr">hooks</span>?: <span class="hljs-title class_">HooksSettings</span>
+  <span class="hljs-attr">mcpServers</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">McpServerConfig</span>&gt;
+  <span class="hljs-attr">isAvailable</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">defaultEnabled</span>?: <span class="hljs-built_in">boolean</span>
+}
+</code></pre>
+<p>一个内置插件可以同时提供三种组件：skills、hooks 和 mcpServers。<code>isAvailable</code> 函数用于动态判断当前系统是否支持（例如某些插件只在 macOS 上可用），返回 <code>false</code> 时插件完全隐藏。</p>
+<h3 id="1112-loadedplugin-类型">11.1.2 LoadedPlugin 类型</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/types/plugin.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">LoadedPlugin</span> = {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">manifest</span>: <span class="hljs-title class_">PluginManifest</span>
+  <span class="hljs-attr">path</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">source</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">repository</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">enabled</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">isBuiltin</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">sha</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">commandsPath</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">commandsPaths</span>?: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">agentsPath</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">skillsPath</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">skillsPaths</span>?: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">hooksConfig</span>?: <span class="hljs-title class_">HooksSettings</span>
+  <span class="hljs-attr">mcpServers</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">McpServerConfig</span>&gt;
+  <span class="hljs-attr">lspServers</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">LspServerConfig</span>&gt;
+  <span class="hljs-attr">settings</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;
+}
+</code></pre>
+<p><code>LoadedPlugin</code> 是运行时统一的插件表示。无论来源是 Built-in、Marketplace 还是 Session，加载后都归一化为此类型。<code>source</code> 字段标识来源（如 <code>myPlugin@builtin</code>、<code>myPlugin@marketplace-name</code>）。</p>
+<h3 id="1113-内置插件注册与状态管理">11.1.3 内置插件注册与状态管理</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/plugins/builtinPlugins.ts</span>
+<span class="hljs-keyword">const</span> <span class="hljs-attr">BUILTIN_PLUGINS</span>: <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">BuiltinPluginDefinition</span>&gt; = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>()
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">registerBuiltinPlugin</span>(<span class="hljs-params">
+  <span class="hljs-attr">definition</span>: <span class="hljs-title class_">BuiltinPluginDefinition</span>,
+</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-variable constant_">BUILTIN_PLUGINS</span>.<span class="hljs-title function_">set</span>(definition.<span class="hljs-property">name</span>, definition)
+}
+</code></pre>
+<p>内置插件在启动时通过 <code>registerBuiltinPlugin()</code> 注册到全局 Map 中。ID 格式为 <code>{name}@builtin</code>。</p>
+<p>状态管理的核心在 <code>getBuiltinPlugins()</code> 函数：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/plugins/builtinPlugins.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getBuiltinPlugins</span>(<span class="hljs-params"></span>): {
+  <span class="hljs-attr">enabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[]
+  <span class="hljs-attr">disabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[]
+} {
+  <span class="hljs-keyword">const</span> settings = <span class="hljs-title function_">getSettings_DEPRECATED</span>()
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">enabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[] = []
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">disabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[] = []
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [name, definition] <span class="hljs-keyword">of</span> <span class="hljs-variable constant_">BUILTIN_PLUGINS</span>) {
+    <span class="hljs-keyword">if</span> (definition.<span class="hljs-property">isAvailable</span> &amp;&amp; !definition.<span class="hljs-title function_">isAvailable</span>()) {
+      <span class="hljs-keyword">continue</span>  <span class="hljs-comment">// 不可用的插件完全跳过</span>
+    }
+
+    <span class="hljs-keyword">const</span> pluginId = <span class="hljs-string">`<span class="hljs-subst">${name}</span>@<span class="hljs-subst">${BUILTIN_MARKETPLACE_NAME}</span>`</span>
+    <span class="hljs-keyword">const</span> userSetting = settings?.<span class="hljs-property">enabledPlugins</span>?.[pluginId]
+    <span class="hljs-comment">// 优先级：用户设置 &gt; 插件默认值 &gt; true</span>
+    <span class="hljs-keyword">const</span> isEnabled =
+      userSetting !== <span class="hljs-literal">undefined</span>
+        ? userSetting === <span class="hljs-literal">true</span>
+        : (definition.<span class="hljs-property">defaultEnabled</span> ?? <span class="hljs-literal">true</span>)
+
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">plugin</span>: <span class="hljs-title class_">LoadedPlugin</span> = {
+      name,
+      <span class="hljs-attr">manifest</span>: { name, <span class="hljs-attr">description</span>: definition.<span class="hljs-property">description</span>, <span class="hljs-attr">version</span>: definition.<span class="hljs-property">version</span> },
+      <span class="hljs-attr">path</span>: <span class="hljs-variable constant_">BUILTIN_MARKETPLACE_NAME</span>,  <span class="hljs-comment">// 哨兵值，无文件系统路径</span>
+      <span class="hljs-attr">source</span>: pluginId,
+      <span class="hljs-attr">repository</span>: pluginId,
+      <span class="hljs-attr">enabled</span>: isEnabled,
+      <span class="hljs-attr">isBuiltin</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">hooksConfig</span>: definition.<span class="hljs-property">hooks</span>,
+      <span class="hljs-attr">mcpServers</span>: definition.<span class="hljs-property">mcpServers</span>,
+    }
+
+    <span class="hljs-keyword">if</span> (isEnabled) {
+      enabled.<span class="hljs-title function_">push</span>(plugin)
+    } <span class="hljs-keyword">else</span> {
+      disabled.<span class="hljs-title function_">push</span>(plugin)
+    }
+  }
+
+  <span class="hljs-keyword">return</span> { enabled, disabled }
+}
+</code></pre>
+<p>三层决策逻辑：</p>
+<ol>
+<li><code>isAvailable()</code> 返回 false -&gt; 完全隐藏</li>
+<li>用户在 settings 中显式设置了 <code>enabledPlugins[pluginId]</code> -&gt; 遵从用户设置</li>
+<li>都没有 -&gt; 取 <code>defaultEnabled</code>，默认为 <code>true</code></li>
+</ol>
+<h3 id="1114-插件加载与合并流程">11.1.4 插件加载与合并流程</h3>
+<p><code>AppState</code> 中的 <code>plugins</code> 域存储了所有已加载的插件状态：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/state/AppStateStore.ts</span>
+<span class="hljs-attr">plugins</span>: {
+  <span class="hljs-attr">enabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[]
+  <span class="hljs-attr">disabled</span>: <span class="hljs-title class_">LoadedPlugin</span>[]
+  <span class="hljs-attr">commands</span>: <span class="hljs-title class_">Command</span>[]
+  <span class="hljs-attr">errors</span>: <span class="hljs-title class_">PluginError</span>[]
+  <span class="hljs-attr">installationStatus</span>: { ... }
+  <span class="hljs-attr">needsRefresh</span>: <span class="hljs-built_in">boolean</span>
+}
+</code></pre>
+<p>Marketplace 插件通过 Git 克隆到本地缓存目录，然后解析 <code>manifest.json</code> 中声明的 skills、hooks、MCP servers 等组件路径。三种来源的插件最终合并到同一个 <code>plugins</code> 状态域中。</p>
+<h2 id="112-skills-系统">11.2 Skills 系统</h2>
+<h3 id="1121-skills-的六种来源">11.2.1 Skills 的六种来源</h3>
+<p>Skills 的加载来源由 <code>LoadedFrom</code> 类型定义：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/loadSkillsDir.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">LoadedFrom</span> =
+  | <span class="hljs-string">'commands_DEPRECATED'</span>  <span class="hljs-comment">// 旧版 /commands/ 目录（已废弃）</span>
+  | <span class="hljs-string">'skills'</span>               <span class="hljs-comment">// 文件系统 skills/ 目录</span>
+  | <span class="hljs-string">'plugin'</span>               <span class="hljs-comment">// 插件提供的 skills</span>
+  | <span class="hljs-string">'managed'</span>              <span class="hljs-comment">// 企业管理策略注入的 skills</span>
+  | <span class="hljs-string">'bundled'</span>              <span class="hljs-comment">// 编译进二进制的内置 skills</span>
+  | <span class="hljs-string">'mcp'</span>                  <span class="hljs-comment">// MCP 服务器暴露的 skills</span>
+</code></pre>
+<p>加载路径由 <code>getSkillsPath()</code> 函数按来源路由：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/loadSkillsDir.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getSkillsPath</span>(<span class="hljs-params">
+  <span class="hljs-attr">source</span>: <span class="hljs-title class_">SettingSource</span> | <span class="hljs-string">'plugin'</span>,
+  <span class="hljs-attr">dir</span>: <span class="hljs-string">'skills'</span> | <span class="hljs-string">'commands'</span>,
+</span>): <span class="hljs-built_in">string</span> {
+  <span class="hljs-keyword">switch</span> (source) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'policySettings'</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">join</span>(<span class="hljs-title function_">getManagedFilePath</span>(), <span class="hljs-string">'.claude'</span>, dir)
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'userSettings'</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">join</span>(<span class="hljs-title function_">getClaudeConfigHomeDir</span>(), dir)
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'projectSettings'</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-string">`.claude/<span class="hljs-subst">${dir}</span>`</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">'plugin'</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'plugin'</span>
+    <span class="hljs-attr">default</span>:
+      <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>
+  }
+}
+</code></pre>
+<p>六种来源的优先级排列如下：</p>
+<ul>
+<li><strong>policySettings</strong> -&gt; 企业管理目录下的 <code>.claude/skills/</code></li>
+<li><strong>userSettings</strong> -&gt; 用户 home 目录下的 <code>~/.claude/skills/</code></li>
+<li><strong>projectSettings</strong> -&gt; 项目目录下的 <code>.claude/skills/</code></li>
+<li><strong>plugin</strong> -&gt; 通过插件系统加载的 skills</li>
+<li><strong>bundled</strong> -&gt; 编译进二进制的内置 skills</li>
+<li><strong>mcp</strong> -&gt; 从 MCP 服务器拉取的 skills</li>
+</ul>
+<h3 id="1122-skill-文件格式：skillmd--frontmatter">11.2.2 Skill 文件格式：SKILL.md + frontmatter</h3>
+<p>Skills 采用目录格式：<code>skill-name/SKILL.md</code>。不支持单文件格式。</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/loadSkillsDir.ts</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">loadSkillsFromSkillsDir</span>(<span class="hljs-params">
+  <span class="hljs-attr">basePath</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">source</span>: <span class="hljs-title class_">SettingSource</span>,
+</span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">SkillWithPath</span>[]&gt; {
+  <span class="hljs-keyword">const</span> fs = <span class="hljs-title function_">getFsImplementation</span>()
+  <span class="hljs-keyword">let</span> entries
+  <span class="hljs-keyword">try</span> {
+    entries = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readdir</span>(basePath)
+  } <span class="hljs-keyword">catch</span> (<span class="hljs-attr">e</span>: <span class="hljs-built_in">unknown</span>) {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isFsInaccessible</span>(e)) <span class="hljs-title function_">logError</span>(e)
+    <span class="hljs-keyword">return</span> []
+  }
+
+  <span class="hljs-keyword">const</span> results = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">all</span>(
+    entries.<span class="hljs-title function_">map</span>(<span class="hljs-title function_">async</span> (entry): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">SkillWithPath</span> | <span class="hljs-literal">null</span>&gt; =&gt; {
+      <span class="hljs-comment">// 只支持目录格式</span>
+      <span class="hljs-keyword">if</span> (!entry.<span class="hljs-title function_">isDirectory</span>() &amp;&amp; !entry.<span class="hljs-title function_">isSymbolicLink</span>()) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+      }
+
+      <span class="hljs-keyword">const</span> skillDirPath = <span class="hljs-title function_">join</span>(basePath, entry.<span class="hljs-property">name</span>)
+      <span class="hljs-keyword">const</span> skillFilePath = <span class="hljs-title function_">join</span>(skillDirPath, <span class="hljs-string">'SKILL.md'</span>)
+
+      <span class="hljs-keyword">let</span> <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span>
+      <span class="hljs-keyword">try</span> {
+        content = <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">readFile</span>(skillFilePath, { <span class="hljs-attr">encoding</span>: <span class="hljs-string">'utf-8'</span> })
+      } <span class="hljs-keyword">catch</span> (<span class="hljs-attr">e</span>: <span class="hljs-built_in">unknown</span>) {
+        <span class="hljs-keyword">if</span> (!<span class="hljs-title function_">isENOENT</span>(e)) {
+          <span class="hljs-title function_">logForDebugging</span>(<span class="hljs-string">`[skills] failed to read <span class="hljs-subst">${skillFilePath}</span>: <span class="hljs-subst">${e}</span>`</span>, {
+            <span class="hljs-attr">level</span>: <span class="hljs-string">'warn'</span>,
+          })
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+      }
+      <span class="hljs-comment">// ... 解析 frontmatter 并创建 Command</span>
+    }),
+  )
+}
+</code></pre>
+<p>SKILL.md 的 frontmatter 支持丰富的元数据字段：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/loadSkillsDir.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">parseSkillFrontmatterFields</span>(<span class="hljs-params">
+  <span class="hljs-attr">frontmatter</span>: <span class="hljs-title class_">FrontmatterData</span>,
+  <span class="hljs-attr">markdownContent</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">resolvedName</span>: <span class="hljs-built_in">string</span>,
+</span>): {
+  <span class="hljs-attr">displayName</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">hasUserSpecifiedDescription</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">allowedTools</span>: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">argumentHint</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">argumentNames</span>: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">whenToUse</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">version</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">model</span>: <span class="hljs-title class_">ReturnType</span>&lt;<span class="hljs-keyword">typeof</span> parseUserSpecifiedModel&gt; | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">disableModelInvocation</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">userInvocable</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">hooks</span>: <span class="hljs-title class_">HooksSettings</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">executionContext</span>: <span class="hljs-string">'fork'</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">agent</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">effort</span>: <span class="hljs-title class_">EffortValue</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">shell</span>: <span class="hljs-title class_">FrontmatterShell</span> | <span class="hljs-literal">undefined</span>
+} {
+  <span class="hljs-comment">// ... 解析逻辑</span>
+}
+</code></pre>
+<p>一个完整的 SKILL.md 示例 frontmatter：</p>
+<pre><code class="lang-markdown">---
+name: my-skill
+description: 执行某个特定任务
+when<span class="hljs-emphasis">_to_</span>use: 当用户需要...
+allowed-tools: ["Bash", "Read", "Write"]
+context: fork
+model: claude-sonnet-4-6
+argument-hint: "&lt;文件路径&gt;"
+arguments: [file, mode]
+hooks:
+  PreToolUse:
+<span class="hljs-bullet">    -</span> matcher: "Bash"
+<span class="hljs-code">      hooks:
+        - type: command
+          command: "echo pre-hook"
+---
+</span>
+Skill 正文内容...
+</code></pre>
+<h3 id="1123-bundledskilldefinition：编译进二进制的-skill">11.2.3 BundledSkillDefinition：编译进二进制的 Skill</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/bundledSkills.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">BundledSkillDefinition</span> = {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">description</span>: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">aliases</span>?: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">whenToUse</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">argumentHint</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">allowedTools</span>?: <span class="hljs-built_in">string</span>[]
+  <span class="hljs-attr">model</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">disableModelInvocation</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">userInvocable</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">isEnabled</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">hooks</span>?: <span class="hljs-title class_">HooksSettings</span>
+  <span class="hljs-attr">context</span>?: <span class="hljs-string">'inline'</span> | <span class="hljs-string">'fork'</span>
+  <span class="hljs-attr">agent</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">files</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">string</span>&gt;  <span class="hljs-comment">// 附带的参考文件</span>
+  <span class="hljs-attr">getPromptForCommand</span>: <span class="hljs-function">(<span class="hljs-params">
+    <span class="hljs-attr">args</span>: <span class="hljs-built_in">string</span>,
+    <span class="hljs-attr">context</span>: <span class="hljs-title class_">ToolUseContext</span>,
+  </span>) =&gt;</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">ContentBlockParam</span>[]&gt;
+}
+</code></pre>
+<p><code>files</code> 字段允许内置 skill 携带参考文件。首次调用时，这些文件被延迟提取到磁盘：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/bundledSkills.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">registerBundledSkill</span>(<span class="hljs-params"><span class="hljs-attr">definition</span>: <span class="hljs-title class_">BundledSkillDefinition</span></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> { files } = definition
+
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">skillRoot</span>: <span class="hljs-built_in">string</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-keyword">let</span> getPromptForCommand = definition.<span class="hljs-property">getPromptForCommand</span>
+
+  <span class="hljs-keyword">if</span> (files &amp;&amp; <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(files).<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span>) {
+    skillRoot = <span class="hljs-title function_">getBundledSkillExtractDir</span>(definition.<span class="hljs-property">name</span>)
+    <span class="hljs-keyword">let</span> <span class="hljs-attr">extractionPromise</span>: <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span>&gt; | <span class="hljs-literal">undefined</span>
+    <span class="hljs-keyword">const</span> inner = definition.<span class="hljs-property">getPromptForCommand</span>
+    getPromptForCommand = <span class="hljs-title function_">async</span> (args, ctx) =&gt; {
+      <span class="hljs-comment">// 闭包级记忆化：同一进程只提取一次</span>
+      <span class="hljs-comment">// 记忆化的是 Promise 而非结果，避免并发调用者竞争写入</span>
+      extractionPromise ??= <span class="hljs-title function_">extractBundledSkillFiles</span>(definition.<span class="hljs-property">name</span>, files)
+      <span class="hljs-keyword">const</span> extractedDir = <span class="hljs-keyword">await</span> extractionPromise
+      <span class="hljs-keyword">const</span> blocks = <span class="hljs-keyword">await</span> <span class="hljs-title function_">inner</span>(args, ctx)
+      <span class="hljs-keyword">if</span> (extractedDir === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> blocks
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">prependBaseDir</span>(blocks, extractedDir)
+    }
+  }
+  <span class="hljs-comment">// ... 构建 Command 并注册</span>
+}
+</code></pre>
+<p>提取文件时的安全措施值得关注：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/bundledSkills.ts</span>
+<span class="hljs-comment">// 进程内 nonce 是防止预创建符号链接/目录的主要防御</span>
+<span class="hljs-comment">// 显式 0o700/0o600 模式在 umask=0 时也保持目录仅主人可访问</span>
+<span class="hljs-comment">// O_NOFOLLOW|O_EXCL 是额外的安全带</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">O_NOFOLLOW</span> = fsConstants.<span class="hljs-property">O_NOFOLLOW</span> ?? <span class="hljs-number">0</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">SAFE_WRITE_FLAGS</span> =
+  process.<span class="hljs-property">platform</span> === <span class="hljs-string">'win32'</span>
+    ? <span class="hljs-string">'wx'</span>
+    : fsConstants.<span class="hljs-property">O_WRONLY</span> | fsConstants.<span class="hljs-property">O_CREAT</span> | fsConstants.<span class="hljs-property">O_EXCL</span> | <span class="hljs-variable constant_">O_NOFOLLOW</span>
+
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">safeWriteFile</span>(<span class="hljs-params"><span class="hljs-attr">p</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt; {
+  <span class="hljs-keyword">const</span> fh = <span class="hljs-keyword">await</span> <span class="hljs-title function_">open</span>(p, <span class="hljs-variable constant_">SAFE_WRITE_FLAGS</span>, <span class="hljs-number">0o600</span>)
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">await</span> fh.<span class="hljs-title function_">writeFile</span>(content, <span class="hljs-string">'utf8'</span>)
+  } <span class="hljs-keyword">finally</span> {
+    <span class="hljs-keyword">await</span> fh.<span class="hljs-title function_">close</span>()
+  }
+}
+</code></pre>
+<p>路径遍历防护：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">resolveSkillFilePath</span>(<span class="hljs-params"><span class="hljs-attr">baseDir</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">relPath</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">string</span> {
+  <span class="hljs-keyword">const</span> normalized = <span class="hljs-title function_">normalize</span>(relPath)
+  <span class="hljs-keyword">if</span> (
+    <span class="hljs-title function_">isAbsolute</span>(normalized) ||
+    normalized.<span class="hljs-title function_">split</span>(pathSep).<span class="hljs-title function_">includes</span>(<span class="hljs-string">'..'</span>) ||
+    normalized.<span class="hljs-title function_">split</span>(<span class="hljs-string">'/'</span>).<span class="hljs-title function_">includes</span>(<span class="hljs-string">'..'</span>)
+  ) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`bundled skill file path escapes skill dir: <span class="hljs-subst">${relPath}</span>`</span>)
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">join</span>(baseDir, normalized)
+}
+</code></pre>
+<h3 id="1124-mcp-skill-桥接">11.2.4 MCP Skill 桥接</h3>
+<p>MCP 服务器也可以暴露 skills。桥接层通过 <code>mcpSkillBuilders.ts</code> 实现：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/mcpSkillBuilders.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">MCPSkillBuilders</span> = {
+  <span class="hljs-attr">createSkillCommand</span>: <span class="hljs-keyword">typeof</span> createSkillCommand
+  <span class="hljs-attr">parseSkillFrontmatterFields</span>: <span class="hljs-keyword">typeof</span> parseSkillFrontmatterFields
+}
+
+<span class="hljs-keyword">let</span> <span class="hljs-attr">builders</span>: <span class="hljs-title class_">MCPSkillBuilders</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">registerMCPSkillBuilders</span>(<span class="hljs-params"><span class="hljs-attr">b</span>: <span class="hljs-title class_">MCPSkillBuilders</span></span>): <span class="hljs-built_in">void</span> {
+  builders = b
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getMCPSkillBuilders</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">MCPSkillBuilders</span> {
+  <span class="hljs-keyword">if</span> (!builders) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(
+      <span class="hljs-string">'MCP skill builders not registered — loadSkillsDir.ts has not been evaluated yet'</span>,
+    )
+  }
+  <span class="hljs-keyword">return</span> builders
+}
+</code></pre>
+<p>这是一个"写一次"注册模式，用于打破循环依赖。<code>loadSkillsDir.ts</code> 在模块初始化时注册，MCP client 在后续使用。关键约束：MCP skills 的 markdown 正文中禁止执行 shell 命令：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/skills/loadSkillsDir.ts</span>
+<span class="hljs-comment">// 安全：MCP skills 是远程且不可信的 —— 永远不执行其 markdown 正文中的</span>
+<span class="hljs-comment">// 内联 shell 命令（!`...` / ```! ... ```）</span>
+<span class="hljs-keyword">if</span> (loadedFrom !== <span class="hljs-string">'mcp'</span>) {
+  finalContent = <span class="hljs-keyword">await</span> <span class="hljs-title function_">executeShellCommandsInPrompt</span>(finalContent, ...)
+}
+</code></pre>
+<h2 id="113-skilltool-的执行流程">11.3 SkillTool 的执行流程</h2>
+<h3 id="1131-工具定义">11.3.1 工具定义</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/SkillTool/SkillTool.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">SkillTool</span>: <span class="hljs-title class_">Tool</span>&lt;<span class="hljs-title class_">InputSchema</span>, <span class="hljs-title class_">Output</span>, <span class="hljs-title class_">Progress</span>&gt; = <span class="hljs-title function_">buildTool</span>({
+  <span class="hljs-attr">name</span>: <span class="hljs-variable constant_">SKILL_TOOL_NAME</span>,  <span class="hljs-comment">// 'Skill'</span>
+  <span class="hljs-attr">searchHint</span>: <span class="hljs-string">'invoke a slash-command skill'</span>,
+  <span class="hljs-attr">maxResultSizeChars</span>: <span class="hljs-number">100_000</span>,
+  <span class="hljs-comment">// ...</span>
+})
+</code></pre>
+<p>输入 schema 非常简洁：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> inputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">object</span>({
+    <span class="hljs-attr">skill</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'The skill name. E.g., "commit", "review-pr", or "pdf"'</span>),
+    <span class="hljs-attr">args</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'Optional arguments for the skill'</span>),
+  }),
+)
+</code></pre>
+<h3 id="1132-inline-vs-fork-执行">11.3.2 inline vs fork 执行</h3>
+<p>SkillTool 的 <code>call()</code> 方法根据 skill 的 <code>context</code> 字段选择执行策略：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/SkillTool/SkillTool.ts</span>
+<span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">{ skill, args }, context, canUseTool, parentMessage, onProgress?</span>) {
+  <span class="hljs-keyword">const</span> commandName = trimmed.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">'/'</span>) ? trimmed.<span class="hljs-title function_">substring</span>(<span class="hljs-number">1</span>) : trimmed
+  <span class="hljs-keyword">const</span> commands = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getAllCommands</span>(context)
+  <span class="hljs-keyword">const</span> command = <span class="hljs-title function_">findCommand</span>(commandName, commands)
+
+  <span class="hljs-title function_">recordSkillUsage</span>(commandName)
+
+  <span class="hljs-comment">// fork 模式：在隔离的子 agent 中执行</span>
+  <span class="hljs-keyword">if</span> (command?.<span class="hljs-property">type</span> === <span class="hljs-string">'prompt'</span> &amp;&amp; command.<span class="hljs-property">context</span> === <span class="hljs-string">'fork'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">executeForkedSkill</span>(
+      command, commandName, args, context,
+      canUseTool, parentMessage, onProgress,
+    )
+  }
+
+  <span class="hljs-comment">// inline 模式（默认）：在当前上下文中展开 prompt</span>
+  <span class="hljs-keyword">const</span> { processPromptSlashCommand } = <span class="hljs-keyword">await</span> <span class="hljs-keyword">import</span>(
+    <span class="hljs-string">'src/utils/processUserInput/processSlashCommand.js'</span>
+  )
+  <span class="hljs-keyword">const</span> processedCommand = <span class="hljs-keyword">await</span> <span class="hljs-title function_">processPromptSlashCommand</span>(
+    commandName, args || <span class="hljs-string">''</span>, commands, context,
+  )
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p><strong>inline 模式</strong>：skill 的 prompt 被展开后注入到当前对话流中，模型继续处理。输出 schema：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> inlineOutputSchema = z.<span class="hljs-title function_">object</span>({
+  <span class="hljs-attr">success</span>: z.<span class="hljs-title function_">boolean</span>(),
+  <span class="hljs-attr">commandName</span>: z.<span class="hljs-title function_">string</span>(),
+  <span class="hljs-attr">allowedTools</span>: z.<span class="hljs-title function_">array</span>(z.<span class="hljs-title function_">string</span>()).<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">model</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">status</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'inline'</span>).<span class="hljs-title function_">optional</span>(),
+})
+</code></pre>
+<p><strong>fork 模式</strong>：启动一个隔离的子 agent，有自己的 token 预算和消息流：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/SkillTool/SkillTool.ts</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">executeForkedSkill</span>(<span class="hljs-params">command, commandName, args, context, canUseTool, parentMessage, onProgress?</span>) {
+  <span class="hljs-keyword">const</span> agentId = <span class="hljs-title function_">createAgentId</span>()
+  <span class="hljs-keyword">const</span> { modifiedGetAppState, baseAgent, promptMessages, skillContent } =
+    <span class="hljs-keyword">await</span> <span class="hljs-title function_">prepareForkedCommandContext</span>(command, args || <span class="hljs-string">''</span>, context)
+
+  <span class="hljs-keyword">const</span> agentDefinition = command.<span class="hljs-property">effort</span> !== <span class="hljs-literal">undefined</span>
+    ? { ...baseAgent, <span class="hljs-attr">effort</span>: command.<span class="hljs-property">effort</span> }
+    : baseAgent
+
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">agentMessages</span>: <span class="hljs-title class_">Message</span>[] = []
+
+  <span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> message <span class="hljs-keyword">of</span> <span class="hljs-title function_">runAgent</span>({
+    agentDefinition,
+    promptMessages,
+    <span class="hljs-attr">toolUseContext</span>: { ...context, <span class="hljs-attr">getAppState</span>: modifiedGetAppState },
+    canUseTool,
+    <span class="hljs-attr">isAsync</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">querySource</span>: <span class="hljs-string">'agent:custom'</span>,
+    <span class="hljs-attr">model</span>: command.<span class="hljs-property">model</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">ModelAlias</span> | <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">availableTools</span>: context.<span class="hljs-property">options</span>.<span class="hljs-property">tools</span>,
+    <span class="hljs-attr">override</span>: { agentId },
+  })) {
+    agentMessages.<span class="hljs-title function_">push</span>(message)
+    <span class="hljs-comment">// 向父级报告工具使用进度</span>
+    <span class="hljs-keyword">if</span> ((message.<span class="hljs-property">type</span> === <span class="hljs-string">'assistant'</span> || message.<span class="hljs-property">type</span> === <span class="hljs-string">'user'</span>) &amp;&amp; onProgress) {
+      <span class="hljs-comment">// ...</span>
+    }
+  }
+
+  <span class="hljs-keyword">const</span> resultText = <span class="hljs-title function_">extractResultText</span>(agentMessages, <span class="hljs-string">'Skill execution completed'</span>)
+  agentMessages.<span class="hljs-property">length</span> = <span class="hljs-number">0</span>  <span class="hljs-comment">// 释放消息内存</span>
+
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">data</span>: {
+      <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, commandName, <span class="hljs-attr">status</span>: <span class="hljs-string">'forked'</span>,
+      agentId, <span class="hljs-attr">result</span>: resultText,
+    },
+  }
+}
+</code></pre>
+<p>fork 模式的关键特性：</p>
+<ul>
+<li>独立的 agentId</li>
+<li>独立的 token 预算</li>
+<li>执行完成后通过 <code>clearInvokedSkillsForAgent(agentId)</code> 清理状态</li>
+<li>可以指定独立的 model 和 effort 级别</li>
+</ul>
+<h3 id="1133-skill-列表的预算管理">11.3.3 Skill 列表的预算管理</h3>
+<p>Skill 列表占用 system prompt 的空间有严格限制：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/SkillTool/prompt.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">SKILL_BUDGET_CONTEXT_PERCENT</span> = <span class="hljs-number">0.01</span>  <span class="hljs-comment">// 上下文窗口的 1%</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">CHARS_PER_TOKEN</span> = <span class="hljs-number">4</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">DEFAULT_CHAR_BUDGET</span> = <span class="hljs-number">8_000</span>  <span class="hljs-comment">// 后备值：200k * 1% * 4</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">MAX_LISTING_DESC_CHARS</span> = <span class="hljs-number">250</span>  <span class="hljs-comment">// 单条描述上限</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getCharBudget</span>(<span class="hljs-params"><span class="hljs-attr">contextWindowTokens</span>?: <span class="hljs-built_in">number</span></span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Number</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">SLASH_COMMAND_TOOL_CHAR_BUDGET</span>)) {
+    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Number</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">SLASH_COMMAND_TOOL_CHAR_BUDGET</span>)
+  }
+  <span class="hljs-keyword">if</span> (contextWindowTokens) {
+    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(contextWindowTokens * <span class="hljs-variable constant_">CHARS_PER_TOKEN</span> * <span class="hljs-variable constant_">SKILL_BUDGET_CONTEXT_PERCENT</span>)
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-variable constant_">DEFAULT_CHAR_BUDGET</span>
+}
+</code></pre>
+<p>当所有 skill 的完整描述超出预算时，系统执行分层截断：</p>
+<ol>
+<li>先尝试完整描述</li>
+<li>超出则划分为 bundled（不截断）和 rest（截断描述）</li>
+<li>极端情况下，non-bundled skills 只保留名称</li>
+</ol>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">formatCommandsWithinBudget</span>(<span class="hljs-params"><span class="hljs-attr">commands</span>: <span class="hljs-title class_">Command</span>[], <span class="hljs-attr">contextWindowTokens</span>?: <span class="hljs-built_in">number</span></span>): <span class="hljs-built_in">string</span> {
+  <span class="hljs-keyword">const</span> budget = <span class="hljs-title function_">getCharBudget</span>(contextWindowTokens)
+  <span class="hljs-keyword">const</span> fullEntries = commands.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">cmd</span> =&gt;</span> ({ cmd, <span class="hljs-attr">full</span>: <span class="hljs-title function_">formatCommandDescription</span>(cmd) }))
+  <span class="hljs-keyword">const</span> fullTotal = fullEntries.<span class="hljs-title function_">reduce</span>(<span class="hljs-function">(<span class="hljs-params">sum, e</span>) =&gt;</span> sum + <span class="hljs-title function_">stringWidth</span>(e.<span class="hljs-property">full</span>), <span class="hljs-number">0</span>) + (fullEntries.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>)
+
+  <span class="hljs-keyword">if</span> (fullTotal &lt;= budget) {
+    <span class="hljs-keyword">return</span> fullEntries.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">e</span> =&gt;</span> e.<span class="hljs-property">full</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>)
+  }
+
+  <span class="hljs-comment">// 分区：bundled 不截断，其余截断</span>
+  <span class="hljs-keyword">const</span> bundledIndices = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-built_in">number</span>&gt;()
+  <span class="hljs-comment">// ...</span>
+  <span class="hljs-keyword">const</span> maxDescLen = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(availableForDescs / restCommands.<span class="hljs-property">length</span>)
+
+  <span class="hljs-keyword">if</span> (maxDescLen &lt; <span class="hljs-variable constant_">MIN_DESC_LENGTH</span>) {
+    <span class="hljs-comment">// 极端情况：non-bundled 只显示名称</span>
+    <span class="hljs-keyword">return</span> commands.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">cmd, i</span>) =&gt;</span>
+      bundledIndices.<span class="hljs-title function_">has</span>(i) ? fullEntries[i]!.<span class="hljs-property">full</span> : <span class="hljs-string">`- <span class="hljs-subst">${cmd.name}</span>`</span>,
+    ).<span class="hljs-title function_">join</span>(<span class="hljs-string">'\n'</span>)
+  }
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<h2 id="114-hook-系统">11.4 Hook 系统</h2>
+<h3 id="1141-27-种事件类型">11.4.1 27 种事件类型</h3>
+<p>Hook 事件定义在 SDK 类型中：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/entrypoints/sdk/coreTypes.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">HOOK_EVENTS</span> = [
+  <span class="hljs-string">'PreToolUse'</span>,
+  <span class="hljs-string">'PostToolUse'</span>,
+  <span class="hljs-string">'PostToolUseFailure'</span>,
+  <span class="hljs-string">'Notification'</span>,
+  <span class="hljs-string">'UserPromptSubmit'</span>,
+  <span class="hljs-string">'SessionStart'</span>,
+  <span class="hljs-string">'SessionEnd'</span>,
+  <span class="hljs-string">'Stop'</span>,
+  <span class="hljs-string">'StopFailure'</span>,
+  <span class="hljs-string">'SubagentStart'</span>,
+  <span class="hljs-string">'SubagentStop'</span>,
+  <span class="hljs-string">'PreCompact'</span>,
+  <span class="hljs-string">'PostCompact'</span>,
+  <span class="hljs-string">'PermissionRequest'</span>,
+  <span class="hljs-string">'PermissionDenied'</span>,
+  <span class="hljs-string">'Setup'</span>,
+  <span class="hljs-string">'TeammateIdle'</span>,
+  <span class="hljs-string">'TaskCreated'</span>,
+  <span class="hljs-string">'TaskCompleted'</span>,
+  <span class="hljs-string">'Elicitation'</span>,
+  <span class="hljs-string">'ElicitationResult'</span>,
+  <span class="hljs-string">'ConfigChange'</span>,
+  <span class="hljs-string">'WorktreeCreate'</span>,
+  <span class="hljs-string">'WorktreeRemove'</span>,
+  <span class="hljs-string">'InstructionsLoaded'</span>,
+  <span class="hljs-string">'CwdChanged'</span>,
+  <span class="hljs-string">'FileChanged'</span>,
+] <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>
+</code></pre>
+<p>这些事件覆盖了 Claude Code 的完整生命周期：</p>
+<ul>
+<li><strong>工具级</strong>：PreToolUse、PostToolUse、PostToolUseFailure</li>
+<li><strong>会话级</strong>：SessionStart、SessionEnd、UserPromptSubmit</li>
+<li><strong>采样级</strong>：Stop、StopFailure</li>
+<li><strong>子代理级</strong>：SubagentStart、SubagentStop</li>
+<li><strong>压缩级</strong>：PreCompact、PostCompact</li>
+<li><strong>权限级</strong>：PermissionRequest���PermissionDenied</li>
+<li><strong>系统级</strong>：Setup、ConfigChange、CwdChanged、FileChanged、InstructionsLoaded</li>
+<li><strong>任务级</strong>：TaskCreated、TaskCompleted、TeammateIdle</li>
+<li><strong>MCP 级</strong>：Elicitation、ElicitationResult</li>
+<li><strong>Worktree 级</strong>：WorktreeCreate、WorktreeRemove</li>
+<li><strong>通知级</strong>：Notification</li>
+</ul>
+<h3 id="1142-4-种-hook-类型">11.4.2 4 种 Hook 类型</h3>
+<p>Hook 的 schema 定义在 <code>src/schemas/hooks.ts</code> 中，使用 Zod discriminatedUnion：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/schemas/hooks.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">HookCommandSchema</span> = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">const</span> { <span class="hljs-title class_">BashCommandHookSchema</span>, <span class="hljs-title class_">PromptHookSchema</span>, <span class="hljs-title class_">AgentHookSchema</span>, <span class="hljs-title class_">HttpHookSchema</span> } = <span class="hljs-title function_">buildHookSchemas</span>()
+  <span class="hljs-keyword">return</span> z.<span class="hljs-title function_">discriminatedUnion</span>(<span class="hljs-string">'type'</span>, [
+    <span class="hljs-title class_">BashCommandHookSchema</span>,
+    <span class="hljs-title class_">PromptHookSchema</span>,
+    <span class="hljs-title class_">AgentHookSchema</span>,
+    <span class="hljs-title class_">HttpHookSchema</span>,
+  ])
+})
+</code></pre>
+<p><strong>1. command 类型（Shell 命令）</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">BashCommandHookSchema</span> = z.<span class="hljs-title function_">object</span>({
+  <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'command'</span>),
+  <span class="hljs-attr">command</span>: z.<span class="hljs-title function_">string</span>(),
+  <span class="hljs-attr">if</span>: <span class="hljs-title class_">IfConditionSchema</span>(),
+  <span class="hljs-attr">shell</span>: z.<span class="hljs-title function_">enum</span>(<span class="hljs-variable constant_">SHELL_TYPES</span>).<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">timeout</span>: z.<span class="hljs-title function_">number</span>().<span class="hljs-title function_">positive</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">statusMessage</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">once</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(),       <span class="hljs-comment">// 执行一次后自动移除</span>
+  <span class="hljs-attr">async</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(),      <span class="hljs-comment">// 后台运行，不阻塞</span>
+  <span class="hljs-attr">asyncRewake</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(), <span class="hljs-comment">// 后台运行，exit code 2 时唤醒模型</span>
+})
+</code></pre>
+<p><code>asyncRewake</code> 是一个精妙的设计：hook 在后台运行，如果退出码为 2（表示"阻塞性错误"），会通过消息队列唤醒模型处理。</p>
+<p><strong>2. prompt 类型（LLM 提示）</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">PromptHookSchema</span> = z.<span class="hljs-title function_">object</span>({
+  <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'prompt'</span>),
+  <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>(),
+  <span class="hljs-attr">if</span>: <span class="hljs-title class_">IfConditionSchema</span>(),
+  <span class="hljs-attr">timeout</span>: z.<span class="hljs-title function_">number</span>().<span class="hljs-title function_">positive</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">model</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">statusMessage</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">once</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(),
+})
+</code></pre>
+<p>prompt hook 将输入交给 LLM 处理，<code>$ARGUMENTS</code> 占位符会被替换为 hook 输入的 JSON。</p>
+<p><strong>3. http 类型（HTTP 回调）</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">HttpHookSchema</span> = z.<span class="hljs-title function_">object</span>({
+  <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'http'</span>),
+  <span class="hljs-attr">url</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">url</span>(),
+  <span class="hljs-attr">if</span>: <span class="hljs-title class_">IfConditionSchema</span>(),
+  <span class="hljs-attr">timeout</span>: z.<span class="hljs-title function_">number</span>().<span class="hljs-title function_">positive</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">headers</span>: z.<span class="hljs-title function_">record</span>(z.<span class="hljs-title function_">string</span>(), z.<span class="hljs-title function_">string</span>()).<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">allowedEnvVars</span>: z.<span class="hljs-title function_">array</span>(z.<span class="hljs-title function_">string</span>()).<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">statusMessage</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">once</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(),
+})
+</code></pre>
+<p>headers 字段支持环境变量插值（<code>$VAR_NAME</code> 或 <code>${VAR_NAME}</code>），但只有在 <code>allowedEnvVars</code> 中显式列出的变量才会被解析。</p>
+<p><strong>4. agent 类型（代理验证器）</strong>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-title class_">AgentHookSchema</span> = z.<span class="hljs-title function_">object</span>({
+  <span class="hljs-attr">type</span>: z.<span class="hljs-title function_">literal</span>(<span class="hljs-string">'agent'</span>),
+  <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>(),
+  <span class="hljs-attr">if</span>: <span class="hljs-title class_">IfConditionSchema</span>(),
+  <span class="hljs-attr">timeout</span>: z.<span class="hljs-title function_">number</span>().<span class="hljs-title function_">positive</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">model</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">statusMessage</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+  <span class="hljs-attr">once</span>: z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>(),
+})
+</code></pre>
+<p>agent hook 启动一个独立的 agent 来验证操作，比 prompt hook 更重量级，可以调用工具。</p>
+<h3 id="1143-hook-配置合并：三层架构">11.4.3 Hook 配置合并：三层架构</h3>
+<p>Hook 配置来自三个层级：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/schemas/hooks.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">HooksSchema</span> = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">partialRecord</span>(z.<span class="hljs-title function_">enum</span>(<span class="hljs-variable constant_">HOOK_EVENTS</span>), z.<span class="hljs-title function_">array</span>(<span class="hljs-title class_">HookMatcherSchema</span>())),
+)
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">HookMatcherSchema</span> = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">object</span>({
+    <span class="hljs-attr">matcher</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">optional</span>(),
+    <span class="hljs-attr">hooks</span>: z.<span class="hljs-title function_">array</span>(<span class="hljs-title class_">HookCommandSchema</span>()),
+  }),
+)
+</code></pre>
+<p>三层来源：</p>
+<ol>
+<li><strong>Settings 层</strong>：<code>settings.json</code> 中的 <code>hooks</code> 字段，通过常规 settings 合并机制（详见第12章）</li>
+<li><strong>SDK/Plugin 层</strong>：插件通过 <code>hooksConfig</code> 字段注册，Skill 通过 frontmatter <code>hooks:</code> 字段注册</li>
+<li><strong>Session 层</strong>：运行时通过 <code>registerSessionHook()</code> 动态注册的临时 hook</li>
+</ol>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/hooks.ts</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">TOOL_HOOK_EXECUTION_TIMEOUT_MS</span> = <span class="hljs-number">10</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">SESSION_END_HOOK_TIMEOUT_MS_DEFAULT</span> = <span class="hljs-number">1500</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getSessionEndHookTimeoutMs</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">const</span> raw = process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_SESSIONEND_HOOKS_TIMEOUT_MS</span>
+  <span class="hljs-keyword">const</span> parsed = raw ? <span class="hljs-built_in">parseInt</span>(raw, <span class="hljs-number">10</span>) : <span class="hljs-title class_">NaN</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(parsed) &amp;&amp; parsed &gt; <span class="hljs-number">0</span>
+    ? parsed
+    : <span class="hljs-variable constant_">SESSION_END_HOOK_TIMEOUT_MS_DEFAULT</span>
+}
+</code></pre>
+<p>工具 hook 默认超时 10 分钟，SessionEnd hook 更紧（1.5 秒），因为它在关闭/清理路径上。</p>
+<h3 id="1144-hook-匹配逻辑">11.4.4 Hook 匹配逻辑</h3>
+<p>匹配函数 <code>matchesPattern()</code> 支持三种模式：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/hooks.ts</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">matchesPattern</span>(<span class="hljs-params"><span class="hljs-attr">matchQuery</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">matcher</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">boolean</span> {
+  <span class="hljs-keyword">if</span> (!matcher || matcher === <span class="hljs-string">'*'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>  <span class="hljs-comment">// 空 matcher 或 * 匹配所有</span>
+  }
+
+  <span class="hljs-comment">// 纯字母数字 + 管道分隔符：精确匹配</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^[a-zA-Z0-9_|]+$/</span>.<span class="hljs-title function_">test</span>(matcher)) {
+    <span class="hljs-keyword">if</span> (matcher.<span class="hljs-title function_">includes</span>(<span class="hljs-string">'|'</span>)) {
+      <span class="hljs-comment">// 管道分隔的精确匹配列表</span>
+      <span class="hljs-keyword">const</span> patterns = matcher.<span class="hljs-title function_">split</span>(<span class="hljs-string">'|'</span>).<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">p</span> =&gt;</span> <span class="hljs-title function_">normalizeLegacyToolName</span>(p.<span class="hljs-title function_">trim</span>()))
+      <span class="hljs-keyword">return</span> patterns.<span class="hljs-title function_">includes</span>(matchQuery)
+    }
+    <span class="hljs-comment">// 单值精确匹配</span>
+    <span class="hljs-keyword">return</span> matchQuery === <span class="hljs-title function_">normalizeLegacyToolName</span>(matcher)
+  }
+
+  <span class="hljs-comment">// 否则视为正则表达式</span>
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> regex = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RegExp</span>(matcher)
+    <span class="hljs-keyword">if</span> (regex.<span class="hljs-title function_">test</span>(matchQuery)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+    }
+    <span class="hljs-comment">// 也测试遗留工具名，使 "^Task$" 等模式仍然有效</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> legacyName <span class="hljs-keyword">of</span> <span class="hljs-title function_">getLegacyToolNames</span>(matchQuery)) {
+      <span class="hljs-keyword">if</span> (regex.<span class="hljs-title function_">test</span>(legacyName)) {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+      }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  } <span class="hljs-keyword">catch</span> {
+    <span class="hljs-title function_">logForDebugging</span>(<span class="hljs-string">`Invalid regex pattern in hook matcher: <span class="hljs-subst">${matcher}</span>`</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  }
+}
+</code></pre>
+<p>三种匹配模式总结：</p>
+<ul>
+<li><strong>精确匹配</strong>：<code>"Write"</code> 匹配工具名 Write</li>
+<li><strong>管道分隔匹配</strong>：<code>"Edit|Write"</code> 匹配 Edit 或 Write</li>
+<li><strong>正则匹配</strong>：<code>"^(Read|Grep)"</code> 匹配以 Read 或 Grep 开头的工具名</li>
+</ul>
+<p><code>if</code> 条件字段提供了更细粒度的过滤，使用权限规则语法（如 <code>"Bash(git *)"</code> 只在 Bash 工具执行 git 命令时触发）。</p>
+<h3 id="1145-hook-的-json-stdout-协议">11.4.5 Hook 的 JSON stdout 协议</h3>
+<p>Hook 的 shell 命令通过 stdout 返回 JSON 来控制 Claude Code 的行为。相关类型定义在 <code>src/types/hooks.ts</code> 中：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/types/hooks.ts（通过 import 可见）</span>
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">SyncHookJSONOutput</span> = {
+  <span class="hljs-attr">decision</span>?: <span class="hljs-string">'allow'</span> | <span class="hljs-string">'deny'</span> | <span class="hljs-string">'block'</span>
+  <span class="hljs-attr">reason</span>?: <span class="hljs-built_in">string</span>
+  <span class="hljs-attr">suppressOutput</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-comment">// ... 权限修改等</span>
+}
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">AsyncHookJSONOutput</span> = {
+  <span class="hljs-attr">async</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">processId</span>?: <span class="hljs-built_in">string</span>
+}
+</code></pre>
+<p>同步输出允许 hook 做出权限决策（allow/deny/block），异步输出则将 hook 推入后台注册。</p>
+<p>后台执行逻辑：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/hooks.ts</span>
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">executeInBackground</span>(<span class="hljs-params">{ processId, hookId, shellCommand, asyncResponse, hookEvent, hookName, command, asyncRewake, pluginId }</span>) {
+  <span class="hljs-keyword">if</span> (asyncRewake) {
+    <span class="hljs-comment">// asyncRewake hook 不进入注册表，完成后如果 exit code 2 则唤醒模型</span>
+    <span class="hljs-built_in">void</span> shellCommand.<span class="hljs-property">result</span>.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">async</span> result =&gt; {
+      <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> <span class="hljs-title function_">setImmediate</span>(resolve))
+      <span class="hljs-keyword">const</span> stdout = <span class="hljs-keyword">await</span> shellCommand.<span class="hljs-property">taskOutput</span>.<span class="hljs-title function_">getStdout</span>()
+      <span class="hljs-keyword">const</span> stderr = shellCommand.<span class="hljs-property">taskOutput</span>.<span class="hljs-title function_">getStderr</span>()
+      shellCommand.<span class="hljs-title function_">cleanup</span>()
+      <span class="hljs-keyword">if</span> (result.<span class="hljs-property">code</span> === <span class="hljs-number">2</span>) {
+        <span class="hljs-title function_">enqueuePendingNotification</span>({
+          <span class="hljs-attr">value</span>: <span class="hljs-title function_">wrapInSystemReminder</span>(
+            <span class="hljs-string">`Stop hook blocking error from command "<span class="hljs-subst">${hookName}</span>": <span class="hljs-subst">${stderr || stdout}</span>`</span>,
+          ),
+          <span class="hljs-attr">mode</span>: <span class="hljs-string">'task-notification'</span>,
+        })
+      }
+    })
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+  }
+
+  <span class="hljs-comment">// 普通异步 hook 推入后台</span>
+  <span class="hljs-keyword">if</span> (!shellCommand.<span class="hljs-title function_">background</span>(processId)) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+  }
+  <span class="hljs-title function_">registerPendingAsyncHook</span>({ processId, hookId, asyncResponse, hookEvent, hookName, command, shellCommand, pluginId })
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+}
+</code></pre>
+<h3 id="1146-信任与安全">11.4.6 信任与安全</h3>
+<p>Hook 执行受到工作区信任约束。来自 <code>projectSettings</code> 的 hook 只在用户接受了信任对话框后才执行。来自 <code>policySettings</code> 的 managed hook 在企业环境下可以绕过此限制。<code>shouldAllowManagedHooksOnly()</code> 和 <code>shouldDisableAllHooksIncludingManaged()</code> 提供了精细的控制粒度。</p>
+<h2 id="115-mcp-工具创建模板模式">11.5 MCP 工具创建模板模式</h2>
+<h3 id="1151-mcptool-作为模板">11.5.1 MCPTool 作为模板</h3>
+<p><code>MCPTool</code> 的定义是一个"空壳"模���：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/MCPTool/MCPTool.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">MCPTool</span> = <span class="hljs-title function_">buildTool</span>({
+  <span class="hljs-attr">isMcp</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'mcp'</span>,                 <span class="hljs-comment">// 被覆盖</span>
+  <span class="hljs-attr">maxResultSizeChars</span>: <span class="hljs-number">100_000</span>,
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">description</span>(<span class="hljs-params"></span>) { <span class="hljs-keyword">return</span> <span class="hljs-variable constant_">DESCRIPTION</span> },  <span class="hljs-comment">// 被覆盖</span>
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">prompt</span>(<span class="hljs-params"></span>) { <span class="hljs-keyword">return</span> <span class="hljs-variable constant_">PROMPT</span> },            <span class="hljs-comment">// 被覆盖</span>
+  <span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params"></span>) { <span class="hljs-keyword">return</span> { <span class="hljs-attr">data</span>: <span class="hljs-string">''</span> } },        <span class="hljs-comment">// 被覆盖</span>
+  <span class="hljs-comment">// ...</span>
+})
+</code></pre>
+<p><code>prompt.ts</code> 中两个常量都是空字符串：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/MCPTool/prompt.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">PROMPT</span> = <span class="hljs-string">''</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">DESCRIPTION</span> = <span class="hljs-string">''</span>
+</code></pre>
+<h3 id="1152-具体-mcp-工具的生成">11.5.2 具体 MCP 工具的生成</h3>
+<p>真正的工具实例在 <code>src/services/mcp/client.ts</code> 中通过展开操作符 <code>...MCPTool</code> 创建：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/mcp/client.ts</span>
+<span class="hljs-keyword">return</span> toolsToProcess.<span class="hljs-title function_">map</span>((tool): <span class="hljs-function"><span class="hljs-params">Tool</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> fullyQualifiedName = <span class="hljs-title function_">buildMcpToolName</span>(client.<span class="hljs-property">name</span>, tool.<span class="hljs-property">name</span>)
+  <span class="hljs-keyword">return</span> {
+    ...<span class="hljs-title class_">MCPTool</span>,
+    <span class="hljs-attr">name</span>: skipPrefix ? tool.<span class="hljs-property">name</span> : fullyQualifiedName,
+    <span class="hljs-attr">mcpInfo</span>: { <span class="hljs-attr">serverName</span>: client.<span class="hljs-property">name</span>, <span class="hljs-attr">toolName</span>: tool.<span class="hljs-property">name</span> },
+    <span class="hljs-attr">isMcp</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">searchHint</span>: <span class="hljs-keyword">typeof</span> tool.<span class="hljs-property">_meta</span>?.[<span class="hljs-string">'anthropic/searchHint'</span>] === <span class="hljs-string">'string'</span>
+      ? tool.<span class="hljs-property">_meta</span>[<span class="hljs-string">'anthropic/searchHint'</span>].<span class="hljs-title function_">replace</span>(<span class="hljs-regexp">/\s+/g</span>, <span class="hljs-string">' '</span>).<span class="hljs-title function_">trim</span>() || <span class="hljs-literal">undefined</span>
+      : <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">alwaysLoad</span>: tool.<span class="hljs-property">_meta</span>?.[<span class="hljs-string">'anthropic/alwaysLoad'</span>] === <span class="hljs-literal">true</span>,
+    <span class="hljs-keyword">async</span> <span class="hljs-title function_">description</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> tool.<span class="hljs-property">description</span> ?? <span class="hljs-string">''</span>
+    },
+    <span class="hljs-keyword">async</span> <span class="hljs-title function_">prompt</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">const</span> desc = tool.<span class="hljs-property">description</span> ?? <span class="hljs-string">''</span>
+      <span class="hljs-keyword">return</span> desc.<span class="hljs-property">length</span> &gt; <span class="hljs-variable constant_">MAX_MCP_DESCRIPTION_LENGTH</span>
+        ? desc.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-variable constant_">MAX_MCP_DESCRIPTION_LENGTH</span>) + <span class="hljs-string">'... [truncated]'</span>
+        : desc
+    },
+    <span class="hljs-title function_">isConcurrencySafe</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> tool.<span class="hljs-property">annotations</span>?.<span class="hljs-property">readOnlyHint</span> ?? <span class="hljs-literal">false</span>
+    },
+    <span class="hljs-title function_">isReadOnly</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> tool.<span class="hljs-property">annotations</span>?.<span class="hljs-property">readOnlyHint</span> ?? <span class="hljs-literal">false</span>
+    },
+    <span class="hljs-title function_">isDestructive</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> tool.<span class="hljs-property">annotations</span>?.<span class="hljs-property">destructiveHint</span> ?? <span class="hljs-literal">false</span>
+    },
+    <span class="hljs-title function_">isOpenWorld</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> tool.<span class="hljs-property">annotations</span>?.<span class="hljs-property">openWorldHint</span> ?? <span class="hljs-literal">false</span>
+    },
+    <span class="hljs-attr">inputJSONSchema</span>: tool.<span class="hljs-property">inputSchema</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">Tool</span>[<span class="hljs-string">'inputJSONSchema'</span>],
+    <span class="hljs-keyword">async</span> <span class="hljs-title function_">checkPermissions</span>(<span class="hljs-params"></span>) {
+      <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">behavior</span>: <span class="hljs-string">'passthrough'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>,
+        <span class="hljs-attr">message</span>: <span class="hljs-string">'MCPTool requires permission.'</span>,
+        <span class="hljs-attr">suggestions</span>: [{
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'addRules'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>,
+          <span class="hljs-attr">rules</span>: [{ <span class="hljs-attr">toolName</span>: fullyQualifiedName, <span class="hljs-attr">ruleContent</span>: <span class="hljs-literal">undefined</span> }],
+          <span class="hljs-attr">behavior</span>: <span class="hljs-string">'allow'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>,
+          <span class="hljs-attr">destination</span>: <span class="hljs-string">'localSettings'</span> <span class="hljs-keyword">as</span> <span class="hljs-keyword">const</span>,
+        }],
+      }
+    },
+    <span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">args, context, _canUseTool, parentMessage, onProgress?</span>) {
+      <span class="hljs-comment">// 实际 MCP 工具调用逻辑</span>
+      <span class="hljs-comment">// ...</span>
+    },
+  }
+})
+</code></pre>
+<p>设计要点：</p>
+<ul>
+<li>通过 <code>...MCPTool</code> 继承模板的基础设施（renderUI、mapToolResult 等）</li>
+<li>覆盖 name、description、prompt、call 等关键方法</li>
+<li><code>mcpInfo</code> 存储原始的服务器名和工具名，用于权限检查</li>
+<li><code>annotations</code> 元数据（readOnlyHint、destructiveHint、openWorldHint）从 MCP 工具声明中透传</li>
+<li><code>'anthropic/searchHint'</code> 和 <code>'anthropic/alwaysLoad'</code> 是 Claude Code 特有的 MCP <code>_meta</code> 扩���</li>
+</ul>
+<h3 id="1153-资源预取架构">11.5.3 资源预取架构</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/services/mcp/client.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">prefetchAllMcpResources</span>(<span class="hljs-params">
+  <span class="hljs-attr">mcpConfigs</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">ScopedMcpServerConfig</span>&gt;,
+</span>): <span class="hljs-title class_">Promise</span>&lt;{
+  <span class="hljs-attr">clients</span>: <span class="hljs-title class_">MCPServerConnection</span>[]
+  <span class="hljs-attr">tools</span>: <span class="hljs-title class_">Tool</span>[]
+  <span class="hljs-attr">commands</span>: <span class="hljs-title class_">Command</span>[]
+}&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> {
+    <span class="hljs-keyword">let</span> pendingCount = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(mcpConfigs).<span class="hljs-property">length</span>
+    <span class="hljs-keyword">let</span> completedCount = <span class="hljs-number">0</span>
+
+    <span class="hljs-keyword">if</span> (pendingCount === <span class="hljs-number">0</span>) {
+      <span class="hljs-built_in">void</span> <span class="hljs-title function_">resolve</span>({ <span class="hljs-attr">clients</span>: [], <span class="hljs-attr">tools</span>: [], <span class="hljs-attr">commands</span>: [] })
+      <span class="hljs-keyword">return</span>
+    }
+
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">clients</span>: <span class="hljs-title class_">MCPServerConnection</span>[] = []
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">tools</span>: <span class="hljs-title class_">Tool</span>[] = []
+    <span class="hljs-keyword">const</span> <span class="hljs-attr">commands</span>: <span class="hljs-title class_">Command</span>[] = []
+
+    <span class="hljs-title function_">getMcpToolsCommandsAndResources</span>(<span class="hljs-function"><span class="hljs-params">result</span> =&gt;</span> {
+      clients.<span class="hljs-title function_">push</span>(result.<span class="hljs-property">client</span>)
+      tools.<span class="hljs-title function_">push</span>(...result.<span class="hljs-property">tools</span>)
+      commands.<span class="hljs-title function_">push</span>(...result.<span class="hljs-property">commands</span>)
+      completedCount++
+      <span class="hljs-keyword">if</span> (completedCount &gt;= pendingCount) {
+        <span class="hljs-built_in">void</span> <span class="hljs-title function_">resolve</span>({ clients, tools, commands })
+      }
+    }, mcpConfigs).<span class="hljs-title function_">catch</span>(<span class="hljs-function"><span class="hljs-params">error</span> =&gt;</span> {
+      <span class="hljs-built_in">void</span> <span class="hljs-title function_">resolve</span>({ <span class="hljs-attr">clients</span>: [], <span class="hljs-attr">tools</span>: [], <span class="hljs-attr">commands</span>: [] })
+    })
+  })
+}
+</code></pre>
+<p>采用回调计数器模式而非 <code>Promise.all()</code>，这样每个服务器连接完成后立即处理，且单个服务器失败不阻塞其他服务器。</p>
+<h2 id="116-cron-调度机制">11.6 Cron 调度机制</h2>
+<h3 id="1161-三个工具">11.6.1 三个工具</h3>
+<p>Cron 系统由三个工具组成：</p>
+<ul>
+<li><strong>CronCreate</strong>：创建定时任务</li>
+<li><strong>CronDelete</strong>：删除定时任务</li>
+<li><strong>CronList</strong>：列出所有定时任务</li>
+</ul>
+<h3 id="1162-内存-vs-持久化">11.6.2 内存 vs 持久化</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/ScheduleCronTool/CronCreateTool.ts</span>
+<span class="hljs-keyword">const</span> inputSchema = <span class="hljs-title function_">lazySchema</span>(<span class="hljs-function">() =&gt;</span>
+  z.<span class="hljs-title function_">strictObject</span>({
+    <span class="hljs-attr">cron</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'Standard 5-field cron expression in local time'</span>),
+    <span class="hljs-attr">prompt</span>: z.<span class="hljs-title function_">string</span>().<span class="hljs-title function_">describe</span>(<span class="hljs-string">'The prompt to enqueue at each fire time.'</span>),
+    <span class="hljs-attr">recurring</span>: <span class="hljs-title function_">semanticBoolean</span>(z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()).<span class="hljs-title function_">describe</span>(
+      <span class="hljs-string">`true (default) = fire on every cron match. false = fire once then auto-delete.`</span>,
+    ),
+    <span class="hljs-attr">durable</span>: <span class="hljs-title function_">semanticBoolean</span>(z.<span class="hljs-title function_">boolean</span>().<span class="hljs-title function_">optional</span>()).<span class="hljs-title function_">describe</span>(
+      <span class="hljs-string">'true = persist to .claude/scheduled_tasks.json. false (default) = in-memory only.'</span>,
+    ),
+  }),
+)
+</code></pre>
+<p>两种持久化模式：</p>
+<ul>
+<li><code>durable: false</code>（默认）：任务仅存在于内存，进程退出后消失</li>
+<li><code>durable: true</code>：写入 <code>.claude/scheduled_tasks.json</code>，跨会话持久</li>
+</ul>
+<pre><code class="lang-typescript"><span class="hljs-keyword">async</span> <span class="hljs-title function_">call</span>(<span class="hljs-params">{ cron, prompt, recurring = <span class="hljs-literal">true</span>, durable = <span class="hljs-literal">false</span> }</span>) {
+  <span class="hljs-keyword">const</span> effectiveDurable = durable &amp;&amp; <span class="hljs-title function_">isDurableCronEnabled</span>()
+  <span class="hljs-keyword">const</span> id = <span class="hljs-keyword">await</span> <span class="hljs-title function_">addCronTask</span>(cron, prompt, recurring, effectiveDurable, <span class="hljs-title function_">getTeammateContext</span>()?.<span class="hljs-property">agentId</span>)
+  <span class="hljs-title function_">setScheduledTasksEnabled</span>(<span class="hljs-literal">true</span>)
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">data</span>: { id, <span class="hljs-attr">humanSchedule</span>: <span class="hljs-title function_">cronToHuman</span>(cron), recurring, <span class="hljs-attr">durable</span>: effectiveDurable },
+  }
+}
+</code></pre>
+<h3 id="1163-抖动设计（jitter）">11.6.3 抖动设计（Jitter）</h3>
+<p>Cron 的抖动设计是防止"雷鸣畜群"效应的精妙工程：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/utils/cronTasks.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">CronJitterConfig</span> = {
+  <span class="hljs-attr">recurringFrac</span>: <span class="hljs-built_in">number</span>      <span class="hljs-comment">// 周期的 10%</span>
+  <span class="hljs-attr">recurringCapMs</span>: <span class="hljs-built_in">number</span>     <span class="hljs-comment">// 最大 15 分钟</span>
+  <span class="hljs-attr">oneShotMaxMs</span>: <span class="hljs-built_in">number</span>       <span class="hljs-comment">// 一次性任务最大 90 秒</span>
+  <span class="hljs-attr">oneShotFloorMs</span>: <span class="hljs-built_in">number</span>     <span class="hljs-comment">// 最小前移量</span>
+  <span class="hljs-attr">oneShotMinuteMod</span>: <span class="hljs-built_in">number</span>   <span class="hljs-comment">// 触发抖动的分钟模数（30 = :00 和 :30）</span>
+  <span class="hljs-attr">recurringMaxAgeMs</span>: <span class="hljs-built_in">number</span>  <span class="hljs-comment">// 循环任务最大存活 7 天</span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">DEFAULT_CRON_JITTER_CONFIG</span>: <span class="hljs-title class_">CronJitterConfig</span> = {
+  <span class="hljs-attr">recurringFrac</span>: <span class="hljs-number">0.1</span>,
+  <span class="hljs-attr">recurringCapMs</span>: <span class="hljs-number">15</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
+  <span class="hljs-attr">oneShotMaxMs</span>: <span class="hljs-number">90</span> * <span class="hljs-number">1000</span>,
+  <span class="hljs-attr">oneShotFloorMs</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">oneShotMinuteMod</span>: <span class="hljs-number">30</span>,
+  <span class="hljs-attr">recurringMaxAgeMs</span>: <span class="hljs-number">7</span> * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
+}
+</code></pre>
+<p>抖动分数来自 taskId 的前 8 位十六进制字符：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">jitterFrac</span>(<span class="hljs-params"><span class="hljs-attr">taskId</span>: <span class="hljs-built_in">string</span></span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">const</span> frac = <span class="hljs-built_in">parseInt</span>(taskId.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-number">8</span>), <span class="hljs-number">16</span>) / <span class="hljs-number">0x1_0000_0000</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Number</span>.<span class="hljs-built_in">isFinite</span>(frac) ? frac : <span class="hljs-number">0</span>
+}
+</code></pre>
+<p><strong>周期性任务</strong>的正向抖动：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">jitteredNextCronRunMs</span>(<span class="hljs-params">
+  <span class="hljs-attr">cron</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">fromMs</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">taskId</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">cfg</span>: <span class="hljs-title class_">CronJitterConfig</span> = DEFAULT_CRON_JITTER_CONFIG,
+</span>): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+  <span class="hljs-keyword">const</span> t1 = <span class="hljs-title function_">nextCronRunMs</span>(cron, fromMs)
+  <span class="hljs-keyword">if</span> (t1 === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  <span class="hljs-keyword">const</span> t2 = <span class="hljs-title function_">nextCronRunMs</span>(cron, t1)
+  <span class="hljs-keyword">if</span> (t2 === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> t1
+  <span class="hljs-comment">// 抖动 = min(taskId分数 * 10% * 周期间隔, 15分钟)</span>
+  <span class="hljs-keyword">const</span> jitter = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(
+    <span class="hljs-title function_">jitterFrac</span>(taskId) * cfg.<span class="hljs-property">recurringFrac</span> * (t2 - t1),
+    cfg.<span class="hljs-property">recurringCapMs</span>,
+  )
+  <span class="hljs-keyword">return</span> t1 + jitter
+}
+</code></pre>
+<p>每小时任务的抖动范围是 [0, 6分钟)，每分钟任务的抖动只有几秒。</p>
+<p><strong>一次性任务</strong>的反向抖动：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">oneShotJitteredNextCronRunMs</span>(<span class="hljs-params">
+  <span class="hljs-attr">cron</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">fromMs</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">taskId</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">cfg</span>: <span class="hljs-title class_">CronJitterConfig</span> = DEFAULT_CRON_JITTER_CONFIG,
+</span>): <span class="hljs-built_in">number</span> | <span class="hljs-literal">null</span> {
+  <span class="hljs-keyword">const</span> t1 = <span class="hljs-title function_">nextCronRunMs</span>(cron, fromMs)
+  <span class="hljs-keyword">if</span> (t1 === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+  <span class="hljs-comment">// 只对整点和半点触发抖动</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(t1).<span class="hljs-title function_">getMinutes</span>() % cfg.<span class="hljs-property">oneShotMinuteMod</span> !== <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> t1
+  <span class="hljs-keyword">const</span> lead = cfg.<span class="hljs-property">oneShotFloorMs</span> +
+    <span class="hljs-title function_">jitterFrac</span>(taskId) * (cfg.<span class="hljs-property">oneShotMaxMs</span> - cfg.<span class="hljs-property">oneShotFloorMs</span>)
+  <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(t1 - lead, fromMs)
+}
+</code></pre>
+<p>一次性任务使用反向抖动（提前执行），因为延迟会破坏"提醒我在3点"的承诺，而提前几十秒用户不会察觉。只在 :00 和 :30 这种"热点"分钟触发抖动。</p>
+<h3 id="1164-gate-控制">11.6.4 Gate 控制</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// src/tools/ScheduleCronTool/prompt.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">isKairosCronEnabled</span>(<span class="hljs-params"></span>): <span class="hljs-built_in">boolean</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">feature</span>(<span class="hljs-string">'AGENT_TRIGGERS'</span>)
+    ? !<span class="hljs-title function_">isEnvTruthy</span>(process.<span class="hljs-property">env</span>.<span class="hljs-property">CLAUDE_CODE_DISABLE_CRON</span>) &amp;&amp;
+        <span class="hljs-title function_">getFeatureValue_CACHED_WITH_REFRESH</span>(
+          <span class="hljs-string">'tengu_kairos_cron'</span>,
+          <span class="hljs-literal">true</span>,           <span class="hljs-comment">// 默认开启</span>
+          <span class="hljs-variable constant_">KAIROS_CRON_REFRESH_MS</span>,  <span class="hljs-comment">// 5 分钟刷新</span>
+        )
+    : <span class="hljs-literal">false</span>
+}
+</code></pre>
+<p>双层 gate：编译时 feature flag（死代码消除）+ 运行时 GrowthBook gate（5 分钟刷新作为紧急关闭开关）。默认值为 <code>true</code> 是因为 <code>/loop</code> 已 GA，Bedrock/Vertex/Foundry 用户无法访问 GrowthBook。</p>
+<h2 id="117-本章小结">11.7 本章小结</h2>
+<p>Claude Code 的扩展体系形成了一个完整的能力注入闭环：</p>
+<ol>
+<li><strong>插件</strong>提供宏观的能力包（skills + hooks + MCP servers），支持启用/禁用切换</li>
+<li><strong>Skills</strong> 是面向模型的"可调用程序"，六种来源、两种执行模式（inline/fork），支持丰富的 frontmatter 配置</li>
+<li><strong>Hooks</strong> 是面向开发者的"事件回调"，27 种事件、4 种类型、三层配置合并、三种匹配模式</li>
+<li><strong>MCP</strong> 工具通过模板模式批量生成，将外部能力无缝接入</li>
+<li><strong>Cron</strong> 调度为异步任务提供了内存/持久双模式和精巧的抖动设计</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="第10章-团队协作与远程通信.html" class="navigation navigation-prev " aria-label="Previous page: 第10章 - 团队协作与远程通信">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="第12章-状态管理安全模型与基础设施.html" class="navigation navigation-next " aria-label="Next page: 第12章 - 状态管理、安全模型与基础设施">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第11章 - 插件、Skills与Hook系统","level":"6.1","depth":1,"next":{"title":"第12章 - 状态管理、安全模型与基础设施","level":"6.2","depth":1,"path":"第12章-状态管理安全模型与基础设施.md","ref":"第12章-状态管理安全模型与基础设施.md","articles":[]},"previous":{"title":"第10章 - 团队协作与远程通信","level":"5.2","depth":1,"path":"第10章-团队协作与远程通信.md","ref":"第10章-团队协作与远程通信.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"第11章-插件Skills与Hook系统.md","mtime":"2026-04-01T01:41:58.471Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

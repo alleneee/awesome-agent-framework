@@ -1,0 +1,424 @@
+# 第1章 项目概述与架构全景
+
+## 1.1 项目定位
+
+Claude Code 是 Anthropic 官方推出的命令行 AI 编程助手，版本 2.1.88。它直接运行在终端中，让开发者通过自然语言与 Claude 模型交互，执行代码编辑、文件操作、Shell 命令等任务。
+
+本书分析的源码来自 npm 包 `@anthropic-ai/claude-code` 的 source map 还原，包含 1908 个 TypeScript/TSX 源文件，共计约 13.3 万行代码。构建产物为单文件 `dist/cli.js`，约 21MB。
+
+## 1.2 技术选型
+
+### 1.2.1 运行时与构建：Bun
+
+项目使用 Bun 同时承担两个角色：
+
+- **依赖管理**：`bun install` 替代 npm/yarn
+- **构建打包**：`bun run build.ts` 使用 Bun 内置 bundler
+
+选择 Bun 的核心原因是其 bundler 支持 `bun:bundle` 虚拟模块，这是整个 feature flag 编译消除体系的基础。源码中大量出现：
+
+```typescript
+// src/entrypoints/cli.tsx 第1行
+import { feature } from 'bun:bundle';
+```
+
+`feature()` 函数在编译期被替换为布尔常量，使得未启用的功能代码被 tree-shaking 彻底消除。
+
+### 1.2.2 终端 UI：Ink + React
+
+项目使用 Ink（基于 React 的终端 UI 框架）构建交互界面。`src/ink/` 目录包含 52 个文件，是一套自研的终端渲染引擎。核心依赖：
+
+```json
+// package.json 第75-76行、第84行
+"ink": "*",
+"react": "*",
+"react-reconciler": "*",
+```
+
+React 的组件模型用于构建 REPL 界面——输入框、消息列表、状态栏等都是 React 组件，通过 Ink 渲染到终端。
+
+### 1.2.3 CLI 框架：Commander
+
+```json
+// package.json 第21行
+"@commander-js/extra-typings": "*",
+"commander": "*",
+```
+
+Commander 处理所有命令行参数解析。项目使用了 `@commander-js/extra-typings` 获得完整的 TypeScript 类型推导。值得注意的是，`postinstall.js` 会修补 Commander 的短选项正则，允许多字符短选项如 `-d2e`。
+
+### 1.2.4 数据校验：Zod
+
+```json
+// package.json 第105-106行
+"zod": "*",
+"zod-to-json-schema": "*",
+```
+
+Zod 在整个项目中用于运行时类型校验——配置文件解析、API 响应验证、工具输入参数校验等。`zod-to-json-schema` 将 Zod schema 转换为 JSON Schema 供 LLM 的结构化输出使用。
+
+### 1.2.5 AI SDK 与云服务
+
+```json
+// package.json 第14-18行
+"@anthropic-ai/sdk": "*",
+"@aws-crypto/sha256-js": "^5.2.0",
+"@aws-sdk/client-bedrock": "^3.1020.0",
+"@aws-sdk/client-bedrock-runtime": "*",
+"@aws-sdk/client-sts": "^3.1020.0",
+```
+
+支持三种 Claude API 接入方式：
+
+- **Anthropic 直连**：`@anthropic-ai/sdk`
+- **AWS Bedrock**：`@aws-sdk/client-bedrock*` + `@smithy/*`
+- **Google Vertex AI**：`google-auth-library`（运行时按需加载）
+
+Bedrock 和 Vertex SDK 在 `build.ts` 中被标记为 `external`，不打包进产物：
+
+```typescript
+// build.ts 第122-127行
+external: [
+  '*.node',
+  'sharp',
+  '@img/*',
+  '@anthropic-ai/bedrock-sdk',
+  '@anthropic-ai/vertex-sdk',
+  '@anthropic-ai/foundry-sdk',
+],
+```
+
+### 1.2.6 其他关键依赖
+
+| 依赖 | 用途 |
+|------|------|
+| `chalk` | 终端颜色输出 |
+| `chokidar` | 文件系统监听（设置热更新、技能变化检测） |
+| `diff` | 文件差异计算（编辑预览） |
+| `fuse.js` | 模糊搜索（会话恢复、命令匹配） |
+| `highlight.js` | 代码语法高亮 |
+| `marked` | Markdown 渲染 |
+| `ws` | WebSocket 通信（IDE 桥接、远程会话） |
+| `execa` | 子进程管理（Bash 工具） |
+| `ignore` | .gitignore 规则解析 |
+| `lru-cache` | 内存缓存（API 响应、文件内容） |
+| `@modelcontextprotocol/sdk` | MCP 协议支持 |
+| `@growthbook/growthbook` | Feature flag 远程评估（运行时灰度） |
+| `@opentelemetry/*` | 可观测性（metrics/traces/logs） |
+
+## 1.3 整体架构分层
+
+```
++------------------------------------------------------------------+
+|                         CLI 入口层                                 |
+|  src/entrypoints/cli.tsx  -- 快速路径分发                          |
+|  src/main.tsx             -- Commander 配置 + 主流程编排            |
++------------------------------------------------------------------+
+|                        会话管理层                                   |
+|  src/setup.ts             -- 会话级初始化                           |
+|  src/entrypoints/init.ts  -- 全局单次初始化 (memoized)              |
+|  src/bootstrap/state.ts   -- 全局状态单例 (1758行)                  |
++------------------------------------------------------------------+
+|                        UI 渲染层                                    |
+|  src/ink/                 -- 自研终端渲染引擎 (52文件)               |
+|  src/components/          -- React 终端组件 (146文件)               |
+|  src/screens/             -- 页面组件 (REPL, 设置等)                |
+|  src/keybindings/         -- 键盘快捷键绑定                         |
+|  src/vim/                 -- Vim 模式支持                           |
++------------------------------------------------------------------+
+|                        核心引擎层                                   |
+|  src/QueryEngine.ts       -- 查询引擎 (API 调用编排)               |
+|  src/query.ts             -- 查询构建与响应处理                     |
+|  src/Tool.ts              -- 工具类型系统                           |
+|  src/tools/               -- 工具实现 (49文件: Bash,Edit,Read等)    |
+|  src/tools.ts             -- 工具注册与发现                         |
++------------------------------------------------------------------+
+|                        服务层                                       |
+|  src/services/analytics/  -- 分析与遥测                             |
+|  src/services/mcp/        -- MCP 协议客户端                         |
+|  src/services/api/        -- API 通信                              |
+|  src/services/lsp/        -- LSP 服务管理                          |
+|  src/services/policyLimits/ -- 企业策略限制                         |
++------------------------------------------------------------------+
+|                        上下文与状态                                  |
+|  src/context.ts           -- 系统/用户上下文构建                    |
+|  src/context/             -- 上下文管理器 (11文件)                  |
+|  src/state/               -- 应用状态存储 (8文件)                   |
+|  src/constants/           -- 系统提示词、产品常量 (23文件)           |
++------------------------------------------------------------------+
+|                        扩展层                                       |
+|  src/commands/            -- 斜杠命令 (105文件)                     |
+|  src/skills/              -- 技能系统                               |
+|  src/plugins/             -- 插件系统                               |
+|  src/hooks/               -- 生命周期钩子 (87文件)                  |
++------------------------------------------------------------------+
+|                        基础设施                                     |
+|  src/utils/               -- 工具函数 (332文件)                     |
+|  src/types/               -- 类型定义                               |
+|  src/migrations/          -- 配置迁移                               |
+|  src/bridge/              -- IDE 桥接 (33文件)                      |
++------------------------------------------------------------------+
+```
+
+## 1.4 目录结构与模块职责
+
+### 1.4.1 src/ 顶层文件
+
+| 文件 | 行数 | 职责 |
+|------|------|------|
+| `main.tsx` | 4683 | 主入口，Commander 配置，交互/非交互分流 |
+| `setup.ts` | 477 | 会话级初始化（Node 版本检查、worktree、hooks） |
+| `QueryEngine.ts` | ~1200 | API 调用编排，消息管理，工具执行循环 |
+| `query.ts` | ~1200 | 查询构建、流式响应处理 |
+| `Tool.ts` | ~700 | 工具基类型定义、权限模型 |
+| `tools.ts` | ~420 | 工具注册表，内置工具集合 |
+| `commands.ts` | ~610 | 斜杠命令注册与分发 |
+| `context.ts` | ~160 | 系统提示词上下文构建 |
+| `interactiveHelpers.tsx` | ~1400 | 交互式 UI 辅助（设置屏幕、错误展示） |
+| `history.ts` | ~340 | 会话历史管理 |
+| `cost-tracker.ts` | ~260 | API 调用费用追踪 |
+
+### 1.4.2 关键子目录
+
+**src/entrypoints/** (8文件)
+构建入口点和初始化逻辑。`cli.tsx` 是 Bun bundler 的唯一入口。`init.ts` 包含 memoized 的全局初始化函数。`sdk/` 子目录提供 Agent SDK 的 TypeScript/Python 入口。
+
+**src/bootstrap/** (1文件)
+`state.ts` 是 1758 行的全局状态单例。定义了 `State` 类型和所有 getter/setter。整个应用的运行时状态都存储在这个模块级变量中。
+
+**src/tools/** (49文件)
+每个工具一个目录/文件。核心工具包括 `BashTool`（Shell 命令执行）、`EditTool`（文件编辑）、`ReadTool`（文件读取）、`AgentTool`（子代理）、`GlobTool`/`GrepTool`（搜索）等。
+
+**src/services/** (39文件)
+业务逻辑服务层。包含 API 通信、MCP 协议、分析遥测、远程设置、策略限制等。
+
+**src/utils/** (332文件)
+最庞大的目录，包含所有工具函数。涵盖认证、Git 操作、文件系统、权限管理、代理配置、模型选择等。
+
+**src/commands/** (105文件)
+斜杠命令实现。如 `/compact`、`/resume`、`/share`、`/mcp`、`/plugin` 等用户可在 REPL 中输入的命令。
+
+**src/components/** (146文件)
+React 终端 UI 组件。消息气泡、输入框、进度条、权限对话框、设置页面等。
+
+**src/hooks/** (87文件)
+生命周期钩子系统。支持 `SessionStart`、`PreToolUse`、`PostToolUse`、`Notification` 等钩子事件。
+
+## 1.5 代码规模统计
+
+| 指标 | 数值 |
+|------|------|
+| TypeScript/TSX 源文件数 | 1,908 |
+| 源码总行数 | ~132,673 |
+| 子目录数量 | 35 |
+| 构建产物大小 | ~21 MB |
+| Feature flags 数量 | 90 |
+| npm 依赖数量 | 93 (dependencies) + 4 (devDependencies) |
+| 最大单文件 | main.tsx (4,683 行) |
+
+## 1.6 核心设计理念
+
+### 1.6.1 Feature Flags 编译消除
+
+这是整个项目最重要的架构决策之一。`build.ts` 定义了 90 个 feature flag：
+
+```typescript
+// build.ts 第10-100行
+const featureFlags: Record<string, boolean> = {
+  ABLATION_BASELINE: false,
+  AGENT_MEMORY_SNAPSHOT: false,
+  AGENT_TRIGGERS: false,
+  // ... 87 个 flag ...
+  BUILTIN_EXPLORE_PLAN_AGENTS: true,
+  COMPACTION_REMINDERS: true,
+  MCP_SKILLS: true,
+  TOKEN_BUDGET: true,
+  // 仅 4 个为 true，其余全部 false
+}
+```
+
+构建时，`bun-bundle-feature-shim` 插件拦截 `import { feature } from 'bun:bundle'`，将 `feature('FLAG_NAME')` 替换为编译期常量。当结果为 `false` 时，整个 `if (feature('FLAG_NAME'))` 代码块被 dead code elimination 移除。
+
+这意味着外部构建（即本源码）只包含 4 个启用的功能，大量 Anthropic 内部功能（DAEMON、BRIDGE_MODE、VOICE_MODE 等）的代码在编译后完全不存在。
+
+### 1.6.2 动态 import 延迟加载
+
+源码大量使用 `await import(...)` 实现按需加载。这是一个性能优化策略——在 CLI 工具中，不同的子命令/路径使用不同的模块，提前加载全部模块会严重拖慢启动速度。
+
+典型模式来自 `cli.tsx`：
+
+```typescript
+// src/entrypoints/cli.tsx 第45-48行
+const {
+  profileCheckpoint
+} = await import('../utils/startupProfiler.js');
+profileCheckpoint('cli_entry');
+```
+
+`--version` 快速路径甚至不需要任何 import，直接使用编译期内联的 `MACRO.VERSION`：
+
+```typescript
+// src/entrypoints/cli.tsx 第37-42行
+if (args.length === 1 && (args[0] === '--version' || args[0] === '-v')) {
+  console.log(`${MACRO.VERSION} (Claude Code)`);
+  return;
+}
+```
+
+### 1.6.3 全局状态单例
+
+`src/bootstrap/state.ts` 是整个应用的状态中枢。它用模块级变量存储一个巨大的 `State` 对象（约 90 个字段），然后导出精细的 getter/setter 函数。
+
+```typescript
+// src/bootstrap/state.ts 第260-278行
+function getInitialState(): State {
+  let resolvedCwd = ''
+  if (
+    typeof process !== 'undefined' &&
+    typeof process.cwd === 'function' &&
+    typeof realpathSync === 'function'
+  ) {
+    const rawCwd = cwd()
+    try {
+      resolvedCwd = realpathSync(rawCwd).normalize('NFC')
+    } catch {
+      resolvedCwd = rawCwd.normalize('NFC')
+    }
+  }
+  const state: State = {
+    originalCwd: resolvedCwd,
+    projectRoot: resolvedCwd,
+    totalCostUSD: 0,
+    // ... ~70 个字段的初始值 ...
+    sessionId: randomUUID() as SessionId,
+    // ...
+  }
+  return state
+}
+```
+
+状态包含：会话标识、工作目录、费用统计、模型配置、遥测指标、API 请求缓存、插件状态、权限模式等。源码顶部有一条警告注释：
+
+```typescript
+// src/bootstrap/state.ts 第31行
+// DO NOT ADD MORE STATE HERE - BE JUDICIOUS WITH GLOBAL STATE
+```
+
+然而这个文件依然有 1758 行，说明全局状态在实践中不断增长。
+
+### 1.6.4 Memoized 初始化
+
+`init()` 函数使用 lodash 的 `memoize` 包装，确保全局只执行一次：
+
+```typescript
+// src/entrypoints/init.ts 第57行
+export const init = memoize(async (): Promise<void> => {
+  // 配置启用、环境变量、网络代理、mTLS、清理注册...
+})
+```
+
+这与 `setup()` 形成分层：`init()` 是进程级一次性初始化（配置系统、网络代理、优雅退出），`setup()` 是会话级初始化（工作目录、hooks、插件预取）。
+
+### 1.6.5 顶层副作用 (Top-Level Side Effects)
+
+`main.tsx` 在模块评估阶段就执行关键操作：
+
+```typescript
+// src/main.tsx 第9-20行
+import { profileCheckpoint, profileReport } from './utils/startupProfiler.js';
+profileCheckpoint('main_tsx_entry');
+import { startMdmRawRead } from './utils/settings/mdm/rawRead.js';
+startMdmRawRead();
+import { startKeychainPrefetch } from './utils/secureStorage/keychainPrefetch.js';
+startKeychainPrefetch();
+```
+
+这三个顶层副作用在 import 语句之间穿插执行，目的是让 MDM 设置读取和 Keychain 预取的子进程在剩余 ~135ms 的模块加载期间并行运行。这是一种极致的启动性能优化手法。
+
+## 1.7 构建系统概览
+
+`build.ts` 使用 Bun bundler 将整个 TypeScript 项目编译为单文件。关键配置：
+
+```typescript
+// build.ts 第102-127行
+const result = await Bun.build({
+  entrypoints: ['./src/entrypoints/cli.tsx'],
+  outdir: './dist',
+  target: 'node',
+  format: 'esm',
+  sourcemap: 'linked',
+  minify: false,
+  define: {
+    'MACRO.VERSION': JSON.stringify(VERSION),
+    'MACRO.BUILD_TIME': JSON.stringify(BUILD_TIME),
+    // ...
+    'Bun.env.NODE_ENV': JSON.stringify('production'),
+  },
+  external: ['*.node', 'sharp', '@img/*', ...],
+  plugins: [/* bun-bundle-feature-shim, text-file-loader */],
+})
+```
+
+- `target: 'node'`：产物面向 Node.js 运行时（不是浏览器或 Bun）
+- `format: 'esm'`：ES Module 格式
+- `minify: false`：不压缩，保持可读性
+- `sourcemap: 'linked'`：生成独立 source map 文件
+- `define`：编译期常量替换（MACRO.* 和 Bun.env.NODE_ENV）
+
+构建成功后，脚本会在产物头部添加 shebang 并设置可执行权限：
+
+```typescript
+// build.ts 第179-185行
+const content = await fs.readFile(outFile, 'utf-8')
+if (!content.startsWith('#!/')) {
+  await fs.writeFile(outFile, `#!/usr/bin/env node\n${content}`)
+}
+await fs.chmod(outFile, 0o755)
+```
+
+## 1.8 TypeScript 编译配置
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": false,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"]
+    },
+    "types": ["bun-types", "node"]
+  },
+  "include": ["src/**/*", "vendor/**/*", "build.ts"]
+}
+```
+
+逐项解读：
+
+- `target/module: "ESNext"`：使用最新 ES 特性，不降级编译
+- `moduleResolution: "bundler"`：匹配 Bun bundler 的模块解析策略
+- `jsx: "react-jsx"` + `jsxImportSource: "react"`：自动导入 React JSX 运行时（不需要每个文件手写 `import React`）
+- `strict: false`：关闭严格类型检查。对于 13 万行的还原代码，开启 strict 会产生大量类型错误
+- `allowImportingTsExtensions: true`：允许 import 路径带 `.ts`/`.tsx` 后缀
+- `noEmit: true`：TypeScript 只做类型检查，不产出 JS（交给 Bun bundler 处理）
+- `paths: { "src/*": ["./src/*"] }`：路径别名，允许 `import xxx from 'src/utils/...'` 风格的绝对路径导入
+- `types: ["bun-types", "node"]`：同时提供 Bun 和 Node.js 的全局类型
+
+## 1.9 本章总结
+
+Claude Code v2.1.88 是一个大规模的 TypeScript CLI 应用（~13 万行），采用 Bun 构建、React/Ink 渲染终端 UI、Commander 解析命令行参数。其架构的核心特征包括：
+
+1. **编译期 feature flag**：90 个开关控制功能裁剪，外部构建仅保留 4 个
+2. **极致的启动优化**：顶层副作用并行化、动态 import 延迟加载、memoized 初始化
+3. **全局状态单例**：`bootstrap/state.ts` 集中管理 ~90 个运行时状态字段
+4. **单文件产出**：整个项目打包为一个 ~21MB 的 `cli.js`
+5. **多云支持**：Anthropic 直连 + AWS Bedrock + Google Vertex AI，按需加载对应 SDK

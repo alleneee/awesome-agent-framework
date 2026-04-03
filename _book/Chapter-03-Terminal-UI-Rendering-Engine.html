@@ -1,0 +1,1460 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>Chapter 03 - Terminal UI Rendering Engine · Claude Code 源码深度教学指南</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.1.7">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Chapter-04-Event-System-and-Input-Handling.html" />
+    
+    
+    <link rel="prev" href="Chapter-02-Build-System-and-Startup-Flow.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">第一部分：基础架构</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="第01章-项目概述与架构全景.html">
+            
+                <a href="第01章-项目概述与架构全景.html">
+            
+                    
+                    第1章 - 项目概述与架构全景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="第02章-构建系统与启动流程.html">
+            
+                <a href="第02章-构建系统与启动流程.html">
+            
+                    
+                    第2章 - 构建系统与启动流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第二部分：终端 UI 层</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="第03章-终端UI渲染引擎.html">
+            
+                <a href="第03章-终端UI渲染引擎.html">
+            
+                    
+                    第3章 - 终端UI渲染引擎
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="第04章-事件系统与输入处理.html">
+            
+                <a href="第04章-事件系统与输入处理.html">
+            
+                    
+                    第4章 - 事件系统与输入处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第三部分：核心 AI 引擎</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="第05章-核心对话引擎QueryEngine.html">
+            
+                <a href="第05章-核心对话引擎QueryEngine.html">
+            
+                    
+                    第5章 - 核心对话引擎 QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="第06章-LLM-API调用与流式处理.html">
+            
+                <a href="第06章-LLM-API调用与流式处理.html">
+            
+                    
+                    第6章 - LLM API 调用与流式处理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="第08章-上下文管理与压缩策略.html">
+            
+                <a href="第08章-上下文管理与压缩策略.html">
+            
+                    
+                    第8章 - 上下文管理与压缩策略
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第四部分：工具生态</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="第07章-工具系统架构与实现.html">
+            
+                <a href="第07章-工具系统架构与实现.html">
+            
+                    
+                    第7章 - 工具系统架构与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第五部分：Agent 与任务</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="第09章-任务系统与多Agent架构.html">
+            
+                <a href="第09章-任务系统与多Agent架构.html">
+            
+                    
+                    第9章 - 任务系统与多Agent架构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="第10章-团队协作与远程通信.html">
+            
+                <a href="第10章-团队协作与远程通信.html">
+            
+                    
+                    第10章 - 团队协作与远程通信
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">第六部分：扩展与基础设施</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="第11章-插件Skills与Hook系统.html">
+            
+                <a href="第11章-插件Skills与Hook系统.html">
+            
+                    
+                    第11章 - 插件、Skills与Hook系统
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="第12章-状态管理安全模型与基础设施.html">
+            
+                <a href="第12章-状态管理安全模型与基础设施.html">
+            
+                    
+                    第12章 - 状态管理、安全模型与基础设施
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">附录</li>
+        
+        
+    
+        <li class="chapter " data-level="7.1" data-path="附录A-核心提示词工程全解析.html">
+            
+                <a href="附录A-核心提示词工程全解析.html">
+            
+                    
+                    附录A - 核心提示词工程全解析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">English Chapters</li>
+        
+        
+    
+        <li class="chapter " data-level="8.1" data-path="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                <a href="Chapter-01-Project-Overview-and-Architecture.html">
+            
+                    
+                    Chapter 01 - Project Overview and Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.2" data-path="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html">
+            
+                    
+                    Chapter 02 - Build System and Startup Flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="8.3" data-path="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                <a href="Chapter-03-Terminal-UI-Rendering-Engine.html">
+            
+                    
+                    Chapter 03 - Terminal UI Rendering Engine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.4" data-path="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                <a href="Chapter-04-Event-System-and-Input-Handling.html">
+            
+                    
+                    Chapter 04 - Event System and Input Handling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.5" data-path="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                <a href="Chapter-05-Core-Conversation-Engine-QueryEngine.html">
+            
+                    
+                    Chapter 05 - Core Conversation Engine QueryEngine
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.6" data-path="Chapter-06-LLM-API-and-Streaming.html">
+            
+                <a href="Chapter-06-LLM-API-and-Streaming.html">
+            
+                    
+                    Chapter 06 - LLM API and Streaming
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.7" data-path="Chapter-07-Tool-System-Architecture.html">
+            
+                <a href="Chapter-07-Tool-System-Architecture.html">
+            
+                    
+                    Chapter 07 - Tool System Architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.8" data-path="Chapter-08-Context-Management-and-Compression.html">
+            
+                <a href="Chapter-08-Context-Management-and-Compression.html">
+            
+                    
+                    Chapter 08 - Context Management and Compression
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.9" data-path="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                <a href="Chapter-09-Task-System-and-Multi-Agent.html">
+            
+                    
+                    Chapter 09 - Task System and Multi-Agent
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.10" data-path="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                <a href="Chapter-10-Team-Collaboration-and-Remote-Communication.html">
+            
+                    
+                    Chapter 10 - Team Collaboration and Remote Communication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.11" data-path="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                <a href="Chapter-11-Plugin-Skills-and-Hook-System.html">
+            
+                    
+                    Chapter 11 - Plugin Skills and Hook System
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="8.12" data-path="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                <a href="Chapter-12-State-Security-and-Infrastructure.html">
+            
+                    
+                    Chapter 12 - State Security and Infrastructure
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >Chapter 03 - Terminal UI Rendering Engine</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="第3章-终端ui渲染引擎">第3章 终端UI渲染引擎</h1>
+<p>Claude Code 并未直接使用社区版 Ink 框架，而是在其基础上构建了一套完整的终端 UI 渲染引擎。该引擎包含自定义 React reconciler、轻量 DOM 模型、Yoga 布局适配层、帧调度机制和双缓冲 diff 渲染算法。本章将逐层剖析这些子系统的设计与实现。</p>
+<h2 id="31-架构总览">3.1 架构总览</h2>
+<p>渲染管线从 React 组件树到终端像素的完整路径如下：</p>
+<pre><code>React 组件 → reconciler → DOM 树 → Yoga 布局 → Screen Buffer → Diff → 终端输出
+</code></pre><p>涉及的核心源码文件：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/ink/reconciler.ts</code></td>
+<td>自定义 React reconciler host config</td>
+</tr>
+<tr>
+<td><code>src/ink/dom.ts</code></td>
+<td>轻量 DOM 模型 (DOMElement / TextNode)</td>
+</tr>
+<tr>
+<td><code>src/ink/layout/node.ts</code></td>
+<td>LayoutNode 抽象接口</td>
+</tr>
+<tr>
+<td><code>src/ink/layout/yoga.ts</code></td>
+<td>Yoga 适配器实现</td>
+</tr>
+<tr>
+<td><code>src/ink/layout/engine.ts</code></td>
+<td>布局节点工厂</td>
+</tr>
+<tr>
+<td><code>src/ink/screen.ts</code></td>
+<td>Screen buffer 与 packed bitmap 格式</td>
+</tr>
+<tr>
+<td><code>src/ink/ink.tsx</code></td>
+<td>Ink 主类：帧调度、双缓冲、渲染循环</td>
+</tr>
+<tr>
+<td><code>src/ink/renderer.ts</code></td>
+<td>渲染器：DOM 树 → Screen buffer</td>
+</tr>
+<tr>
+<td><code>src/ink/log-update.ts</code></td>
+<td>Diff 引擎：双缓冲比较与终端输出</td>
+</tr>
+<tr>
+<td><code>src/ink/constants.ts</code></td>
+<td>帧间隔常量</td>
+</tr>
+</tbody>
+</table>
+<h2 id="32-为什么要自定义-react-reconciler">3.2 为什么要自定义 React Reconciler</h2>
+<p>社区版 Ink 使用 react-reconciler 构建了一个终端渲染器，但 Claude Code 对其进行了深度重写。主要原因包括：</p>
+<ol>
+<li><strong>W3C 事件模型</strong>：Claude Code 需要捕获/冒泡事件分发，社区版 Ink 只有扁平的 EventEmitter。</li>
+<li><strong>React 19 适配</strong>：reconciler 需要实现 <code>commitUpdate</code> 直接接收新旧 props（而非 updatePayload），以及 <code>maySuspendCommit</code> 等新方法。</li>
+<li><strong>性能优先的 dirty 标记</strong>：通过 <code>markDirty</code> 和 <code>stylesEqual</code> 等机制减少不必要的 Yoga 重新测量。</li>
+<li><strong>与 Dispatcher 集成</strong>：reconciler 的优先级系统（<code>getCurrentUpdatePriority</code> / <code>resolveUpdatePriority</code>）直接委托给自定义的 <code>Dispatcher</code>。</li>
+<li><strong>调试能力</strong>：通过 <code>getOwnerChain</code> 追踪组件栈用于 repaint 归因。</li>
+</ol>
+<h2 id="33-reconciler-host-config-关键实现">3.3 Reconciler Host Config 关键实现</h2>
+<p>源码位于 <code>src/ink/reconciler.ts</code>。整个 reconciler 通过 <code>createReconciler</code> 创建，类型参数指定了宿主环境的类型映射：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> reconciler = createReconciler&lt;
+  <span class="hljs-title class_">ElementNames</span>,    <span class="hljs-comment">// 宿主元素类型名</span>
+  <span class="hljs-title class_">Props</span>,           <span class="hljs-comment">// props 对象类型</span>
+  <span class="hljs-title class_">DOMElement</span>,      <span class="hljs-comment">// 容器类型</span>
+  <span class="hljs-title class_">DOMElement</span>,      <span class="hljs-comment">// 实例类型</span>
+  <span class="hljs-title class_">TextNode</span>,        <span class="hljs-comment">// 文本实例类型</span>
+  <span class="hljs-title class_">DOMElement</span>,      <span class="hljs-comment">// 挂起实例类型</span>
+  <span class="hljs-built_in">unknown</span>,         <span class="hljs-comment">// 公共实例类型</span>
+  <span class="hljs-built_in">unknown</span>,         <span class="hljs-comment">// 水合实例类型</span>
+  <span class="hljs-title class_">DOMElement</span>,      <span class="hljs-comment">// HostContext 持有者</span>
+  <span class="hljs-title class_">HostContext</span>,     <span class="hljs-comment">// 宿主上下文</span>
+  <span class="hljs-literal">null</span>,            <span class="hljs-comment">// UpdatePayload - React 19 不再使用</span>
+  <span class="hljs-title class_">NodeJS</span>.<span class="hljs-property">Timeout</span>,  <span class="hljs-comment">// setTimeout 返回类型</span>
+  -<span class="hljs-number">1</span>,              <span class="hljs-comment">// noTimeout 哨兵值</span>
+  <span class="hljs-literal">null</span>             <span class="hljs-comment">// 过渡状态</span>
+&gt;({
+  <span class="hljs-comment">// ... host config 方法</span>
+})
+</code></pre>
+<h3 id="331-createinstance----创建宿主元素">3.3.1 createInstance -- 创建宿主元素</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">createInstance</span>(
+  <span class="hljs-attr">originalType</span>: <span class="hljs-title class_">ElementNames</span>,
+  <span class="hljs-attr">newProps</span>: <span class="hljs-title class_">Props</span>,
+  <span class="hljs-attr">_root</span>: <span class="hljs-title class_">DOMElement</span>,
+  <span class="hljs-attr">hostContext</span>: <span class="hljs-title class_">HostContext</span>,
+  <span class="hljs-attr">internalHandle</span>?: <span class="hljs-built_in">unknown</span>,
+): <span class="hljs-title class_">DOMElement</span> {
+  <span class="hljs-keyword">if</span> (hostContext.<span class="hljs-property">isInsideText</span> &amp;&amp; originalType === <span class="hljs-string">'ink-box'</span>) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">`&lt;Box&gt; can't be nested inside &lt;Text&gt; component`</span>)
+  }
+
+  <span class="hljs-keyword">const</span> <span class="hljs-keyword">type</span> =
+    originalType === <span class="hljs-string">'ink-text'</span> &amp;&amp; hostContext.<span class="hljs-property">isInsideText</span>
+      ? <span class="hljs-string">'ink-virtual-text'</span>
+      : originalType
+
+  <span class="hljs-keyword">const</span> node = <span class="hljs-title function_">createNode</span>(<span class="hljs-keyword">type</span>)
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">COMMIT_LOG</span>) _createCount++
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(newProps)) {
+    <span class="hljs-title function_">applyProp</span>(node, key, value)
+  }
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isDebugRepaintsEnabled</span>()) {
+    node.<span class="hljs-property">debugOwnerChain</span> = <span class="hljs-title function_">getOwnerChain</span>(internalHandle)
+  }
+
+  <span class="hljs-keyword">return</span> node
+}
+</code></pre>
+<p>核心逻辑：</p>
+<ul>
+<li><strong>类型降级</strong>：当 <code>ink-text</code> 嵌套在文本上下文中时，自动降级为 <code>ink-virtual-text</code>。<code>ink-virtual-text</code> 不创建 Yoga 节点，因为它不参与布局计算，只是文本内容的容器。</li>
+<li><strong>props 应用</strong>：遍历所有 props 调用 <code>applyProp</code>，区分 <code>style</code>、<code>textStyles</code>、事件处理器和普通属性四种情况。</li>
+<li><strong>调试追踪</strong>：当环境变量 <code>CLAUDE_CODE_DEBUG_REPAINTS</code> 开启时，通过 React Fiber 的 <code>_debugOwner</code> 链追踪组件栈。</li>
+</ul>
+<h3 id="332-createtextinstance----创建文本节点">3.3.2 createTextInstance -- 创建文本节点</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">createTextInstance</span>(
+  <span class="hljs-attr">text</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">_root</span>: <span class="hljs-title class_">DOMElement</span>,
+  <span class="hljs-attr">hostContext</span>: <span class="hljs-title class_">HostContext</span>,
+): <span class="hljs-title class_">TextNode</span> {
+  <span class="hljs-keyword">if</span> (!hostContext.<span class="hljs-property">isInsideText</span>) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(
+      <span class="hljs-string">`Text string "<span class="hljs-subst">${text}</span>" must be rendered inside &lt;Text&gt; component`</span>,
+    )
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createTextNode</span>(text)
+}
+</code></pre>
+<p>强制要求纯文本必须在 <code>&lt;Text&gt;</code> 组件内部渲染，这是 Ink 对终端渲染的约束——裸文本没有样式信息，无法确定如何着色。</p>
+<h3 id="333-commitupdate----react-19-的-props-diff">3.3.3 commitUpdate -- React 19 的 props diff</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">commitUpdate</span>(
+  <span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span>,
+  <span class="hljs-attr">_type</span>: <span class="hljs-title class_">ElementNames</span>,
+  <span class="hljs-attr">oldProps</span>: <span class="hljs-title class_">Props</span>,
+  <span class="hljs-attr">newProps</span>: <span class="hljs-title class_">Props</span>,
+): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> props = <span class="hljs-title function_">diff</span>(oldProps, newProps)
+  <span class="hljs-keyword">const</span> style = <span class="hljs-title function_">diff</span>(oldProps[<span class="hljs-string">'style'</span>] <span class="hljs-keyword">as</span> <span class="hljs-title class_">Styles</span>, newProps[<span class="hljs-string">'style'</span>] <span class="hljs-keyword">as</span> <span class="hljs-title class_">Styles</span>)
+
+  <span class="hljs-keyword">if</span> (props) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(props)) {
+      <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'style'</span>) {
+        <span class="hljs-title function_">setStyle</span>(node, value <span class="hljs-keyword">as</span> <span class="hljs-title class_">Styles</span>)
+        <span class="hljs-keyword">continue</span>
+      }
+      <span class="hljs-keyword">if</span> (key === <span class="hljs-string">'textStyles'</span>) {
+        <span class="hljs-title function_">setTextStyles</span>(node, value <span class="hljs-keyword">as</span> <span class="hljs-title class_">TextStyles</span>)
+        <span class="hljs-keyword">continue</span>
+      }
+      <span class="hljs-keyword">if</span> (<span class="hljs-variable constant_">EVENT_HANDLER_PROPS</span>.<span class="hljs-title function_">has</span>(key)) {
+        <span class="hljs-title function_">setEventHandler</span>(node, key, value)
+        <span class="hljs-keyword">continue</span>
+      }
+      <span class="hljs-title function_">setAttribute</span>(node, key, value <span class="hljs-keyword">as</span> <span class="hljs-title class_">DOMNodeAttribute</span>)
+    }
+  }
+
+  <span class="hljs-keyword">if</span> (style &amp;&amp; node.<span class="hljs-property">yogaNode</span>) {
+    <span class="hljs-title function_">applyStyles</span>(node.<span class="hljs-property">yogaNode</span>, style, newProps[<span class="hljs-string">'style'</span>] <span class="hljs-keyword">as</span> <span class="hljs-title class_">Styles</span>)
+  }
+}
+</code></pre>
+<p>React 19 重大变化：<code>commitUpdate</code> 直接接收新旧 props，不再使用 <code>prepareUpdate</code> 返回的 <code>updatePayload</code>。这里用 <code>diff</code> 函数做浅比较，只更新实际变化的属性。事件处理器被特殊存储到 <code>_eventHandlers</code> 字段中，避免触发 <code>markDirty</code>��</p>
+<h3 id="334-resetaftercommit----渲染触发点">3.3.4 resetAfterCommit -- 渲染触发点</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">resetAfterCommit</span>(<span class="hljs-params">rootNode</span>) {
+  <span class="hljs-comment">// ... 性能计数省略</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> rootNode.<span class="hljs-property">onComputeLayout</span> === <span class="hljs-string">'function'</span>) {
+    rootNode.<span class="hljs-title function_">onComputeLayout</span>()
+  }
+  <span class="hljs-comment">// 测试环境直接渲染</span>
+  <span class="hljs-keyword">if</span> (process.<span class="hljs-property">env</span>.<span class="hljs-property">NODE_ENV</span> === <span class="hljs-string">'test'</span>) {
+    rootNode.<span class="hljs-property">onImmediateRender</span>?.()
+    <span class="hljs-keyword">return</span>
+  }
+  <span class="hljs-comment">// 生产环境走节流渲染</span>
+  rootNode.<span class="hljs-property">onRender</span>?.()
+}
+</code></pre>
+<p>这是 React reconciler 完成一次 commit 后的回调。两个关键操作：</p>
+<ol>
+<li><strong>布局计算</strong>：调用 <code>onComputeLayout</code> 触发 Yoga 布局，这样后续的 <code>useLayoutEffect</code> 就能拿到新鲜的布局数据。</li>
+<li><strong>渲染调度</strong>：<code>onRender</code> 指向 <code>Ink</code> 类上的 <code>scheduleRender</code>（节流版），而测试环境用 <code>onImmediateRender</code> 同步渲染。</li>
+</ol>
+<h3 id="335-优先级与事件系统集成">3.3.5 优先级与事件系统集成</h3>
+<pre><code class="lang-typescript"><span class="hljs-attr">getCurrentUpdatePriority</span>: <span class="hljs-function">() =&gt;</span> dispatcher.<span class="hljs-property">currentUpdatePriority</span>,
+<span class="hljs-title function_">setCurrentUpdatePriority</span>(<span class="hljs-attr">newPriority</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">void</span> {
+  dispatcher.<span class="hljs-property">currentUpdatePriority</span> = newPriority
+},
+<span class="hljs-title function_">resolveUpdatePriority</span>(): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">return</span> dispatcher.<span class="hljs-title function_">resolveEventPriority</span>()
+},
+<span class="hljs-title function_">resolveEventType</span>(): <span class="hljs-built_in">string</span> | <span class="hljs-literal">null</span> {
+  <span class="hljs-keyword">return</span> dispatcher.<span class="hljs-property">currentEvent</span>?.<span class="hljs-property">type</span> ?? <span class="hljs-literal">null</span>
+},
+<span class="hljs-title function_">resolveEventTimeStamp</span>(): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">return</span> dispatcher.<span class="hljs-property">currentEvent</span>?.<span class="hljs-property">timeStamp</span> ?? -<span class="hljs-number">1.1</span>
+},
+</code></pre>
+<p>reconciler 的优先级系统完全委托给 <code>Dispatcher</code>，后者在事件分发时设置 <code>currentEvent</code>，使得事件驱动的 React 更新能获得正确的调度优先级（discrete / continuous / default）。</p>
+<p>文件末尾的关键连接：</p>
+<pre><code class="lang-typescript">dispatcher.<span class="hljs-property">discreteUpdates</span> = reconciler.<span class="hljs-property">discreteUpdates</span>.<span class="hljs-title function_">bind</span>(reconciler)
+</code></pre>
+<p>这打破了 <code>dispatcher.ts</code> 和 <code>reconciler.ts</code> 之间的循环依赖：Dispatcher 需要 reconciler 的 <code>discreteUpdates</code> 来实现同步优先级分发，但 reconciler 又依赖 Dispatcher 来解析事件优先级。通过延迟注入解决。</p>
+<h2 id="34-dom-模型设计">3.4 DOM 模型设计</h2>
+<p>源码位于 <code>src/ink/dom.ts</code>。这是一个极简的 DOM 模型，不追求浏览器兼容性，只保留终端渲染所需的最小字段集。</p>
+<h3 id="341-domelement-类型定义">3.4.1 DOMElement 类型定义</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">DOMElement</span> = {
+  <span class="hljs-attr">nodeName</span>: <span class="hljs-title class_">ElementNames</span>
+  <span class="hljs-attr">attributes</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">DOMNodeAttribute</span>&gt;
+  <span class="hljs-attr">childNodes</span>: <span class="hljs-title class_">DOMNode</span>[]
+  <span class="hljs-attr">textStyles</span>?: <span class="hljs-title class_">TextStyles</span>
+
+  <span class="hljs-attr">onComputeLayout</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">onRender</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">onImmediateRender</span>?: <span class="hljs-function">() =&gt;</span> <span class="hljs-built_in">void</span>
+  <span class="hljs-attr">hasRenderedContent</span>?: <span class="hljs-built_in">boolean</span>
+
+  <span class="hljs-attr">dirty</span>: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">isHidden</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">_eventHandlers</span>?: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;
+
+  <span class="hljs-attr">scrollTop</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">pendingScrollDelta</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">scrollClampMin</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">scrollClampMax</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">scrollHeight</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">scrollViewportHeight</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">scrollViewportTop</span>?: <span class="hljs-built_in">number</span>
+  <span class="hljs-attr">stickyScroll</span>?: <span class="hljs-built_in">boolean</span>
+  <span class="hljs-attr">scrollAnchor</span>?: { <span class="hljs-attr">el</span>: <span class="hljs-title class_">DOMElement</span>; <span class="hljs-attr">offset</span>: <span class="hljs-built_in">number</span> }
+  <span class="hljs-attr">focusManager</span>?: <span class="hljs-title class_">FocusManager</span>
+
+  <span class="hljs-attr">debugOwnerChain</span>?: <span class="hljs-built_in">string</span>[]
+} &amp; <span class="hljs-title class_">InkNode</span>
+</code></pre>
+<p>各字段职责：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nodeName</code></td>
+<td>元素类型，共7种：<code>ink-root</code>、<code>ink-box</code>、<code>ink-text</code>、<code>ink-virtual-text</code>、<code>ink-link</code>、<code>ink-progress</code>、<code>ink-raw-ansi</code></td>
+</tr>
+<tr>
+<td><code>attributes</code></td>
+<td>普通属性（tabIndex、rawWidth 等）</td>
+</tr>
+<tr>
+<td><code>childNodes</code></td>
+<td>子节点数组（DOMElement 或 TextNode）</td>
+</tr>
+<tr>
+<td><code>dirty</code></td>
+<td>脏标记，标识需要重新渲染</td>
+</tr>
+<tr>
+<td><code>isHidden</code></td>
+<td>reconciler 的 <code>hideInstance</code> 设置，对应 <code>display: none</code></td>
+</tr>
+<tr>
+<td><code>_eventHandlers</code></td>
+<td>事件处理器独立存储，handler 身份变化不触发 markDirty</td>
+</tr>
+<tr>
+<td><code>scrollTop</code> / <code>pendingScrollDelta</code></td>
+<td>滚动状态，renderer 在渲染时读取</td>
+</tr>
+<tr>
+<td><code>stickyScroll</code></td>
+<td>自动跟随底部</td>
+</tr>
+<tr>
+<td><code>scrollAnchor</code></td>
+<td>锚点滚动，渲染时延迟读取元素位置</td>
+</tr>
+<tr>
+<td><code>focusManager</code></td>
+<td>仅 <code>ink-root</code> 持有，子节点通过 <code>parentNode</code> 链到达</td>
+</tr>
+<tr>
+<td><code>debugOwnerChain</code></td>
+<td>调试用组件栈追踪</td>
+</tr>
+</tbody>
+</table>
+<p><code>InkNode</code> 是共享基类：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">InkNode</span> = {
+  <span class="hljs-attr">parentNode</span>: <span class="hljs-title class_">DOMElement</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-attr">yogaNode</span>?: <span class="hljs-title class_">LayoutNode</span>
+  <span class="hljs-attr">style</span>: <span class="hljs-title class_">Styles</span>
+}
+</code></pre>
+<h3 id="342-textnode">3.4.2 TextNode</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">TextNode</span> = {
+  <span class="hljs-attr">nodeName</span>: <span class="hljs-title class_">TextName</span>  <span class="hljs-comment">// '#text'</span>
+  <span class="hljs-attr">nodeValue</span>: <span class="hljs-built_in">string</span>
+} &amp; <span class="hljs-title class_">InkNode</span>
+</code></pre>
+<p>文本节点只有值，没有子节点和属性。但它也有 <code>parentNode</code>、<code>style</code>（继承自祖先）和可选的 <code>yogaNode</code>（通常为 <code>undefined</code>，因为文本节点不直接参与布局）。</p>
+<h3 id="343-节点创建">3.4.3 节点创建</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> createNode = (<span class="hljs-attr">nodeName</span>: <span class="hljs-title class_">ElementNames</span>): <span class="hljs-function"><span class="hljs-params">DOMElement</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> needsYogaNode =
+    nodeName !== <span class="hljs-string">'ink-virtual-text'</span> &amp;&amp;
+    nodeName !== <span class="hljs-string">'ink-link'</span> &amp;&amp;
+    nodeName !== <span class="hljs-string">'ink-progress'</span>
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span> = {
+    nodeName,
+    <span class="hljs-attr">style</span>: {},
+    <span class="hljs-attr">attributes</span>: {},
+    <span class="hljs-attr">childNodes</span>: [],
+    <span class="hljs-attr">parentNode</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">yogaNode</span>: needsYogaNode ? <span class="hljs-title function_">createLayoutNode</span>() : <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">dirty</span>: <span class="hljs-literal">false</span>,
+  }
+
+  <span class="hljs-keyword">if</span> (nodeName === <span class="hljs-string">'ink-text'</span>) {
+    node.<span class="hljs-property">yogaNode</span>?.<span class="hljs-title function_">setMeasureFunc</span>(measureTextNode.<span class="hljs-title function_">bind</span>(<span class="hljs-literal">null</span>, node))
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nodeName === <span class="hljs-string">'ink-raw-ansi'</span>) {
+    node.<span class="hljs-property">yogaNode</span>?.<span class="hljs-title function_">setMeasureFunc</span>(measureRawAnsiNode.<span class="hljs-title function_">bind</span>(<span class="hljs-literal">null</span>, node))
+  }
+
+  <span class="hljs-keyword">return</span> node
+}
+</code></pre>
+<p>关键设计决策：</p>
+<ul>
+<li><code>ink-virtual-text</code>、<code>ink-link</code>、<code>ink-progress</code> 不创建 Yoga 节点，它们不参与布局计算。</li>
+<li><code>ink-text</code> 设置 <code>measureFunc</code> 让 Yoga 能查询文本的固有尺寸。测量函数会考虑文本换行（<code>wrapText</code>）和 tab 扩展（<code>expandTabs</code>）。</li>
+<li><code>ink-raw-ansi</code> 直接从属性读取预计算的尺寸，跳过 <code>stringWidth</code> 计算。</li>
+</ul>
+<h3 id="344-markdirty----脏标记上传">3.4.4 markDirty -- 脏标记上传</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> markDirty = (<span class="hljs-attr">node</span>?: <span class="hljs-title class_">DOMNode</span>): <span class="hljs-function"><span class="hljs-params">void</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">current</span>: <span class="hljs-title class_">DOMNode</span> | <span class="hljs-literal">undefined</span> = node
+  <span class="hljs-keyword">let</span> markedYoga = <span class="hljs-literal">false</span>
+
+  <span class="hljs-keyword">while</span> (current) {
+    <span class="hljs-keyword">if</span> (current.<span class="hljs-property">nodeName</span> !== <span class="hljs-string">'#text'</span>) {
+      ;(current <span class="hljs-keyword">as</span> <span class="hljs-title class_">DOMElement</span>).<span class="hljs-property">dirty</span> = <span class="hljs-literal">true</span>
+      <span class="hljs-keyword">if</span> (
+        !markedYoga &amp;&amp;
+        (current.<span class="hljs-property">nodeName</span> === <span class="hljs-string">'ink-text'</span> ||
+          current.<span class="hljs-property">nodeName</span> === <span class="hljs-string">'ink-raw-ansi'</span>) &amp;&amp;
+        current.<span class="hljs-property">yogaNode</span>
+      ) {
+        current.<span class="hljs-property">yogaNode</span>.<span class="hljs-title function_">markDirty</span>()
+        markedYoga = <span class="hljs-literal">true</span>
+      }
+    }
+    current = current.<span class="hljs-property">parentNode</span>
+  }
+}
+</code></pre>
+<p>从当前节点沿 <code>parentNode</code> 链一路标记 <code>dirty = true</code>，直到根节点。同时，对 <code>ink-text</code> 和 <code>ink-raw-ansi</code> 叶节点调用 Yoga 的 <code>markDirty</code>，触发布局重新测量。这是级联标记——任何属性变更都会将整条祖先链标脏，但 Yoga 的 <code>markDirty</code> 只在叶节点调用一��。</p>
+<h3 id="345-树操作">3.4.5 树操作</h3>
+<p><code>appendChildNode</code> 同时操作 DOM 树和 Yoga 树：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> appendChildNode = (
+  <span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span>,
+  <span class="hljs-attr">childNode</span>: <span class="hljs-title class_">DOMElement</span>,
+): <span class="hljs-function"><span class="hljs-params">void</span> =&gt;</span> {
+  <span class="hljs-keyword">if</span> (childNode.<span class="hljs-property">parentNode</span>) {
+    <span class="hljs-title function_">removeChildNode</span>(childNode.<span class="hljs-property">parentNode</span>, childNode)
+  }
+  childNode.<span class="hljs-property">parentNode</span> = node
+  node.<span class="hljs-property">childNodes</span>.<span class="hljs-title function_">push</span>(childNode)
+  <span class="hljs-keyword">if</span> (childNode.<span class="hljs-property">yogaNode</span>) {
+    node.<span class="hljs-property">yogaNode</span>?.<span class="hljs-title function_">insertChild</span>(
+      childNode.<span class="hljs-property">yogaNode</span>,
+      node.<span class="hljs-property">yogaNode</span>.<span class="hljs-title function_">getChildCount</span>(),
+    )
+  }
+  <span class="hljs-title function_">markDirty</span>(node)
+}
+</code></pre>
+<p><code>insertBeforeNode</code> 需要计算正确的 Yoga 索引，因为某些 DOM 子节点（<code>ink-progress</code>、<code>ink-virtual-text</code>）没有 Yoga 节点，DOM 索引和 Yoga 索引并不一一对应：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">let</span> yogaIndex = <span class="hljs-number">0</span>
+<span class="hljs-keyword">if</span> (newChildNode.<span class="hljs-property">yogaNode</span> &amp;&amp; node.<span class="hljs-property">yogaNode</span>) {
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; index; i++) {
+    <span class="hljs-keyword">if</span> (node.<span class="hljs-property">childNodes</span>[i]?.<span class="hljs-property">yogaNode</span>) {
+      yogaIndex++
+    }
+  }
+}
+</code></pre>
+<p><code>removeChildNode</code> 在移除时收集被删除子树中的缓存矩形，用于帧间 blit 优化的失效处理。</p>
+<h2 id="35-yoga-布局引擎适配层">3.5 Yoga 布局引擎适配层</h2>
+<h3 id="351-layoutnode-抽象接口">3.5.1 LayoutNode 抽象接口</h3>
+<p>源码位于 <code>src/ink/layout/node.ts</code>。这是一个纯接口，将 Yoga 的具体 API 隐藏在抽象层之后：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">LayoutNode</span> = {
+  <span class="hljs-comment">// 树操作</span>
+  <span class="hljs-title function_">insertChild</span>(<span class="hljs-attr">child</span>: <span class="hljs-title class_">LayoutNode</span>, <span class="hljs-attr">index</span>: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">removeChild</span>(<span class="hljs-attr">child</span>: <span class="hljs-title class_">LayoutNode</span>): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">getChildCount</span>(): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getParent</span>(): <span class="hljs-title class_">LayoutNode</span> | <span class="hljs-literal">null</span>
+
+  <span class="hljs-comment">// 布局计算</span>
+  <span class="hljs-title function_">calculateLayout</span>(<span class="hljs-attr">width</span>?: <span class="hljs-built_in">number</span>, <span class="hljs-attr">height</span>?: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">setMeasureFunc</span>(<span class="hljs-attr">fn</span>: <span class="hljs-title class_">LayoutMeasureFunc</span>): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">unsetMeasureFunc</span>(): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">markDirty</span>(): <span class="hljs-built_in">void</span>
+
+  <span class="hljs-comment">// 布局结果读取</span>
+  <span class="hljs-title function_">getComputedLeft</span>(): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getComputedTop</span>(): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getComputedWidth</span>(): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getComputedHeight</span>(): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getComputedBorder</span>(<span class="hljs-attr">edge</span>: <span class="hljs-title class_">LayoutEdge</span>): <span class="hljs-built_in">number</span>
+  <span class="hljs-title function_">getComputedPadding</span>(<span class="hljs-attr">edge</span>: <span class="hljs-title class_">LayoutEdge</span>): <span class="hljs-built_in">number</span>
+
+  <span class="hljs-comment">// 样式设置器（setWidth, setHeight, setFlexDirection 等）</span>
+  <span class="hljs-comment">// ... 省略40+个设置器方法</span>
+
+  <span class="hljs-comment">// 生命周期</span>
+  <span class="hljs-title function_">free</span>(): <span class="hljs-built_in">void</span>
+  <span class="hljs-title function_">freeRecursive</span>(): <span class="hljs-built_in">void</span>
+}
+</code></pre>
+<p>为什么需要这个抽象层？</p>
+<ol>
+<li><strong>解耦 Yoga 版本</strong>：Claude Code 使用的是 TypeScript 原生移植版的 Yoga（<code>src/native-ts/yoga-layout</code>），而非 WASM 版本。抽象层使得替换布局引擎不影响上层代码。</li>
+<li><strong>类型安全的枚举映射</strong>：Yoga 内部用数字枚举（<code>Display.Flex = 0</code>），LayoutNode 使用字符串枚举（<code>LayoutDisplay.Flex = 'flex'</code>），可读性更好且不依赖 Yoga 的数值约定。</li>
+<li><strong>测量模式标准化</strong>：<code>LayoutMeasureMode</code> 将 Yoga 的 <code>MeasureMode.Exactly</code> / <code>AtMost</code> / <code>Undefined</code> 统一为字符串标识符。</li>
+</ol>
+<h3 id="352-yogalayoutnode-适配器">3.5.2 YogaLayoutNode 适配器</h3>
+<p>源码位于 <code>src/ink/layout/yoga.ts</code>。每个方法都是到 Yoga 原生 API 的直通委托，加上枚举映射：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">YogaLayoutNode</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LayoutNode</span> {
+  <span class="hljs-keyword">readonly</span> <span class="hljs-attr">yoga</span>: <span class="hljs-title class_">YogaNode</span>
+
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">yoga</span>: <span class="hljs-title class_">YogaNode</span></span>) {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">yoga</span> = yoga
+  }
+
+  <span class="hljs-title function_">setMeasureFunc</span>(<span class="hljs-attr">fn</span>: <span class="hljs-title class_">LayoutMeasureFunc</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">yoga</span>.<span class="hljs-title function_">setMeasureFunc</span>(<span class="hljs-function">(<span class="hljs-params">w, wMode</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> mode =
+        wMode === <span class="hljs-title class_">MeasureMode</span>.<span class="hljs-property">Exactly</span>
+          ? <span class="hljs-title class_">LayoutMeasureMode</span>.<span class="hljs-property">Exactly</span>
+          : wMode === <span class="hljs-title class_">MeasureMode</span>.<span class="hljs-property">AtMost</span>
+            ? <span class="hljs-title class_">LayoutMeasureMode</span>.<span class="hljs-property">AtMost</span>
+            : <span class="hljs-title class_">LayoutMeasureMode</span>.<span class="hljs-property">Undefined</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-title function_">fn</span>(w, mode)
+    })
+  }
+
+  <span class="hljs-title function_">setDisplay</span>(<span class="hljs-attr">display</span>: <span class="hljs-title class_">LayoutDisplay</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">yoga</span>.<span class="hljs-title function_">setDisplay</span>(display === <span class="hljs-string">'flex'</span> ? <span class="hljs-title class_">Display</span>.<span class="hljs-property">Flex</span> : <span class="hljs-title class_">Display</span>.<span class="hljs-property">None</span>)
+  }
+
+  <span class="hljs-title function_">calculateLayout</span>(<span class="hljs-attr">width</span>?: <span class="hljs-built_in">number</span>, <span class="hljs-attr">_height</span>?: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">yoga</span>.<span class="hljs-title function_">calculateLayout</span>(width, <span class="hljs-literal">undefined</span>, <span class="hljs-title class_">Direction</span>.<span class="hljs-property">LTR</span>)
+  }
+  <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+<p>注意 <code>calculateLayout</code> 硬编码为 LTR 方向，且忽略 height 参数（终端内容高度由布局自动确定，不做约束）。</p>
+<h3 id="353-工厂函数">3.5.3 工厂函数</h3>
+<pre><code class="lang-typescript"><span class="hljs-comment">// engine.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createLayoutNode</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">LayoutNode</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-title function_">createYogaLayoutNode</span>()
+}
+
+<span class="hljs-comment">// yoga.ts</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createYogaLayoutNode</span>(<span class="hljs-params"></span>): <span class="hljs-title class_">LayoutNode</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">YogaLayoutNode</span>(<span class="hljs-title class_">Yoga</span>.<span class="hljs-property">Node</span>.<span class="hljs-title function_">create</span>())
+}
+</code></pre>
+<p>两层间接调用看似冗余，但 <code>engine.ts</code> 是上层代码（<code>dom.ts</code>）的唯一入口点。如果需要替换 Yoga 为其他布局引擎，只需修改 <code>engine.ts</code> 的返回值。</p>
+<h2 id="36-帧调度机制">3.6 帧调度机制</h2>
+<h3 id="361-16ms-节流--微任务">3.6.1 16ms 节流 + 微任务</h3>
+<p>帧间隔定义在 <code>src/ink/constants.ts</code>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-variable constant_">FRAME_INTERVAL_MS</span> = <span class="hljs-number">16</span>
+</code></pre>
+<p><code>Ink</code> 类的构造函数中设置调度器：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> deferredRender = (): <span class="hljs-function"><span class="hljs-params">void</span> =&gt;</span> <span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">onRender</span>);
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">scheduleRender</span> = <span class="hljs-title function_">throttle</span>(deferredRender, <span class="hljs-variable constant_">FRAME_INTERVAL_MS</span>, {
+  <span class="hljs-attr">leading</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">trailing</span>: <span class="hljs-literal">true</span>
+});
+</code></pre>
+<p>这是一个两层调度：</p>
+<ol>
+<li><strong>lodash throttle（16ms）</strong>：保证渲染频率不超过 60fps。<code>leading: true</code> 表示首次调用立即执行；<code>trailing: true</code> 表示节流期间的最后一次调用会在冷却���执行。</li>
+<li><strong>queueMicrotask</strong>：将实际渲染延迟到微任务队列。这解决了一个关键时序问题——reconciler 的 <code>resetAfterCommit</code> 在 React 的 commit 阶段触发，早于 layout 阶段（ref 赋值 + useLayoutEffect）。如果同步渲染，<code>useDeclaredCursor</code> 设置的光标位置会比渲染晚一帧。微任务延迟确保 layout effects 先执行。</li>
+</ol>
+<h3 id="362-rootnode-上的回调挂载">3.6.2 rootNode 上的回调挂载</h3>
+<pre><code class="lang-typescript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">onRender</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">scheduleRender</span>;
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">onImmediateRender</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">onRender</span>;
+<span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">onComputeLayout</span> = <span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">isUnmounted</span>) <span class="hljs-keyword">return</span>;
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">yogaNode</span>) {
+    <span class="hljs-keyword">const</span> t0 = performance.<span class="hljs-title function_">now</span>();
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">yogaNode</span>.<span class="hljs-title function_">setWidth</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">terminalColumns</span>);
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">rootNode</span>.<span class="hljs-property">yogaNode</span>.<span class="hljs-title function_">calculateLayout</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">terminalColumns</span>);
+    <span class="hljs-keyword">const</span> ms = performance.<span class="hljs-title function_">now</span>() - t0;
+    <span class="hljs-title function_">recordYogaMs</span>(ms);
+  }
+};
+</code></pre>
+<p><code>onComputeLayout</code> 在 <code>resetAfterCommit</code> 中被调用（commit 阶段内），设置根节点宽度为终端列数，然后触发 Yoga 全树布局。这确保了 <code>useLayoutEffect</code> 中读取到的 <code>getComputedWidth()</code>/<code>getComputedHeight()</code> 是最新值。</p>
+<h3 id="363-dom-级别的渲染触发">3.6.3 DOM 级别的渲染触发</h3>
+<p>对于不经过 React 的 DOM 变更（如滚动），有一个独立的触发路径：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> scheduleRenderFrom = (<span class="hljs-attr">node</span>?: <span class="hljs-title class_">DOMNode</span>): <span class="hljs-function"><span class="hljs-params">void</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">cur</span>: <span class="hljs-title class_">DOMNode</span> | <span class="hljs-literal">undefined</span> = node
+  <span class="hljs-keyword">while</span> (cur?.<span class="hljs-property">parentNode</span>) cur = cur.<span class="hljs-property">parentNode</span>
+  <span class="hljs-keyword">if</span> (cur &amp;&amp; cur.<span class="hljs-property">nodeName</span> !== <span class="hljs-string">'#text'</span>) (cur <span class="hljs-keyword">as</span> <span class="hljs-title class_">DOMElement</span>).<span class="hljs-property">onRender</span>?.()
+}
+</code></pre>
+<p>ScrollBox 的 <code>scrollTo</code> / <code>scrollBy</code> 直接修改 DOM 节点的 <code>scrollTop</code>，然后调用 <code>scheduleRenderFrom</code> 沿父链走到根节点触发渲染，完全绕过 React reconciler。这消除了滚动事件的 reconciler 开销。</p>
+<h2 id="37-双缓冲与渲染循环">3.7 双缓冲与渲染循环</h2>
+<h3 id="371-前后缓冲">3.7.1 前后缓冲</h3>
+<p><code>Ink</code> 类持有两个 <code>Frame</code> 对象：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">private</span> <span class="hljs-attr">frontFrame</span>: <span class="hljs-title class_">Frame</span>;
+<span class="hljs-keyword">private</span> <span class="hljs-attr">backFrame</span>: <span class="hljs-title class_">Frame</span>;
+</code></pre>
+<ul>
+<li><code>frontFrame</code>：上一帧的渲染结果，用于 diff 比较。</li>
+<li><code>backFrame</code>：当前帧的渲染目标。</li>
+</ul>
+<p><code>onRender</code> 方法的核心流程：</p>
+<pre><code class="lang-typescript"><span class="hljs-title function_">onRender</span>(<span class="hljs-params"></span>) {
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">isUnmounted</span> || <span class="hljs-variable language_">this</span>.<span class="hljs-property">isPaused</span>) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-comment">// 1. 渲染 DOM 树到 backFrame</span>
+  <span class="hljs-keyword">const</span> frame = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">renderer</span>({
+    <span class="hljs-attr">frontFrame</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">frontFrame</span>,
+    <span class="hljs-attr">backFrame</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">backFrame</span>,
+    <span class="hljs-attr">isTTY</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">options</span>.<span class="hljs-property">stdout</span>.<span class="hljs-property">isTTY</span>,
+    terminalWidth,
+    terminalRows,
+    <span class="hljs-attr">altScreen</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">altScreenActive</span>,
+    <span class="hljs-attr">prevFrameContaminated</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">prevFrameContaminated</span>
+  });
+
+  <span class="hljs-comment">// 2. 叠加选择和搜索高亮</span>
+  <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">altScreenActive</span>) {
+    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">hasSelection</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">selection</span>)) {
+      <span class="hljs-title function_">applySelectionOverlay</span>(frame.<span class="hljs-property">screen</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">selection</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">stylePool</span>);
+    }
+    hlActive = <span class="hljs-title function_">applySearchHighlight</span>(frame.<span class="hljs-property">screen</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchHighlightQuery</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">stylePool</span>);
+  }
+
+  <span class="hljs-comment">// 3. Diff 比较并输出</span>
+  <span class="hljs-keyword">const</span> diff = <span class="hljs-variable language_">this</span>.<span class="hljs-property">log</span>.<span class="hljs-title function_">render</span>(prevFrame, frame, <span class="hljs-variable language_">this</span>.<span class="hljs-property">altScreenActive</span>, <span class="hljs-variable constant_">SYNC_OUTPUT_SUPPORTED</span>);
+
+  <span class="hljs-comment">// 4. 交换缓冲</span>
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">backFrame</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">frontFrame</span>;
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">frontFrame</span> = frame;
+}
+</code></pre>
+<p>交换缓冲后，旧的 <code>frontFrame</code> 变成新的 <code>backFrame</code>，供下一帧复用（<code>resetScreen</code> 会在渲染器中清空它）。</p>
+<h3 id="372-渲染器-rendererts">3.7.2 渲染器 (renderer.ts)</h3>
+<p>渲染器负责将 DOM 树绘制到 Screen buffer：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createRenderer</span>(<span class="hljs-params">
+  <span class="hljs-attr">node</span>: <span class="hljs-title class_">DOMElement</span>,
+  <span class="hljs-attr">stylePool</span>: <span class="hljs-title class_">StylePool</span>,
+</span>): <span class="hljs-title class_">Renderer</span> {
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">output</span>: <span class="hljs-title class_">Output</span> | <span class="hljs-literal">undefined</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">options</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> { frontFrame, backFrame, isTTY, terminalWidth, terminalRows } = options
+    <span class="hljs-keyword">const</span> width = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">floor</span>(node.<span class="hljs-property">yogaNode</span>.<span class="hljs-title function_">getComputedWidth</span>())
+    <span class="hljs-keyword">const</span> height = options.<span class="hljs-property">altScreen</span> ? terminalRows : yogaHeight
+
+    <span class="hljs-comment">// Alt-screen 模式下 screen buffer 高度等于终端行数</span>
+    <span class="hljs-comment">// Main-screen 模式下等于 Yoga 计算出的内容高度</span>
+    <span class="hljs-comment">// ...</span>
+  }
+}
+</code></pre>
+<p>闭包内部复用 <code>Output</code> 对象，使 charCache（字符 tokenize + grapheme 聚类的缓存）跨帧持久化——大部分文本行帧间不变，缓存命中率很高。</p>
+<h2 id="38-screen-buffer-的-cell-级-packed-bitmap-格式">3.8 Screen Buffer 的 Cell 级 Packed Bitmap 格式</h2>
+<p>这是整个渲染引擎中最底层的数据结构，源码位于 <code>src/ink/screen.ts</code>。</p>
+<h3 id="381-设计动机">3.8.1 设计动机</h3>
+<p>一个 200x120 的终端有 24000 个 cell。如果每个 cell 用 JavaScript 对象表示（<code>{ char, styleId, width, hyperlink }</code>），会产生 24000 个堆对象。Claude Code 的解决方案是将所有 cell 数据打包进一个连续的 <code>Int32Array</code>，彻底消除 GC 压力。</p>
+<h3 id="382-内存布局">3.8.2 内存布局</h3>
+<p>每个 cell 占 2 个 Int32（8 字节）：</p>
+<pre><code>word0 (cells[ci]):     charId (完整 32 位)
+word1 (cells[ci + 1]): styleId[31:17] | hyperlinkId[16:2] | width[1:0]
+</code></pre><p>位域分配：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>位范围</th>
+<th>宽度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>charId</td>
+<td>word0 全部</td>
+<td>32 bits</td>
+<td>字符池索引</td>
+</tr>
+<tr>
+<td>styleId</td>
+<td>word1[31:17]</td>
+<td>15 bits</td>
+<td>样式池索引，bit 0 编码是否对空格可见</td>
+</tr>
+<tr>
+<td>hyperlinkId</td>
+<td>word1[16:2]</td>
+<td>15 bits</td>
+<td>超链接池索引</td>
+</tr>
+<tr>
+<td>width</td>
+<td>word1[1:0]</td>
+<td>2 bits</td>
+<td>CellWidth 枚举</td>
+</tr>
+</tbody>
+</table>
+<p>打包和解包的常量定义：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">STYLE_SHIFT</span> = <span class="hljs-number">17</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">HYPERLINK_SHIFT</span> = <span class="hljs-number">2</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">HYPERLINK_MASK</span> = <span class="hljs-number">0x7fff</span> <span class="hljs-comment">// 15 bits</span>
+<span class="hljs-keyword">const</span> <span class="hljs-variable constant_">WIDTH_MASK</span> = <span class="hljs-number">3</span>          <span class="hljs-comment">// 2 bits</span>
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">packWord1</span>(<span class="hljs-params"><span class="hljs-attr">styleId</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">hyperlinkId</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">width</span>: <span class="hljs-built_in">number</span></span>): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">return</span> (styleId &lt;&lt; <span class="hljs-variable constant_">STYLE_SHIFT</span>) | (hyperlinkId &lt;&lt; <span class="hljs-variable constant_">HYPERLINK_SHIFT</span>) | width
+}
+</code></pre>
+<h3 id="383-cellwidth-枚举">3.8.3 CellWidth 枚举</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">enum</span> <span class="hljs-title class_">CellWidth</span> {
+  <span class="hljs-title class_">Narrow</span> = <span class="hljs-number">0</span>,      <span class="hljs-comment">// 普通字符，宽度 1</span>
+  <span class="hljs-title class_">Wide</span> = <span class="hljs-number">1</span>,        <span class="hljs-comment">// CJK/emoji，宽度 2</span>
+  <span class="hljs-title class_">SpacerTail</span> = <span class="hljs-number">2</span>,  <span class="hljs-comment">// 宽字符占据的第二列</span>
+  <span class="hljs-title class_">SpacerHead</span> = <span class="hljs-number">3</span>,  <span class="hljs-comment">// 软换行的行尾占位符</span>
+}
+</code></pre>
+<p>宽字符（CJK、emoji）在 buffer 中占两个 cell：第一个 cell 持有实际字符（<code>width = Wide</code>），第二个是占位符（<code>width = SpacerTail</code>，char 为空串）。</p>
+<h3 id="384-字符串池化">3.8.4 字符串池化</h3>
+<p>为避免在 packed array 中存储字符串引用，所有字符串通过池化转为整数索引：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CharPool</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">strings</span>: <span class="hljs-built_in">string</span>[] = [<span class="hljs-string">' '</span>, <span class="hljs-string">''</span>]  <span class="hljs-comment">// 0 = 空格, 1 = 空串(spacer)</span>
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">ascii</span>: <span class="hljs-title class_">Int32Array</span> = <span class="hljs-title function_">initCharAscii</span>()
+
+  <span class="hljs-title function_">intern</span>(<span class="hljs-attr">char</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">number</span> {
+    <span class="hljs-keyword">if</span> (char.<span class="hljs-property">length</span> === <span class="hljs-number">1</span>) {
+      <span class="hljs-keyword">const</span> code = char.<span class="hljs-title function_">charCodeAt</span>(<span class="hljs-number">0</span>)
+      <span class="hljs-keyword">if</span> (code &lt; <span class="hljs-number">128</span>) {
+        <span class="hljs-keyword">const</span> cached = <span class="hljs-variable language_">this</span>.<span class="hljs-property">ascii</span>[code]!
+        <span class="hljs-keyword">if</span> (cached !== -<span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> cached
+        <span class="hljs-keyword">const</span> index = <span class="hljs-variable language_">this</span>.<span class="hljs-property">strings</span>.<span class="hljs-property">length</span>
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">strings</span>.<span class="hljs-title function_">push</span>(char)
+        <span class="hljs-variable language_">this</span>.<span class="hljs-property">ascii</span>[code] = index
+        <span class="hljs-keyword">return</span> index
+      }
+    }
+    <span class="hljs-keyword">const</span> existing = <span class="hljs-variable language_">this</span>.<span class="hljs-property">stringMap</span>.<span class="hljs-title function_">get</span>(char)
+    <span class="hljs-keyword">if</span> (existing !== <span class="hljs-literal">undefined</span>) <span class="hljs-keyword">return</span> existing
+    <span class="hljs-keyword">const</span> index = <span class="hljs-variable language_">this</span>.<span class="hljs-property">strings</span>.<span class="hljs-property">length</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">strings</span>.<span class="hljs-title function_">push</span>(char)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">stringMap</span>.<span class="hljs-title function_">set</span>(char, index)
+    <span class="hljs-keyword">return</span> index
+  }
+}
+</code></pre>
+<p>ASCII 字符走数组直接索引（O(1)），非 ASCII 字符走 Map 查找。池在帧间共享，ID 跨 screen buffer 有效，使得 blit 操作可以直接拷贝整数而无需重新 intern。</p>
+<h3 id="385-stylepool----样式-id-的-bit-0-技巧">3.8.5 StylePool -- 样式 ID 的 bit 0 技巧</h3>
+<pre><code class="lang-typescript"><span class="hljs-title function_">intern</span>(<span class="hljs-attr">styles</span>: <span class="hljs-title class_">AnsiCode</span>[]): <span class="hljs-built_in">number</span> {
+  <span class="hljs-keyword">const</span> key = styles.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> ? <span class="hljs-string">''</span> : styles.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">s</span> =&gt;</span> s.<span class="hljs-property">code</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">'\0'</span>)
+  <span class="hljs-keyword">let</span> id = <span class="hljs-variable language_">this</span>.<span class="hljs-property">ids</span>.<span class="hljs-title function_">get</span>(key)
+  <span class="hljs-keyword">if</span> (id === <span class="hljs-literal">undefined</span>) {
+    <span class="hljs-keyword">const</span> rawId = <span class="hljs-variable language_">this</span>.<span class="hljs-property">styles</span>.<span class="hljs-property">length</span>
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">styles</span>.<span class="hljs-title function_">push</span>(styles.<span class="hljs-property">length</span> === <span class="hljs-number">0</span> ? [] : styles)
+    id = (rawId &lt;&lt; <span class="hljs-number">1</span>) | (styles.<span class="hljs-property">length</span> &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-title function_">hasVisibleSpaceEffect</span>(styles) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>)
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">ids</span>.<span class="hljs-title function_">set</span>(key, id)
+  }
+  <span class="hljs-keyword">return</span> id
+}
+</code></pre>
+<p>styleId 的 bit 0 编码该样式是否对空格字符产生可见效果（背景色、反转、下划线等）。这让渲染器在 diff 时能用单次位运算跳过不可见的空格 cell——如果 charId=0（空格）且 <code>styleId &amp; 1 === 0</code>（纯前景样式），该 cell 视觉上等价于空白，可以用光标移动替代输出。</p>
+<h3 id="386-screen-创建与双缓冲复用">3.8.6 Screen 创建与双缓冲复用</h3>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createScreen</span>(<span class="hljs-params">width, height, styles, charPool, hyperlinkPool</span>): <span class="hljs-title class_">Screen</span> {
+  <span class="hljs-keyword">const</span> size = width * height
+  <span class="hljs-keyword">const</span> buf = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(size &lt;&lt; <span class="hljs-number">3</span>)  <span class="hljs-comment">// 8 bytes per cell</span>
+  <span class="hljs-keyword">const</span> cells = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Int32Array</span>(buf)
+  <span class="hljs-keyword">const</span> cells64 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BigInt64Array</span>(buf)  <span class="hljs-comment">// 同一 buffer 的 64 位视图</span>
+
+  <span class="hljs-keyword">return</span> {
+    width, height,
+    cells, cells64,
+    charPool, hyperlinkPool,
+    <span class="hljs-attr">emptyStyleId</span>: styles.<span class="hljs-property">none</span>,
+    <span class="hljs-attr">damage</span>: <span class="hljs-literal">undefined</span>,
+    <span class="hljs-attr">noSelect</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(size),
+    <span class="hljs-attr">softWrap</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">Int32Array</span>(height),
+  }
+}
+</code></pre>
+<p><code>cells</code> 和 <code>cells64</code> 是同一 <code>ArrayBuffer</code> 的两个视图。<code>cells</code>（Int32Array）用于逐字段读写；<code>cells64</code>（BigInt64Array）用于批量清零（<code>cells64.fill(0n)</code>，一次 fill 操作清除所有 cell，比逐 Int32 清零快 2 倍）。</p>
+<p><code>resetScreen</code> 函数用于帧间复用：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">resetScreen</span>(<span class="hljs-params">screen, width, height</span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-keyword">const</span> size = width * height
+  <span class="hljs-keyword">if</span> (screen.<span class="hljs-property">cells64</span>.<span class="hljs-property">length</span> &lt; size) {
+    <span class="hljs-comment">// 只在需要时扩容，避免重新分配</span>
+    <span class="hljs-keyword">const</span> buf = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBuffer</span>(size &lt;&lt; <span class="hljs-number">3</span>)
+    screen.<span class="hljs-property">cells</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Int32Array</span>(buf)
+    screen.<span class="hljs-property">cells64</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">BigInt64Array</span>(buf)
+  }
+  screen.<span class="hljs-property">cells64</span>.<span class="hljs-title function_">fill</span>(<span class="hljs-variable constant_">EMPTY_CELL_VALUE</span>, <span class="hljs-number">0</span>, size)
+  screen.<span class="hljs-property">noSelect</span>.<span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, size)
+  screen.<span class="hljs-property">softWrap</span>.<span class="hljs-title function_">fill</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, height)
+  screen.<span class="hljs-property">damage</span> = <span class="hljs-literal">undefined</span>
+}
+</code></pre>
+<p>只增不减的分配策略——如果终端缩小了，buffer 不会收缩，只是使用更小的范围。扩大时才重新分配。</p>
+<h3 id="387-damage-tracking">3.8.7 Damage Tracking</h3>
+<p>Screen 维护一个 <code>damage: Rectangle</code> 跟踪本帧写入的范围：</p>
+<pre><code class="lang-typescript"><span class="hljs-comment">// setCellAt 内部</span>
+<span class="hljs-keyword">const</span> damage = screen.<span class="hljs-property">damage</span>
+<span class="hljs-keyword">if</span> (damage) {
+  <span class="hljs-comment">// 扩展已有范围</span>
+  <span class="hljs-keyword">if</span> (minX &lt; damage.<span class="hljs-property">x</span>) { damage.<span class="hljs-property">width</span> += damage.<span class="hljs-property">x</span> - minX; damage.<span class="hljs-property">x</span> = minX }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x &gt;= right) { damage.<span class="hljs-property">width</span> = x - damage.<span class="hljs-property">x</span> + <span class="hljs-number">1</span> }
+  <span class="hljs-comment">// ...</span>
+} <span class="hljs-keyword">else</span> {
+  screen.<span class="hljs-property">damage</span> = { <span class="hljs-attr">x</span>: minX, y, <span class="hljs-attr">width</span>: x - minX + <span class="hljs-number">1</span>, <span class="hljs-attr">height</span>: <span class="hljs-number">1</span> }
+}
+</code></pre>
+<p>diff 引擎只比较 damage 区域内的 cell，跳过未被写入的区域。稳态下（只有时钟/spinner 更新），damage 可能只有几行，diff 开销接近 O(1)。</p>
+<h2 id="39-核心组件">3.9 核心组件</h2>
+<h3 id="391-box">3.9.1 Box</h3>
+<p><code>Box</code> 是 Ink 的基础布局组件，对应 <code>&lt;div style="display: flex"&gt;</code>。经过 React Compiler 转换后，它使用 <code>_c()</code> 缓存来消除不必要的重新渲染。</p>
+<p>核心 JSX 产出是一个 <code>ink-box</code> 宿主元素：</p>
+<pre><code class="lang-tsx">&lt;ink-box
+  ref={ref}
+  style={{
+    flexDirection, flexGrow, flexShrink, flexWrap,
+    ...style
+  }}
+  tabIndex={tabIndex}
+  autoFocus={autoFocus}
+  onClick={onClick}
+  onKeyDown={onKeyDown}
+  onKeyDownCapture={onKeyDownCapture}
+  onFocus={onFocus}
+  onFocusCapture={onFocusCapture}
+  onBlur={onBlur}
+  onBlurCapture={onBlurCapture}
+  onMouseEnter={onMouseEnter}
+  onMouseLeave={onMouseLeave}
+&gt;
+  {children}
+&lt;/ink-box&gt;
+</code></pre>
+<p>默认值：<code>flexDirection: 'row'</code>、<code>flexGrow: 0</code>、<code>flexShrink: 1</code>、<code>flexWrap: 'nowrap'</code>。这意味着 Box 默认水平排列子元素，不增长但可以收缩。</p>
+<h3 id="392-text">3.9.2 Text</h3>
+<p><code>Text</code> 组件渲染样式化文本，它产出两层宿主元素：</p>
+<ol>
+<li>外层 <code>ink-text</code>：拥有 Yoga 节点和 <code>measureFunc</code>，参与布局。</li>
+<li>内层 <code>ink-virtual-text</code>（嵌套时降级）：不创建 Yoga 节点，只是样式和文本内容的容器。</li>
+</ol>
+<p>样式通过 <code>textStyles</code> prop 传递给 <code>ink-text</code>：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">const</span> <span class="hljs-attr">memoizedStylesForWrap</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-title class_">NonNullable</span>&lt;<span class="hljs-title class_">Styles</span>[<span class="hljs-string">'textWrap'</span>]&gt;, <span class="hljs-title class_">Styles</span>&gt; = {
+  <span class="hljs-attr">wrap</span>: {
+    <span class="hljs-attr">flexGrow</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">flexShrink</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">flexDirection</span>: <span class="hljs-string">'row'</span>,
+    <span class="hljs-attr">textWrap</span>: <span class="hljs-string">'wrap'</span>
+  },
+  <span class="hljs-comment">// ... 其他 wrap 模式</span>
+}
+</code></pre>
+<p>支持的文本样式属性：<code>color</code>、<code>backgroundColor</code>、<code>bold</code>/<code>dim</code>（互斥）、<code>italic</code>、<code>underline</code>、<code>strikethrough</code>、<code>inverse</code>。bold 和 dim 在终端中互斥，TypeScript 类型通过联合类型强制二选一：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">type</span> <span class="hljs-title class_">WeightProps</span> = {
+  <span class="hljs-attr">bold</span>?: <span class="hljs-built_in">never</span>; <span class="hljs-attr">dim</span>?: <span class="hljs-built_in">never</span>;
+} | {
+  <span class="hljs-attr">bold</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">dim</span>?: <span class="hljs-built_in">never</span>;
+} | {
+  <span class="hljs-attr">dim</span>: <span class="hljs-built_in">boolean</span>; <span class="hljs-attr">bold</span>?: <span class="hljs-built_in">never</span>;
+}
+</code></pre>
+<h3 id="393-scrollbox">3.9.3 ScrollBox</h3>
+<p><code>ScrollBox</code> 是一个带虚拟滚动的容器。它的 imperative API 完全绕过 React：</p>
+<pre><code class="lang-typescript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">scrollMutated</span>(<span class="hljs-params"><span class="hljs-attr">el</span>: <span class="hljs-title class_">DOMElement</span></span>): <span class="hljs-built_in">void</span> {
+  <span class="hljs-title function_">markScrollActivity</span>();
+  <span class="hljs-title function_">markDirty</span>(el);
+  <span class="hljs-title function_">markCommitStart</span>();
+  <span class="hljs-title function_">notify</span>();
+  <span class="hljs-keyword">if</span> (renderQueuedRef.<span class="hljs-property">current</span>) <span class="hljs-keyword">return</span>;
+  renderQueuedRef.<span class="hljs-property">current</span> = <span class="hljs-literal">true</span>;
+  <span class="hljs-title function_">queueMicrotask</span>(<span class="hljs-function">() =&gt;</span> {
+    renderQueuedRef.<span class="hljs-property">current</span> = <span class="hljs-literal">false</span>;
+    <span class="hljs-title function_">scheduleRenderFrom</span>(el);
+  });
+}
+</code></pre>
+<p><code>scrollTo</code>、<code>scrollBy</code> 直接修改 DOM 节点的 <code>scrollTop</code>，然后通过 <code>markDirty</code> + <code>scheduleRenderFrom</code> 触发渲染。<code>queueMicrotask</code> 合并同一输入批次中的多次 <code>scrollBy</code>（比如 <code>discreteUpdates</code> 内的多个滚轮事件），避免 throttle 的 leading edge 在第一个事件就触发渲染。</p>
+<p><code>pendingScrollDelta</code> 是分帧排空的滚动增量——快速翻滚不会一次跳到目标位置，而是以 <code>SCROLL_MAX_PER_FRAME</code> 的速率逐帧排空，产生平滑的滚动动画效果。方向反转自然抵消（纯累加器，无目标跟踪）。</p>
+<h2 id="310-小结">3.10 小结</h2>
+<p>Claude Code 的终端 UI 渲染引擎是一个高度优化的系统：</p>
+<ul>
+<li><strong>Reconciler</strong> 适配 React 19，集成 W3C 事件模型和优先级调度。</li>
+<li><strong>DOM 模型</strong> 极简化，只保留终端渲染所需字段，事件处理器独立存储避免无效 dirty 标记。</li>
+<li><strong>Yoga 适配层</strong> 通过 LayoutNode 接口隔离布局引擎具体实现。</li>
+<li><strong>帧调度</strong> 使用 16ms throttle + microtask 双层机制，平衡响应性和吞吐量。</li>
+<li><strong>Screen Buffer</strong> 使用 packed Int32Array 存储 cell 数据，通过字符串池化、样式池化和 bit-packing 技术消除 GC 压力。</li>
+<li><strong>Damage Tracking</strong> 将 diff 范围限制在实际变化的区域，稳态下接近零开销。</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="Chapter-02-Build-System-and-Startup-Flow.html" class="navigation navigation-prev " aria-label="Previous page: Chapter 02 - Build System and Startup Flow">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Chapter-04-Event-System-and-Input-Handling.html" class="navigation navigation-next " aria-label="Next page: Chapter 04 - Event System and Input Handling">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Chapter 03 - Terminal UI Rendering Engine","level":"8.3","depth":1,"next":{"title":"Chapter 04 - Event System and Input Handling","level":"8.4","depth":1,"path":"Chapter-04-Event-System-and-Input-Handling.md","ref":"Chapter-04-Event-System-and-Input-Handling.md","articles":[]},"previous":{"title":"Chapter 02 - Build System and Startup Flow","level":"8.2","depth":1,"path":"Chapter-02-Build-System-and-Startup-Flow.md","ref":"Chapter-02-Build-System-and-Startup-Flow.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-sharing"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Claude Code 源码深度教学指南","language":"zh-hans","gitbook":"*","description":"Claude Code v2.1.88 源码从 0 到 1 的深度教学指南"},"file":{"path":"Chapter-03-Terminal-UI-Rendering-Engine.md","mtime":"2026-04-01T01:41:31.544Z","type":"markdown"},"gitbook":{"version":"6.1.7","time":"2026-04-03T06:44:50.007Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
